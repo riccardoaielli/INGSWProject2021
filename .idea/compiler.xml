@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ingswAM2021-Aielli-Bisignano-Cerasani" />
+        <module name="AM37" />
       </profile>
     </annotationProcessing>
   </component>
