@@ -10,8 +10,7 @@ public class FaithTrack {
      * tiles values:
      * 0 - value before vatican report
      * 1 - value after vatican report if the tile doesn't turn
-     * 2 - value after vatican report if the tile turn
-     * */
+     * 2 - value after vatican report if the tile turn     * */
     private int faithTrackPosition;
     private final int numOfPopeFavourTiles = 3;
     private final int nonActive = 0;
@@ -102,6 +101,7 @@ public class FaithTrack {
     }
 
     private int calculateVPfromFaithPoints(){
+        //rounds down faithpoints to the maximum multiple of 3 and then assings victory points with a switch case
         int vp;
         int roundedFaithPoints = faithTrackPosition - (faithTrackPosition % 3);
         switch (roundedFaithPoints){
@@ -128,9 +128,10 @@ public class FaithTrack {
 
     private int calculateVPfromTiles(){
         int vp=0;
+        //iterating all the tiles
         for(int tileNumber = 0; tileNumber < 3; tileNumber++){
-            if(popeFavourTiles.get(tileNumber) == active)
-                vp = vp + (tileNumber + 2);
+            if(popeFavourTiles.get(tileNumber) == active)   //only active tiles contributes to the victory points calculations
+                vp = vp + (tileNumber + 2);     //(tileNumber + 2) are VP that you get from an active tile
         }
         return vp;
     }
