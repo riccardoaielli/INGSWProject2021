@@ -3,9 +3,8 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enumerations.DevelopmentCardColor;
 import it.polimi.ingsw.model.exceptions.InvalidDevelopmentCardException;
 import org.junit.jupiter.api.Test;
-
+import java.util.ArrayList;
 import java.util.HashMap;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class DevelopmentCardSpaceTest {
@@ -49,16 +48,23 @@ class DevelopmentCardSpaceTest {
         DevelopmentCard card = new DevelopmentCard(color,cardLevel, new HashMap<>(),5, powerOfProduction );
         DevelopmentCardSpace developmentCardSpace= new DevelopmentCardSpace();
 
-        assertFalse(developmentCardSpace.checkRequirement(color));
+        ArrayList<CardsRequirement> requirements = new ArrayList<>();
+        Integer levelRequirement = null;
+        CardsRequirement singleRequirement = new CardsRequirement(color,levelRequirement);
+        requirements.add(singleRequirement);
+
+        assertFalse(developmentCardSpace.checkRequirement(requirements));
         try {
             developmentCardSpace.addCard(card, 1);
         }catch (Exception invalidDevelopmentCardException){
             assert false;
         }
 
-        assertTrue(developmentCardSpace.checkRequirement(color));
-        color = DevelopmentCardColor.PURPLE;
-        assertFalse(developmentCardSpace.checkRequirement(color));
+        assertTrue(developmentCardSpace.checkRequirement(requirements));
+        levelRequirement = cardLevel;
+        singleRequirement = new CardsRequirement(color,levelRequirement);
+        requirements.add(singleRequirement);
+        assertTrue(developmentCardSpace.checkRequirement(requirements));
     }
 
     @Test

@@ -3,8 +3,9 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enumerations.DevelopmentCardColor;
 import it.polimi.ingsw.model.exceptions.InvalidDevelopmentCardException;
 
+
 import java.util.ArrayList;
-import java.util.stream.Stream;
+
 
 public class DevelopmentCardSpace {
     //Each of the three stack of cards is stored in an ArrayList and they are collected in another ArrayList
@@ -43,17 +44,35 @@ public class DevelopmentCardSpace {
         }
     }
 
+
     /**
-     * this method checks if there is a card that matches the given color
-     * @param color is the color searched in the card space
-     * @return true if the color matches at least one card color in the development card space
+     * this method checks if a leaderCard's requirement matches a card contained in this developmentCard space
+     * @param requirements are the requirements for the activation of a leader card
+     * @return true if it matches the requirements with cards from the card space
      */
-    public boolean checkRequirement(DevelopmentCardColor color){
+    public boolean checkRequirement(ArrayList<CardsRequirement> requirements){
+       if(requirements.stream().filter(x -> checkSingleRequirement(x.getColor(),x.getLevel()) == false).count() == 0)
+           return true;
+       else
+           return false;
+    }
+
+    /**
+     * this method check if a card in the card space matches a combination of level and color, the level can be null
+     * @param color is the color to match
+     * @param level is the level to match
+     * @return true if it finds a match
+     */
+    private boolean checkSingleRequirement(DevelopmentCardColor color, Integer level){
         int stack = 0;
+        ArrayList<DevelopmentCard> singleStack;
+
         while(stack < cards.size()){
-            if(cards.get(stack).stream().map(x -> x.getColor()).filter(x -> x == color).count() > 0) {
+            singleStack = cards.get(stack);
+            if(level != null && singleStack.stream().filter(x -> x.getColor() == color && x.getLevel() == level).count() > 0)
                 return true;
-            }
+            if(level == null && singleStack.stream().filter(x -> x.getColor() == color).count() > 0)
+                return true;
             stack++;
         }
         return false;
