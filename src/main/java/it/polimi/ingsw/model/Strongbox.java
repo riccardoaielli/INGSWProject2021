@@ -1,8 +1,10 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.exceptions.NotEnoughResourcesException;
+
 import java.util.HashMap;
 
-public class Strongbox implements Manageable{
+public class Strongbox {
     private HashMap<Resource, Integer> strongbox;
 
     /**
@@ -13,28 +15,36 @@ public class Strongbox implements Manageable{
     }
 
     /**
-     * Stores a given quantity of the passed resource
-     * @param resource The resource to be added, must not be faith
-     * @param quantity  The quantity of the resource to be added, must be a positive number
+     * Stores the given map of resources in the strongbox
+     * @param resourceMap The map of resources to add
      */
-    @Override
-    public void add(Resource resource, int quantity) {
-        strongbox.merge(resource, quantity, Integer::sum);
+    public void add(HashMap<Resource, Integer> resourceMap) {
+        resourceMap.forEach((resource, quantity) -> strongbox.merge(resource, quantity, Integer::sum));
     }
 
     /**
-     * Removes a given quantity of the passed resource
-     * If the passed quantity is greater than the  quantity of the resource in strongbox, the quantity is set to 0
-     * @param resource The resource to be removed, must exist in Strongbox and must not be Faith and must be previously added
-     * @param quantity The quantity of the resource to be removed, must be a positive number smaller
-     *                 than the quantity available
+     * Removes the given map of resources from the strongbox
+     * @param resourceMap The map of resources to remove
+     * @throws NotEnoughResourcesException When trying to remove more resources than there are in strongbox
      */
-    @Override
-    public void remove(Resource resource, int quantity) {
-        if (strongbox.get(resource) == quantity)
-            strongbox.remove(resource);
-        else
-            strongbox.merge(resource, -quantity, Integer::sum);
+
+    public void remove(HashMap<Resource, Integer> resourceMap) throws NotEnoughResourcesException {
+        for (Resource resource : resourceMap.keySet())  {
+            if (strongbox.get(resource) == null){
+                throw new NotEnoughResourcesException();
+            }
+            else if (strongbox.get(resource) < resourceMap.get(resource)){
+                throw new NotEnoughResourcesException();
+            }
+        }
+
+        for (Resource resource : resourceMap.keySet())  {
+            if (strongbox.get(resource).equals(resourceMap.get(resource)))
+                strongbox.remove(resource);
+            else
+                strongbox.merge(resource, -resourceMap.get(resource), Integer::sum);
+        }
+
     }
 
     /**
