@@ -50,7 +50,7 @@ public class DevelopmentCardSpace {
      * @param requirements are the requirements for the activation of a leader card
      * @return true if it matches the requirements with cards from the card space
      */
-    public boolean checkRequirement(ArrayList<CardsRequirement> requirements){
+    public boolean checkRequirement(ArrayList<CardRequirement> requirements){
        if(requirements.stream().filter(x -> checkSingleRequirement(x.getColor(),x.getLevel()) == false).count() == 0)
            return true;
        else

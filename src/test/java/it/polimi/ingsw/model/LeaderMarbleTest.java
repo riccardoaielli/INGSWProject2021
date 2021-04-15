@@ -14,7 +14,7 @@ class LeaderMarbleTest {
     void abilityMarble() {
 
         BlueMarble marbleTest = BlueMarble.getInstance();
-        Requirement requirement = new Requirement(new ArrayList<CardsRequirement>(),new HashMap<Resource,Integer>());
+        Requirement requirement = new Requirement(new ArrayList<CardRequirement>(),new HashMap<Resource,Integer>());
         LeaderCard leaderCardTest = new LeaderMarble(10,requirement,marbleTest);
 
         HashMap<Marble,Integer> marblesTest = new HashMap<>();
