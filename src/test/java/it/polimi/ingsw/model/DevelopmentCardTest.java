@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumerations.DevelopmentCardColor;
+import it.polimi.ingsw.model.exceptions.InvalidParameterException;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -8,8 +9,11 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 class DevelopmentCardTest {
+    /**
+     * Tish test tests basic construction of a development card
+     */
     @Test
-    void constructorTest(){
+    void constructorTest() throws InvalidParameterException {
         DevelopmentCardColor colorTest = DevelopmentCardColor.PURPLE;
         int levelTest = 1;
         HashMap<Resource,Integer> priceTest = new HashMap<>();
@@ -29,7 +33,7 @@ class DevelopmentCardTest {
         try{
             levelTest = 4;
             developmentCardTest = new DevelopmentCard(colorTest,levelTest,priceTest,victoryPointsTest,powerOfProductionTest);
-        }catch (Error invalidLevelValue){
+        }catch (Exception exception){
             assert true;
         }
         levelTest = 1;
@@ -37,7 +41,7 @@ class DevelopmentCardTest {
         try{
             priceTest = null;
             developmentCardTest = new DevelopmentCard(colorTest,levelTest,priceTest,victoryPointsTest,powerOfProductionTest);
-        }catch (Error nullPrice){
+        }catch (Exception exception){
             assert true;
         }
         priceTest = new HashMap<>();
@@ -45,7 +49,7 @@ class DevelopmentCardTest {
         try{
             victoryPointsTest = -1;
             developmentCardTest = new DevelopmentCard(colorTest,levelTest,priceTest,victoryPointsTest,powerOfProductionTest);
-        }catch (Error invalidVictoryPointsValue){
+        }catch (Exception exception){
             assert true;
         }
         victoryPointsTest = 2;
@@ -53,7 +57,7 @@ class DevelopmentCardTest {
         try{
             powerOfProductionTest = null;
             developmentCardTest = new DevelopmentCard(colorTest,levelTest,priceTest,victoryPointsTest,powerOfProductionTest);
-        }catch (Error nullPowerOfProduction){
+        }catch (Exception exception){
             assert true;
         }
 

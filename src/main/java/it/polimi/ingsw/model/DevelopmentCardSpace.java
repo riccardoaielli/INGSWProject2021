@@ -2,11 +2,14 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumerations.DevelopmentCardColor;
 import it.polimi.ingsw.model.exceptions.InvalidDevelopmentCardException;
+import it.polimi.ingsw.model.exceptions.InvalidParameterException;
 
 
 import java.util.ArrayList;
 
-
+/**
+ * This class represents the slots of development cards that each player has on its personal board
+ */
 public class DevelopmentCardSpace {
     //Each of the three stack of cards is stored in an ArrayList and they are collected in another ArrayList
     private ArrayList<ArrayList<DevelopmentCard>> cards;
@@ -30,17 +33,19 @@ public class DevelopmentCardSpace {
      * @param card represents the card to add
      * @param cardPosition represents the number of the stack: 1,2 or 3 from left to right
      */
-    public void addCard(DevelopmentCard card, int cardPosition) throws InvalidDevelopmentCardException{
-        assert card != null;
+    public void addCard(DevelopmentCard card, int cardPosition) throws InvalidDevelopmentCardException, InvalidParameterException {
         cardPosition = cardPosition - 1;
-        assert cardPosition >= 0 && cardPosition < numOfStacks;
-        ArrayList<DevelopmentCard> stackList = cards.get(cardPosition);
+        if((card != null) || (cardPosition >= 0 && cardPosition < numOfStacks)) {
+            ArrayList<DevelopmentCard> stackList = cards.get(cardPosition);
 
-        if((card.getLevel() == 1 && stackList.size() == 0) || (card.getLevel() != 1 && (card.getLevel() - 1) == stackList.get(stackList.size() - 1).getLevel())){
-            stackList.add(card);
+            if ((card.getLevel() == 1 && stackList.size() == 0) || (card.getLevel() != 1 && (card.getLevel() - 1) == stackList.get(stackList.size() - 1).getLevel())) {
+                stackList.add(card);
+            } else {
+                throw new InvalidDevelopmentCardException();
+            }
         }
         else{
-            throw new InvalidDevelopmentCardException();
+            throw new InvalidParameterException();
         }
     }
 

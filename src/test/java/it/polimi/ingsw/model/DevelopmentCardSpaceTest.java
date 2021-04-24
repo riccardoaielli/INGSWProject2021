@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumerations.DevelopmentCardColor;
+import it.polimi.ingsw.model.exceptions.InvalidParameterException;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,8 +9,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DevelopmentCardSpaceTest {
 
+    /**
+     * This test tests the addition of cards in different positions and with different levels
+     */
     @Test
-    void addCardTest() {
+    void addCardTest() throws InvalidParameterException {
         int cardPosition = 1;
         int cardLevel = 1;
         PowerOfProduction powerOfProduction = new PowerOfProduction(new HashMap<>(), new HashMap<>());
@@ -39,8 +43,11 @@ class DevelopmentCardSpaceTest {
 
     }
 
+    /**
+     * This test checks different requirements in a development card space
+     */
     @Test
-    void checkRequirementTest() {
+    void checkRequirementTest() throws InvalidParameterException{
         int cardLevel = 1;
         DevelopmentCardColor color = DevelopmentCardColor.GREEN;
         PowerOfProduction powerOfProduction = new PowerOfProduction(new HashMap<>(), new HashMap<>());
@@ -66,8 +73,11 @@ class DevelopmentCardSpaceTest {
         assertTrue(developmentCardSpace.checkRequirement(requirements));
     }
 
+    /**
+     * This test tests if the the method to get the power of productions from a card space works properly
+     */
     @Test
-    void getPowerOfProductionTest() {
+    void getPowerOfProductionTest() throws InvalidParameterException{
         int cardLevel1 = 1;
         int cardLevel2 = 2;
         PowerOfProduction powerOfProduction1 = new PowerOfProduction(new HashMap<>(), new HashMap<>());
@@ -89,8 +99,11 @@ class DevelopmentCardSpaceTest {
         assertEquals(powerOfProduction2, developmentCardSpace.getPowerOfProduction().get(0));
     }
 
+    /**
+     * this test tests the calculation of victory points from a development card space
+     */
     @Test
-    void getVictoryPointsTest() {
+    void getVictoryPointsTest() throws InvalidParameterException{
         int victoryPoints1 = 10;
         int victoryPoints2 = 12;
         int cardLevel = 1;

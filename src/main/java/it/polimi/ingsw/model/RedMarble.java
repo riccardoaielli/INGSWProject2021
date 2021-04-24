@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.exceptions.InvalidParameterException;
+
 import java.util.Map;
 
 public class RedMarble extends Marble {
@@ -24,9 +26,11 @@ public class RedMarble extends Marble {
      * @param resourceMap map of resources from personal board
      * @param faithTrack references of FaithTrack
      */
-    public void transform (Map<Resource,Integer> resourceMap, FaithTrack faithTrack){
-
-        faithTrack.moveFaithMarker(value);
-
+    public void transform (Map<Resource,Integer> resourceMap, FaithTrack faithTrack) throws InvalidParameterException {
+        try {
+            faithTrack.moveFaithMarker(value);
+        }catch (Exception exception){
+            throw new InvalidParameterException();
+        }
     }
 }

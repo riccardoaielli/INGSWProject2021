@@ -8,30 +8,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PowerOfProductionTest {
 
+    /**
+     * This test tests setting and getting cost of a powerOfProduction
+     */
     @Test
-    void PowerOfProduction(){
-        HashMap<Resource,Integer> costTest = new HashMap<>();
-        HashMap<Resource,Integer> productionTest = new HashMap<>();
-        Resource resourceTest1 = Shield.getInstance();
-        Resource resourceTest2 = Servant.getInstance();
-        Resource resourceTest3 = Coin.getInstance();
-        costTest.put(resourceTest1,4);
-        costTest.put(resourceTest2,5);
-        productionTest.put(resourceTest3,3);
-
-        PowerOfProduction popTest = new PowerOfProduction(costTest,productionTest);
-        assertEquals(costTest, popTest.getCost());
-        assertEquals(productionTest, popTest.getProduction());
-        try {
-            popTest = new PowerOfProduction(null, null);
-        }
-        catch (Error nullElements){
-            assert true;
-        }
-    }
-
-    @Test
-    void setgetCost() {
+    void setgetCost() throws Exception{
         HashMap<Resource,Integer> costTest = new HashMap<>();
         HashMap<Resource,Integer> productionTest = new HashMap<>();
         Resource resourceTest1 = Shield.getInstance();
@@ -43,16 +24,20 @@ class PowerOfProductionTest {
         costTest.put(resourceTest2,1);
         popTest.setCost(costTest);
         assertEquals(costTest, popTest.getCost());
+
         try {
             popTest.setCost(null);
         }
-        catch (Error nullElements){
+        catch (Exception exception){
             assert true;
         }
     }
 
+    /**
+     * This test tests setting and getting production of a powerOfProduction
+     */
     @Test
-    void setgetProduction() {
+    void setgetProduction() throws Exception{
         HashMap<Resource,Integer> costTest = new HashMap<>();
         HashMap<Resource,Integer> productionTest = new HashMap<>();
         Resource resourceTest1 = Shield.getInstance();
@@ -67,7 +52,7 @@ class PowerOfProductionTest {
         try {
             popTest.setProduction(null);
         }
-        catch (Error nullElements){
+        catch (Exception exception){
             assert true;
         }
     }

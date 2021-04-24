@@ -1,9 +1,13 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumerations.DevelopmentCardColor;
+import it.polimi.ingsw.model.exceptions.InvalidParameterException;
 
 import java.util.HashMap;
 
+/**
+ * This class represent a card that players can buy from the market
+ */
 public class DevelopmentCard {
 
     private DevelopmentCardColor color;
@@ -20,15 +24,16 @@ public class DevelopmentCard {
      * @param victoryPoints represents the victory points that the card values at the and of the game
      * @param powerOfProduction represents the production available for the card owner
      */
-    public DevelopmentCard(DevelopmentCardColor color, int level, HashMap<Resource, Integer> price, int victoryPoints, PowerOfProduction powerOfProduction) {
-        assert level > 0 && level < 4 && victoryPoints > 0;
-        assert price != null && powerOfProduction != null;
-
-        this.color = color;
-        this.level = level;
-        this.price = price;
-        this.victoryPoints = victoryPoints;
-        this.powerOfProduction = powerOfProduction;
+    public DevelopmentCard(DevelopmentCardColor color, int level, HashMap<Resource, Integer> price, int victoryPoints, PowerOfProduction powerOfProduction) throws InvalidParameterException{
+        if((level > 0 && level < 4 && victoryPoints > 0) || (price != null && powerOfProduction != null)){
+            this.color = color;
+            this.level = level;
+            this.price = price;
+            this.victoryPoints = victoryPoints;
+            this.powerOfProduction = powerOfProduction;
+        }
+        else
+            throw new InvalidParameterException();
     }
 
     /**
