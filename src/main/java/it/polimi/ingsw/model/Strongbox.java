@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.NotEnoughResourcesException;
+import it.polimi.ingsw.model.exceptions.InvalidRemovalException;
 
 import java.util.HashMap;
 
@@ -25,16 +25,18 @@ public class Strongbox {
     /**
      * Removes the given map of resources from the strongbox
      * @param resourceMap The map of resources to remove
-     * @throws NotEnoughResourcesException When trying to remove more resources than there are in strongbox
+     * @throws InvalidRemovalException When trying to remove more resources than there are in strongbox
      */
 
-    public void remove(HashMap<Resource, Integer> resourceMap) throws NotEnoughResourcesException {
+    public void remove(HashMap<Resource, Integer> resourceMap) throws InvalidRemovalException {
+
+        //Checking if there are enough resources in strongbox to remove
         for (Resource resource : resourceMap.keySet())  {
             if (strongbox.get(resource) == null){
-                throw new NotEnoughResourcesException();
+                throw new InvalidRemovalException();
             }
             else if (strongbox.get(resource) < resourceMap.get(resource)){
-                throw new NotEnoughResourcesException();
+                throw new InvalidRemovalException();
             }
         }
 

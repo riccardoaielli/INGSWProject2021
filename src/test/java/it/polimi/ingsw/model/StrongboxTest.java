@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.NotEnoughResourcesException;
+import it.polimi.ingsw.model.exceptions.InvalidRemovalException;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -38,10 +38,17 @@ class StrongboxTest {
     @Test
     void testRemove() {
         Strongbox strongbox1 = new Strongbox();
-        //Testing the removal of fewer resources than there are in strongbox
         HashMap<Resource, Integer> resourceMap = new HashMap<>();
-        //Adding 10 stones to strongbox1
         resourceMap.put(Stone.getInstance(), 10);
+        //Testing the removal of a resource not in strongbox
+        try {
+            strongbox1.remove(resourceMap);
+        } catch (InvalidRemovalException e) {
+            assert true;
+        }
+        //Testing the removal of fewer resources than there are in strongbox
+
+        //Adding 10 stones to strongbox1
         strongbox1.add(resourceMap);
 
         //removing 6 stones from strongbox1
@@ -49,7 +56,7 @@ class StrongboxTest {
         resourceMap.put(Stone.getInstance(), 6);
         try {
             strongbox1.remove(resourceMap);
-        } catch (NotEnoughResourcesException e) {
+        } catch (InvalidRemovalException e) {
             assert false;
         }
         assertEquals(4, strongbox1.getResourceQuantity(Stone.getInstance()));
@@ -61,7 +68,7 @@ class StrongboxTest {
         resourceMap.put(Stone.getInstance(), 4);
         try {
             strongbox1.remove(resourceMap);
-        } catch (NotEnoughResourcesException e) {
+        } catch (InvalidRemovalException e) {
             assert false;
         }
         assertEquals(0, strongbox1.getResourceQuantity(Stone.getInstance()));
@@ -73,11 +80,10 @@ class StrongboxTest {
         strongbox1.add(resourceMap);
 
         resourceMap.put(Coin.getInstance(), 10);
-        resourceMap.put(Stone.getInstance(),3);
         try {
             strongbox1.remove(resourceMap);
             assert false;
-        } catch (NotEnoughResourcesException e) {
+        } catch (InvalidRemovalException e) {
             assert true;
         }
 
