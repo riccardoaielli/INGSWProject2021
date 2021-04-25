@@ -1,865 +1,882 @@
 [
-  {
-    "color" : "GREEN",
-    "level" : 1,
-    "price" : {
-      "shield" : 2
-    },
-    "victoryPoints" : 1,
-    "powerOfProduction" : {
-      "cost" : {
-        "coin" : 1
+  [
+    [
+      {
+        "color" : "GREEN",
+        "level" : 1,
+        "price" : {
+          "shield" : 2
+        },
+        "victoryPoints" : 1,
+        "powerOfProduction" : {
+          "cost" : {
+            "coin" : 1
+          },
+          "production" : {
+            "faith" : 1
+          }
+        }
       },
-      "production" : {
-        "faith" : 1
-      }
-    }
-  },
-  {
-    "color" : "GREEN",
-    "level" : 1,
-    "price" : {
-      "shield" : 1,
-      "stone" : 1,
-      "servant" : 1
-    },
-    "victoryPoints" : 2,
-    "powerOfProduction" : {
-      "cost" : {
-        "stone" : 1
+      {
+        "color" : "GREEN",
+        "level" : 1,
+        "price" : {
+          "shield" : 1,
+          "stone" : 1,
+          "servant" : 1
+        },
+        "victoryPoints" : 2,
+        "powerOfProduction" : {
+          "cost" : {
+            "stone" : 1
+          },
+          "production" : {
+            "servant" : 1
+          }
+        }
       },
-      "production" : {
-        "servant" : 1
-      }
-    }
-  },
-  {
-    "color" : "GREEN",
-    "level" : 1,
-    "price" : {
-      "shield" : 3
-    },
-    "victoryPoints" : 3,
-    "powerOfProduction" : {
-      "cost" : {
-        "servant" : 2
+      {
+        "color" : "GREEN",
+        "level" : 1,
+        "price" : {
+          "shield" : 3
+        },
+        "victoryPoints" : 3,
+        "powerOfProduction" : {
+          "cost" : {
+            "servant" : 2
+          },
+          "production" : {
+            "coin" : 1,
+            "shield" : 1,
+            "stone" : 1
+          }
+        }
       },
-      "production" : {
-        "coin" : 1,
-        "shield" : 1,
-        "stone" : 1
+      {
+        "color" : "GREEN",
+        "level" : 1,
+        "price" : {
+          "shield" : 2,
+          "coin" : 2
+        },
+        "victoryPoints" : 4,
+        "powerOfProduction" : {
+          "cost" : {
+            "stone" : 1,
+            "servant" : 1
+          },
+          "production" : {
+            "coin" : 2,
+            "faith" : 1
+          }
+        }
       }
-    }
-  },
-  {
-    "color" : "GREEN",
-    "level" : 1,
-    "price" : {
-      "shield" : 2,
-      "coin" : 2
-    },
-    "victoryPoints" : 4,
-    "powerOfProduction" : {
-      "cost" : {
-        "stone" : 1,
-        "servant" : 1
+    ],
+    [
+      {
+        "color" : "GREEN",
+        "level" : 2,
+        "price" : {
+          "shield" : 4
+        },
+        "victoryPoints" : 5,
+        "powerOfProduction" : {
+          "cost" : {
+            "stone" : 1
+          },
+          "production" : {
+            "faith" : 2
+          }
+        }
       },
-      "production" : {
-        "coin" : 2,
-        "faith" : 1
-      }
-    }
-  },
-
-  {
-    "color" : "GREEN",
-    "level" : 2,
-    "price" : {
-      "shield" : 4
-    },
-    "victoryPoints" : 5,
-    "powerOfProduction" : {
-      "cost" : {
-        "stone" : 1
+      {
+        "color" : "GREEN",
+        "level" : 2,
+        "price" : {
+          "shield" : 3,
+          "servant" : 2
+        },
+        "victoryPoints" : 6,
+        "powerOfProduction" : {
+          "cost" : {
+            "shield" : 1,
+            "servant" : 1
+          },
+          "production" : {
+            "stone" : 3
+          }
+        }
       },
-      "production" : {
-        "faith" : 2
-      }
-    }
-  },
-  {
-    "color" : "GREEN",
-    "level" : 2,
-    "price" : {
-      "shield" : 3,
-      "servant" : 2
-    },
-    "victoryPoints" : 6,
-    "powerOfProduction" : {
-      "cost" : {
-        "shield" : 1,
-        "servant" : 1
+      {
+        "color" : "GREEN",
+        "level" : 2,
+        "price" : {
+          "shield" : 5
+        },
+        "victoryPoints" : 7,
+        "powerOfProduction" : {
+          "cost" : {
+            "coin" : 2
+          },
+          "production" : {
+            "stone" : 2,
+            "faith" : 2
+          }
+        }
       },
-      "production" : {
-        "stone" : 3
+      {
+        "color" : "GREEN",
+        "level" : 2,
+        "price" : {
+          "shield" : 3,
+          "coin" : 3
+        },
+        "victoryPoints" : 8,
+        "powerOfProduction" : {
+          "cost" : {
+            "coin" : 1
+          },
+          "production" : {
+            "shield" : 2,
+            "faith" : 1
+          }
+        }
       }
-    }
-  },
-  {
-    "color" : "GREEN",
-    "level" : 2,
-    "price" : {
-      "shield" : 5
-    },
-    "victoryPoints" : 7,
-    "powerOfProduction" : {
-      "cost" : {
-        "coin" : 2
+    ],
+    [
+      {
+        "color" : "GREEN",
+        "level" : 3,
+        "price" : {
+          "shield" : 6
+        },
+        "victoryPoints" : 9,
+        "powerOfProduction" : {
+          "cost" : {
+            "coin" : 2
+          },
+          "production" : {
+            "stone" : 3,
+            "faith" : 2
+          }
+        }
       },
-      "production" : {
-        "stone" : 2,
-        "faith" : 2
-      }
-    }
-  },
-  {
-    "color" : "GREEN",
-    "level" : 2,
-    "price" : {
-      "shield" : 3,
-      "coin" : 3
-    },
-    "victoryPoints" : 8,
-    "powerOfProduction" : {
-      "cost" : {
-        "coin" : 1
+      {
+        "color" : "GREEN",
+        "level" : 3,
+        "price" : {
+          "shield" : 5,
+          "servant" : 2
+        },
+        "victoryPoints" : 10,
+        "powerOfProduction" : {
+          "cost" : {
+            "coin" : 1,
+            "servant" : 1
+          },
+          "production" : {
+            "shield" : 2,
+            "stone" : 2,
+            "faith" : 1
+          }
+        }
       },
-      "production" : {
-        "shield" : 2,
-        "faith" : 1
-      }
-    }
-  },
-
-  {
-    "color" : "GREEN",
-    "level" : 3,
-    "price" : {
-      "shield" : 6
-    },
-    "victoryPoints" : 9,
-    "powerOfProduction" : {
-      "cost" : {
-        "coin" : 2
+      {
+        "color" : "GREEN",
+        "level" : 3,
+        "price" : {
+          "shield" : 7
+        },
+        "victoryPoints" : 11,
+        "powerOfProduction" : {
+          "cost" : {
+            "servant" : 1
+          },
+          "production" : {
+            "coin" : 1,
+            "faith" : 3
+          }
+        }
       },
-      "production" : {
-        "stone" : 3,
-        "faith" : 2
+      {
+        "color" : "GREEN",
+        "level" : 3,
+        "price" : {
+          "shield" : 4,
+          "coin" : 4
+        },
+        "victoryPoints" : 12,
+        "powerOfProduction" : {
+          "cost" : {
+            "stone" : 1
+          },
+          "production" : {
+            "coin" : 3,
+            "shield" : 1
+          }
+        }
       }
-    }
-  },
-  {
-    "color" : "GREEN",
-    "level" : 3,
-    "price" : {
-      "shield" : 5,
-      "servant" : 2
-    },
-    "victoryPoints" : 10,
-    "powerOfProduction" : {
-      "cost" : {
-        "coin" : 1,
-        "servant" : 1
+    ]
+  ],
+  [
+    [
+      {
+        "color" : "BLUE",
+        "level" : 1,
+        "price" : {
+          "coin" : 2
+        },
+        "victoryPoints" : 1,
+        "powerOfProduction" : {
+          "cost" : {
+            "shield" : 1
+          },
+          "production" : {
+            "faith" : 1
+          }
+        }
       },
-      "production" : {
-        "shield" : 2,
-        "stone" : 2,
-        "faith" : 1
-      }
-    }
-  },
-  {
-    "color" : "GREEN",
-    "level" : 3,
-    "price" : {
-      "shield" : 7
-    },
-    "victoryPoints" : 11,
-    "powerOfProduction" : {
-      "cost" : {
-        "servant" : 1
+      {
+        "color" : "BLUE",
+        "level" : 1,
+        "price" : {
+          "coin" : 1,
+          "stone" : 1,
+          "servant" : 1
+        },
+        "victoryPoints" : 2,
+        "powerOfProduction" : {
+          "cost" : {
+            "servant" : 1
+          },
+          "production" : {
+            "stone" : 1
+          }
+        }
       },
-      "production" : {
-        "coin" : 1,
-        "faith" : 3
-      }
-    }
-  },
-  {
-    "color" : "GREEN",
-    "level" : 3,
-    "price" : {
-      "shield" : 4,
-      "coin" : 4
-    },
-    "victoryPoints" : 12,
-    "powerOfProduction" : {
-      "cost" : {
-        "stone" : 1
+      {
+        "color" : "BLUE",
+        "level" : 1,
+        "price" : {
+          "coin" : 3
+        },
+        "victoryPoints" : 3,
+        "powerOfProduction" : {
+          "cost" : {
+            "stone" : 2
+          },
+          "production" : {
+            "coin" : 1,
+            "servant" : 1,
+            "shield" : 1
+          }
+        }
       },
-      "production" : {
-        "coin" : 3,
-        "shield" : 1
+      {
+        "color" : "BLUE",
+        "level" : 1,
+        "price" : {
+          "coin" : 2,
+          "servant" : 2
+        },
+        "victoryPoints" : 4,
+        "powerOfProduction" : {
+          "cost" : {
+            "shield" : 1,
+            "stone" : 1
+          },
+          "production" : {
+            "servant" : 2,
+            "faith" : 1
+          }
+        }
       }
-    }
-  },
-
-
-  {
-    "color" : "BLUE",
-    "level" : 1,
-    "price" : {
-      "coin" : 2
-    },
-    "victoryPoints" : 1,
-    "powerOfProduction" : {
-      "cost" : {
-        "shield" : 1
+    ],
+    [
+      {
+        "color" : "BLUE",
+        "level" : 2,
+        "price" : {
+          "coin" : 4
+        },
+        "victoryPoints" : 5,
+        "powerOfProduction" : {
+          "cost" : {
+            "servant" : 1
+          },
+          "production" : {
+            "faith" : 2
+          }
+        }
       },
-      "production" : {
-        "faith" : 1
-      }
-    }
-  },
-  {
-    "color" : "BLUE",
-    "level" : 1,
-    "price" : {
-      "coin" : 1,
-      "stone" : 1,
-      "servant" : 1
-    },
-    "victoryPoints" : 2,
-    "powerOfProduction" : {
-      "cost" : {
-        "servant" : 1
+      {
+        "color" : "BLUE",
+        "level" : 2,
+        "price" : {
+          "coin" : 3,
+          "stone" : 2
+        },
+        "victoryPoints" : 6,
+        "powerOfProduction" : {
+          "cost" : {
+            "coin" : 1,
+            "stone" : 1
+          },
+          "production" : {
+            "servant" : 3
+          }
+        }
       },
-      "production" : {
-        "stone" : 1
-      }
-    }
-  },
-  {
-    "color" : "BLUE",
-    "level" : 1,
-    "price" : {
-      "coin" : 3
-    },
-    "victoryPoints" : 3,
-    "powerOfProduction" : {
-      "cost" : {
-        "stone" : 2
+      {
+        "color" : "BLUE",
+        "level" : 2,
+        "price" : {
+          "coin" : 5
+        },
+        "victoryPoints" : 7,
+        "powerOfProduction" : {
+          "cost" : {
+            "servant" : 2
+          },
+          "production" : {
+            "shield" : 2,
+            "faith" : 2
+          }
+        }
       },
-      "production" : {
-        "coin" : 1,
-        "servant" : 1,
-        "shield" : 1
+      {
+        "color" : "BLUE",
+        "level" : 2,
+        "price" : {
+          "coin" : 3,
+          "stone" : 3
+        },
+        "victoryPoints" : 8,
+        "powerOfProduction" : {
+          "cost" : {
+            "servant" : 1
+          },
+          "production" : {
+            "stone" : 2,
+            "faith" : 1
+          }
+        }
       }
-    }
-  },
-  {
-    "color" : "BLUE",
-    "level" : 1,
-    "price" : {
-      "coin" : 2,
-      "servant" : 2
-    },
-    "victoryPoints" : 4,
-    "powerOfProduction" : {
-      "cost" : {
-        "shield" : 1,
-        "stone" : 1
+    ],
+    [
+      {
+        "color" : "BLUE",
+        "level" : 3,
+        "price" : {
+          "coin" : 6
+        },
+        "victoryPoints" : 9,
+        "powerOfProduction" : {
+          "cost" : {
+            "servant" : 2
+          },
+          "production" : {
+            "shield" : 3,
+            "faith" : 2
+          }
+        }
       },
-      "production" : {
-        "servant" : 2,
-        "faith" : 1
-      }
-    }
-  },
-
-  {
-    "color" : "BLUE",
-    "level" : 2,
-    "price" : {
-      "coin" : 4
-    },
-    "victoryPoints" : 5,
-    "powerOfProduction" : {
-      "cost" : {
-        "servant" : 1
+      {
+        "color" : "BLUE",
+        "level" : 3,
+        "price" : {
+          "coin" : 5,
+          "stone" : 2
+        },
+        "victoryPoints" : 10,
+        "powerOfProduction" : {
+          "cost" : {
+            "coin" : 1,
+            "shield" : 1
+          },
+          "production" : {
+            "servant" : 2,
+            "stone" : 2,
+            "faith" : 1
+          }
+        }
       },
-      "production" : {
-        "faith" : 2
-      }
-    }
-  },
-  {
-    "color" : "BLUE",
-    "level" : 2,
-    "price" : {
-      "coin" : 3,
-      "stone" : 2
-    },
-    "victoryPoints" : 6,
-    "powerOfProduction" : {
-      "cost" : {
-        "coin" : 1,
-        "stone" : 1
+      {
+        "color" : "BLUE",
+        "level" : 3,
+        "price" : {
+          "coin" : 7
+        },
+        "victoryPoints" : 11,
+        "powerOfProduction" : {
+          "cost" : {
+            "stone" : 1
+          },
+          "production" : {
+            "shield" : 1,
+            "faith" : 3
+          }
+        }
       },
-      "production" : {
-        "servant" : 3
+      {
+        "color" : "BLUE",
+        "level" : 3,
+        "price" : {
+          "coin" : 4,
+          "stone" : 4
+        },
+        "victoryPoints" : 12,
+        "powerOfProduction" : {
+          "cost" : {
+            "servant" : 1
+          },
+          "production" : {
+            "coin" : 1,
+            "shield" : 3
+          }
+        }
       }
-    }
-  },
-  {
-    "color" : "BLUE",
-    "level" : 2,
-    "price" : {
-      "coin" : 5
-    },
-    "victoryPoints" : 7,
-    "powerOfProduction" : {
-      "cost" : {
-        "servant" : 2
+    ]
+  ],
+  [
+    [
+      {
+        "color" : "YELLOW",
+        "level" : 1,
+        "price" : {
+          "stone" : 2
+        },
+        "victoryPoints" : 1,
+        "powerOfProduction" : {
+          "cost" : {
+            "servant" : 1
+          },
+          "production" : {
+            "faith" : 1
+          }
+        }
       },
-      "production" : {
-        "shield" : 2,
-        "faith" : 2
-      }
-    }
-  },
-  {
-    "color" : "BLUE",
-    "level" : 2,
-    "price" : {
-      "coin" : 3,
-      "stone" : 3
-    },
-    "victoryPoints" : 8,
-    "powerOfProduction" : {
-      "cost" : {
-        "servant" : 1
+      {
+        "color" : "YELLOW",
+        "level" : 1,
+        "price" : {
+          "coin" : 1,
+          "shield" : 1,
+          "stone" : 1
+        },
+        "victoryPoints" : 2,
+        "powerOfProduction" : {
+          "cost" : {
+            "shield" : 1
+          },
+          "production" : {
+            "coin" : 1
+          }
+        }
       },
-      "production" : {
-        "stone" : 2,
-        "faith" : 1
-      }
-    }
-  },
-
-  {
-    "color" : "BLUE",
-    "level" : 3,
-    "price" : {
-      "coin" : 6
-    },
-    "victoryPoints" : 9,
-    "powerOfProduction" : {
-      "cost" : {
-        "servant" : 2
+      {
+        "color" : "YELLOW",
+        "level" : 1,
+        "price" : {
+          "stone" : 3
+        },
+        "victoryPoints" : 3,
+        "powerOfProduction" : {
+          "cost" : {
+            "shield" : 2
+          },
+          "production" : {
+            "coin" : 1,
+            "servant" : 1,
+            "stone" : 1
+          }
+        }
       },
-      "production" : {
-        "shield" : 3,
-        "faith" : 2
+      {
+        "color" : "YELLOW",
+        "level" : 1,
+        "price" : {
+          "stone" : 2,
+          "shield" : 2
+        },
+        "victoryPoints" : 4,
+        "powerOfProduction" : {
+          "cost" : {
+            "coin" : 1,
+            "servant" : 1
+          },
+          "production" : {
+            "shield" : 2,
+            "faith" : 1
+          }
+        }
       }
-    }
-  },
-  {
-    "color" : "BLUE",
-    "level" : 3,
-    "price" : {
-      "coin" : 5,
-      "stone" : 2
-    },
-    "victoryPoints" : 10,
-    "powerOfProduction" : {
-      "cost" : {
-        "coin" : 1,
-        "shield" : 1
+    ],
+    [
+      {
+        "color" : "YELLOW",
+        "level" : 2,
+        "price" : {
+          "stone" : 4
+        },
+        "victoryPoints" : 5,
+        "powerOfProduction" : {
+          "cost" : {
+            "shield" : 1
+          },
+          "production" : {
+            "faith" : 2
+          }
+        }
       },
-      "production" : {
-        "servant" : 2,
-        "stone" : 2,
-        "faith" : 1
-      }
-    }
-  },
-  {
-    "color" : "BLUE",
-    "level" : 3,
-    "price" : {
-      "coin" : 7
-    },
-    "victoryPoints" : 11,
-    "powerOfProduction" : {
-      "cost" : {
-        "stone" : 1
+      {
+        "color" : "YELLOW",
+        "level" : 2,
+        "price" : {
+          "stone" : 3,
+          "shield" : 2
+        },
+        "victoryPoints" : 6,
+        "powerOfProduction" : {
+          "cost" : {
+            "stone" : 1,
+            "shield" : 1
+          },
+          "production" : {
+            "coin" : 3
+          }
+        }
       },
-      "production" : {
-        "shield" : 1,
-        "faith" : 3
-      }
-    }
-  },
-  {
-    "color" : "BLUE",
-    "level" : 3,
-    "price" : {
-      "coin" : 4,
-      "stone" : 4
-    },
-    "victoryPoints" : 12,
-    "powerOfProduction" : {
-      "cost" : {
-        "servant" : 1
+      {
+        "color" : "YELLOW",
+        "level" : 2,
+        "price" : {
+          "stone" : 5
+        },
+        "victoryPoints" : 7,
+        "powerOfProduction" : {
+          "cost" : {
+            "shield" : 2
+          },
+          "production" : {
+            "servant" : 2,
+            "faith" : 2
+          }
+        }
       },
-      "production" : {
-        "coin" : 1,
-        "shield" : 3
+      {
+        "color" : "YELLOW",
+        "level" : 2,
+        "price" : {
+          "stone" : 3,
+          "servant" : 3
+        },
+        "victoryPoints" : 8,
+        "powerOfProduction" : {
+          "cost" : {
+            "shield" : 1
+          },
+          "production" : {
+            "coin" : 2,
+            "faith" : 1
+          }
+        }
       }
-    }
-  },
-
-
-  {
-    "color" : "YELLOW",
-    "level" : 1,
-    "price" : {
-      "stone" : 2
-    },
-    "victoryPoints" : 1,
-    "powerOfProduction" : {
-      "cost" : {
-        "servant" : 1
+    ],
+    [
+      {
+        "color" : "YELLOW",
+        "level" : 3,
+        "price" : {
+          "stone" : 6
+        },
+        "victoryPoints" : 9,
+        "powerOfProduction" : {
+          "cost" : {
+            "shield" : 2
+          },
+          "production" : {
+            "servant" : 3,
+            "faith" : 2
+          }
+        }
       },
-      "production" : {
-        "faith" : 1
-      }
-    }
-  },
-  {
-    "color" : "YELLOW",
-    "level" : 1,
-    "price" : {
-      "coin" : 1,
-      "shield" : 1,
-      "stone" : 1
-    },
-    "victoryPoints" : 2,
-    "powerOfProduction" : {
-      "cost" : {
-        "shield" : 1
+      {
+        "color" : "YELLOW",
+        "level" : 3,
+        "price" : {
+          "stone" : 5,
+          "servant" : 2
+        },
+        "victoryPoints" : 10,
+        "powerOfProduction" : {
+          "cost" : {
+            "stone" : 1,
+            "servant" : 1
+          },
+          "production" : {
+            "coin" : 2,
+            "shield" : 2,
+            "faith" : 1
+          }
+        }
       },
-      "production" : {
-        "coin" : 1
-      }
-    }
-  },
-  {
-    "color" : "YELLOW",
-    "level" : 1,
-    "price" : {
-      "stone" : 3
-    },
-    "victoryPoints" : 3,
-    "powerOfProduction" : {
-      "cost" : {
-        "shield" : 2
+      {
+        "color" : "YELLOW",
+        "level" : 3,
+        "price" : {
+          "stone" : 7
+        },
+        "victoryPoints" : 11,
+        "powerOfProduction" : {
+          "cost" : {
+            "shield" : 1
+          },
+          "production" : {
+            "servant" : 1,
+            "faith" : 3
+          }
+        }
       },
-      "production" : {
-        "coin" : 1,
-        "servant" : 1,
-        "stone" : 1
+      {
+        "color" : "YELLOW",
+        "level" : 3,
+        "price" : {
+          "stone" : 4,
+          "servant" : 4
+        },
+        "victoryPoints" : 12,
+        "powerOfProduction" : {
+          "cost" : {
+            "shield" : 1
+          },
+          "production" : {
+            "stone" : 1,
+            "servant" : 3
+          }
+        }
       }
-    }
-  },
-  {
-    "color" : "YELLOW",
-    "level" : 1,
-    "price" : {
-      "stone" : 2,
-      "shield" : 2
-    },
-    "victoryPoints" : 4,
-    "powerOfProduction" : {
-      "cost" : {
-        "coin" : 1,
-        "servant" : 1
+    ]
+  ],
+  [
+    [
+      {
+        "color" : "PURPLE",
+        "level" : 1,
+        "price" : {
+          "servant" : 2
+        },
+        "victoryPoints" : 1,
+        "powerOfProduction" : {
+          "cost" : {
+            "stone" : 1
+          },
+          "production" : {
+            "faith" : 1
+          }
+        }
       },
-      "production" : {
-        "shield" : 2,
-        "faith" : 1
-      }
-    }
-  },
-
-  {
-    "color" : "YELLOW",
-    "level" : 2,
-    "price" : {
-      "stone" : 4
-    },
-    "victoryPoints" : 5,
-    "powerOfProduction" : {
-      "cost" : {
-        "shield" : 1
+      {
+        "color" : "PURPLE",
+        "level" : 1,
+        "price" : {
+          "shield" : 1,
+          "coin" : 1,
+          "servant" : 1
+        },
+        "victoryPoints" : 2,
+        "powerOfProduction" : {
+          "cost" : {
+            "coin" : 1
+          },
+          "production" : {
+            "shield" : 1
+          }
+        }
       },
-      "production" : {
-        "faith" : 2
-      }
-    }
-  },
-  {
-    "color" : "YELLOW",
-    "level" : 2,
-    "price" : {
-      "stone" : 3,
-      "shield" : 2
-    },
-    "victoryPoints" : 6,
-    "powerOfProduction" : {
-      "cost" : {
-        "stone" : 1,
-        "shield" : 1
+      {
+        "color" : "PURPLE",
+        "level" : 1,
+        "price" : {
+          "servant" : 3
+        },
+        "victoryPoints" : 3,
+        "powerOfProduction" : {
+          "cost" : {
+            "coin" : 2
+          },
+          "production" : {
+            "servant" : 1,
+            "shield" : 1,
+            "stone" : 1
+          }
+        }
       },
-      "production" : {
-        "coin" : 3
+      {
+        "color" : "PURPLE",
+        "level" : 1,
+        "price" : {
+          "stone" : 2,
+          "servant" : 2
+        },
+        "victoryPoints" : 4,
+        "powerOfProduction" : {
+          "cost" : {
+            "coin" : 1,
+            "shield" : 1
+          },
+          "production" : {
+            "stone" : 2,
+            "faith" : 1
+          }
+        }
       }
-    }
-  },
-  {
-    "color" : "YELLOW",
-    "level" : 2,
-    "price" : {
-      "stone" : 5
-    },
-    "victoryPoints" : 7,
-    "powerOfProduction" : {
-      "cost" : {
-        "shield" : 2
+    ],
+    [
+      {
+        "color" : "PURPLE",
+        "level" : 2,
+        "price" : {
+          "servant" : 4
+        },
+        "victoryPoints" : 5,
+        "powerOfProduction" : {
+          "cost" : {
+            "coin" : 1
+          },
+          "production" : {
+            "faith" : 2
+          }
+        }
       },
-      "production" : {
-        "servant" : 2,
-        "faith" : 2
-      }
-    }
-  },
-  {
-    "color" : "YELLOW",
-    "level" : 2,
-    "price" : {
-      "stone" : 3,
-      "servant" : 3
-    },
-    "victoryPoints" : 8,
-    "powerOfProduction" : {
-      "cost" : {
-        "shield" : 1
+      {
+        "color" : "PURPLE",
+        "level" : 2,
+        "price" : {
+          "servant" : 3,
+          "coin" : 2
+        },
+        "victoryPoints" : 6,
+        "powerOfProduction" : {
+          "cost" : {
+            "coin" : 1,
+            "servant" : 1
+          },
+          "production" : {
+            "shield" : 3
+          }
+        }
       },
-      "production" : {
-        "coin" : 2,
-        "faith" : 1
-      }
-    }
-  },
-
-  {
-    "color" : "YELLOW",
-    "level" : 3,
-    "price" : {
-      "stone" : 6
-    },
-    "victoryPoints" : 9,
-    "powerOfProduction" : {
-      "cost" : {
-        "shield" : 2
+      {
+        "color" : "PURPLE",
+        "level" : 2,
+        "price" : {
+          "servant" : 5
+        },
+        "victoryPoints" : 7,
+        "powerOfProduction" : {
+          "cost" : {
+            "stone" : 2
+          },
+          "production" : {
+            "coin" : 2,
+            "faith" : 2
+          }
+        }
       },
-      "production" : {
-        "servant" : 3,
-        "faith" : 2
+      {
+        "color" : "PURPLE",
+        "level" : 2,
+        "price" : {
+          "servant" : 3,
+          "shield" : 3
+        },
+        "victoryPoints" : 8,
+        "powerOfProduction" : {
+          "cost" : {
+            "stone" : 1
+          },
+          "production" : {
+            "servant" : 2,
+            "faith" : 1
+          }
+        }
       }
-    }
-  },
-  {
-    "color" : "YELLOW",
-    "level" : 3,
-    "price" : {
-      "stone" : 5,
-      "servant" : 2
-    },
-    "victoryPoints" : 10,
-    "powerOfProduction" : {
-      "cost" : {
-        "stone" : 1,
-        "servant" : 1
+    ],
+    [
+      {
+        "color" : "PURPLE",
+        "level" : 3,
+        "price" : {
+          "servant" : 6
+        },
+        "victoryPoints" : 9,
+        "powerOfProduction" : {
+          "cost" : {
+            "stone" : 2
+          },
+          "production" : {
+            "coin" : 3,
+            "faith" : 2
+          }
+        }
       },
-      "production" : {
-        "coin" : 2,
-        "shield" : 2,
-        "faith" : 1
-      }
-    }
-  },
-  {
-    "color" : "YELLOW",
-    "level" : 3,
-    "price" : {
-      "stone" : 7
-    },
-    "victoryPoints" : 11,
-    "powerOfProduction" : {
-      "cost" : {
-        "shield" : 1
+      {
+        "color" : "PURPLE",
+        "level" : 3,
+        "price" : {
+          "servant" : 5,
+          "coin" : 2
+        },
+        "victoryPoints" : 10,
+        "powerOfProduction" : {
+          "cost" : {
+            "stone" : 1,
+            "shield" : 1
+          },
+          "production" : {
+            "coin" : 2,
+            "servant" : 2,
+            "faith" : 1
+          }
+        }
       },
-      "production" : {
-        "servant" : 1,
-        "faith" : 3
-      }
-    }
-  },
-  {
-    "color" : "YELLOW",
-    "level" : 3,
-    "price" : {
-      "stone" : 4,
-      "servant" : 4
-    },
-    "victoryPoints" : 12,
-    "powerOfProduction" : {
-      "cost" : {
-        "shield" : 1
+      {
+        "color" : "PURPLE",
+        "level" : 3,
+        "price" : {
+          "servant" : 7
+        },
+        "victoryPoints" : 11,
+        "powerOfProduction" : {
+          "cost" : {
+            "coin" : 1
+          },
+          "production" : {
+            "stone" : 1,
+            "faith" : 3
+          }
+        }
       },
-      "production" : {
-        "stone" : 1,
-        "servant" : 3
+      {
+        "color" : "PURPLE",
+        "level" : 3,
+        "price" : {
+          "servant" : 4,
+          "shield" : 4
+        },
+        "victoryPoints" : 12,
+        "powerOfProduction" : {
+          "cost" : {
+            "coin" : 1
+          },
+          "production" : {
+            "stone" : 3,
+            "servant" : 1
+          }
+        }
       }
-    }
-  },
-
-
-  {
-    "color" : "PURPLE",
-    "level" : 1,
-    "price" : {
-      "servant" : 2
-    },
-    "victoryPoints" : 1,
-    "powerOfProduction" : {
-      "cost" : {
-        "stone" : 1
-      },
-      "production" : {
-        "faith" : 1
-      }
-    }
-  },
-  {
-    "color" : "PURPLE",
-    "level" : 1,
-    "price" : {
-      "shield" : 1,
-      "coin" : 1,
-      "servant" : 1
-    },
-    "victoryPoints" : 2,
-    "powerOfProduction" : {
-      "cost" : {
-        "coin" : 1
-      },
-      "production" : {
-        "shield" : 1
-      }
-    }
-  },
-  {
-    "color" : "PURPLE",
-    "level" : 1,
-    "price" : {
-      "servant" : 3
-    },
-    "victoryPoints" : 3,
-    "powerOfProduction" : {
-      "cost" : {
-        "coin" : 2
-      },
-      "production" : {
-        "servant" : 1,
-        "shield" : 1,
-        "stone" : 1
-      }
-    }
-  },
-  {
-    "color" : "PURPLE",
-    "level" : 1,
-    "price" : {
-      "stone" : 2,
-      "servant" : 2
-    },
-    "victoryPoints" : 4,
-    "powerOfProduction" : {
-      "cost" : {
-        "coin" : 1,
-        "shield" : 1
-      },
-      "production" : {
-        "stone" : 2,
-        "faith" : 1
-      }
-    }
-  },
-
-  {
-    "color" : "PURPLE",
-    "level" : 2,
-    "price" : {
-      "servant" : 4
-    },
-    "victoryPoints" : 5,
-    "powerOfProduction" : {
-      "cost" : {
-        "coin" : 1
-      },
-      "production" : {
-        "faith" : 2
-      }
-    }
-  },
-  {
-    "color" : "PURPLE",
-    "level" : 2,
-    "price" : {
-      "servant" : 3,
-      "coin" : 2
-    },
-    "victoryPoints" : 6,
-    "powerOfProduction" : {
-      "cost" : {
-        "coin" : 1,
-        "servant" : 1
-      },
-      "production" : {
-        "shield" : 3
-      }
-    }
-  },
-  {
-    "color" : "PURPLE",
-    "level" : 2,
-    "price" : {
-      "servant" : 5
-    },
-    "victoryPoints" : 7,
-    "powerOfProduction" : {
-      "cost" : {
-        "stone" : 2
-      },
-      "production" : {
-        "coin" : 2,
-        "faith" : 2
-      }
-    }
-  },
-  {
-    "color" : "PURPLE",
-    "level" : 2,
-    "price" : {
-      "servant" : 3,
-      "shield" : 3
-    },
-    "victoryPoints" : 8,
-    "powerOfProduction" : {
-      "cost" : {
-        "stone" : 1
-      },
-      "production" : {
-        "servant" : 2,
-        "faith" : 1
-      }
-    }
-  },
-
-  {
-    "color" : "PURPLE",
-    "level" : 3,
-    "price" : {
-      "servant" : 6
-    },
-    "victoryPoints" : 9,
-    "powerOfProduction" : {
-      "cost" : {
-        "stone" : 2
-      },
-      "production" : {
-        "coin" : 3,
-        "faith" : 2
-      }
-    }
-  },
-  {
-    "color" : "PURPLE",
-    "level" : 3,
-    "price" : {
-      "servant" : 5,
-      "coin" : 2
-    },
-    "victoryPoints" : 10,
-    "powerOfProduction" : {
-      "cost" : {
-        "stone" : 1,
-        "shield" : 1
-      },
-      "production" : {
-        "coin" : 2,
-        "servant" : 2,
-        "faith" : 1
-      }
-    }
-  },
-  {
-    "color" : "PURPLE",
-    "level" : 3,
-    "price" : {
-      "servant" : 7
-    },
-    "victoryPoints" : 11,
-    "powerOfProduction" : {
-      "cost" : {
-        "coin" : 1
-      },
-      "production" : {
-        "stone" : 1,
-        "faith" : 3
-      }
-    }
-  },
-  {
-    "color" : "PURPLE",
-    "level" : 3,
-    "price" : {
-      "servant" : 4,
-      "shield" : 4
-    },
-    "victoryPoints" : 12,
-    "powerOfProduction" : {
-      "cost" : {
-        "coin" : 1
-      },
-      "production" : {
-        "stone" : 3,
-        "servant" : 1
-      }
-    }
-  }
-
+    ]
+  ]
 ]
