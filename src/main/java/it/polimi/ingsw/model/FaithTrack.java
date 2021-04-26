@@ -68,7 +68,7 @@ public class FaithTrack {
 
 
     /**
-     * this method returns the status of a give tile
+     * this method returns the status of a tile
      * @param tileNumber represents the number of the tile
      * @return true if the tile value is 1 o 2, false if the tile value is 0
      */
