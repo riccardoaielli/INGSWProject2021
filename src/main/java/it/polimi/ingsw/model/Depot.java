@@ -48,6 +48,10 @@ public class Depot {
         if (!(mapResource.getOrDefault(resource, 0) + addedResourceMap.get(resource) <= SIZE)) throw new InvalidAdditionException("Not enough space");
     }
 
+    /**
+     * Adds a resource to the depot, must be called only after performing checks with checkAdd
+     * @param addedResourceMap resource map to add, must contain a single key
+     */
     public void uncheckedAdd(HashMap<Resource, Integer> addedResourceMap){
         Resource resource = addedResourceMap.keySet().iterator().next();
         mapResource.merge(resource, addedResourceMap.get(resource), Integer::sum);
@@ -63,29 +67,50 @@ public class Depot {
         uncheckedAdd(addedResourceMap);
     }
 
-    public void checkRemove(HashMap<Resource, Integer> removedResourceMap) throws InvalidRemovalException {
-        Resource resource = removedResourceMap.keySet().iterator().next();
-        if (mapResource.get(resource) == null) throw new InvalidRemovalException();
-        if (mapResource.get(resource) < removedResourceMap.get(resource)) throw new InvalidRemovalException();
+    /**
+     * This method removes from toBeRemovedResourceMap the maximum quantity of resources that are both in depot and in the passed map
+     * @param toBeRemovedResourceMap This map contains the resources that are not found to be stored in a depot yet
+     */
+    public void checkAvailability(HashMap<Resource, Integer> toBeRemovedResourceMap){
+        //Returns if depot is empty
+        if(!mapResource.keySet().iterator().hasNext()) return;
+        Resource resource = mapResource.keySet().iterator().next();
+        //Returns if the resource in depot is not to be removed
+        if (toBeRemovedResourceMap.get(resource) == null) return;
+        //Checks availability and removes the resources available from toBeRemovedResourceMap
+        if (mapResource.get(resource) >= toBeRemovedResourceMap.get(resource))
+            toBeRemovedResourceMap.remove(resource);
+        else
+            toBeRemovedResourceMap.merge(resource, -mapResource.get(resource), Integer::sum);
     }
 
     /**
-     * Method to remove a specified number of a resource from the depot
-     * @param removedResourceMap Must have a single key which represents the single resource to remove and the value associated represents the quantity to remove
-     * @throws InvalidRemovalException When there are not enough resources to remove from the depot or when the resource is not in the depot
+     * This method removes from toBeRemovedResourceMap and from the depot the maximum quantity of resources that are both in depot and in the passed map
+     * @param toBeRemovedResourceMap This map contains the resources that have to be removed from WarehouseDepots
      */
-    public void remove(HashMap<Resource, Integer> removedResourceMap) throws InvalidRemovalException {
-        //Checking if there are enough resources in depot to remove
-        checkRemove(removedResourceMap);
-        uncheckedRemove(removedResourceMap);
-    }
+    public void uncheckedRemove(HashMap<Resource, Integer> toBeRemovedResourceMap){
+        //Checking if the depot is empty
+        if(!mapResource.keySet().iterator().hasNext()) return;
+        Resource resource = mapResource.keySet().iterator().next();
+        //Checking if the resource in depot is not to be removed
+        if (toBeRemovedResourceMap.get(resource) == null) return;
 
-    public void uncheckedRemove(HashMap<Resource, Integer> removedResourceMap){
-        Resource resource = removedResourceMap.keySet().iterator().next();
-        if (mapResource.get(resource).equals(removedResourceMap.get(resource)))
+        int quantityToRemove = toBeRemovedResourceMap.get(resource);
+        int quantityInDepot = mapResource.get(resource);
+
+        //Removing as many resources as possible and updating toBeRemovedResourceMap
+        if (quantityToRemove == quantityInDepot){
             mapResource.remove(resource);
-        else
-            mapResource.merge(resource, -removedResourceMap.get(resource), Integer::sum);
+            toBeRemovedResourceMap.remove(resource);
+        }
+        else if (quantityToRemove > quantityInDepot){
+            mapResource.remove(resource);
+            toBeRemovedResourceMap.merge(resource, -quantityInDepot, Integer::sum);
+        }
+        else{
+            mapResource.merge(resource, -quantityToRemove, Integer::sum);
+            toBeRemovedResourceMap.remove(resource);
+        }
     }
 
     /**

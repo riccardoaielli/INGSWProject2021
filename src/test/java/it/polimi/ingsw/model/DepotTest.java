@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.InvalidAdditionException;
-import it.polimi.ingsw.model.exceptions.InvalidRemovalException;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -69,48 +68,6 @@ class DepotTest {
     }
 
     @Test
-    void remove() {
-        Depot depot1 = new Depot(3);
-        HashMap<Resource, Integer> resourceMap1 = new HashMap<>();
-        resourceMap1.put(Shield.getInstance(), 3);
-        try {
-            depot1.add(resourceMap1);
-        } catch (InvalidAdditionException e) {
-            assert false;
-        }
-        resourceMap1.put(Shield.getInstance(), 2);
-        try {
-            depot1.remove(resourceMap1);
-        } catch (InvalidRemovalException e) {
-            assert false;
-        }
-        assertEquals(1, depot1.getMapResource().get(Shield.getInstance()));
-
-        try {
-            depot1.remove(resourceMap1);
-        } catch (InvalidRemovalException e) {
-            assert true;
-        }
-        HashMap<Resource, Integer> resourceMap2 = new HashMap<>();
-        resourceMap2.put(Stone.getInstance(), 3);
-        //Trying the removal of a resource not in depot
-        try {
-            depot1.remove(resourceMap2);
-        } catch (InvalidRemovalException e) {
-            assert true;
-        }
-        assertEquals(1, depot1.getMapResource().get(Shield.getInstance()));
-
-        resourceMap1.put(Shield.getInstance(), 1);
-        try {
-            depot1.remove(resourceMap1);
-        } catch (InvalidRemovalException e) {
-            assert false;
-        }
-        assertNull(depot1.getMapResource().get(Shield.getInstance()));
-    }
-
-    @Test
     void getNumberResources() {
         Depot depot = new Depot(3);
         assertEquals(0, depot.getNumberResources());
@@ -124,5 +81,27 @@ class DepotTest {
         assertEquals(3, depot.getNumberResources());
 
 
+    }
+
+    @Test
+    void uncheckedRemove() {
+        HashMap<Resource, Integer> resourceMap1 = new HashMap<>();
+        resourceMap1.put(Coin.getInstance(), 3);
+        resourceMap1.put(Shield.getInstance(),4);
+
+        HashMap<Resource, Integer> resourceMap2 = new HashMap<>();
+        resourceMap2.put(Coin.getInstance(),2);
+
+        Depot depot = new Depot(3);
+        try {
+            depot.add(resourceMap2);
+        } catch (InvalidAdditionException e) {
+            assert false;
+        }
+
+        depot.uncheckedRemove(resourceMap1);
+        assertTrue(depot.getMapResource().isEmpty());
+        assertEquals(1, resourceMap1.get(Coin.getInstance()));
+        assertEquals(4, resourceMap1.get(Shield.getInstance()));
     }
 }

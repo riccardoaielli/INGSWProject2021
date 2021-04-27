@@ -139,40 +139,119 @@ class WarehouseDepotsTest {
         }
     }
 
+
     @Test
-    void remove() {
+    void checkAndRemove() {
         WarehouseDepots warehouseDepots = new WarehouseDepots();
-        HashMap<Resource, Integer> resourceMap = new HashMap<>();
+        HashMap<Resource, Integer> resourceMap1 = new HashMap<>();
+        resourceMap1.put(Shield.getInstance(), 4);
+        resourceMap1.put(Coin.getInstance(), 2);
 
-        //Trying to remove and empty resource map
+        HashMap<Resource, Integer> resourceMap2 = new HashMap<>();
+        resourceMap2.put(Shield.getInstance(), 2);
         try {
-            warehouseDepots.remove(2, resourceMap);
-            assert false;
-        } catch (InvalidRemovalException e) {
-            assert true;
-        }
-
-        resourceMap.put(Shield.getInstance(),1);
-        //Adding 1 shield to depot number 2
-        try {
-            warehouseDepots.add(2, resourceMap);
+            warehouseDepots.add(2, resourceMap2);
         } catch (InvalidAdditionException e) {
             assert false;
         }
-        //Checking if there is 1 shield
-        assertEquals(1, warehouseDepots.getDepot(2).getMapResource().get(Shield.getInstance()));
-        //Removing 1 shield from depot number 2
+        warehouseDepots.addSpecialDepot(Shield.getInstance());
         try {
-            warehouseDepots.remove(2, resourceMap);
+            warehouseDepots.add(4, resourceMap2);
+        } catch (InvalidAdditionException e) {
+            assert false;
+        }
+
+        HashMap<Resource, Integer> resourceMap3 = new HashMap<>();
+        resourceMap3.put(Coin.getInstance(), 3);
+        try {
+            warehouseDepots.add(3, resourceMap3);
+        } catch (InvalidAdditionException e) {
+            assert false;
+        }
+
+        try {
+            warehouseDepots.checkAvailability(resourceMap1);
         } catch (InvalidRemovalException e) {
             assert false;
         }
-        //Checking there is not any shield in depot number 2
-        assertNull(warehouseDepots.getDepot(2).getMapResource().get(Shield.getInstance()));
 
-        //Removing from a non existent depot
+        warehouseDepots.uncheckedRemove(resourceMap1);
+        assertTrue(warehouseDepots.getDepot(1).getMapResource().isEmpty());
+        assertTrue(warehouseDepots.getDepot(2).getMapResource().isEmpty());
+        assertTrue(warehouseDepots.getDepot(4).getMapResource().isEmpty());
+        assertEquals(1, warehouseDepots.getDepot(3).getMapResource().get(Coin.getInstance()));
+    }
+
+    @Test
+    void checkAndRemoveNull() {
+        WarehouseDepots warehouseDepots = new WarehouseDepots();
+        HashMap<Resource, Integer> resourceMap1 = new HashMap<>();
+        HashMap<Resource, Integer> resourceMap2 = new HashMap<>();
+        HashMap<Resource, Integer> resourceMap3 = new HashMap<>();
+        resourceMap1.put(Shield.getInstance(), 2);
         try {
-            warehouseDepots.remove(4, resourceMap);
+            warehouseDepots.add(2, resourceMap1);
+        } catch (InvalidAdditionException e) {
+            assert false;
+        }
+        warehouseDepots.addSpecialDepot(Shield.getInstance());
+        try {
+            warehouseDepots.add(4, resourceMap1);
+        } catch (InvalidAdditionException e) {
+            assert false;
+        }
+
+        resourceMap2.put(Coin.getInstance(), 3);
+        try {
+            warehouseDepots.add(3, resourceMap2);
+        } catch (InvalidAdditionException e) {
+            assert false;
+        }
+
+        try {
+            warehouseDepots.checkAvailability(resourceMap3);
+        } catch (InvalidRemovalException e) {
+            assert false;
+        }
+
+        warehouseDepots.uncheckedRemove(resourceMap3);
+        assertTrue(warehouseDepots.getDepot(1).getMapResource().isEmpty());
+        assertEquals(2, warehouseDepots.getDepot(2).getMapResource().get(Shield.getInstance()));
+        assertEquals(3, warehouseDepots.getDepot(3).getMapResource().get(Coin.getInstance()));
+        assertEquals(2, warehouseDepots.getDepot(4).getMapResource().get(Shield.getInstance()));
+    }
+
+    @Test
+    void resourcesNotAvailable() {
+        WarehouseDepots warehouseDepots = new WarehouseDepots();
+        HashMap<Resource, Integer> resourceMap1 = new HashMap<>();
+        resourceMap1.put(Servant.getInstance(), 2);
+        resourceMap1.put(Shield.getInstance(), 1);
+
+        HashMap<Resource, Integer> resourceMap2 = new HashMap<>();
+        resourceMap2.put(Shield.getInstance(), 2);
+        try {
+            warehouseDepots.add(2, resourceMap2);
+        } catch (InvalidAdditionException e) {
+            assert false;
+        }
+        warehouseDepots.addSpecialDepot(Shield.getInstance());
+        try {
+            warehouseDepots.add(4, resourceMap2);
+        } catch (InvalidAdditionException e) {
+            assert false;
+        }
+
+        HashMap<Resource, Integer> resourceMap3 = new HashMap<>();
+        resourceMap3.put(Coin.getInstance(), 3);
+        try {
+            warehouseDepots.add(3, resourceMap3);
+        } catch (InvalidAdditionException e) {
+            assert false;
+        }
+
+        try {
+            warehouseDepots.checkAvailability(resourceMap1);
             assert false;
         } catch (InvalidRemovalException e) {
             assert true;

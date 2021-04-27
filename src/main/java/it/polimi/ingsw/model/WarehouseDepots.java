@@ -126,40 +126,53 @@ public class WarehouseDepots {
 
         //Instantiating the resource map that has to be moved
         HashMap<Resource, Integer> resourceMap = new HashMap<>();
-
+        //Throws exception if the source depot is empty
         if (!sourceDepot.getMapResource().keySet().iterator().hasNext()){
             throw new InvalidRemovalException();
         }
         Resource resourceToMove = sourceDepot.getMapResource().keySet().iterator().next();
         resourceMap.put(resourceToMove, quantity);
-
         //Checking if the move can be performed
-        sourceDepot.checkRemove(resourceMap);
+        HashMap<Resource, Integer> resourceToCheckMap = new HashMap<>(resourceMap);
+        sourceDepot.checkAvailability(resourceToCheckMap);
+        if (!resourceToCheckMap.isEmpty()) {
+            throw new InvalidRemovalException();
+        }
         checkAdd(destinationDepotNumber, resourceMap);
         destinationDepot.checkAdd(resourceMap);
 
         //Moving the resource
-        sourceDepot.uncheckedRemove(resourceMap);
+        HashMap<Resource, Integer> resourceToRemove = new HashMap<>(resourceMap);
+        sourceDepot.uncheckedRemove(resourceToRemove);
+
         destinationDepot.uncheckedAdd(resourceMap);
     }
 
     /**
-     * Method to remove a resource from a depot
-     * @param depotNumber The number of depot from which the resource has to be removed
-     * @param singleResourceMap The map that contains the resource and the quantity of the resource to remove
-     * @throws InvalidRemovalException Exception thrown when:
-     * the depot from which to remove the resource does not exist,
-     * there are not enough resources to remove from the depot,
-     * the resource is not in the depot or singleResourceMap does not contain exactly one key
+     * Checks that all the resources and their quantities in resourceMap are stored in WarehouseDepot
+     * @param resourceMap The resources and their quantities whose availability in WarehouseDepot is verified
+     * @throws InvalidRemovalException Exception thrown when not every resource in resourceMap is in WarehouseDepots
      */
-    public void remove(int depotNumber, HashMap<Resource, Integer> singleResourceMap) throws InvalidRemovalException {
-        if (singleResourceMap.size() != 1) {
+    public void checkAvailability(HashMap<Resource, Integer> resourceMap) throws InvalidRemovalException{
+        HashMap<Resource, Integer> resourceToCheckMap = new HashMap<>(resourceMap);
+        for (Depot depot: depots){
+            depot.checkAvailability(resourceToCheckMap);
+        }
+        if (!resourceToCheckMap.isEmpty()) {
             throw new InvalidRemovalException();
         }
-        if (depotNumber > depots.size()) {
-            throw new InvalidRemovalException();
+    }
+
+
+    /**
+     * Method to remove a resource from a depot
+     * @param resourceMap The map that contains the resources and the quantity of the resources to remove
+     */
+    public void uncheckedRemove(HashMap<Resource, Integer> resourceMap){
+        HashMap<Resource, Integer> resourceToRemoveMap = new HashMap<>(resourceMap);
+        for (Depot depot: depots){
+            depot.uncheckedRemove(resourceToRemoveMap);
         }
-        depots.get(depotNumber-1).remove(singleResourceMap);
     }
 
     /**
