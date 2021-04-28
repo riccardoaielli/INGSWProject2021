@@ -9,6 +9,7 @@ public class Market {
 
     private Marble[][] marketMatrix = new Marble[3][4];
     private Marble marbleOut, tempMarble;
+    private Stack<Marble> marbleStack;
 
     private final int maxRow = 3;
     private final int maxColumn = 4;
@@ -19,7 +20,7 @@ public class Market {
     public Market(){
 
         int i, j;
-        Stack<Marble> marbleStack = new Stack<>();
+        marbleStack = new Stack<>();
 
         // filling the stack with all needed marbles
         for (i=0; i<4 ; i++){

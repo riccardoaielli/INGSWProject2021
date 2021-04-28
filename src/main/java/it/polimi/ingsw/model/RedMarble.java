@@ -22,7 +22,7 @@ public class RedMarble extends Marble {
     }
 
     /**
-     * Implementation of transform method, it moves the faithMarker
+     * Implementation of transform method, it moves the faithMarker of one position
      * @param resourceMap map of resources from personal board
      * @param faithTrack references of FaithTrack
      */
