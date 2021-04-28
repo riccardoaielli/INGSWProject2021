@@ -42,7 +42,8 @@ class StrongboxTest {
         resourceMap.put(Stone.getInstance(), 10);
         //Testing the removal of a resource not in strongbox
         try {
-            strongbox1.remove(resourceMap);
+            strongbox1.checkAvailability(resourceMap);
+            strongbox1.uncheckedRemove(resourceMap);
         } catch (InvalidRemovalException e) {
             assert true;
         }
@@ -55,7 +56,8 @@ class StrongboxTest {
         resourceMap = new HashMap<>();
         resourceMap.put(Stone.getInstance(), 6);
         try {
-            strongbox1.remove(resourceMap);
+            strongbox1.checkAvailability(resourceMap);
+            strongbox1.uncheckedRemove(resourceMap);
         } catch (InvalidRemovalException e) {
             assert false;
         }
@@ -67,10 +69,12 @@ class StrongboxTest {
         //removing 4 stones from strongbox1
         resourceMap.put(Stone.getInstance(), 4);
         try {
-            strongbox1.remove(resourceMap);
+            strongbox1.checkAvailability(resourceMap);
+            strongbox1.uncheckedRemove(resourceMap);
         } catch (InvalidRemovalException e) {
             assert false;
         }
+
         assertEquals(0, strongbox1.getResourceQuantity(Stone.getInstance()));
 
         //Testing the removal of more resources than there are in strongbox
@@ -81,7 +85,8 @@ class StrongboxTest {
 
         resourceMap.put(Coin.getInstance(), 10);
         try {
-            strongbox1.remove(resourceMap);
+            strongbox1.checkAvailability(resourceMap);
+            strongbox1.uncheckedRemove(resourceMap);
             assert false;
         } catch (InvalidRemovalException e) {
             assert true;

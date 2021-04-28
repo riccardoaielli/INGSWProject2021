@@ -165,7 +165,7 @@ public class WarehouseDepots {
 
 
     /**
-     * Method to remove a resource from a depot
+     * Method to remove a resource from a depot, must be called only after performing checks with checkAvailability
      * @param resourceMap The map that contains the resources and the quantity of the resources to remove
      */
     public void uncheckedRemove(HashMap<Resource, Integer> resourceMap){

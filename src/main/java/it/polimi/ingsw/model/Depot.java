@@ -85,7 +85,8 @@ public class Depot {
     }
 
     /**
-     * This method removes from toBeRemovedResourceMap and from the depot the maximum quantity of resources that are both in depot and in the passed map
+     * This method removes from toBeRemovedResourceMap and from the depot the maximum quantity of resources that are both in depot and in the passed map,
+     * must be called only after performing checks with checkAvailability
      * @param toBeRemovedResourceMap This map contains the resources that have to be removed from WarehouseDepots
      */
     public void uncheckedRemove(HashMap<Resource, Integer> toBeRemovedResourceMap){

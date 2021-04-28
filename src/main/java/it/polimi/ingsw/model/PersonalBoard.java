@@ -100,7 +100,7 @@ public class PersonalBoard {
         try {
             //moves the faith marker
             faithTrack.moveFaithMarker(numOfSteps);
-            //activates checks vatica report
+            //activates checks vatican report
             checkVaticanReport();
         }catch (InvalidParameterException invalidParameterException){
             throw new InvalidParameterException();

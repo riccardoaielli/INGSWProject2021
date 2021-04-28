@@ -23,13 +23,11 @@ public class Strongbox {
     }
 
     /**
-     * Removes the given map of resources from the strongbox
-     * @param resourceMap The map of resources to remove
-     * @throws InvalidRemovalException When trying to remove more resources than there are in strongbox
+     * Checks that all the resources and their quantities in resourceMap are stored in Strongbox
+     * @param resourceMap The resources and their quantities whose availability in Strongbox is verified
+     * @throws InvalidRemovalException Exception thrown when not every resource in resourceMap is in Strongbox
      */
-
-    public void remove(HashMap<Resource, Integer> resourceMap) throws InvalidRemovalException {
-
+    public void checkAvailability(HashMap<Resource, Integer> resourceMap) throws InvalidRemovalException{
         //Checking if there are enough resources in strongbox to remove
         for (Resource resource : resourceMap.keySet())  {
             if (strongbox.get(resource) == null){
@@ -39,7 +37,14 @@ public class Strongbox {
                 throw new InvalidRemovalException();
             }
         }
+    }
 
+    /**
+     * Removes the given map of resources from the strongbox, must be called only after performing checks with checkAvailability
+     * @param resourceMap The map of resources to remove
+     */
+
+    public void uncheckedRemove(HashMap<Resource, Integer> resourceMap){
         for (Resource resource : resourceMap.keySet())  {
             if (strongbox.get(resource).equals(resourceMap.get(resource)))
                 strongbox.remove(resource);
