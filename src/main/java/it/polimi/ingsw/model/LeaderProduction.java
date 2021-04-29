@@ -4,7 +4,6 @@ import it.polimi.ingsw.model.enumerations.Resource;
 import it.polimi.ingsw.model.exceptions.NotEnoughWhiteMarblesException;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class LeaderProduction extends LeaderCard{
     private HashMap<Resource, Integer> cost;
@@ -20,7 +19,7 @@ public class LeaderProduction extends LeaderCard{
     }
 
     @Override
-    public void abilityDepot() {
+    public void abilityDepot(WarehouseDepots warehouseDepots) {
 
     }
 
@@ -34,6 +33,6 @@ public class LeaderProduction extends LeaderCard{
      */
     @Override
     public HashMap<Resource, Integer> abilityProduction() {
-        return cost;
+        return new HashMap<Resource,Integer>(cost);
     }
 }

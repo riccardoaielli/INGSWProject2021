@@ -37,7 +37,7 @@ public abstract class LeaderCard {
 
     public abstract void abilityDiscount(HashMap<Resource,Integer> resources);
 
-    public abstract void abilityDepot();
+    public abstract void abilityDepot(WarehouseDepots warehouseDepots);
 
     public abstract void abilityMarble(HashMap<Marble,Integer> temporaryMapMarble, int numOfTransformation) throws NotEnoughWhiteMarblesException;
 

@@ -19,8 +19,8 @@ public class LeaderDepot extends LeaderCard{
     }
 
     @Override
-    public void abilityDepot() {
-
+    public void abilityDepot(WarehouseDepots warehouseDepots) {
+        warehouseDepots.addSpecialDepot(specialDepotResource);
     }
 
     @Override

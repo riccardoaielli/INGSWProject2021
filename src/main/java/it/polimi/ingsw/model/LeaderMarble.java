@@ -21,7 +21,7 @@ public class LeaderMarble extends LeaderCard{
     }
 
     @Override
-    public void abilityDepot() {
+    public void abilityDepot(WarehouseDepots warehouseDepots) {
 
     }
 
