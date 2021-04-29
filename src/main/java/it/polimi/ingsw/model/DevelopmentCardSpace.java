@@ -5,7 +5,6 @@ import it.polimi.ingsw.model.exceptions.InvalidDevelopmentCardException;
 import it.polimi.ingsw.model.exceptions.InvalidParameterException;
 
 
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
@@ -16,6 +15,8 @@ public class DevelopmentCardSpace {
     private ArrayList<ArrayList<DevelopmentCard>> cards;
     private final int numOfStacks = 3;
     private int numOfcards;
+    private Match matchToNotify;
+
 
     /**
      * the constructor generates an empty structure for the development cards
@@ -26,6 +27,14 @@ public class DevelopmentCardSpace {
             cards.add(new ArrayList<>());
         }
         numOfcards = 0;
+    }
+
+    /**
+     * This method sets the match to notify and is called after the constructor of the class
+     * @param matchToNotify is the match that this class has to notify when reaches 7 cards
+     */
+    public void AddMatchToNotify(Match matchToNotify){
+        this.matchToNotify = matchToNotify;
     }
 
 
@@ -54,6 +63,8 @@ public class DevelopmentCardSpace {
             throw new InvalidParameterException();
         }
         //notifies match when reaches 7 cards in the development card space
+        if(numOfcards == 7 && matchToNotify != null)
+            matchToNotify.setLastRound();
     }
 
 

@@ -31,6 +31,9 @@ public class Match {
         players.forEach(x -> x.getPersonalBoard().activateVaticanReport(tileNumber));
     }
 
+    /**
+     * This method is called by the faithTracks and by the developmentCardSpaces when they reaches the condition to end the game
+     */
     public void setLastRound() {
         lastRound = true;
     }

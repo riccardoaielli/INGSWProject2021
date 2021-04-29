@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  *this class represents the faith track of a player with the positions of the red cross and the tiles status
 */
-public class FaithTrack {
+public class FaithTrack{
     /**
      * tiles values:
      * 0 - value before vatican report
@@ -20,6 +20,7 @@ public class FaithTrack {
     private final int nonActivated = 1;
     private final int active = 2;
     private ArrayList<Integer> popeFavourTiles;
+    private Match matchToNotify;
 
     /**
      * this constructor sets the position of the red cross to 0 and each tiles as nonActive
@@ -31,6 +32,13 @@ public class FaithTrack {
             popeFavourTiles.add(nonActive);
     }
 
+    /**
+     * This method sets the match to notify and is called after the constructor of the class
+     * @param matchToNotify is the match that this class has to notify when 20 faith point are reached
+     */
+    public void AddMatchToNotify(Match matchToNotify){
+        this.matchToNotify = matchToNotify;
+    }
 
     /**
      * this method returns the position in the faith track
@@ -50,6 +58,7 @@ public class FaithTrack {
             if (faithTrackPosition > 20) {      // the maximum amount of space in the track is 20
                 faithTrackPosition = 20;
                 //notifies match
+                if(matchToNotify != null) matchToNotify.setLastRound();
             }
         }
         else throw new InvalidParameterException();
