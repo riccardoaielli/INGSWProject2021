@@ -4,13 +4,14 @@ import it.polimi.ingsw.model.enumerations.Resource;
 import it.polimi.ingsw.model.exceptions.NotEnoughWhiteMarblesException;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class LeaderProduction extends LeaderCard{
-    private PowerOfProduction powerOfProduction;
+    private HashMap<Resource, Integer> cost;
 
-    public LeaderProduction(int victoryPoints, Requirement requirement, PowerOfProduction powerOfProduction) {
+    public LeaderProduction(int victoryPoints, Requirement requirement, HashMap<Resource, Integer> cost) {
         super(victoryPoints, requirement);
-        this.powerOfProduction = powerOfProduction;
+        this.cost = cost;
     }
 
     @Override
@@ -32,7 +33,7 @@ public class LeaderProduction extends LeaderCard{
      * @return the power of production of the leader card
      */
     @Override
-    public PowerOfProduction abilityProduction() {
-        return powerOfProduction;
+    public HashMap<Resource, Integer> abilityProduction() {
+        return cost;
     }
 }

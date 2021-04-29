@@ -41,6 +41,6 @@ public abstract class LeaderCard {
 
     public abstract void abilityMarble(HashMap<Marble,Integer> temporaryMapMarble, int numOfTransformation) throws NotEnoughWhiteMarblesException;
 
-    public abstract PowerOfProduction abilityProduction();
+    public abstract HashMap<Resource,Integer> abilityProduction();
 
 }

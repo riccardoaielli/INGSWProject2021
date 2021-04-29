@@ -39,7 +39,7 @@ public class LeaderDiscount extends LeaderCard{
     }
 
     @Override
-    public PowerOfProduction abilityProduction() {
+    public HashMap<Resource,Integer> abilityProduction() {
         return null;
     }
 }
