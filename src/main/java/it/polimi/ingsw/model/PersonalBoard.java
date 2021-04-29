@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.InvalidParameterException;
-import it.polimi.ingsw.model.exceptions.NotEnoughWhiteMarblesException;
+import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,18 +8,60 @@ import java.util.Iterator;
 
 public class PersonalBoard {
     private HashMap<Marble,Integer> temporaryMarbles;
+    private HashMap<Resource, Integer> temporaryMapResource;
     private ArrayList<PowerOfProduction> powerOfProductions;
     private ArrayList<LeaderCard> leaderCards;
     private FaithTrack faithTrack;
     private Match match;
+    private Strongbox strongbox;
+    private WarehouseDepots warehouseDepots;
+    private Market market;
 
-
-    public void activateProduction(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, PowerOfProduction powerOfProduction){
-
+    public PersonalBoard(ArrayList<LeaderCard> leaderCards, Match match) {
+        //this.market = match.getMarket();
+        //this.cardGrid = match.getCardGrid();
+        this.leaderCards = leaderCards;
+        this.faithTrack = new FaithTrack();
+        this.match = match;
+        this.strongbox = new Strongbox();
+        this.warehouseDepots = new WarehouseDepots();
     }
 
-    public void takeFromMarket(int rowOrColumn, int value){
 
+    public void activateProduction(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, int indexDevelopmentCardSpace){
+        //Controllo che non sia già stato fatto
+        //Mergiamo le due mappe cost in una temporanea e verifichiamo che sia uguale al cost del power of production del leader
+        //Controllo disponibilità risorse
+        //Rimuovo da stronbox/warehouse e aggiungo risorsa a strongbox/ punto fede
+        //Cambio il flag della production in "fatto"
+    }
+
+    public void activateBasicProduction(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, Resource resource){
+        //Controllo che non sia già stato fatto
+        //Controllo che la risorsa non sia fede
+        //Controllo che ci siano effettivamente due risorse nei cost
+        //Controllo disponibilità risorse checkAvailability()
+
+        //Rimuovo da stronbox/warehouse e aggiungo risorsa a strongbox
+        //Cambio il flag di basic production in "fatto"
+    }
+
+    public void activateLeaderProduction(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, int indexLeaderCard, Resource resource){
+        //Controllo che la leader card sia attiva
+        //Controllo che non sia già stato fatto
+        //Controllo che risorsa non sia fede
+        //Ottengo power of produciton, se null lancio eccezione
+        //Mergiamo le due mappe cost in una temporanea e verifichiamo che sia uguale al cost del power of production del leader
+        //Controllo disponibilità risorse
+
+        //Rimuovo da stronbox/warehouse e aggiungo risorsa a strongbox/ punto fede
+        //Cambio il flag della leader production in "fatto"
+    }
+
+
+
+    public void takeFromMarket(int rowOrColumn, int value){
+        temporaryMarbles = new HashMap<>(market.takeBoughtMarbles(rowOrColumn, value));
     }
 
     /**
@@ -38,11 +79,27 @@ public class PersonalBoard {
     }
 
     public void transformMarbles(){
-
+        for (Marble marble : temporaryMarbles.keySet()){
+            for(int value = 0; value < temporaryMarbles.get(marble); value++){
+                try {
+                    marble.transform(temporaryMapResource, faithTrack);
+                } catch (InvalidParameterException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
-    public void addToWarehouseDepots(int depotLevel, HashMap<Resource,Integer> singleResourceMap){
+    public void addToWarehouseDepots(int depotLevel, HashMap<Resource,Integer> singleResourceMap) throws InvalidAdditionException {
+        warehouseDepots.add(depotLevel, singleResourceMap);
+    }
 
+    public void swapResourceStandardDepot(int depot1, int depot2) throws InvalidSwapException {
+        warehouseDepots.swap(depot1, depot2);
+    }
+
+    public void moveResourceSpecialDepot(int sourceDepotNumber, int destinationDepotNumber, int quantity) throws InvalidAdditionException, InvalidRemovalException, InvalidMoveException {
+        warehouseDepots.moveToFromSpecialDepot(sourceDepotNumber, destinationDepotNumber, quantity);
     }
 
     public void buyDevelopmentCard(int row, int column,HashMap<Resource, Integer> costStrongbox, HashMap<Resource, Integer> costWarehouseDepots, LeaderCard leaderCard){
