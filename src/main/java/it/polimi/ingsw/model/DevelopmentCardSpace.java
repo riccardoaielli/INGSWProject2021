@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.exceptions.InvalidDevelopmentCardException;
 import it.polimi.ingsw.model.exceptions.InvalidParameterException;
 
 
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
@@ -14,6 +15,7 @@ public class DevelopmentCardSpace {
     //Each of the three stack of cards is stored in an ArrayList and they are collected in another ArrayList
     private ArrayList<ArrayList<DevelopmentCard>> cards;
     private final int numOfStacks = 3;
+    private int numOfcards;
 
     /**
      * the constructor generates an empty structure for the development cards
@@ -23,7 +25,10 @@ public class DevelopmentCardSpace {
         for(int i = 0; i < numOfStacks; i++){
             cards.add(new ArrayList<>());
         }
+        numOfcards = 0;
     }
+
+
 
     /**
      * this method adds a card on top of a specified stack.
@@ -40,6 +45,7 @@ public class DevelopmentCardSpace {
 
             if ((card.getLevel() == 1 && stackList.size() == 0) || (card.getLevel() != 1 && (card.getLevel() - 1) == stackList.get(stackList.size() - 1).getLevel())) {
                 stackList.add(card);
+                numOfcards++;
             } else {
                 throw new InvalidDevelopmentCardException();
             }
@@ -47,6 +53,7 @@ public class DevelopmentCardSpace {
         else{
             throw new InvalidParameterException();
         }
+        //notifies match when reaches 7 cards in the development card space
     }
 
 
@@ -124,4 +131,5 @@ public class DevelopmentCardSpace {
         ArrayList<DevelopmentCard> stack = cards.get(cardPosition);
         return stack.get(stack.size() - 1);
     }
+
 }

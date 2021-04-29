@@ -9,8 +9,8 @@ import java.util.HashMap;
  * This class represents a power of production that players can use to produce resources and faith points from other resources
  */
 public class PowerOfProduction {
-    HashMap<Resource,Integer> cost;
-    HashMap<Resource,Integer> production;
+    private HashMap<Resource,Integer> cost;
+    private HashMap<Resource,Integer> production;
 
     /**
      * @param cost contains resources needed to activate the power

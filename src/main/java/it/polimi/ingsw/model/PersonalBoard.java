@@ -118,21 +118,17 @@ public class PersonalBoard {
      * This method checks the conditions to activate the vatican report and activates the report for all the players.
      */
     public void checkVaticanReport() {
-        try {
-            if (faithTrack.getPopeFavourTile(1) && 4 < faithTrack.getFaithTrackPosition() && faithTrack.getFaithTrackPosition() < 9){
-                //calls the vatican report for all the other players
-                match.vaticanReport(1);
-            }
-            else if(faithTrack.getPopeFavourTile(2) && 11 < faithTrack.getFaithTrackPosition() && faithTrack.getFaithTrackPosition() < 17){
-                //calls the vatican report for all the other players
-                match.vaticanReport(2);
-            }
-            else if(faithTrack.getPopeFavourTile(3) && 18 < faithTrack.getFaithTrackPosition() && faithTrack.getFaithTrackPosition() < 25){
-                //calls the vatican report for all the other players
-                match.vaticanReport(3);
-            }
-        }catch (InvalidParameterException invalidParameterException){
-            invalidParameterException.printStackTrace();
+        if (faithTrack.getPopeFavourTile(1) && 4 < faithTrack.getFaithTrackPosition() && faithTrack.getFaithTrackPosition() < 9){
+            //calls the vatican report for all the other players
+            match.vaticanReport(1);
+        }
+        else if(faithTrack.getPopeFavourTile(2) && 11 < faithTrack.getFaithTrackPosition() && faithTrack.getFaithTrackPosition() < 17){
+            //calls the vatican report for all the other players
+            match.vaticanReport(2);
+        }
+        else if(faithTrack.getPopeFavourTile(3) && 18 < faithTrack.getFaithTrackPosition() && faithTrack.getFaithTrackPosition() < 25){
+            //calls the vatican report for all the other players
+            match.vaticanReport(3);
         }
     }
 
@@ -154,14 +150,10 @@ public class PersonalBoard {
      * @throws InvalidParameterException
      */
     private void moveFaithMarkerInternally(int numOfSteps) throws InvalidParameterException {
-        try {
-            //moves the faith marker
-            faithTrack.moveFaithMarker(numOfSteps);
-            //activates checks vatican report
-            checkVaticanReport();
-        }catch (InvalidParameterException invalidParameterException){
-            throw new InvalidParameterException();
-        }
+        //moves the faith marker
+        faithTrack.moveFaithMarker(numOfSteps);
+        //activates checks vatican report
+        checkVaticanReport();
     }
 
     /**
@@ -170,12 +162,8 @@ public class PersonalBoard {
      * @throws InvalidParameterException
      */
     public void moveFaithMarker(int numOfSteps) throws InvalidParameterException {
-        try {
-            //moves the faith marker
-            faithTrack.moveFaithMarker(numOfSteps);
-        }catch (InvalidParameterException invalidParameterException){
-            throw new InvalidParameterException();
-        }
+        //moves the faith marker
+        faithTrack.moveFaithMarker(numOfSteps);
     }
 
     /**
@@ -183,12 +171,7 @@ public class PersonalBoard {
      * @param tileNumber is the tile to activate
      */
     public void activateVaticanReport(int tileNumber){
-        try{
-            faithTrack.setPopeFavourTiles(tileNumber);
-        }
-        catch (InvalidParameterException invalidParameterException){
-            invalidParameterException.printStackTrace();
-        }
+        faithTrack.setPopeFavourTiles(tileNumber);
     }
 
 }

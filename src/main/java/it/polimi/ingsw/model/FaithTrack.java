@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.InvalidParameterException;
 
+
 import java.util.ArrayList;
 
 /**
@@ -18,7 +19,7 @@ public class FaithTrack {
     private final int nonActive = 0;
     private final int nonActivated = 1;
     private final int active = 2;
-    public ArrayList<Integer> popeFavourTiles;
+    private ArrayList<Integer> popeFavourTiles;
 
     /**
      * this constructor sets the position of the red cross to 0 and each tiles as nonActive
@@ -29,6 +30,7 @@ public class FaithTrack {
         for(int tile = 0; tile < numOfPopeFavourTiles; tile++)
             popeFavourTiles.add(nonActive);
     }
+
 
     /**
      * this method returns the position in the faith track
@@ -45,8 +47,10 @@ public class FaithTrack {
     public void moveFaithMarker(int numOfSteps) throws InvalidParameterException {
         if (numOfSteps >= 0) {
             faithTrackPosition = faithTrackPosition + numOfSteps;
-            if (faithTrackPosition > 20)        // the maximum amount of space in the track is 20
+            if (faithTrackPosition > 20) {      // the maximum amount of space in the track is 20
                 faithTrackPosition = 20;
+                //notifies match
+            }
         }
         else throw new InvalidParameterException();
     }
@@ -57,13 +61,9 @@ public class FaithTrack {
      * @param tileNumber represents the number of the tile
      * @return an int representing the value of the tile
      */
-    public int getPopeFavourTileValue(int tileNumber) throws InvalidParameterException{
-        if(tileNumber > 0 && tileNumber < 4){
-            tileNumber = tileNumber - 1;
-            return popeFavourTiles.get(tileNumber);
-        }
-        else
-            throw new InvalidParameterException();
+    public int getPopeFavourTileValue(int tileNumber){
+        tileNumber = tileNumber - 1;
+        return popeFavourTiles.get(tileNumber);
     }
 
 
@@ -72,17 +72,13 @@ public class FaithTrack {
      * @param tileNumber represents the number of the tile
      * @return true if the tile value is 1 o 2, false if the tile value is 0
      */
-    public boolean getPopeFavourTile(int tileNumber) throws InvalidParameterException{
-        if( tileNumber > 0 && tileNumber < 4) {
-            tileNumber = tileNumber - 1;
-            boolean isTileActive = false;
-            int tileValue = popeFavourTiles.get(tileNumber);
-            if (tileValue == 1 || tileValue == 2)
-                isTileActive = true;
-            return isTileActive;
-        }
-        else
-            throw new InvalidParameterException();
+    public boolean getPopeFavourTile(int tileNumber) {
+        tileNumber = tileNumber - 1;
+        boolean isTileActive = false;
+        int tileValue = popeFavourTiles.get(tileNumber);
+        if (tileValue == 1 || tileValue == 2)
+            isTileActive = true;
+        return isTileActive;
     }
 
     /**
@@ -90,8 +86,7 @@ public class FaithTrack {
      * it checks the position of the red cross on the faith path
      * @param tileNumber represents the number of the tile
      */
-    public void setPopeFavourTiles(int tileNumber) throws InvalidParameterException{
-        if( tileNumber > 0 && tileNumber < 4) {
+    public void setPopeFavourTiles(int tileNumber) {
             tileNumber = tileNumber - 1;
             int firstValueInterval = 4 + (7 * tileNumber);
             int secondValueInterval = 9 + (8 * tileNumber);
@@ -101,9 +96,6 @@ public class FaithTrack {
                 else
                     popeFavourTiles.set(tileNumber, nonActivated);
             }
-        }
-        else
-            throw new InvalidParameterException();
     }
 
     /**

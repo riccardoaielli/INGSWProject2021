@@ -10,6 +10,7 @@ public class Match {
     private ArrayList<Player> players;
     private boolean lastRound;
 
+
     public void setup(){
 
     }
@@ -34,7 +35,7 @@ public class Match {
         lastRound = true;
     }
 
-    public void endGame(){
+    public void endGame() {
 
     }
 
@@ -52,4 +53,5 @@ public class Match {
         });
         players.stream().filter(x -> x != currentPlayer).forEach(x -> x.getPersonalBoard().checkVaticanReport());
     }
+
 }
