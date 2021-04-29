@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enumerations.Resource;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -11,23 +12,23 @@ class LeaderDiscountTest {
 
     @Test
     void abilityDiscount() {
-        Shield resourcediscount = Shield.getInstance();
+        Resource resourcediscount = Resource.SHIELD;
         Requirement requirement = new Requirement(new ArrayList<>(),new HashMap<>());
         LeaderCard leaderCardTest = new LeaderDiscount(10,requirement,2,resourcediscount);
 
         HashMap<Resource,Integer> resourcesTest = new HashMap<>();
-        resourcesTest.put(Shield.getInstance(),1);
+        resourcesTest.put(Resource.SHIELD,1);
 
         leaderCardTest.abilityDiscount(resourcesTest);
-        assertTrue(resourcesTest.get(Shield.getInstance()) == 0);
+        assertTrue(resourcesTest.get(Resource.SHIELD) == 0);
 
         leaderCardTest.abilityDiscount(resourcesTest);
-        assertTrue(resourcesTest.get(Shield.getInstance()) == 0);
+        assertTrue(resourcesTest.get(Resource.SHIELD) == 0);
 
-        resourcesTest.put(Coin.getInstance(), 4);
-        resourcesTest.put(Shield.getInstance(),3);
+        resourcesTest.put(Resource.COIN, 4);
+        resourcesTest.put(Resource.SHIELD,3);
         leaderCardTest.abilityDiscount(resourcesTest);
-        assertTrue(resourcesTest.get(Shield.getInstance()) == 1);
-        assertTrue(resourcesTest.get(Coin.getInstance()) == 4);
+        assertTrue(resourcesTest.get(Resource.SHIELD) == 1);
+        assertTrue(resourcesTest.get(Resource.COIN) == 4);
     }
 }

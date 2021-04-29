@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enumerations.Resource;
 import it.polimi.ingsw.model.exceptions.InvalidAdditionException;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 import it.polimi.ingsw.model.exceptions.InvalidSwapException;
@@ -16,8 +17,8 @@ class WarehouseDepotsTest {
     void add() {
         WarehouseDepots warehouseDepots = new WarehouseDepots();
         HashMap<Resource, Integer> resourceMap = new HashMap<>();
-        resourceMap.put(Coin.getInstance(),2);
-        resourceMap.put(Shield.getInstance(),1);
+        resourceMap.put(Resource.COIN,2);
+        resourceMap.put(Resource.SHIELD,1);
         try {
             warehouseDepots.add(2, resourceMap);
             assert false;
@@ -25,7 +26,7 @@ class WarehouseDepotsTest {
             assertEquals("More than one resource", e.getMessage());
         }
         //Removing the extra resource, now the resourceMap has only Coin
-        resourceMap.remove(Shield.getInstance());
+        resourceMap.remove(Resource.SHIELD);
 
         //Adding coin to depot number 2
         try {
@@ -45,7 +46,7 @@ class WarehouseDepotsTest {
 
 
         //Testing the same addition after adding a special depot and with the same resource in depot number 2
-        warehouseDepots.addSpecialDepot(Coin.getInstance());
+        warehouseDepots.addSpecialDepot(Resource.COIN);
         try {
             warehouseDepots.add(4, resourceMap);
             assert true;
@@ -69,11 +70,11 @@ class WarehouseDepotsTest {
     void addSpecialDepot() {
         WarehouseDepots warehouseDepots = new WarehouseDepots();
         assertEquals(3, warehouseDepots.getNumDepots());
-        warehouseDepots.addSpecialDepot(Shield.getInstance());
+        warehouseDepots.addSpecialDepot(Resource.SHIELD);
         assertEquals(4, warehouseDepots.getNumDepots());
 
         HashMap<Resource, Integer> resourceMap = new HashMap<>();
-        resourceMap.put(Coin.getInstance(),2);
+        resourceMap.put(Resource.COIN,2);
         try {
             warehouseDepots.add(4, resourceMap);
             assert false;
@@ -89,7 +90,7 @@ class WarehouseDepotsTest {
         HashMap<Resource, Integer> resourceMap1 = new HashMap<>();
 
         //Adding 2 coins to depot 2
-        resourceMap1.put(Coin.getInstance(),2);
+        resourceMap1.put(Resource.COIN,2);
         try {
             warehouseDepots.add(2, resourceMap1);
         } catch (InvalidAdditionException e) {
@@ -97,7 +98,7 @@ class WarehouseDepotsTest {
         }
         //Adding 2 stones to depot 3
         HashMap<Resource, Integer> resourceMap2 = new HashMap<>();
-        resourceMap2.put(Stone.getInstance(),2);
+        resourceMap2.put(Resource.STONE,2);
         try {
             warehouseDepots.add(3, resourceMap2);
         } catch (InvalidAdditionException e) {
@@ -113,9 +114,9 @@ class WarehouseDepotsTest {
 
         //Checking if the resources have been swapped
         Depot depot2 = warehouseDepots.getDepot(2);
-        assertEquals(2, depot2.getMapResource().get(Stone.getInstance()));
+        assertEquals(2, depot2.getMapResource().get(Resource.STONE));
         Depot depot3 = warehouseDepots.getDepot(3);
-        assertEquals(2, depot3.getMapResource().get(Coin.getInstance()));
+        assertEquals(2, depot3.getMapResource().get(Resource.COIN));
 
         //Testing swapping when a resource do not fit a depot
         try {
@@ -144,17 +145,17 @@ class WarehouseDepotsTest {
     void checkAndRemove() {
         WarehouseDepots warehouseDepots = new WarehouseDepots();
         HashMap<Resource, Integer> resourceMap1 = new HashMap<>();
-        resourceMap1.put(Shield.getInstance(), 4);
-        resourceMap1.put(Coin.getInstance(), 2);
+        resourceMap1.put(Resource.SHIELD, 4);
+        resourceMap1.put(Resource.COIN, 2);
 
         HashMap<Resource, Integer> resourceMap2 = new HashMap<>();
-        resourceMap2.put(Shield.getInstance(), 2);
+        resourceMap2.put(Resource.SHIELD, 2);
         try {
             warehouseDepots.add(2, resourceMap2);
         } catch (InvalidAdditionException e) {
             assert false;
         }
-        warehouseDepots.addSpecialDepot(Shield.getInstance());
+        warehouseDepots.addSpecialDepot(Resource.SHIELD);
         try {
             warehouseDepots.add(4, resourceMap2);
         } catch (InvalidAdditionException e) {
@@ -162,7 +163,7 @@ class WarehouseDepotsTest {
         }
 
         HashMap<Resource, Integer> resourceMap3 = new HashMap<>();
-        resourceMap3.put(Coin.getInstance(), 3);
+        resourceMap3.put(Resource.COIN, 3);
         try {
             warehouseDepots.add(3, resourceMap3);
         } catch (InvalidAdditionException e) {
@@ -179,7 +180,7 @@ class WarehouseDepotsTest {
         assertTrue(warehouseDepots.getDepot(1).getMapResource().isEmpty());
         assertTrue(warehouseDepots.getDepot(2).getMapResource().isEmpty());
         assertTrue(warehouseDepots.getDepot(4).getMapResource().isEmpty());
-        assertEquals(1, warehouseDepots.getDepot(3).getMapResource().get(Coin.getInstance()));
+        assertEquals(1, warehouseDepots.getDepot(3).getMapResource().get(Resource.COIN));
     }
 
     @Test
@@ -188,20 +189,20 @@ class WarehouseDepotsTest {
         HashMap<Resource, Integer> resourceMap1 = new HashMap<>();
         HashMap<Resource, Integer> resourceMap2 = new HashMap<>();
         HashMap<Resource, Integer> resourceMap3 = new HashMap<>();
-        resourceMap1.put(Shield.getInstance(), 2);
+        resourceMap1.put(Resource.SHIELD, 2);
         try {
             warehouseDepots.add(2, resourceMap1);
         } catch (InvalidAdditionException e) {
             assert false;
         }
-        warehouseDepots.addSpecialDepot(Shield.getInstance());
+        warehouseDepots.addSpecialDepot(Resource.SHIELD);
         try {
             warehouseDepots.add(4, resourceMap1);
         } catch (InvalidAdditionException e) {
             assert false;
         }
 
-        resourceMap2.put(Coin.getInstance(), 3);
+        resourceMap2.put(Resource.COIN, 3);
         try {
             warehouseDepots.add(3, resourceMap2);
         } catch (InvalidAdditionException e) {
@@ -216,26 +217,26 @@ class WarehouseDepotsTest {
 
         warehouseDepots.uncheckedRemove(resourceMap3);
         assertTrue(warehouseDepots.getDepot(1).getMapResource().isEmpty());
-        assertEquals(2, warehouseDepots.getDepot(2).getMapResource().get(Shield.getInstance()));
-        assertEquals(3, warehouseDepots.getDepot(3).getMapResource().get(Coin.getInstance()));
-        assertEquals(2, warehouseDepots.getDepot(4).getMapResource().get(Shield.getInstance()));
+        assertEquals(2, warehouseDepots.getDepot(2).getMapResource().get(Resource.SHIELD));
+        assertEquals(3, warehouseDepots.getDepot(3).getMapResource().get(Resource.COIN));
+        assertEquals(2, warehouseDepots.getDepot(4).getMapResource().get(Resource.SHIELD));
     }
 
     @Test
     void resourcesNotAvailable() {
         WarehouseDepots warehouseDepots = new WarehouseDepots();
         HashMap<Resource, Integer> resourceMap1 = new HashMap<>();
-        resourceMap1.put(Servant.getInstance(), 2);
-        resourceMap1.put(Shield.getInstance(), 1);
+        resourceMap1.put(Resource.SERVANT, 2);
+        resourceMap1.put(Resource.SHIELD, 1);
 
         HashMap<Resource, Integer> resourceMap2 = new HashMap<>();
-        resourceMap2.put(Shield.getInstance(), 2);
+        resourceMap2.put(Resource.SHIELD, 2);
         try {
             warehouseDepots.add(2, resourceMap2);
         } catch (InvalidAdditionException e) {
             assert false;
         }
-        warehouseDepots.addSpecialDepot(Shield.getInstance());
+        warehouseDepots.addSpecialDepot(Resource.SHIELD);
         try {
             warehouseDepots.add(4, resourceMap2);
         } catch (InvalidAdditionException e) {
@@ -243,7 +244,7 @@ class WarehouseDepotsTest {
         }
 
         HashMap<Resource, Integer> resourceMap3 = new HashMap<>();
-        resourceMap3.put(Coin.getInstance(), 3);
+        resourceMap3.put(Resource.COIN, 3);
         try {
             warehouseDepots.add(3, resourceMap3);
         } catch (InvalidAdditionException e) {
@@ -265,11 +266,11 @@ class WarehouseDepotsTest {
         assertEquals(0, warehouseDepots.getTotalResources());
 
         HashMap<Resource, Integer> resourceMap1 = new HashMap<>();
-        resourceMap1.put(Servant.getInstance(), 1);
+        resourceMap1.put(Resource.SERVANT, 1);
         HashMap<Resource, Integer> resourceMap2 = new HashMap<>();
-        resourceMap2.put(Shield.getInstance(), 2);
+        resourceMap2.put(Resource.SHIELD, 2);
         HashMap<Resource, Integer> resourceMap3 = new HashMap<>();
-        resourceMap3.put(Stone.getInstance(), 3);
+        resourceMap3.put(Resource.STONE, 3);
         //Adding 8 resources to warehouse depots
         try {
             warehouseDepots.add(1, resourceMap1);
@@ -278,7 +279,7 @@ class WarehouseDepotsTest {
         } catch (InvalidAdditionException e) {
             assert false;
         }
-        warehouseDepots.addSpecialDepot(Shield.getInstance());
+        warehouseDepots.addSpecialDepot(Resource.SHIELD);
         try {
             warehouseDepots.add(4, resourceMap2);
         } catch (InvalidAdditionException e) {
@@ -292,7 +293,7 @@ class WarehouseDepotsTest {
     void moveToFromSpecialDepot() {
         WarehouseDepots warehouseDepots = new WarehouseDepots();
         HashMap<Resource, Integer> resourceMap1 = new HashMap<>();
-        resourceMap1.put(Coin.getInstance(), 3);
+        resourceMap1.put(Resource.COIN, 3);
         //Putting 3 coins to depot 3
         try {
             warehouseDepots.add(3, resourceMap1);
@@ -300,9 +301,9 @@ class WarehouseDepotsTest {
             assert false;
         }
         //Adding special depot
-        warehouseDepots.addSpecialDepot(Coin.getInstance());
+        warehouseDepots.addSpecialDepot(Resource.COIN);
         //Adding 1 coin to special depot
-        resourceMap1.put(Coin.getInstance(), 1);
+        resourceMap1.put(Resource.COIN, 1);
         try {
             warehouseDepots.add(4, resourceMap1);
         } catch (InvalidAdditionException e) {
@@ -356,7 +357,7 @@ class WarehouseDepotsTest {
         }
 
 
-        assertEquals(2, warehouseDepots.getDepot(3).getMapResource().get(Coin.getInstance()));
-        assertEquals(2, warehouseDepots.getDepot(4).getMapResource().get(Coin.getInstance()));
+        assertEquals(2, warehouseDepots.getDepot(3).getMapResource().get(Resource.COIN));
+        assertEquals(2, warehouseDepots.getDepot(4).getMapResource().get(Resource.COIN));
     }
 }

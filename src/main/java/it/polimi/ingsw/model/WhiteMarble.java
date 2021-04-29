@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enumerations.Resource;
+
 import java.util.Map;
 
 public class WhiteMarble extends Marble {

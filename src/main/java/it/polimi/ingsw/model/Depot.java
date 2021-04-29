@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enumerations.Resource;
 import it.polimi.ingsw.model.exceptions.InvalidAdditionException;
-import it.polimi.ingsw.model.exceptions.InvalidRemovalException;
 
 import java.util.HashMap;
 

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enumerations.Resource;
 import it.polimi.ingsw.model.exceptions.InvalidAdditionException;
 import org.junit.jupiter.api.Test;
 
@@ -11,15 +12,15 @@ class DepotTest {
     @Test
     void testCheckResource() {
         Depot depot1 = new Depot(1);
-        assertFalse(depot1.checkResource(Shield.getInstance()));
+        assertFalse(depot1.checkResource(Resource.SHIELD));
         HashMap<Resource, Integer> resourceMap = new HashMap<>();
-        resourceMap.put(Shield.getInstance(), 1);
+        resourceMap.put(Resource.SHIELD, 1);
         try {
             depot1.add(resourceMap);
         } catch (InvalidAdditionException e) {
             assert false;
         }
-        assertTrue(depot1.checkResource(Shield.getInstance()));
+        assertTrue(depot1.checkResource(Resource.SHIELD));
 
     }
 
@@ -27,7 +28,7 @@ class DepotTest {
     void testAdd() {
         Depot depot1 = new Depot(3);
         HashMap<Resource, Integer> resourceMap = new HashMap<>();
-        resourceMap.put(Shield.getInstance(), 2);
+        resourceMap.put(Resource.SHIELD, 2);
         try {
             depot1.add(resourceMap);
         } catch (InvalidAdditionException e) {
@@ -36,7 +37,7 @@ class DepotTest {
 
         //Testing addition when there is another resource in the depot
         resourceMap = new HashMap<>();
-        resourceMap.put(Coin.getInstance(), 1);
+        resourceMap.put(Resource.COIN, 1);
         try {
             depot1.add(resourceMap);
             assert false;
@@ -49,7 +50,7 @@ class DepotTest {
 
         //Adding the maximum permitted limit of Shield
         resourceMap = new HashMap<>();
-        resourceMap.put(Shield.getInstance(), 3);
+        resourceMap.put(Resource.SHIELD, 3);
         try {
             depot1.add(resourceMap);
         } catch (InvalidAdditionException e) {
@@ -58,7 +59,7 @@ class DepotTest {
 
         //Exceeding the limit of Shield in the depot
         resourceMap = new HashMap<>();
-        resourceMap.put(Shield.getInstance(), 1);
+        resourceMap.put(Resource.SHIELD, 1);
         try {
             depot1.add(resourceMap);
         } catch (InvalidAdditionException e) {
@@ -72,7 +73,7 @@ class DepotTest {
         Depot depot = new Depot(3);
         assertEquals(0, depot.getNumberResources());
         HashMap<Resource, Integer> resourceMap = new HashMap<>();
-        resourceMap.put(Servant.getInstance(), 3);
+        resourceMap.put(Resource.SERVANT, 3);
         try {
             depot.add(resourceMap);
         } catch (InvalidAdditionException e) {
@@ -86,11 +87,11 @@ class DepotTest {
     @Test
     void uncheckedRemove() {
         HashMap<Resource, Integer> resourceMap1 = new HashMap<>();
-        resourceMap1.put(Coin.getInstance(), 3);
-        resourceMap1.put(Shield.getInstance(),4);
+        resourceMap1.put(Resource.COIN, 3);
+        resourceMap1.put(Resource.SHIELD,4);
 
         HashMap<Resource, Integer> resourceMap2 = new HashMap<>();
-        resourceMap2.put(Coin.getInstance(),2);
+        resourceMap2.put(Resource.COIN,2);
 
         Depot depot = new Depot(3);
         try {
@@ -101,7 +102,7 @@ class DepotTest {
 
         depot.uncheckedRemove(resourceMap1);
         assertTrue(depot.getMapResource().isEmpty());
-        assertEquals(1, resourceMap1.get(Coin.getInstance()));
-        assertEquals(4, resourceMap1.get(Shield.getInstance()));
+        assertEquals(1, resourceMap1.get(Resource.COIN));
+        assertEquals(4, resourceMap1.get(Resource.SHIELD));
     }
 }

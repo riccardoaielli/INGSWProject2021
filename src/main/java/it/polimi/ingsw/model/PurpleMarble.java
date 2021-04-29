@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enumerations.Resource;
+
 import java.util.Map;
 
 public class PurpleMarble extends Marble {
@@ -26,7 +28,7 @@ public class PurpleMarble extends Marble {
      */
     public void transform (Map<Resource,Integer> resourceMap, FaithTrack faithTrack){
 
-        resourceMap.merge(Servant.getInstance(), value, Integer::sum);
+        resourceMap.merge(Resource.SERVANT, value, Integer::sum);
 
     }
 }

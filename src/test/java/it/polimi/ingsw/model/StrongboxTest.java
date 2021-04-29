@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enumerations.Resource;
 import it.polimi.ingsw.model.exceptions.InvalidRemovalException;
 import org.junit.jupiter.api.Test;
 
@@ -13,25 +14,25 @@ class StrongboxTest {
     void testAdd() {
         Strongbox strongbox1 = new Strongbox();
         HashMap<Resource, Integer> resourceMap = new HashMap<>();
-        resourceMap.put(Shield.getInstance(), 5);
-        resourceMap.put(Stone.getInstance(), 4);
-        resourceMap.put(Coin.getInstance(), 1);
-        resourceMap.put(Servant.getInstance(), 1000);
+        resourceMap.put(Resource.SHIELD, 5);
+        resourceMap.put(Resource.STONE, 4);
+        resourceMap.put(Resource.COIN, 1);
+        resourceMap.put(Resource.SERVANT, 1000);
         strongbox1.add(resourceMap);
 
         //Testing adding a resource when such resource is not in strongbox
-        assertEquals(5, strongbox1.getResourceQuantity(Shield.getInstance()));
-        assertEquals(4, strongbox1.getResourceQuantity(Stone.getInstance()));
-        assertEquals(1, strongbox1.getResourceQuantity(Coin.getInstance()));
-        assertEquals(1000, strongbox1.getResourceQuantity(Servant.getInstance()));
+        assertEquals(5, strongbox1.getResourceQuantity(Resource.SHIELD));
+        assertEquals(4, strongbox1.getResourceQuantity(Resource.STONE));
+        assertEquals(1, strongbox1.getResourceQuantity(Resource.COIN));
+        assertEquals(1000, strongbox1.getResourceQuantity(Resource.SERVANT));
 
 
         //Testing adding a resource already present in strongbox
-        resourceMap.put(Shield.getInstance(), 10);
-        resourceMap.put(Servant.getInstance(), 2000);
+        resourceMap.put(Resource.SHIELD, 10);
+        resourceMap.put(Resource.SERVANT, 2000);
         strongbox1.add(resourceMap);
-        assertEquals(15, strongbox1.getResourceQuantity(Shield.getInstance()));
-        assertEquals(3000, strongbox1.getResourceQuantity(Servant.getInstance()));
+        assertEquals(15, strongbox1.getResourceQuantity(Resource.SHIELD));
+        assertEquals(3000, strongbox1.getResourceQuantity(Resource.SERVANT));
     }
 
 
@@ -39,7 +40,7 @@ class StrongboxTest {
     void testRemove() {
         Strongbox strongbox1 = new Strongbox();
         HashMap<Resource, Integer> resourceMap = new HashMap<>();
-        resourceMap.put(Stone.getInstance(), 10);
+        resourceMap.put(Resource.STONE, 10);
         //Testing the removal of a resource not in strongbox
         try {
             strongbox1.checkAvailability(resourceMap);
@@ -54,20 +55,20 @@ class StrongboxTest {
 
         //removing 6 stones from strongbox1
         resourceMap = new HashMap<>();
-        resourceMap.put(Stone.getInstance(), 6);
+        resourceMap.put(Resource.STONE, 6);
         try {
             strongbox1.checkAvailability(resourceMap);
             strongbox1.uncheckedRemove(resourceMap);
         } catch (InvalidRemovalException e) {
             assert false;
         }
-        assertEquals(4, strongbox1.getResourceQuantity(Stone.getInstance()));
+        assertEquals(4, strongbox1.getResourceQuantity(Resource.STONE));
 
         //Testing the removal of same resources than there are in strongbox
         resourceMap = new HashMap<>();
 
         //removing 4 stones from strongbox1
-        resourceMap.put(Stone.getInstance(), 4);
+        resourceMap.put(Resource.STONE, 4);
         try {
             strongbox1.checkAvailability(resourceMap);
             strongbox1.uncheckedRemove(resourceMap);
@@ -75,15 +76,15 @@ class StrongboxTest {
             assert false;
         }
 
-        assertEquals(0, strongbox1.getResourceQuantity(Stone.getInstance()));
+        assertEquals(0, strongbox1.getResourceQuantity(Resource.STONE));
 
         //Testing the removal of more resources than there are in strongbox
         resourceMap = new HashMap<>();
         //adding 3 coins to strongbox
-        resourceMap.put(Coin.getInstance(), 3);
+        resourceMap.put(Resource.COIN, 3);
         strongbox1.add(resourceMap);
 
-        resourceMap.put(Coin.getInstance(), 10);
+        resourceMap.put(Resource.COIN, 10);
         try {
             strongbox1.checkAvailability(resourceMap);
             strongbox1.uncheckedRemove(resourceMap);
@@ -101,10 +102,10 @@ class StrongboxTest {
         assertEquals(0, strongbox1.getTotalResources());
 
         HashMap<Resource, Integer> resourceMap = new HashMap<>();
-        resourceMap.put(Shield.getInstance(), 3);
-        resourceMap.put(Stone.getInstance(), 2);
-        resourceMap.put(Coin.getInstance(), 7);
-        resourceMap.put(Servant.getInstance(), 3);
+        resourceMap.put(Resource.SHIELD, 3);
+        resourceMap.put(Resource.STONE, 2);
+        resourceMap.put(Resource.COIN, 7);
+        resourceMap.put(Resource.SERVANT, 3);
         strongbox1.add(resourceMap);
 
         assertEquals(15, strongbox1.getTotalResources());

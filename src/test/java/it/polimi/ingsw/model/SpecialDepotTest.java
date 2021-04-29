@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enumerations.Resource;
 import it.polimi.ingsw.model.exceptions.InvalidAdditionException;
 import org.junit.jupiter.api.Test;
 
@@ -11,9 +12,9 @@ class SpecialDepotTest {
 
     @Test
     void add() {
-        SpecialDepot specialDepot1 = new SpecialDepot(Shield.getInstance());
+        SpecialDepot specialDepot1 = new SpecialDepot(Resource.SHIELD);
         HashMap<Resource, Integer> resourceMap = new HashMap<>();
-        resourceMap.put(Coin.getInstance(), 1);
+        resourceMap.put(Resource.COIN, 1);
         try {
             specialDepot1.add(resourceMap);
             assert false;

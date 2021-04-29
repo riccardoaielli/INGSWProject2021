@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enumerations.Resource;
 import it.polimi.ingsw.model.exceptions.NotEnoughWhiteMarblesException;
 import org.junit.jupiter.api.Test;
 

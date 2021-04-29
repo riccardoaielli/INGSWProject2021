@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enumerations.Resource;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -30,6 +31,6 @@ class GreyMarbleTest {
 
         greyMarble.transform(resourceMap, faithTrack);
 
-        assertEquals(1, resourceMap.get(Stone.getInstance()));
+        assertEquals(1, resourceMap.get(Resource.STONE));
     }
 }
