@@ -55,7 +55,7 @@ class DevelopmentCardSpaceTest {
         DevelopmentCardSpace developmentCardSpace= new DevelopmentCardSpace();
 
         ArrayList<CardRequirement> requirements = new ArrayList<>();
-        Integer levelRequirement = null;
+        Integer levelRequirement = 0;
         CardRequirement singleRequirement = new CardRequirement(color,levelRequirement);
         requirements.add(singleRequirement);
 
