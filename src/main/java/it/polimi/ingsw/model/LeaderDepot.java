@@ -14,22 +14,8 @@ public class LeaderDepot extends LeaderCard{
     }
 
     @Override
-    public void abilityDiscount(HashMap<Resource, Integer> resources) {
-
-    }
-
-    @Override
     public void abilityDepot(WarehouseDepots warehouseDepots) {
         warehouseDepots.addSpecialDepot(specialDepotResource);
     }
 
-    @Override
-    public void abilityMarble(HashMap<Marble, Integer> temporaryMapMarble, int numOfTransformation) throws NotEnoughWhiteMarblesException {
-
-    }
-
-    @Override
-    public HashMap<Resource,Integer> abilityProduction() {
-        return null;
-    }
 }
