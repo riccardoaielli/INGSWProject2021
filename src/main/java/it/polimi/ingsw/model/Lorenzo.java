@@ -11,7 +11,7 @@ public class Lorenzo {
     private Stack<SoloActionToken> soloActionTokenStack;
     private Stack<SoloActionToken> soloActionTokenUsedStack;
     private SoloActionToken currentActionToken;
-    //private CardGrid cardGrid;
+    private CardGrid cardGrid;
 
 
     /**
@@ -19,7 +19,7 @@ public class Lorenzo {
      */
     public Lorenzo(CardGrid cardGrid){
 
-        //this.cardGrid = cardGrid;
+        this.cardGrid = cardGrid;
         soloActionTokenStack = new Stack<>();
         soloActionTokenUsedStack = new Stack<>();
 
