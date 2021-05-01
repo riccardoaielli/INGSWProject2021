@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumerations.Resource;
+import it.polimi.ingsw.model.exceptions.InvalidLeaderAction;
 import it.polimi.ingsw.model.exceptions.NotEnoughWhiteMarblesException;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ class LeaderMarbleTest {
     void abilityMarble() {
 
         BlueMarble marbleTest = BlueMarble.getInstance();
-        Requirement requirement = new Requirement(new ArrayList<CardRequirement>(),new HashMap<Resource,Integer>());
+        Requirement requirement = new Requirement(new ArrayList<>(),new HashMap<>());
         LeaderCard leaderCardTest = new LeaderMarble(10,requirement,marbleTest);
 
         HashMap<Marble,Integer> marblesTest = new HashMap<>();
@@ -29,6 +30,9 @@ class LeaderMarbleTest {
             leaderCardTest.abilityMarble(marblesTest, 3);
         }catch (NotEnoughWhiteMarblesException exception){
             assert true;
+        }
+        catch (InvalidLeaderAction excaption){
+            assert false;
         }
         assertEquals(marblesTest.get(WhiteMarble.getInstance()), 2);
         assertEquals(marblesTest.get(BlueMarble.getInstance()), 5);

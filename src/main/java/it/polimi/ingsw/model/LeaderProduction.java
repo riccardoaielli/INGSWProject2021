@@ -6,33 +6,18 @@ import it.polimi.ingsw.model.exceptions.NotEnoughWhiteMarblesException;
 import java.util.HashMap;
 
 public class LeaderProduction extends LeaderCard{
-    private HashMap<Resource, Integer> cost;
+    private PowerOfProduction powerOfProduction;
 
-    public LeaderProduction(int victoryPoints, Requirement requirement, HashMap<Resource, Integer> cost) {
+    public LeaderProduction(int victoryPoints, Requirement requirement, PowerOfProduction powerOfProduction) {
         super(victoryPoints, requirement);
-        this.cost = cost;
-    }
-
-    @Override
-    public void abilityDiscount(HashMap<Resource, Integer> resources) {
-
-    }
-
-    @Override
-    public void abilityDepot(WarehouseDepots warehouseDepots) {
-
-    }
-
-    @Override
-    public void abilityMarble(HashMap<Marble, Integer> temporaryMapMarble, int numOfTransformation) throws NotEnoughWhiteMarblesException {
-
+        this.powerOfProduction = powerOfProduction;
     }
 
     /**
      * @return the power of production of the leader card
      */
     @Override
-    public HashMap<Resource, Integer> abilityProduction() {
-        return new HashMap<Resource,Integer>(cost);
+    public PowerOfProduction abilityProduction() {
+        return powerOfProduction;
     }
 }

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumerations.Resource;
-import it.polimi.ingsw.model.exceptions.NotEnoughWhiteMarblesException;
 
 import java.util.HashMap;
 
@@ -28,18 +27,4 @@ public class LeaderDiscount extends LeaderCard{
             resources.replace(resourceDiscounted,0);
     }
 
-    @Override
-    public void abilityDepot(WarehouseDepots warehouseDepots) {
-
-    }
-
-    @Override
-    public void abilityMarble(HashMap<Marble, Integer> temporaryMapMarble, int numOfTransformation) throws NotEnoughWhiteMarblesException {
-
-    }
-
-    @Override
-    public HashMap<Resource,Integer> abilityProduction() {
-        return null;
-    }
 }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumerations.Resource;
+import it.polimi.ingsw.model.exceptions.InvalidLeaderAction;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -18,17 +19,20 @@ class LeaderDiscountTest {
 
         HashMap<Resource,Integer> resourcesTest = new HashMap<>();
         resourcesTest.put(Resource.SHIELD,1);
+        try {
+            leaderCardTest.abilityDiscount(resourcesTest);
+            assertTrue(resourcesTest.get(Resource.SHIELD) == 0);
 
-        leaderCardTest.abilityDiscount(resourcesTest);
-        assertTrue(resourcesTest.get(Resource.SHIELD) == 0);
+            leaderCardTest.abilityDiscount(resourcesTest);
+            assertTrue(resourcesTest.get(Resource.SHIELD) == 0);
 
-        leaderCardTest.abilityDiscount(resourcesTest);
-        assertTrue(resourcesTest.get(Resource.SHIELD) == 0);
-
-        resourcesTest.put(Resource.COIN, 4);
-        resourcesTest.put(Resource.SHIELD,3);
-        leaderCardTest.abilityDiscount(resourcesTest);
-        assertTrue(resourcesTest.get(Resource.SHIELD) == 1);
-        assertTrue(resourcesTest.get(Resource.COIN) == 4);
+            resourcesTest.put(Resource.COIN, 4);
+            resourcesTest.put(Resource.SHIELD,3);
+            leaderCardTest.abilityDiscount(resourcesTest);
+            assertTrue(resourcesTest.get(Resource.SHIELD) == 1);
+            assertTrue(resourcesTest.get(Resource.COIN) == 4);
+        }catch (InvalidLeaderAction exception){
+            assert false;
+        }
     }
 }

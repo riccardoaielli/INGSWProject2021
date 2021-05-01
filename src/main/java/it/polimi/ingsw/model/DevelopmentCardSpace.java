@@ -81,7 +81,7 @@ public class DevelopmentCardSpace {
     }
 
     /**
-     * this method check if a card in the card space matches a combination of level and color, the level can be null
+     * this method check if a card in the card space matches a combination of level and color, the level is 0 when it is not requested a specific level
      * @param color is the color to match
      * @param level is the level to match
      * @return true if it finds a match
@@ -92,9 +92,9 @@ public class DevelopmentCardSpace {
 
         while(stack < cards.size()){
             singleStack = cards.get(stack);
-            if(level != null && singleStack.stream().filter(x -> x.getColor() == color && x.getLevel() == level).count() > 0)
+            if(level != 0 && singleStack.stream().filter(x -> x.getColor() == color && x.getLevel() == level).count() > 0)
                 return true;
-            if(level == null && singleStack.stream().filter(x -> x.getColor() == color).count() > 0)
+            if(level == 0 && singleStack.stream().filter(x -> x.getColor() == color).count() > 0)
                 return true;
             stack++;
         }

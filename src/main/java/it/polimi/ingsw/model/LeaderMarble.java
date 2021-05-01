@@ -15,16 +15,6 @@ public class LeaderMarble extends LeaderCard{
         this.whiteMarble = WhiteMarble.getInstance();
     }
 
-    @Override
-    public void abilityDiscount(HashMap<Resource, Integer> resources) {
-
-    }
-
-    @Override
-    public void abilityDepot(WarehouseDepots warehouseDepots) {
-
-    }
-
     /**
      * this method transform a number of white marbles from a map of marbles
      * @param temporaryMapMarble represents the map of marbles that contains the white marbles to transform
@@ -42,8 +32,4 @@ public class LeaderMarble extends LeaderCard{
         }
     }
 
-    @Override
-    public HashMap<Resource,Integer> abilityProduction() {
-        return null;
-    }
 }
