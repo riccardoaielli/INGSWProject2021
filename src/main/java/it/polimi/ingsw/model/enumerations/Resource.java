@@ -1,38 +1,32 @@
 package it.polimi.ingsw.model.enumerations;
 
+import it.polimi.ingsw.model.FaithTrack;
+import it.polimi.ingsw.model.exceptions.InvalidParameterException;
+
+import java.util.Map;
+
 /**
  * This class represents the abstract resource
  */
 public enum Resource {
     COIN{
-        @Override
-        void dispatch() {
-            System.out.println("COIN");
-        }
     },
     SHIELD{
-        @Override
-        void dispatch() {
-            System.out.println("SHIELD");
-        }
     },
     SERVANT{
-        @Override
-        void dispatch() {
-            System.out.println("SERVANT");
-        }
     },
     STONE{
-        @Override
-        void dispatch() {
-            System.out.println("STONE");
-        }
     },
     FAITH{
         @Override
-        void dispatch() {
-            System.out.println("FAITH");
+        public void dispatch(Map<Resource, Integer> resourceMap, FaithTrack faithTrack) {
+            try {
+                faithTrack.moveFaithMarker(resourceMap.get(FAITH));
+            } catch (InvalidParameterException ignored) {
+            }
+            resourceMap.remove(FAITH);
         }
     };
-    abstract  void dispatch();
+    public void dispatch(Map<Resource, Integer> resourceMap, FaithTrack faithTrack){
+    }
 }
