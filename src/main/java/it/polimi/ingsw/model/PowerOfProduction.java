@@ -26,17 +26,17 @@ public class PowerOfProduction {
 
 
     /**
-     * @return an HashMap of resources that represents the cost of the production
+     * @return a copy of an HashMap of resources that represents the cost of the production
      */
     public HashMap<Resource, Integer> getCost() {
-        return cost;
+        return new HashMap<>(cost);
     }
 
     /**
-     * @return an HashMap of resources that represents the resources produced by the production process
+     * @return a copy of  an HashMap of resources that represents the resources produced by the production process
      */
     public HashMap<Resource, Integer> getProduction() {
-        return production;
+        return new HashMap<>(production);
     }
 
     /**
