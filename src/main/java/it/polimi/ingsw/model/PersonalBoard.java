@@ -18,13 +18,14 @@ public class PersonalBoard {
     private Strongbox strongbox;
     private WarehouseDepots warehouseDepots;
     private Market market;
+    private CardGrid cardGrid;
     private DevelopmentCardSpace developmentCardSpace;
     //Array of booleans used to check if a powerOfProduction has already been used in the same turn
     private Boolean[] powerOfProductionUsed = new Boolean[TOTPOWERPRODUCTIONS];
 
     public PersonalBoard(ArrayList<LeaderCard> leaderCards, Match match) {
-        //this.market = match.getMarket();
-        //this.cardGrid = match.getCardGrid();
+        this.market = match.getMarket();
+        this.cardGrid = match.getCardGrid();
         this.leaderCards = leaderCards;
         this.faithTrack = new FaithTrack();
         this.match = match;
@@ -226,7 +227,7 @@ public class PersonalBoard {
     /**
      * This method moves the faith marker and activates the vatican report if necessary
      * @param numOfSteps is the number of steps to make on the faith track
-     * @throws InvalidParameterException
+     * @throws InvalidParameterException when numOfSteps is negative
      */
     private void moveFaithMarkerInternally(int numOfSteps) throws InvalidParameterException {
         //moves the faith marker
@@ -238,7 +239,7 @@ public class PersonalBoard {
     /**
      * This method moves the faith marker without checking for the vatican report
      * @param numOfSteps is the number of steps to make on the faith track
-     * @throws InvalidParameterException
+     * @throws InvalidParameterException when numOfSteps is negative
      */
     public void moveFaithMarker(int numOfSteps) throws InvalidParameterException {
         //moves the faith marker

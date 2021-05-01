@@ -2,11 +2,20 @@ package it.polimi.ingsw.model;
 
 public class Player {
     private final String nickname;
-    private final PersonalBoard personalBoard;
+    private  PersonalBoard personalBoard;
+    private boolean connected;
 
-    public Player(String nickname, PersonalBoard personalBoard) {
+    public Player(String nickname,PersonalBoard personalBoard) {//passiamo una personal board gia costruita
         this.nickname = nickname;
         this.personalBoard = personalBoard;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
     }
 
     public PersonalBoard getPersonalBoard() {
