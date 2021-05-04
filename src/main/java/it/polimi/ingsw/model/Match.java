@@ -25,9 +25,13 @@ public class Match {
     private MatchPhase matchPhase;
     private Market market;
     private CardGrid cardGrid;
+    private ArrayList<Player> rank;
 
-
-
+    /**
+     * This constructor creates a match deserializing all the leader cards and creating the market and the cardgrind
+     * @param matchID an int that identifies the match
+     * @param numOfPlayer the number of players that will join the match
+     */
     public Match(int matchID, int numOfPlayer) {
         this.matchID = matchID;
         this.numOfPlayers = numOfPlayer;
@@ -48,7 +52,7 @@ public class Match {
      */
     private void loadLeaderCards(){
         Gson gson = new Gson();
-        String path = "src/main/java/it/polimi/ingsw/model/resources/LeaderCards.json";
+        String path = "src/main/java/it/polimi/ingsw/model/resources/leaderCards.json";
 
         Reader reader = null;
         try {
@@ -77,32 +81,46 @@ public class Match {
             players.add(new Player(nickName, new PersonalBoard(drawedLeaderCards, this)));
             numOfPlayersReady++;
             //when ready players reaches the number of players for the match the game starts
-            if (numOfPlayers == numOfPlayersReady)
+            if (numOfPlayers == numOfPlayersReady) {
                 matchPhase = MatchPhase.STANDARDROUND;
+            }
         }
         else
             throw new InvalidNickName();
     }
 
+    /**
+     * This method gives access to the market
+     * @return the market of the match
+     */
     public Market getMarket() {
         return market;
     }
 
+    /**
+     * This method gives access to the card grid
+     * @return the card grind of the match
+     */
     public CardGrid getCardGrid() {
         return cardGrid;
     }
 
-    public void setup(){
-
-    }
-
-    public void endTurn(){
-
-    }
-
+    /**
+     * This method is use to end every turn, it changes the current player and ends the game if the last round ends
+     */
     public void nextPlayer(){
+        if(matchPhase == MatchPhase.LASTROUND && ((players.indexOf(currentPlayer) + 1) == numOfPlayers)){
+            endGame();
+        }
+        else{
+            currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % numOfPlayers);
+        }
     }
 
+    /**
+     * This method is called to know the player that's playing the turn
+     * @return the Player currently playing
+     */
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
@@ -124,8 +142,12 @@ public class Match {
     }
 
     public void endGame() {
-
+        players.forEach(x -> x.getPersonalBoard().sumVictoryPoints());
+        rank = new ArrayList<>(players);
+        Collections.sort(rank, new CustomPlayerComparator());
+        matchPhase = MatchPhase.GAMEOVER;
     }
+
 
     /**
      * This method moves the faith marker for all the players out of the current player
@@ -142,4 +164,11 @@ public class Match {
         players.stream().filter(x -> x != currentPlayer).forEach(x -> x.getPersonalBoard().checkVaticanReport());
     }
 
+    public MatchPhase getMatchPhase() {
+        return matchPhase;
+    }
+
+    public ArrayList<Player> getRank() {
+        return rank;
+    }
 }

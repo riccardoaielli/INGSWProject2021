@@ -5,7 +5,7 @@ public class Player {
     private  PersonalBoard personalBoard;
     private boolean connected;
 
-    public Player(String nickname,PersonalBoard personalBoard) {//passiamo una personal board gia costruita
+    public Player(String nickname,PersonalBoard personalBoard) {
         this.nickname = nickname;
         this.personalBoard = personalBoard;
     }
@@ -14,7 +14,7 @@ public class Player {
         return nickname;
     }
 
-    public void setConnected(boolean connected) {
+    public void setConnection(boolean connected) {
         this.connected = connected;
     }
 
