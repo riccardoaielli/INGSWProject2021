@@ -79,16 +79,30 @@ public class Match {
                 drawedLeaderCards.add(leaderCards.pop());
             //creates the player and its personal board
             players.add(new Player(nickName, new PersonalBoard(drawedLeaderCards, this)));
-            numOfPlayersReady++;
-            //when ready players reaches the number of players for the match the game starts
-            if (numOfPlayers == numOfPlayersReady) {
-                matchPhase = MatchPhase.STANDARDROUND;
-            }
+            //updates the number of players ready
+            addPlayerReady();
         }
         else
             throw new InvalidNickName();
     }
 
+    /**
+     * This method is used to count the players that played their turn in phases in which players dont have to follow an order
+     */
+    public synchronized void addPlayerReady(){
+        numOfPlayersReady++;
+        if(numOfPlayers == numOfPlayersReady){
+            switch (matchPhase){
+                case SETUP:
+                    matchPhase = MatchPhase.LEADERCHOICE;
+                    numOfPlayersReady = 0;
+                case LEADERCHOICE:
+                    matchPhase = MatchPhase.RESOURCECHOICE;
+                    numOfPlayersReady = 0;
+                    Collections.shuffle(players);
+            }
+        }
+    }
     /**
      * This method gives access to the market
      * @return the market of the match
@@ -109,9 +123,14 @@ public class Match {
      * This method is use to end every turn, it changes the current player and ends the game if the last round ends
      */
     public void nextPlayer(){
+        //changes from resource choice phase to standard round phase
+        if(matchPhase == MatchPhase.RESOURCECHOICE && ((players.indexOf(currentPlayer) + 1) == numOfPlayers))
+            matchPhase = MatchPhase.STANDARDROUND;
+        //at the end of the last round ends the game
         if(matchPhase == MatchPhase.LASTROUND && ((players.indexOf(currentPlayer) + 1) == numOfPlayers)){
             endGame();
         }
+        //changes the current player to the next player
         else{
             currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % numOfPlayers);
         }
@@ -141,6 +160,9 @@ public class Match {
             matchPhase = MatchPhase.LASTROUND;
     }
 
+    /**
+     * This method ends the game calculating the victory points from each player and ranking the players
+     */
     public void endGame() {
         players.forEach(x -> x.getPersonalBoard().sumVictoryPoints());
         rank = new ArrayList<>(players);
