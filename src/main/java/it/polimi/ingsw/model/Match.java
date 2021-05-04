@@ -48,7 +48,7 @@ public class Match {
      */
     private void loadLeaderCards(){
         Gson gson = new Gson();
-        String path = "src/main/java/it/polimi/ingsw/model/resources/LeaderCards.json";
+        String path = "src/main/java/it/polimi/ingsw/model/resources/leaderCards.json";
 
         Reader reader = null;
         try {

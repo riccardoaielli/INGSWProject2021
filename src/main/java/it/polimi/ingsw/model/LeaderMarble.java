@@ -1,18 +1,18 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.enumerations.Resource;
+import it.polimi.ingsw.model.enumerations.Marble;
 import it.polimi.ingsw.model.exceptions.NotEnoughWhiteMarblesException;
 
 import java.util.HashMap;
 
 public class LeaderMarble extends LeaderCard{
     private Marble marble;
-    private WhiteMarble whiteMarble;
+    private Marble whiteMarble;
 
     public LeaderMarble(int victoryPoints, Requirement requirement, Marble marble) {
         super(victoryPoints, requirement);
         this.marble = marble;
-        this.whiteMarble = WhiteMarble.getInstance();
+        this.whiteMarble = Marble.WHITEMARBLE;
     }
 
     /**

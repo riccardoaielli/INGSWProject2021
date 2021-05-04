@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enumerations.Marble;
+
 import java.util.*;
 
 /**
@@ -24,16 +26,16 @@ public class Market {
 
         // filling the stack with all needed marbles
         for (i=0; i<4 ; i++){
-            marbleStack.push(WhiteMarble.getInstance());
+            marbleStack.push(Marble.WHITEMARBLE);
         }
 
         for (i=0; i<2 ; i++){
-            marbleStack.push(BlueMarble.getInstance());
-            marbleStack.push(YellowMarble.getInstance());
-            marbleStack.push(GreyMarble.getInstance());
-            marbleStack.push(PurpleMarble.getInstance());
+            marbleStack.push(Marble.BLUEMARBLE);
+            marbleStack.push(Marble.YELLOWMARBLE);
+            marbleStack.push(Marble.GREYMARBLE);
+            marbleStack.push(Marble.PURPLEMARBLE);
         }
-        marbleStack.push(RedMarble.getInstance());
+        marbleStack.push(Marble.REDMARBLE);
 
         // randomizing marbleStack
         Collections.shuffle(marbleStack);
