@@ -1,0 +1,86 @@
+[
+  {
+    "victoryPoints": 4,
+    "requirement": {
+      "cardRequirement": [
+        {
+          "color": "BLUE",
+          "level": 2
+        }
+      ],
+      "resourceRequirement": null
+    },
+    "active": false,
+    "powerOfProduction": {
+      "cost": {
+        "SERVANT": 1
+      },
+      "production": {
+        "FAITH": 1
+      }
+    }
+  },
+  {
+    "victoryPoints": 4,
+    "requirement": {
+      "cardRequirement": [
+        {
+          "color": "YELLOW",
+          "level": 2
+        }
+      ],
+      "resourceRequirement": null
+    },
+    "active": false,
+    "powerOfProduction": {
+      "cost": {
+        "SHIELD": 1
+      },
+      "production": {
+        "FAITH": 1
+      }
+    }
+  },
+  {
+    "victoryPoints": 4,
+    "requirement": {
+      "cardRequirement": [
+        {
+          "color": "GREEN",
+          "level": 2
+        }
+      ],
+      "resourceRequirement": null
+    },
+    "active": false,
+    "powerOfProduction": {
+      "cost": {
+        "COIN": 1
+      },
+      "production": {
+        "FAITH": 1
+      }
+    }
+  },
+  {
+    "victoryPoints": 4,
+    "requirement": {
+      "cardRequirement": [
+        {
+          "color": "PURPLE",
+          "level": 2
+        }
+      ],
+      "resourceRequirement": null
+    },
+    "active": false,
+    "powerOfProduction": {
+      "cost": {
+        "STONE": 1
+      },
+      "production": {
+        "FAITH": 1
+      }
+    }
+  }
+]

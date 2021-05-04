@@ -1,0 +1,46 @@
+[
+  {
+    "victoryPoints": 3,
+    "requirement": {
+      "cardRequirement": null,
+      "resourceRequirement": {
+        "STONE": 5
+      }
+    },
+    "active": false,
+    "specialDepotResource": "SERVANT"
+  },
+  {
+    "victoryPoints": 3,
+    "requirement": {
+      "cardRequirement": null,
+      "resourceRequirement": {
+        "SERVANT": 5
+      }
+    },
+    "active": false,
+    "specialDepotResource": "SHIELD"
+  },
+  {
+    "victoryPoints": 3,
+    "requirement": {
+      "cardRequirement": null,
+      "resourceRequirement": {
+        "COIN": 5
+      }
+    },
+    "active": false,
+    "specialDepotResource": "STONE"
+  },
+  {
+    "victoryPoints": 3,
+    "requirement": {
+      "cardRequirement": null,
+      "resourceRequirement": {
+        "SHIELD": 5
+      }
+    },
+    "active": false,
+    "specialDepotResource": "COIN"
+  }
+]

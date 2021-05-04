@@ -1,0 +1,94 @@
+[
+  {
+    "victoryPoints": 5,
+    "requirement": {
+      "cardRequirement": [
+        {
+          "color": "GREEN",
+          "level": 0
+        },
+        {
+          "color": "GREEN",
+          "level": 0
+        },
+        {
+          "color": "PURPLE",
+          "level": 0
+        }
+      ],
+      "resourceRequirement": null
+    },
+    "active": false,
+    "marble": "BLUEMARBLE",
+    "whiteMarble": "WHITEMARBLE"
+  },
+  {
+    "victoryPoints": 5,
+    "requirement": {
+      "cardRequirement": [
+        {
+          "color": "YELLOW",
+          "level": 0
+        },
+        {
+          "color": "YELLOW",
+          "level": 0
+        },
+        {
+          "color": "BLUE",
+          "level": 0
+        }
+      ],
+      "resourceRequirement": null
+    },
+    "active": false,
+    "marble": "PURPLEMARBLE",
+    "whiteMarble": "WHITEMARBLE"
+  },
+  {
+    "victoryPoints": 5,
+    "requirement": {
+      "cardRequirement": [
+        {
+          "color": "BLUE",
+          "level": 0
+        },
+        {
+          "color": "BLUE",
+          "level": 0
+        },
+        {
+          "color": "YELLOW",
+          "level": 0
+        }
+      ],
+      "resourceRequirement": null
+    },
+    "active": false,
+    "marble": "GREYMARBLE",
+    "whiteMarble": "WHITEMARBLE"
+  },
+  {
+    "victoryPoints": 5,
+    "requirement": {
+      "cardRequirement": [
+        {
+          "color": "PURPLE",
+          "level": 0
+        },
+        {
+          "color": "PURPLE",
+          "level": 0
+        },
+        {
+          "color": "GREEN",
+          "level": 0
+        }
+      ],
+      "resourceRequirement": null
+    },
+    "active": false,
+    "marble": "YELLOWMARBLE",
+    "whiteMarble": "WHITEMARBLE"
+  }
+]

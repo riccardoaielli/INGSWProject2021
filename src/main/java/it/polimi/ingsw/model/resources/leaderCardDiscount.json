@@ -1,0 +1,78 @@
+[
+  {
+    "victoryPoints": 2,
+    "requirement": {
+      "cardRequirement": [
+        {
+          "color": "YELLOW",
+          "level": 1
+        },
+        {
+          "color": "GREEN",
+          "level": 1
+        }
+      ],
+      "resourceRequirement": null
+    },
+    "active": false,
+    "discount": 1,
+    "resourceDiscounted": "SERVANT"
+  },
+  {
+    "victoryPoints": 2,
+    "requirement": {
+      "cardRequirement": [
+        {
+          "color": "BLUE",
+          "level": 1
+        },
+        {
+          "color": "PURPLE",
+          "level": 1
+        }
+      ],
+      "resourceRequirement": null
+    },
+    "active": false,
+    "discount": 1,
+    "resourceDiscounted": "SHIELD"
+  },
+  {
+    "victoryPoints": 2,
+    "requirement": {
+      "cardRequirement": [
+        {
+          "color": "YELLOW",
+          "level": 1
+        },
+        {
+          "color": "PURPLE",
+          "level": 1
+        }
+      ],
+      "resourceRequirement": null
+    },
+    "active": false,
+    "discount": 1,
+    "resourceDiscounted": "COIN"
+  },
+  {
+    "victoryPoints": 2,
+    "requirement": {
+      "cardRequirement": [
+        {
+          "color": "GREEN",
+          "level": 1
+        },
+        {
+          "color": "BLUE",
+          "level": 1
+        }
+      ],
+      "resourceRequirement": null
+    },
+    "active": false,
+    "discount": 1,
+    "resourceDiscounted": "STONE"
+  }
+]
