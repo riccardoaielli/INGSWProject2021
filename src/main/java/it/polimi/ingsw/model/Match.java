@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.Stack;
 
 
-public class Match {
+public class Match implements EndGameConditionsObserver{
     private int matchID;
     private final int numOfPlayers;
     private int numOfPlayersReady;
@@ -25,9 +25,13 @@ public class Match {
     private MatchPhase matchPhase;
     private Market market;
     private CardGrid cardGrid;
+    private ArrayList<Player> rank;
 
-
-
+    /**
+     * This constructor creates a match deserializing all the leader cards and creating the market and the cardgrind
+     * @param matchID an int that identifies the match
+     * @param numOfPlayer the number of players that will join the match
+     */
     public Match(int matchID, int numOfPlayer) {
         this.matchID = matchID;
         this.numOfPlayers = numOfPlayer;
@@ -75,36 +79,77 @@ public class Match {
                 drawedLeaderCards.add(leaderCards.pop());
             //creates the player and its personal board
             players.add(new Player(nickName, new PersonalBoard(drawedLeaderCards, this)));
-            numOfPlayersReady++;
-            //when ready players reaches the number of players for the match the game starts
-            if (numOfPlayers == numOfPlayersReady)
-                matchPhase = MatchPhase.STANDARDROUND;
+            //updates the number of players ready
+            addPlayerReady();
         }
         else
             throw new InvalidNickName();
     }
 
+    /**
+     * This method is used to count the players that played their turn in phases in which players dont have to follow an order
+     */
+    public synchronized void addPlayerReady(){
+        numOfPlayersReady++;
+        if(numOfPlayers == numOfPlayersReady){
+            switch (matchPhase){
+                case SETUP:
+                    matchPhase = MatchPhase.LEADERCHOICE;
+                    numOfPlayersReady = 0;
+                case LEADERCHOICE:
+                    matchPhase = MatchPhase.RESOURCECHOICE;
+                    numOfPlayersReady = 0;
+                    Collections.shuffle(players);
+            }
+        }
+    }
+    /**
+     * This method gives access to the market
+     * @return the market of the match
+     */
     public Market getMarket() {
         return market;
     }
 
+    /**
+     * This method gives access to the card grid
+     * @return the card grind of the match
+     */
     public CardGrid getCardGrid() {
         return cardGrid;
     }
 
-    public void setup(){
-
-    }
-
-    public void endTurn(){
-
-    }
-
+    /**
+     * This method is use to end every turn, it changes the current player and ends the game if the last round ends
+     */
     public void nextPlayer(){
+        //changes from resource choice phase to standard round phase
+        if(matchPhase == MatchPhase.RESOURCECHOICE && ((players.indexOf(currentPlayer) + 1) == numOfPlayers))
+            matchPhase = MatchPhase.STANDARDROUND;
+        //at the end of the last round ends the game
+        if(matchPhase == MatchPhase.LASTROUND && ((players.indexOf(currentPlayer) + 1) == numOfPlayers)){
+            endGame();
+        }
+        //changes the current player to the next player
+        else{
+            currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % numOfPlayers);
+        }
     }
 
+    /**
+     * This method is called to know the player that's playing the turn
+     * @return the Player currently playing
+     */
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public Player getPlayer(String nickname) throws InvalidNickName{
+        for(Player player : players){
+            if(player.getNickname().equals(nickname))
+                return player;
+        }
+        throw new InvalidNickName();
     }
 
     /**
@@ -115,17 +160,17 @@ public class Match {
         players.forEach(x -> x.getPersonalBoard().activateVaticanReport(tileNumber));
     }
 
+
     /**
-     * This method is called by the faithTracks and by the developmentCardSpaces when they reaches the condition to end the game
+     * This method ends the game calculating the victory points from each player and ranking the players
      */
-    public void setLastRound() {
-        if(matchPhase == MatchPhase.STANDARDROUND)
-            matchPhase = MatchPhase.LASTROUND;
-    }
-
     public void endGame() {
-
+        players.forEach(x -> x.getPersonalBoard().sumVictoryPoints());
+        rank = new ArrayList<>(players);
+        Collections.sort(rank, new CustomPlayerComparator());
+        matchPhase = MatchPhase.GAMEOVER;
     }
+
 
     /**
      * This method moves the faith marker for all the players out of the current player
@@ -142,4 +187,20 @@ public class Match {
         players.stream().filter(x -> x != currentPlayer).forEach(x -> x.getPersonalBoard().checkVaticanReport());
     }
 
+    public MatchPhase getMatchPhase() {
+        return matchPhase;
+    }
+
+    public ArrayList<Player> getRank() {
+        return rank;
+    }
+
+/**
+ * This method is called by the faithTracks and by the developmentCardSpaces when they reaches the condition to end the game
+ */
+    @Override
+    public void update() {
+        if(matchPhase == MatchPhase.STANDARDROUND)
+            matchPhase = MatchPhase.LASTROUND;
+    }
 }

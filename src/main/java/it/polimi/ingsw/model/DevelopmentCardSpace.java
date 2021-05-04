@@ -10,12 +10,12 @@ import java.util.ArrayList;
 /**
  * This class represents the slots of development cards that each player has on its personal board
  */
-public class DevelopmentCardSpace {
+public class DevelopmentCardSpace implements Observable<EndGameConditionsObserver>{
     //Each of the three stack of cards is stored in an ArrayList and they are collected in another ArrayList
     private ArrayList<ArrayList<DevelopmentCard>> cards;
     private final int numOfStacks = 3;
     private int numOfcards;
-    private Match matchToNotify;
+    private EndGameConditionsObserver matchToNotify;
 
 
     /**
@@ -28,16 +28,6 @@ public class DevelopmentCardSpace {
         }
         numOfcards = 0;
     }
-
-    /**
-     * This method sets the match to notify and is called after the constructor of the class
-     * @param matchToNotify is the match that this class has to notify when reaches 7 cards
-     */
-    public void AddMatchToNotify(Match matchToNotify){
-        this.matchToNotify = matchToNotify;
-    }
-
-
 
     /**
      * this method adds a card on top of a specified stack.
@@ -64,7 +54,7 @@ public class DevelopmentCardSpace {
         }
         //notifies match when reaches 7 cards in the development card space
         if(numOfcards == 7 && matchToNotify != null)
-            matchToNotify.setLastRound();
+            matchToNotify.update();
     }
 
 
@@ -143,4 +133,12 @@ public class DevelopmentCardSpace {
         return stack.get(stack.size() - 1);
     }
 
+    /**
+     * This method sets the match to notify and is called after the constructor of the class
+     * @param observer is the match that this class has to notify when reaches 7 cards
+     */
+    @Override
+    public void addObserver(EndGameConditionsObserver observer) {
+        this.matchToNotify = observer;
+    }
 }

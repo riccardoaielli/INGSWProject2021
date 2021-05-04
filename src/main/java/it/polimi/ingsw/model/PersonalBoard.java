@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class PersonalBoard {
     private final int TOTPOWERPRODUCTIONS = 6;
+    private int victoryPoints;
     private HashMap<Marble,Integer> temporaryMarbles;
     private HashMap<Resource, Integer> temporaryMapResource;
     private ArrayList<PowerOfProduction> powerOfProductions;
@@ -221,8 +222,12 @@ public class PersonalBoard {
 
     }
 
-    public int sumVictoryPoints(){
-        return 0;
+    public void sumVictoryPoints(){
+
+    }
+
+    public int getVictoryPoints() {
+        return victoryPoints;
     }
 
     /**
