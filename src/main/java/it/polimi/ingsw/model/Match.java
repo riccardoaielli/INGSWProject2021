@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.Stack;
 
 
-public class Match {
+public class Match implements EndGameConditionsObserver{
     private int matchID;
     private final int numOfPlayers;
     private int numOfPlayersReady;
@@ -144,6 +144,14 @@ public class Match {
         return currentPlayer;
     }
 
+    public Player getPlayer(String nickname) throws InvalidNickName{
+        for(Player player : players){
+            if(player.getNickname().equals(nickname))
+                return player;
+        }
+        throw new InvalidNickName();
+    }
+
     /**
      * This method activates the vatican report on all players on a specific tile
      * @param tileNumber is the tile to activate
@@ -152,13 +160,6 @@ public class Match {
         players.forEach(x -> x.getPersonalBoard().activateVaticanReport(tileNumber));
     }
 
-    /**
-     * This method is called by the faithTracks and by the developmentCardSpaces when they reaches the condition to end the game
-     */
-    public void setLastRound() {
-        if(matchPhase == MatchPhase.STANDARDROUND)
-            matchPhase = MatchPhase.LASTROUND;
-    }
 
     /**
      * This method ends the game calculating the victory points from each player and ranking the players
@@ -192,5 +193,14 @@ public class Match {
 
     public ArrayList<Player> getRank() {
         return rank;
+    }
+
+/**
+ * This method is called by the faithTracks and by the developmentCardSpaces when they reaches the condition to end the game
+ */
+    @Override
+    public void update() {
+        if(matchPhase == MatchPhase.STANDARDROUND)
+            matchPhase = MatchPhase.LASTROUND;
     }
 }
