@@ -27,7 +27,7 @@ public class WarehouseDepots {
         }
         //Checking if the request is correct
         if (singleResourceMap.size() != 1) {
-            throw new InvalidAdditionException("More than one resource");
+            throw new InvalidAdditionException("Not one resource");
         }
         Resource resource = singleResourceMap.keySet().iterator().next();
         //Checks to do if the depot is a standard depot
@@ -49,7 +49,7 @@ public class WarehouseDepots {
      * @param depotNumber The depot to which the resource has to be added, the specified depot must exist
      * @param singleResourceMap The map must contain only one resource and the value associated with the resource is the quantity that will be added
      * @throws InvalidAdditionException "Invalid Depot" : the depot does not exist
-     * "More than one resource": singleResourceMap does not contain only one resource
+     * "Not one resource": singleResourceMap does not contain only one resource
      * "Same resource in other depots": when trying to add a resource to a standard depot and the same resource is in another standard depot
      * The exception can be thrown by the depot itself when there is not enough space or there is already another resource in the depot
      */

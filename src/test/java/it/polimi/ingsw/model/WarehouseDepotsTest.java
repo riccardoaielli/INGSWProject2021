@@ -23,7 +23,7 @@ class WarehouseDepotsTest {
             warehouseDepots.add(2, resourceMap);
             assert false;
         } catch (InvalidAdditionException e) {
-            assertEquals("More than one resource", e.getMessage());
+            assertEquals("Not one resource", e.getMessage());
         }
         //Removing the extra resource, now the resourceMap has only Coin
         resourceMap.remove(Resource.SHIELD);

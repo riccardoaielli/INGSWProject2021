@@ -33,7 +33,8 @@ public class PersonalBoard {
         this.match = match;
         this.strongbox = new Strongbox();
         this.warehouseDepots = new WarehouseDepots();
-
+        this.temporaryMapResource = new HashMap<>();
+        this.temporaryMarbles = new HashMap<>();
     }
 
     private void mergeCostsAndVerify(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, PowerOfProduction powerOfProduction) throws InvalidProductionException {
@@ -173,8 +174,29 @@ public class PersonalBoard {
     }
 
     public void addToWarehouseDepots(int depotLevel, HashMap<Resource,Integer> singleResourceMap) throws InvalidAdditionException {
+        //Checking if the request is correct
+        if (singleResourceMap.size() != 1) {
+            throw new InvalidAdditionException("Not one resource");
+        }
+        Resource resource = singleResourceMap.keySet().iterator().next();
+        //Checking if there are enough resources in temporary map
+        if(temporaryMapResource.get(resource) == null){
+            throw new InvalidAdditionException("Not enough resources in temporary map");
+        }
+        if (temporaryMapResource.get(resource) < singleResourceMap.get(resource)){
+            throw new InvalidAdditionException("Not enough resources in temporary map");
+        }
         warehouseDepots.add(depotLevel, singleResourceMap);
+        //Removing or subtracting from temporaryResourceMap
+        if (temporaryMapResource.get(resource).equals(singleResourceMap.get(resource))){
+            temporaryMapResource.remove(resource);
+        }
+        else{
+            temporaryMapResource.put(resource, temporaryMapResource.get(resource) - singleResourceMap.get(resource));
+        }
     }
+
+
 
     public void swapResourceStandardDepot(int depot1, int depot2) throws InvalidSwapException {
         warehouseDepots.swap(depot1, depot2);
@@ -193,6 +215,10 @@ public class PersonalBoard {
     }
 
     public void removeLeader(LeaderCard leaderCard){
+
+    }
+
+    public void discardInitialLeader(int indexLeaderCard1, int indexLeaderCard2){
 
     }
 
@@ -260,4 +286,16 @@ public class PersonalBoard {
         faithTrack.setPopeFavourTiles(tileNumber);
     }
 
+    /**
+     * @return The temporary resource map of the resources not yet stored
+     */
+    public HashMap<Resource, Integer> getTemporaryMapResource() {
+        return temporaryMapResource;
+    }
+    /**
+     * @return The temporary marble map of the marbles not yet transformed
+     */
+    public HashMap<Marble, Integer> getTemporaryMarbles() {
+        return temporaryMarbles;
+    }
 }

@@ -50,6 +50,7 @@ public class Match implements EndGameConditionsObserver{
         market = new Market();
         cardGrid = new CardGrid();
         cardGrid.AddMatchToNotify(this);
+        players = new ArrayList<>();
     }
 
     /**
