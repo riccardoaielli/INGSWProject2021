@@ -20,11 +20,12 @@ public class LeaderDiscount extends LeaderCard{
      */
     @Override
     public void abilityDiscount(HashMap<Resource, Integer> resources) {
-        Integer newValue = resources.get(resourceDiscounted) - discount;
-        if(newValue >= 0)
-            resources.replace(resourceDiscounted,newValue);
-        else
-            resources.replace(resourceDiscounted,0);
+        if (resources.containsKey(resourceDiscounted)) {
+            Integer newValue = resources.get(resourceDiscounted) - discount;
+            if (newValue >= 0)
+                resources.replace(resourceDiscounted, newValue);
+            else
+                resources.replace(resourceDiscounted, 0);
+        }
     }
-
 }
