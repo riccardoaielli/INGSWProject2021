@@ -23,12 +23,12 @@ public class LeaderMarble extends LeaderCard{
      */
     @Override
     public void abilityMarble(HashMap<Marble, Integer> temporaryMapMarble, int numOfTransformation) throws NotEnoughWhiteMarblesException {
-        if(temporaryMapMarble.get(whiteMarble) < numOfTransformation){
+        if(!temporaryMapMarble.containsKey(whiteMarble) || temporaryMapMarble.get(whiteMarble) < numOfTransformation){
             throw new NotEnoughWhiteMarblesException();
         }
         else{
             temporaryMapMarble.replace(whiteMarble,temporaryMapMarble.get(whiteMarble) - numOfTransformation);
-            temporaryMapMarble.replace(marble,temporaryMapMarble.get(marble) + numOfTransformation);
+            temporaryMapMarble.merge(marble,numOfTransformation,Integer::sum);
         }
     }
 
