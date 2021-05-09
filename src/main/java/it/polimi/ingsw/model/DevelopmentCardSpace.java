@@ -92,19 +92,18 @@ public class DevelopmentCardSpace implements Observable<EndGameConditionsObserve
     }
 
     /**
-     * @return an ArrayList that contains all the power of production available for the player
+     * @param cardPosition represents the number of the stack: 1,2 or 3 from left to right
+     * @return the power of production requested in cardPosition
+     * @throws InvalidParameterException when the cardPosition is not valid
      */
-    public ArrayList<PowerOfProduction> getPowerOfProduction(){
-        int stack = 0;
-        ArrayList<PowerOfProduction> powerOfProductions = new ArrayList<>();
-        ArrayList<DevelopmentCard> stackList;
-        while (stack < cards.size()){
-            stackList = cards.get(stack);
-            if(stackList.size() != 0)
-                powerOfProductions.add(stackList.get(stackList.size() - 1).getPowerOfProduction());
-            stack++;
+    public PowerOfProduction getPowerOfProduction(int cardPosition) throws InvalidParameterException{
+        cardPosition = cardPosition - 1;
+        if(cardPosition >= 0 && cardPosition <  numOfStacks && cards.get(cardPosition) != null) {
+            ArrayList<DevelopmentCard> cardStack = cards.get(cardPosition);
+            return cardStack.get(cardStack.size() - 1).getPowerOfProduction();
         }
-        return powerOfProductions;
+        else
+            throw new InvalidParameterException();
     }
 
     /**

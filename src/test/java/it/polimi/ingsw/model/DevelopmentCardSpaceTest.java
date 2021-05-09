@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumerations.DevelopmentCardColor;
+import it.polimi.ingsw.model.exceptions.InvalidDevelopmentCardException;
 import it.polimi.ingsw.model.exceptions.InvalidParameterException;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -77,26 +78,42 @@ class DevelopmentCardSpaceTest {
      * This test tests if the the method to get the power of productions from a card space works properly
      */
     @Test
-    void getPowerOfProductionTest() throws InvalidParameterException{
+    void getPowerOfProductionTest() {
         int cardLevel1 = 1;
         int cardLevel2 = 2;
-        PowerOfProduction powerOfProduction1 = new PowerOfProduction(new HashMap<>(), new HashMap<>());
-        PowerOfProduction powerOfProduction2 = new PowerOfProduction(new HashMap<>(), new HashMap<>());
-
-        DevelopmentCard card1 = new DevelopmentCard(DevelopmentCardColor.GREEN,cardLevel1, new HashMap<>(),5, powerOfProduction1 );
-        DevelopmentCard card2 = new DevelopmentCard(DevelopmentCardColor.GREEN,cardLevel2, new HashMap<>(),5, powerOfProduction2 );
         DevelopmentCardSpace developmentCardSpace= new DevelopmentCardSpace();
+        try{
+            PowerOfProduction powerOfProduction1 = new PowerOfProduction(new HashMap<>(), new HashMap<>());
+            PowerOfProduction powerOfProduction2 = new PowerOfProduction(new HashMap<>(), new HashMap<>());
 
-        try {
+            DevelopmentCard card1 = new DevelopmentCard(DevelopmentCardColor.GREEN,cardLevel1, new HashMap<>(),5, powerOfProduction1 );
+            DevelopmentCard card2 = new DevelopmentCard(DevelopmentCardColor.GREEN,cardLevel2, new HashMap<>(),5, powerOfProduction2 );
+
             developmentCardSpace.addCard(card1, 1);
             developmentCardSpace.addCard(card1, 2);
             developmentCardSpace.addCard(card2, 1);
-        }catch (Exception invalidDevelopmentCardException){
+            developmentCardSpace.addCard(card1, 3);
+
+            assertEquals(powerOfProduction2, developmentCardSpace.getPowerOfProduction(1));
+            assertEquals(powerOfProduction1, developmentCardSpace.getPowerOfProduction(2));
+            assertEquals(powerOfProduction1, developmentCardSpace.getPowerOfProduction(3));
+        }
+        catch (InvalidParameterException | InvalidDevelopmentCardException exception) {
             assert false;
         }
 
-        assertEquals(powerOfProduction1, developmentCardSpace.getPowerOfProduction().get(1));
-        assertEquals(powerOfProduction2, developmentCardSpace.getPowerOfProduction().get(0));
+        try {
+            developmentCardSpace.getPowerOfProduction(0);
+        }
+        catch (InvalidParameterException exception){
+            assert true;
+        }
+        try {
+            developmentCardSpace.getPowerOfProduction(4);
+        }
+        catch (InvalidParameterException exception){
+            assert true;
+        }
     }
 
     /**

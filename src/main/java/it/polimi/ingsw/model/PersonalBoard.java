@@ -69,12 +69,12 @@ public class PersonalBoard {
     }
 
 
-    public void activateProduction(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, int indexDevelopmentCardSpace) throws InvalidProductionException, InvalidRemovalException {
+    public void activateProduction(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, int indexDevelopmentCardSpace) throws InvalidProductionException, InvalidRemovalException, InvalidParameterException {
         //Checking that this production has not already been used in this turn
         if (powerOfProductionUsed[indexDevelopmentCardSpace]) {
             throw new InvalidProductionException();
         }
-        PowerOfProduction powerOfProduction = developmentCardSpace.getPowerOfProduction().get(indexDevelopmentCardSpace-1);
+        PowerOfProduction powerOfProduction = developmentCardSpace.getPowerOfProduction(indexDevelopmentCardSpace );
         //Checking the correctness of costs
         mergeCostsAndVerify(costStrongbox, costWarehouseDepot, powerOfProduction);
         //Activating production
@@ -150,11 +150,20 @@ public class PersonalBoard {
 
     /**
      * This method transform a number of white marbles in the temporaryMarbles map
-     * @param leaderCard is the card to use to transform marbles
+     * @param indexLeaderCard is the index of card to use to transform marbles
      * @param numOfTransformations is the number of marbles that needs to be transformed
      * @throws NotEnoughWhiteMarblesException this exception is thrown when there are not enough white marbles in the given map of marbles
      */
-    public void transformWhiteMarble(LeaderCard leaderCard, Integer numOfTransformations) throws NotEnoughWhiteMarblesException, InvalidLeaderAction {
+    public void transformWhiteMarble(int indexLeaderCard, Integer numOfTransformations) throws NotEnoughWhiteMarblesException, InvalidLeaderAction {
+        //Checking that the power of production has not been already used in this turn
+        if (powerOfProductionUsed[3+indexLeaderCard]){
+            throw new InvalidLeaderAction();
+        }
+        LeaderCard leaderCard = leaderCards.get(indexLeaderCard-1);
+        //Checking that leader card is active
+        if(!leaderCard.isActive()){
+            throw new InvalidLeaderAction();
+        }
         leaderCard.abilityMarble(temporaryMarbles,numOfTransformations);
     }
 
@@ -240,9 +249,6 @@ public class PersonalBoard {
         }
     }
 
-    public void notifyVaticanReport(){
-
-    }
 
     private void checkLastRound(){
 
