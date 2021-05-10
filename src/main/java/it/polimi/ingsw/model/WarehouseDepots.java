@@ -149,19 +149,27 @@ public class WarehouseDepots {
         destinationDepot.uncheckedAdd(resourceMap);
     }
 
+
+
     /**
      * Checks that all the resources and their quantities in resourceMap are stored in WarehouseDepot
      * @param resourceMap The resources and their quantities whose availability in WarehouseDepot is verified
-     * @throws InvalidRemovalException Exception thrown when not every resource in resourceMap is in WarehouseDepots
+     * @return true if all the resources in resourceMap are in WareHouseDepot, false otherwise
      */
-    public void checkAvailability(HashMap<Resource, Integer> resourceMap) throws InvalidRemovalException{
+    public boolean isAvailable(HashMap<Resource, Integer> resourceMap) {
+        return resourcesNotAvailable(resourceMap).isEmpty();
+    }
+
+    /**
+     * @param resourceMap Resources whose presence in WarehouseDepots is checked
+     * @return a map of the resources not available in WarehouseDepots among those in resourceMap
+     */
+    public HashMap<Resource, Integer> resourcesNotAvailable(HashMap<Resource, Integer> resourceMap){
         HashMap<Resource, Integer> resourceToCheckMap = new HashMap<>(resourceMap);
         for (Depot depot: depots){
             depot.checkAvailability(resourceToCheckMap);
         }
-        if (!resourceToCheckMap.isEmpty()) {
-            throw new InvalidRemovalException();
-        }
+        return resourceToCheckMap;
     }
 
 

@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.enumerations.Resource;
 import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +14,6 @@ public class PersonalBoard {
     private int victoryPoints;
     private HashMap<Marble,Integer> temporaryMarbles;
     private HashMap<Resource, Integer> temporaryMapResource;
-    private ArrayList<PowerOfProduction> powerOfProductions;
     private ArrayList<LeaderCard> leaderCards;
     private FaithTrack faithTrack;
     private Match match;
@@ -26,6 +26,7 @@ public class PersonalBoard {
     private Boolean[] powerOfProductionUsed = new Boolean[TOTPOWERPRODUCTIONS];
 
     public PersonalBoard(ArrayList<LeaderCard> leaderCards, Match match) {
+        this.victoryPoints = 0;
         this.market = match.getMarket();
         this.cardGrid = match.getCardGrid();
         this.leaderCards = leaderCards;
@@ -35,27 +36,37 @@ public class PersonalBoard {
         this.warehouseDepots = new WarehouseDepots();
         this.temporaryMapResource = new HashMap<>();
         this.temporaryMarbles = new HashMap<>();
+        Arrays.fill(this.powerOfProductionUsed, false);
+        //TODO when the turn ends set power of production to null again
     }
 
-    private void mergeCostsAndVerify(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, PowerOfProduction powerOfProduction) throws InvalidProductionException {
+    //Method used to check if the merged maps of cost strongbox and cost warehouseDepot are equal to costToPay
+    private void mergeCostsAndVerify(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, HashMap<Resource,Integer> costToPay) throws InvalidCostException {
         //Merging maps in a temporary cost map and checking it is equal to cost of power of production
         HashMap<Resource,Integer> totalCostResourceMap =  new HashMap<>(costStrongbox);
         costWarehouseDepot.forEach(
                 (key, value) -> totalCostResourceMap.merge(key, value, Integer::sum)
         );
 
-        if(!totalCostResourceMap.equals(powerOfProduction.getCost())){
-            throw new InvalidProductionException();
+        if(!totalCostResourceMap.equals(costToPay)){
+            throw new InvalidCostException();
         }
     }
 
-    private void produce(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, HashMap<Resource,Integer> production) throws InvalidRemovalException {
+    //Method used to remove resources from strongbox and warehouseDepot
+    private void pay(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot) throws InvalidRemovalException {
         //Checking resource availability
-        strongbox.checkAvailability(costStrongbox);
-        warehouseDepots.checkAvailability(costWarehouseDepot);
+        if(!strongbox.isAvailable(costStrongbox) || !warehouseDepots.isAvailable(costWarehouseDepot)){
+            throw new InvalidRemovalException();
+        }
         //Removing price paid from strongbox and/or warehouse
         strongbox.uncheckedRemove(costStrongbox);
         warehouseDepots.uncheckedRemove(costWarehouseDepot);
+    }
+
+    //Method used to pay and add production to faithTrack and/or strongbox
+    private void produce(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, HashMap<Resource,Integer> production) throws InvalidRemovalException {
+        pay(costStrongbox, costWarehouseDepot);
         //Adding production to strongbox and/or faithTrack
         dispatch(production);
         strongbox.add(production);
@@ -68,22 +79,48 @@ public class PersonalBoard {
         }
     }
 
+    //Returns true if all the resources in resourceRequirement are present in strongbox and/or warehouse
+    private boolean checkResourceRequirement(HashMap<Resource,Integer> resourceRequirement){
+        HashMap<Resource,Integer> resourcesNotAvailable = warehouseDepots.resourcesNotAvailable(resourceRequirement);
+        resourcesNotAvailable = strongbox.resourcesNotAvailable(resourcesNotAvailable);
+        return resourcesNotAvailable.isEmpty();
+    }
 
-    public void activateProduction(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, int indexDevelopmentCardSpace) throws InvalidProductionException, InvalidRemovalException, InvalidParameterException {
+    /**
+     * Method used to activate the production using the power of production of a development card
+     * @param costStrongbox The cost of power of production paid with the resources located in the strongbox
+     * @param costWarehouseDepot The cost of power of production paid with the resources located in the warehouse
+     * @param indexDevelopmentCardSpace  The number of the development card slot used for the production. Ranges from 1 to 3
+     * @throws InvalidProductionException If the same production has already been done in the same turn
+     * @throws InvalidRemovalException If the payment can't be made
+     * @throws InvalidCostException If the specified costs do not match the cost required by the power of production
+     */
+    public void activateCardProduction(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, int indexDevelopmentCardSpace) throws InvalidProductionException, InvalidRemovalException, InvalidCostException, InvalidParameterException {
         //Checking that this production has not already been used in this turn
         if (powerOfProductionUsed[indexDevelopmentCardSpace]) {
             throw new InvalidProductionException();
         }
-        PowerOfProduction powerOfProduction = developmentCardSpace.getPowerOfProduction(indexDevelopmentCardSpace );
+        //TODO what happens if card space is empty? What happens if the index is out of bound
+        //TODO wrong, the power of productions are dynamic, we have to use getCard but with an exception if there is no card
+        PowerOfProduction powerOfProduction = developmentCardSpace.getPowerOfProduction(indexDevelopmentCardSpace);
         //Checking the correctness of costs
-        mergeCostsAndVerify(costStrongbox, costWarehouseDepot, powerOfProduction);
+        mergeCostsAndVerify(costStrongbox, costWarehouseDepot, powerOfProduction.getCost());
         //Activating production
         produce(costStrongbox, costWarehouseDepot, powerOfProduction.getProduction());
         //Marking that the production has been done in this turn
         powerOfProductionUsed[indexDevelopmentCardSpace] = true;
     }
 
-    public void activateBasicProduction(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, Resource resource) throws InvalidProductionException, InvalidRemovalException {
+    /**
+     * Method used to activate the production using the basic production power
+     * @param costStrongbox The cost of power of production paid with the resources located in the strongbox
+     * @param costWarehouseDepot The cost of power of production paid with the resources located in the warehouse
+     * @param resource The resource that is going to be produced
+     * @throws InvalidProductionException If the same production has already been done in the same turn or if the specified resource is faith
+     * @throws InvalidRemovalException If the payment can't be made
+     * @throws InvalidCostException If the total resources are not two
+     */
+    public void activateBasicProduction(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, Resource resource) throws InvalidProductionException, InvalidRemovalException, InvalidCostException {
         //Checking that this production has not already been used in this turn
         if (powerOfProductionUsed[0]) {
             throw new InvalidProductionException();
@@ -101,7 +138,7 @@ public class PersonalBoard {
             totalResources += singleQuantity;
         }
         if (totalResources != 2){
-            throw new InvalidProductionException();
+            throw new InvalidCostException();
         }
         //Creating a resource map with the single resource
         HashMap<Resource, Integer> resourceToAdd = new HashMap<>();
@@ -112,12 +149,27 @@ public class PersonalBoard {
         powerOfProductionUsed[0] = true;
     }
 
-    public void activateLeaderProduction(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, int indexLeaderCard, Resource resource) throws InvalidProductionException, InvalidRemovalException, InvalidLeaderAction {
-        //Checking that the power of production has not been already used in this turn
-        if (powerOfProductionUsed[3+indexLeaderCard]){
+    /**
+     * Method used to activate the production using the power of production of a leader card with the proper power
+     * @param costStrongbox The cost of power of production paid with the resources located in the strongbox
+     * @param costWarehouseDepot The cost of power of production paid with the resources located in the warehouse
+     * @param numLeaderCard The number of the leader card to use, must be > 0 and < leader cards not discarded in PlayerBoard
+     * @param resource The resource that is going to be produced (together with a faith point already provided by the leader card)
+     * @throws InvalidProductionException If the specified leader card does not exist or if the same production has already been done in the same turn
+     * @throws InvalidRemovalException If the payment can't be made
+     * @throws InvalidLeaderAction If the chosen leader card does not have the proper power
+     * @throws InvalidCostException If the specified costs do not match the cost required by the power of production
+     */
+    public void activateLeaderProduction(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, int numLeaderCard, Resource resource) throws InvalidProductionException, InvalidRemovalException, InvalidLeaderAction, InvalidCostException {
+        //Checking that the specified leader card exists
+        if (numLeaderCard <= 0 || numLeaderCard > leaderCards.size()){
             throw new InvalidProductionException();
         }
-        LeaderCard leaderCard = leaderCards.get(indexLeaderCard-1);
+        //Checking that the power of production has not been already used in this turn
+        if (powerOfProductionUsed[3+numLeaderCard]){
+            throw new InvalidProductionException();
+        }
+        LeaderCard leaderCard = leaderCards.get(numLeaderCard-1);
         //Checking that leader card is active
         if(!leaderCard.isActive()){
             throw new InvalidProductionException();
@@ -136,34 +188,28 @@ public class PersonalBoard {
         production.put(resource, 1);
 
         //checking that the resources the specified cost are right for this production
-        mergeCostsAndVerify(costStrongbox, costWarehouseDepot, powerOfProduction);
+        mergeCostsAndVerify(costStrongbox, costWarehouseDepot, powerOfProduction.getCost());
         produce(costStrongbox, costWarehouseDepot, production);
         //Changing boolean of power of production for this turn
-        powerOfProductionUsed[3+indexLeaderCard] = true;
+        powerOfProductionUsed[3+numLeaderCard] = true;
     }
 
-
-
+    /**
+     * Method used to acquire marbles form market
+     * @param rowOrColumn 0 if row, 1 if column
+     * @param value from 0 to 2 if row, from 0 to 3 if column Todo ricontrollare
+     */
     public void takeFromMarket(int rowOrColumn, int value){
         temporaryMarbles = new HashMap<>(market.takeBoughtMarbles(rowOrColumn, value));
     }
 
     /**
      * This method transform a number of white marbles in the temporaryMarbles map
-     * @param indexLeaderCard is the index of card to use to transform marbles
+     * @param leaderCard is the card to use to transform marbles
      * @param numOfTransformations is the number of marbles that needs to be transformed
      * @throws NotEnoughWhiteMarblesException this exception is thrown when there are not enough white marbles in the given map of marbles
      */
-    public void transformWhiteMarble(int indexLeaderCard, Integer numOfTransformations) throws NotEnoughWhiteMarblesException, InvalidLeaderAction {
-        //Checking that the power of production has not been already used in this turn
-        if (powerOfProductionUsed[3+indexLeaderCard]){
-            throw new InvalidLeaderAction();
-        }
-        LeaderCard leaderCard = leaderCards.get(indexLeaderCard-1);
-        //Checking that leader card is active
-        if(!leaderCard.isActive()){
-            throw new InvalidLeaderAction();
-        }
+    public void transformWhiteMarble(LeaderCard leaderCard, Integer numOfTransformations) throws NotEnoughWhiteMarblesException, InvalidLeaderAction {
         leaderCard.abilityMarble(temporaryMarbles,numOfTransformations);
     }
 
@@ -180,8 +226,16 @@ public class PersonalBoard {
                 }
             }
         }
+        temporaryMarbles.clear();
     }
 
+    /**
+     * Method used to add a single resource type in a specified quantity from the temporary resource map to a depot
+     * @param depotLevel The depot to add the resource to
+     * @param singleResourceMap The map which contains the single resource type and its quantity
+     * @throws InvalidAdditionException If there is not a single resource type, if the resource is not in the temporary resource map or is not enough,
+     * or if the rules of the warehouse depot are not followed
+     */
     public void addToWarehouseDepots(int depotLevel, HashMap<Resource,Integer> singleResourceMap) throws InvalidAdditionException {
         //Checking if the request is correct
         if (singleResourceMap.size() != 1) {
@@ -205,30 +259,133 @@ public class PersonalBoard {
         }
     }
 
-
-
+    /**
+     * Method used to swap resources between two standard depots
+     * @param depot1 Cannot be a special depot
+     * @param depot2 Cannot be a special depot
+     * @throws InvalidSwapException This exception is thrown when the depot is a special depot or when the resource of at least one depot do not fit the other depot
+     */
     public void swapResourceStandardDepot(int depot1, int depot2) throws InvalidSwapException {
         warehouseDepots.swap(depot1, depot2);
     }
 
+    /**
+     * Method to move a resource between a standard depot and a special depot, only one of the two depots can be a special depot
+     * @param sourceDepotNumber Number of the depot from which the resource has to be moved, if this is a special depot the other depot cannot be a special depot
+     * @param destinationDepotNumber Number of the depot to which the resource has to be moved, if this is a special depot the other depot cannot be a special depot
+     * @param quantity How much of the resource in the source depot has to be moved
+     * @throws InvalidRemovalException If there is not enough of the resource in the source depot
+     * @throws InvalidAdditionException If the resource cannot be moved to the destination depot
+     * @throws InvalidMoveException If the condition that only one of the two depots can be a special depot is not respected or if at least one of the two depots does not exist
+     */
     public void moveResourceSpecialDepot(int sourceDepotNumber, int destinationDepotNumber, int quantity) throws InvalidAdditionException, InvalidRemovalException, InvalidMoveException {
         warehouseDepots.moveToFromSpecialDepot(sourceDepotNumber, destinationDepotNumber, quantity);
     }
 
-    public void buyDevelopmentCard(int row, int column,HashMap<Resource, Integer> costStrongbox, HashMap<Resource, Integer> costWarehouseDepots, LeaderCard leaderCard){
+    //se index è 0 non attiva nessuna leader card, valori possibili 0,1 o 2
 
+    /**
+     * Method to buy a development card from card grid
+     * @param row Row of the card grid of the chosen card, ranges from 0 to 2
+     * @param column Column of the card grid of the chosen card, ranges from 0 to 3
+     * @param costStrongbox The cost of power of production paid with the resources located in the strongbox
+     * @param costWarehouseDepots The cost of power of production paid with the resources located in the warehouse
+     * @param numLeaderCard The number of the leader card to use to discount the price, if 0 then no leader card will be used, otherwise must be > 0 and < leader cards not discarded in PlayerBoard
+     * @param cardPosition The development card space slot in which the bought card will be placed
+     * @throws NoCardException If there is no card in the specified coordinates of card grid
+     * @throws InvalidCostException If the specified price does not match the one of the chosen card
+     * @throws InvalidLeaderAction If the specified leader card does not have the proper power
+     * @throws InvalidRemovalException If the payment can't be made
+     * @throws InvalidDevelopmentCardException If the card cannot be placed in the chosen development card space slot
+     * @throws InvalidParameterException If the specified development card space slot does not exist
+     */
+    public void buyDevelopmentCard(int row, int column,HashMap<Resource, Integer> costStrongbox, HashMap<Resource, Integer> costWarehouseDepots, int numLeaderCard, int cardPosition) throws NoCardException, InvalidCostException, InvalidLeaderAction, InvalidRemovalException, InvalidDevelopmentCardException, InvalidParameterException {
+        DevelopmentCard cardToBuy = cardGrid.getCard(row, column);
+        HashMap<Resource, Integer> price = new HashMap<>(cardToBuy.getPrice());
+        //if numLeaderCard is 1 or 2 method tries to discount price
+        if (numLeaderCard != 0){
+            if (numLeaderCard < 0 || numLeaderCard > leaderCards.size())
+                throw new InvalidLeaderAction();
+            //if not the correct leader throws InvalidLeaderAction()
+            leaderCards.get(numLeaderCard-1).abilityDiscount(price);
+            //TODO make sure ability discount manages if resource to discount is not in price
+        }
+        //Verifying that the provided costs are correct
+        mergeCostsAndVerify(costStrongbox, costWarehouseDepots, price);
+        //Checking resource availability
+        if(!strongbox.isAvailable(costStrongbox) || !warehouseDepots.isAvailable(costWarehouseDepots)){
+            throw new InvalidRemovalException();
+        }
+        developmentCardSpace.addCard(cardToBuy, cardPosition);
+        //Removing price paid from strongbox and/or warehouse
+        strongbox.uncheckedRemove(costStrongbox);
+        warehouseDepots.uncheckedRemove(costWarehouseDepots);
+        cardGrid.buyCard(row, column);
     }
 
-    public void activateLeader(LeaderCard leaderCard){
+    /**
+     * Method to activate a leader
+     * @param numLeaderCard The number of the leader card to activate, must be > 0 and < leader cards not discarded in PlayerBoard
+     * @throws RequirementNotMetException if the requirements of the leader card are not met
+     * @throws InvalidParameterException if the specified numLeaderCard is not correct, or if the leader card is already active
+     */
+    public void activateLeader(int numLeaderCard) throws RequirementNotMetException, InvalidParameterException {
+        if (numLeaderCard <= 0 || numLeaderCard > leaderCards.size())
+            throw new InvalidParameterException();
+        LeaderCard leaderCard = leaderCards.get(numLeaderCard-1);
+        if (leaderCard.isActive()){
+            throw new InvalidParameterException();
+        }
 
+        Requirement requirement = leaderCard.getRequirement();
+        //Checking resource requirements if the field not set to null
+        if (requirement.getResourceRequirement() != null){
+            if(!checkResourceRequirement(requirement.getResourceRequirement())){
+                throw new RequirementNotMetException();
+            }
+        }
+        //Checking card requirements if the field is not set to null
+        if (requirement.getCardsRequirement() != null){
+            if(!developmentCardSpace.checkRequirement(requirement.getCardsRequirement())){
+                throw new RequirementNotMetException();
+            }
+        }
+        //Activate leader card
+        leaderCard.activate();
     }
 
-    public void removeLeader(LeaderCard leaderCard){
-
+    /**
+     * Method used to discard a leader card during the game and gain a faith point as a consequence
+     * @param numLeaderCard The number of the leader card to activate, must be > 0 and < leader cards not discarded in PlayerBoard
+     * @throws InvalidParameterException if numLeaderCard is incorrect or the leader does not exist
+     */
+    public void removeLeader(int numLeaderCard) throws InvalidParameterException {
+        if (numLeaderCard <= 0 || numLeaderCard > leaderCards.size())
+            throw new InvalidParameterException();
+        LeaderCard leaderCard = leaderCards.get(numLeaderCard-1);
+        //Checking if leader card is active
+        if (leaderCard.isActive()){
+            throw new InvalidParameterException();
+        }
+        //Moving faith
+        moveFaithMarkerInternally(1);
+        //Removing leader card
+        leaderCards.remove(numLeaderCard-1);
     }
 
-    public void discardInitialLeader(int indexLeaderCard1, int indexLeaderCard2){
-
+    /**
+     * Method used to discard the two leader cards at the beginning of the match
+     * @param indexLeaderCard1 Index of one of the two leader cards to discard, must range from 1 to 4 and must be different from the other index
+     * @param indexLeaderCard2 Index of one of the two leader cards to discard, must range from 1 to 4 and must be different from the other index
+     * @throws InvalidParameterException If the conditions specified in the parameters are not met
+     */
+    public void discardInitialLeader(int indexLeaderCard1, int indexLeaderCard2) throws InvalidParameterException {
+        if (indexLeaderCard1 <= 0 || indexLeaderCard1 > leaderCards.size()
+                || indexLeaderCard2 <= 0 || indexLeaderCard2 > leaderCards.size()
+                || indexLeaderCard1 == indexLeaderCard2 )
+            throw new InvalidParameterException();
+        leaderCards.remove(indexLeaderCard1-1);
+        leaderCards.remove(indexLeaderCard2-1);
     }
 
     /**
@@ -249,15 +406,27 @@ public class PersonalBoard {
         }
     }
 
-
-    private void checkLastRound(){
-
-    }
-
+    /**
+     * Calculates the victory points for this personalBoard
+     */
     public void sumVictoryPoints(){
-
+        //Points from development cards
+        victoryPoints += developmentCardSpace.getVictoryPoints();
+        //Points from faith points and Pope's favour tiles
+        victoryPoints += faithTrack.calculateVictoryPoints();
+        //Points from active leader cards
+        for (LeaderCard leaderCard : leaderCards){
+            if (leaderCard.isActive()){
+                victoryPoints += leaderCard.getVictoryPoints();
+            }
+        }
+        //Points from resources in Warehouse or Strongbox
+        victoryPoints += Math.floorDiv(strongbox.getTotalResources() + warehouseDepots.getTotalResources(), 5);
     }
 
+    /**
+     * @return The victory points of this personalBoard
+     */
     public int getVictoryPoints() {
         return victoryPoints;
     }
@@ -303,5 +472,21 @@ public class PersonalBoard {
      */
     public HashMap<Marble, Integer> getTemporaryMarbles() {
         return temporaryMarbles;
+    }
+
+    public Strongbox getStrongbox() {
+        return strongbox;
+    }
+
+    public WarehouseDepots getWarehouseDepots() {
+        return warehouseDepots;
+    }
+
+    public CardGrid getCardGrid() {
+        return cardGrid;
+    }
+
+    public DevelopmentCardSpace getDevelopmentCardSpace() {
+        return developmentCardSpace;
     }
 }

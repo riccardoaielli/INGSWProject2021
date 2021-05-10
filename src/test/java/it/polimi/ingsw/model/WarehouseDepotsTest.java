@@ -170,12 +170,7 @@ class WarehouseDepotsTest {
             assert false;
         }
 
-        try {
-            warehouseDepots.checkAvailability(resourceMap1);
-        } catch (InvalidRemovalException e) {
-            assert false;
-        }
-
+        assertTrue(warehouseDepots.isAvailable(resourceMap1));
         warehouseDepots.uncheckedRemove(resourceMap1);
         assertTrue(warehouseDepots.getDepot(1).getMapResource().isEmpty());
         assertTrue(warehouseDepots.getDepot(2).getMapResource().isEmpty());
@@ -209,12 +204,7 @@ class WarehouseDepotsTest {
             assert false;
         }
 
-        try {
-            warehouseDepots.checkAvailability(resourceMap3);
-        } catch (InvalidRemovalException e) {
-            assert false;
-        }
-
+        assertTrue(warehouseDepots.isAvailable(resourceMap3));
         warehouseDepots.uncheckedRemove(resourceMap3);
         assertTrue(warehouseDepots.getDepot(1).getMapResource().isEmpty());
         assertEquals(2, warehouseDepots.getDepot(2).getMapResource().get(Resource.SHIELD));
@@ -250,13 +240,7 @@ class WarehouseDepotsTest {
         } catch (InvalidAdditionException e) {
             assert false;
         }
-
-        try {
-            warehouseDepots.checkAvailability(resourceMap1);
-            assert false;
-        } catch (InvalidRemovalException e) {
-            assert true;
-        }
+        assertFalse(warehouseDepots.isAvailable(resourceMap1));
     }
 
     @Test

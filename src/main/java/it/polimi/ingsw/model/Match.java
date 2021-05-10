@@ -53,6 +53,13 @@ public class Match implements EndGameConditionsObserver{
         players = new ArrayList<>();
     }
 
+    public Match(int matchID, int numOfPlayers, Stack<LeaderCard> leaderCards, Market market, CardGrid cardGrid) {
+        this(matchID, numOfPlayers);
+        this.leaderCards = leaderCards;
+        this.market = market;
+        this.cardGrid = cardGrid;
+    }
+
     /**
      * this method loads all the leader cards from the resources of the model
      */
@@ -136,11 +143,11 @@ public class Match implements EndGameConditionsObserver{
         //checks if the nickname is not taken in this match
         if(players.stream().noneMatch(x -> x.getNickname().equals(nickName))) {
             //draw 4 cards from the leader cards stack
-            ArrayList drawedLeaderCards = new ArrayList();
+            ArrayList<LeaderCard> drawnLeaderCards = new ArrayList<>();
             for(int draws = 0; draws < 4; draws++)
-                drawedLeaderCards.add(leaderCards.pop());
+                drawnLeaderCards.add(leaderCards.pop());
             //creates the player and its personal board
-            players.add(new Player(nickName, new PersonalBoard(drawedLeaderCards, this)));
+            players.add(new Player(nickName, new PersonalBoard(drawnLeaderCards, this)));
             //updates the number of players ready
             addPlayerReady();
         }

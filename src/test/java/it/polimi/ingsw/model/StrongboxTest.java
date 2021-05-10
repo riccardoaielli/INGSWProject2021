@@ -41,13 +41,10 @@ class StrongboxTest {
         Strongbox strongbox1 = new Strongbox();
         HashMap<Resource, Integer> resourceMap = new HashMap<>();
         resourceMap.put(Resource.STONE, 10);
-        //Testing the removal of a resource not in strongbox
-        try {
-            strongbox1.checkAvailability(resourceMap);
-            strongbox1.uncheckedRemove(resourceMap);
-        } catch (InvalidRemovalException e) {
-            assert true;
-        }
+        //Testing the presence of a resource not in strongbox
+        assertFalse(strongbox1.isAvailable(resourceMap));
+
+
         //Testing the removal of fewer resources than there are in strongbox
 
         //Adding 10 stones to strongbox1
@@ -56,12 +53,11 @@ class StrongboxTest {
         //removing 6 stones from strongbox1
         resourceMap = new HashMap<>();
         resourceMap.put(Resource.STONE, 6);
-        try {
-            strongbox1.checkAvailability(resourceMap);
+
+        if(strongbox1.isAvailable(resourceMap)){
             strongbox1.uncheckedRemove(resourceMap);
-        } catch (InvalidRemovalException e) {
-            assert false;
         }
+
         assertEquals(4, strongbox1.getResourceQuantity(Resource.STONE));
 
         //Testing the removal of same resources than there are in strongbox
@@ -69,11 +65,9 @@ class StrongboxTest {
 
         //removing 4 stones from strongbox1
         resourceMap.put(Resource.STONE, 4);
-        try {
-            strongbox1.checkAvailability(resourceMap);
+
+        if(strongbox1.isAvailable(resourceMap)){
             strongbox1.uncheckedRemove(resourceMap);
-        } catch (InvalidRemovalException e) {
-            assert false;
         }
 
         assertEquals(0, strongbox1.getResourceQuantity(Resource.STONE));
@@ -85,15 +79,7 @@ class StrongboxTest {
         strongbox1.add(resourceMap);
 
         resourceMap.put(Resource.COIN, 10);
-        try {
-            strongbox1.checkAvailability(resourceMap);
-            strongbox1.uncheckedRemove(resourceMap);
-            assert false;
-        } catch (InvalidRemovalException e) {
-            assert true;
-        }
-
-
+        assertFalse(strongbox1.isAvailable(resourceMap));
     }
 
     @Test

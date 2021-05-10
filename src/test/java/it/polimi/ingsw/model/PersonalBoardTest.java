@@ -1,13 +1,11 @@
 package it.polimi.ingsw.model;
 
+
 import it.polimi.ingsw.model.enumerations.Marble;
 import it.polimi.ingsw.model.enumerations.Resource;
-import it.polimi.ingsw.model.exceptions.InvalidAdditionException;
-import it.polimi.ingsw.model.exceptions.InvalidNickName;
+import it.polimi.ingsw.model.exceptions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,15 +28,60 @@ class PersonalBoardTest {
         } catch (InvalidNickName invalidNickName) {
             assert false;
         }
-
     }
 
     @Test
-    void activateProduction() {
+    void activateCardProduction() {
     }
 
     @Test
     void activateBasicProduction() {
+        HashMap<Resource, Integer> resourceInWarehouse = new HashMap<>();
+        HashMap<Resource, Integer> resourceInStrongbox = new HashMap<>();
+        HashMap<Resource, Integer> costWarehouseDepot = new HashMap<>();
+        HashMap<Resource, Integer> costStrongbox = new HashMap<>();
+
+        resourceInWarehouse.put(Resource.COIN, 1);
+        try {
+            personalBoard.getWarehouseDepots().add(1, resourceInWarehouse);
+        } catch (InvalidAdditionException e) {
+            assert false;
+        }
+
+        resourceInWarehouse.clear();
+        resourceInWarehouse.put(Resource.SHIELD, 2);
+
+        try {
+            personalBoard.getWarehouseDepots().add(2, resourceInWarehouse);
+        } catch (InvalidAdditionException e) {
+            assert false;
+        }
+
+        resourceInStrongbox.put(Resource.SERVANT, 3);
+        personalBoard.getStrongbox().add(resourceInStrongbox);
+
+        costStrongbox.put(Resource.SERVANT, 1);
+        costWarehouseDepot.put(Resource.SHIELD, 1);
+
+        try {
+            personalBoard.activateBasicProduction(costStrongbox, costWarehouseDepot, Resource.STONE);
+        } catch (InvalidProductionException | InvalidCostException | InvalidRemovalException e) {
+            assert false;
+        }
+
+        assertEquals(1, personalBoard.getStrongbox().getResourceQuantity(Resource.STONE));
+        assertEquals(2, personalBoard.getStrongbox().getResourceQuantity(Resource.SERVANT));
+        assertEquals(1, personalBoard.getWarehouseDepots().getDepot(2).getNumberResources());
+
+
+        try {
+            personalBoard.activateBasicProduction(costStrongbox, costWarehouseDepot, Resource.COIN);
+            assert false;
+        } catch (InvalidProductionException e) {
+            assert true;
+        } catch (InvalidRemovalException | InvalidCostException e) {
+            assert false;
+        }
     }
 
     @Test
@@ -107,6 +150,7 @@ class PersonalBoardTest {
 
     @Test
     void buyDevelopmentCard() {
+
     }
 
     @Test
