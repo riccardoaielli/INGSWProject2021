@@ -36,7 +36,9 @@ public class Match implements EndGameConditionsObserver{
      * @param matchID an int that identifies the match
      * @param numOfPlayer the number of players that will join the match
      */
-    public Match(int matchID, int numOfPlayer) {
+    public Match(int matchID, int numOfPlayer) throws InvalidParameterException{
+        if (numOfPlayer < 0 || numOfPlayer > 4)
+            throw new InvalidParameterException();
         this.matchID = matchID;
         this.numOfPlayers = numOfPlayer;
         numOfPlayersReady = 0;
@@ -53,7 +55,7 @@ public class Match implements EndGameConditionsObserver{
         players = new ArrayList<>();
     }
 
-    public Match(int matchID, int numOfPlayers, Stack<LeaderCard> leaderCards, Market market, CardGrid cardGrid) {
+    public Match(int matchID, int numOfPlayers, Stack<LeaderCard> leaderCards, Market market, CardGrid cardGrid) throws InvalidParameterException{
         this(matchID, numOfPlayers);
         this.leaderCards = leaderCards;
         this.market = market;
@@ -165,6 +167,7 @@ public class Match implements EndGameConditionsObserver{
                 case SETUP:
                     matchPhase = MatchPhase.LEADERCHOICE;
                     numOfPlayersReady = 0;
+                    return;
                 case LEADERCHOICE:
                     matchPhase = MatchPhase.RESOURCECHOICE;
                     numOfPlayersReady = 0;
@@ -192,16 +195,14 @@ public class Match implements EndGameConditionsObserver{
      * This method is use to end every turn, it changes the current player and ends the game if the last round ends
      */
     public void nextPlayer(){
+        //changes the current player to the next player
+        currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % numOfPlayers);
         //changes from resource choice phase to standard round phase
         if(matchPhase == MatchPhase.RESOURCECHOICE && ((players.indexOf(currentPlayer) + 1) == numOfPlayers))
             matchPhase = MatchPhase.STANDARDROUND;
         //at the end of the last round ends the game
         if(matchPhase == MatchPhase.LASTROUND && ((players.indexOf(currentPlayer) + 1) == numOfPlayers)){
             endGame();
-        }
-        //changes the current player to the next player
-        else{
-            currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % numOfPlayers);
         }
     }
 

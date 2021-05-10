@@ -31,6 +31,9 @@ public class PersonalBoard {
         this.cardGrid = match.getCardGrid();
         this.leaderCards = leaderCards;
         this.faithTrack = new FaithTrack();
+        faithTrack.addObserver(match);
+        this.developmentCardSpace = new DevelopmentCardSpace();
+        developmentCardSpace.addObserver(match);
         this.match = match;
         this.strongbox = new Strongbox();
         this.warehouseDepots = new WarehouseDepots();
@@ -386,6 +389,7 @@ public class PersonalBoard {
             throw new InvalidParameterException();
         leaderCards.remove(indexLeaderCard1-1);
         leaderCards.remove(indexLeaderCard2-1);
+        match.addPlayerReady();
     }
 
     /**

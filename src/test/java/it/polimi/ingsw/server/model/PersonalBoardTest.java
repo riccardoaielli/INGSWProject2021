@@ -18,7 +18,11 @@ class PersonalBoardTest {
 
     @BeforeEach
     void setup(){
-        match = new Match(1, 4);
+        try {
+            match = new Match(1, 4);
+        } catch (InvalidParameterException exception) {
+            assert false;
+        }
         try {
             match.addPlayer("Mario");
         } catch (InvalidNickName invalidNickName) {
