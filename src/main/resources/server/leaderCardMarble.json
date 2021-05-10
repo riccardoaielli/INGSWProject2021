@@ -1,5 +1,6 @@
 [
   {
+    "id": 57,
     "victoryPoints": 5,
     "requirement": {
       "cardRequirement": [
@@ -23,6 +24,7 @@
     "whiteMarble": "WHITEMARBLE"
   },
   {
+    "id": 58,
     "victoryPoints": 5,
     "requirement": {
       "cardRequirement": [
@@ -46,6 +48,7 @@
     "whiteMarble": "WHITEMARBLE"
   },
   {
+    "id": 59,
     "victoryPoints": 5,
     "requirement": {
       "cardRequirement": [
@@ -69,6 +72,7 @@
     "whiteMarble": "WHITEMARBLE"
   },
   {
+    "id": 60,
     "victoryPoints": 5,
     "requirement": {
       "cardRequirement": [

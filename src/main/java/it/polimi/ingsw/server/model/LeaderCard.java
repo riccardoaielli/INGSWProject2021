@@ -11,6 +11,7 @@ import java.util.HashMap;
  * this class represent the abstract leader card
  */
 public abstract class LeaderCard {
+    private int id;
     private int victoryPoints;
     private Requirement requirement;
     private Boolean active;
@@ -19,6 +20,13 @@ public abstract class LeaderCard {
         this.victoryPoints = victoryPoints;
         this.requirement = requirement;
         this.active = false;
+    }
+
+    /**
+     * @return the id of the card
+     */
+    public int getId() {
+        return id;
     }
 
     public void activate(){

@@ -11,6 +11,7 @@ import java.util.HashMap;
  */
 public class DevelopmentCard {
 
+    private int id;
     private DevelopmentCardColor color;
     private int level;
     private HashMap<Resource,Integer> price;
@@ -35,6 +36,13 @@ public class DevelopmentCard {
         }
         else
             throw new InvalidParameterException();
+    }
+
+    /**
+     * @return the id of the card
+     */
+    public int getId() {
+        return id;
     }
 
     /**

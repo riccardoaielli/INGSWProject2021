@@ -1,5 +1,6 @@
 [
   {
+    "id": 61,
     "victoryPoints": 4,
     "requirement": {
       "cardRequirement": [
@@ -21,6 +22,7 @@
     }
   },
   {
+    "id": 62,
     "victoryPoints": 4,
     "requirement": {
       "cardRequirement": [
@@ -42,6 +44,7 @@
     }
   },
   {
+    "id": 63,
     "victoryPoints": 4,
     "requirement": {
       "cardRequirement": [
@@ -63,6 +66,7 @@
     }
   },
   {
+    "id": 64,
     "victoryPoints": 4,
     "requirement": {
       "cardRequirement": [

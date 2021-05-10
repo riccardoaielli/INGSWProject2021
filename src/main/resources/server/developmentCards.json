@@ -2,6 +2,7 @@
   [
     [
       {
+        "id": 1,
         "color" : "GREEN",
         "level" : 3,
         "price" : {
@@ -19,6 +20,7 @@
         }
       },
       {
+        "id": 2,
         "color" : "GREEN",
         "level" : 3,
         "price" : {
@@ -39,6 +41,7 @@
         }
       },
       {
+        "id": 3,
         "color" : "GREEN",
         "level" : 3,
         "price" : {
@@ -56,6 +59,7 @@
         }
       },
       {
+        "id": 4,
         "color" : "GREEN",
         "level" : 3,
         "price" : {
@@ -76,6 +80,7 @@
     ],
     [
       {
+        "id": 5,
         "color" : "BLUE",
         "level" : 3,
         "price" : {
@@ -93,6 +98,7 @@
         }
       },
       {
+        "id": 6,
         "color" : "BLUE",
         "level" : 3,
         "price" : {
@@ -113,6 +119,7 @@
         }
       },
       {
+        "id": 7,
         "color" : "BLUE",
         "level" : 3,
         "price" : {
@@ -130,6 +137,7 @@
         }
       },
       {
+        "id": 8,
         "color" : "BLUE",
         "level" : 3,
         "price" : {
@@ -150,6 +158,7 @@
     ],
     [
       {
+        "id": 9,
         "color" : "YELLOW",
         "level" : 3,
         "price" : {
@@ -167,6 +176,7 @@
         }
       },
       {
+        "id": 10,
         "color" : "YELLOW",
         "level" : 3,
         "price" : {
@@ -187,6 +197,7 @@
         }
       },
       {
+        "id": 11,
         "color" : "YELLOW",
         "level" : 3,
         "price" : {
@@ -204,6 +215,7 @@
         }
       },
       {
+        "id": 12,
         "color" : "YELLOW",
         "level" : 3,
         "price" : {
@@ -224,6 +236,7 @@
     ],
     [
       {
+        "id": 13,
         "color" : "PURPLE",
         "level" : 3,
         "price" : {
@@ -241,6 +254,7 @@
         }
       },
       {
+        "id": 14,
         "color" : "PURPLE",
         "level" : 3,
         "price" : {
@@ -261,6 +275,7 @@
         }
       },
       {
+        "id": 15,
         "color" : "PURPLE",
         "level" : 3,
         "price" : {
@@ -278,6 +293,7 @@
         }
       },
       {
+        "id": 16,
         "color" : "PURPLE",
         "level" : 3,
         "price" : {
@@ -300,6 +316,7 @@
   [
     [
       {
+        "id": 17,
         "color" : "GREEN",
         "level" : 2,
         "price" : {
@@ -316,6 +333,7 @@
         }
       },
       {
+        "id": 18,
         "color" : "GREEN",
         "level" : 2,
         "price" : {
@@ -334,6 +352,7 @@
         }
       },
       {
+        "id": 19,
         "color" : "GREEN",
         "level" : 2,
         "price" : {
@@ -351,6 +370,7 @@
         }
       },
       {
+        "id": 20,
         "color" : "GREEN",
         "level" : 2,
         "price" : {
@@ -371,6 +391,7 @@
     ],
     [
       {
+        "id": 21,
         "color" : "BLUE",
         "level" : 2,
         "price" : {
@@ -387,6 +408,7 @@
         }
       },
       {
+        "id": 22,
         "color" : "BLUE",
         "level" : 2,
         "price" : {
@@ -405,6 +427,7 @@
         }
       },
       {
+        "id": 23,
         "color" : "BLUE",
         "level" : 2,
         "price" : {
@@ -422,6 +445,7 @@
         }
       },
       {
+        "id": 24,
         "color" : "BLUE",
         "level" : 2,
         "price" : {
@@ -442,6 +466,7 @@
     ],
     [
       {
+        "id": 25,
         "color" : "YELLOW",
         "level" : 2,
         "price" : {
@@ -458,6 +483,7 @@
         }
       },
       {
+        "id": 26,
         "color" : "YELLOW",
         "level" : 2,
         "price" : {
@@ -476,6 +502,7 @@
         }
       },
       {
+        "id": 27,
         "color" : "YELLOW",
         "level" : 2,
         "price" : {
@@ -493,6 +520,7 @@
         }
       },
       {
+        "id": 28,
         "color" : "YELLOW",
         "level" : 2,
         "price" : {
@@ -513,6 +541,7 @@
     ],
     [
       {
+        "id": 29,
         "color" : "PURPLE",
         "level" : 2,
         "price" : {
@@ -529,6 +558,7 @@
         }
       },
       {
+        "id": 30,
         "color" : "PURPLE",
         "level" : 2,
         "price" : {
@@ -547,6 +577,7 @@
         }
       },
       {
+        "id": 31,
         "color" : "PURPLE",
         "level" : 2,
         "price" : {
@@ -564,6 +595,7 @@
         }
       },
       {
+        "id": 32,
         "color" : "PURPLE",
         "level" : 2,
         "price" : {
@@ -586,6 +618,7 @@
   [
     [
       {
+        "id":33,
         "color" : "GREEN",
         "level" : 1,
         "price" : {
@@ -602,6 +635,7 @@
         }
       },
       {
+        "id": 34,
         "color" : "GREEN",
         "level" : 1,
         "price" : {
@@ -620,6 +654,7 @@
         }
       },
       {
+        "id": 35,
         "color" : "GREEN",
         "level" : 1,
         "price" : {
@@ -638,6 +673,7 @@
         }
       },
       {
+        "id": 36,
         "color" : "GREEN",
         "level" : 1,
         "price" : {
@@ -659,6 +695,7 @@
     ],
     [
       {
+        "id": 37,
         "color" : "BLUE",
         "level" : 1,
         "price" : {
@@ -675,6 +712,7 @@
         }
       },
       {
+        "id": 38,
         "color" : "BLUE",
         "level" : 1,
         "price" : {
@@ -693,6 +731,7 @@
         }
       },
       {
+        "id": 39,
         "color" : "BLUE",
         "level" : 1,
         "price" : {
@@ -711,6 +750,7 @@
         }
       },
       {
+        "id": 40,
         "color" : "BLUE",
         "level" : 1,
         "price" : {
@@ -732,6 +772,7 @@
     ],
     [
       {
+        "id": 41,
         "color" : "YELLOW",
         "level" : 1,
         "price" : {
@@ -748,6 +789,7 @@
         }
       },
       {
+        "id": 42,
         "color" : "YELLOW",
         "level" : 1,
         "price" : {
@@ -766,6 +808,7 @@
         }
       },
       {
+        "id": 43,
         "color" : "YELLOW",
         "level" : 1,
         "price" : {
@@ -784,6 +827,7 @@
         }
       },
       {
+        "id": 44,
         "color" : "YELLOW",
         "level" : 1,
         "price" : {
@@ -805,6 +849,7 @@
     ],
     [
       {
+        "id": 45,
         "color" : "PURPLE",
         "level" : 1,
         "price" : {
@@ -821,6 +866,7 @@
         }
       },
       {
+        "id": 46,
         "color" : "PURPLE",
         "level" : 1,
         "price" : {
@@ -839,6 +885,7 @@
         }
       },
       {
+        "id": 47,
         "color" : "PURPLE",
         "level" : 1,
         "price" : {
@@ -857,6 +904,7 @@
         }
       },
       {
+        "id": 48,
         "color" : "PURPLE",
         "level" : 1,
         "price" : {

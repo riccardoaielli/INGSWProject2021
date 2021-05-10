@@ -1,5 +1,6 @@
 [
   {
+    "id": 49,
     "victoryPoints": 3,
     "requirement": {
       "cardRequirement": null,
@@ -11,6 +12,7 @@
     "specialDepotResource": "SERVANT"
   },
   {
+    "id": 50,
     "victoryPoints": 3,
     "requirement": {
       "cardRequirement": null,
@@ -22,6 +24,7 @@
     "specialDepotResource": "SHIELD"
   },
   {
+    "id": 51,
     "victoryPoints": 3,
     "requirement": {
       "cardRequirement": null,
@@ -33,6 +36,7 @@
     "specialDepotResource": "STONE"
   },
   {
+    "id": 52,
     "victoryPoints": 3,
     "requirement": {
       "cardRequirement": null,
