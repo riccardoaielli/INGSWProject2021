@@ -208,19 +208,26 @@ public class PersonalBoard {
      * @param rowOrColumn 0 if row, 1 if column
      * @param value from 0 to 2 if row, from 0 to 3 if column Todo ricontrollare
      */
-    public void takeFromMarket(int rowOrColumn, int value){
-        temporaryMarbles = new HashMap<>(market.takeBoughtMarbles(rowOrColumn, value));
+    public void takeFromMarket(int rowOrColumn, int value) throws InvalidParameterException{
+        if((rowOrColumn == 0 && value >= 0 && value <= 2) || (rowOrColumn == 1 && value >= 0 && value <= 3))
+            temporaryMarbles = new HashMap<>(market.takeBoughtMarbles(rowOrColumn, value));
+        else{
+            throw new InvalidParameterException();
+        }
         personalBoardPhase = PersonalBoardPhase.TAKE_FROM_MARKET;
     }
 
     /**
      * This method transform a number of white marbles in the temporaryMarbles map
-     * @param leaderCard is the card to use to transform marbles
+     * @param leaderCard is the number of the card to use to transform marbles
      * @param numOfTransformations is the number of marbles that needs to be transformed
      * @throws NotEnoughWhiteMarblesException this exception is thrown when there are not enough white marbles in the given map of marbles
      */
-    public void transformWhiteMarble(LeaderCard leaderCard, Integer numOfTransformations) throws NotEnoughWhiteMarblesException, InvalidLeaderAction {
-        leaderCard.abilityMarble(temporaryMarbles,numOfTransformations);
+    public void transformWhiteMarble(int leaderCard, int numOfTransformations) throws InvalidParameterException,NotEnoughWhiteMarblesException, InvalidLeaderAction {
+        if(leaderCard > 0 && leaderCard <=leaderCards.size() && numOfTransformations > 0)
+            leaderCards.get(leaderCard - 1).abilityMarble(temporaryMarbles,numOfTransformations);
+        else
+            throw new InvalidParameterException();
     }
 
     /**

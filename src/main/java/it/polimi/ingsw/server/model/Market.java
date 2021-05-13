@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.common.MarketUpdate;
+import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 
 import java.util.*;
@@ -7,7 +9,7 @@ import java.util.*;
 /**
  * this class represents the market
  */
-public class Market {
+public class Market extends MessageObservable {
 
     private Marble[][] marketMatrix = new Marble[3][4];
     private Marble marbleOut, tempMarble;
@@ -103,5 +105,10 @@ public class Market {
     public Marble getMarbleOut() {
         return marbleOut;
     }
+
+    public void doNotify(){
+        notifyObservers(new MarketUpdate(marketMatrix.clone(), marbleOut));
+    }
+
 
 }

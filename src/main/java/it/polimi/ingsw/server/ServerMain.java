@@ -27,6 +27,7 @@ public class ServerMain {
 
     public void startServer() {
 
+        controller = new Controller();
         ExecutorService executor = Executors.newCachedThreadPool();
         ServerSocket serverSocket;
 

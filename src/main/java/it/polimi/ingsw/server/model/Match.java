@@ -168,6 +168,7 @@ public class Match implements EndGameConditionsObserver{
                 case SETUP:
                     numOfPlayersReady = 0;
                     matchPhase = MatchPhase.LEADERCHOICE;
+                    startMatchNotify();
                     return;
                 case LEADERCHOICE:
                     numOfPlayersReady = 0;
@@ -302,5 +303,10 @@ public class Match implements EndGameConditionsObserver{
     public void update() {
         if(matchPhase == MatchPhase.STANDARDROUND)
             matchPhase = MatchPhase.LASTROUND;
+    }
+
+    private void startMatchNotify(){
+        market.doNotify();
+        //
     }
 }

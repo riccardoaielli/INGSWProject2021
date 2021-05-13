@@ -2,17 +2,15 @@ package it.polimi.ingsw.common;
 
 import it.polimi.ingsw.server.controller.Controller;
 
-
 public class NicknameReplyMessage extends MessageToServer{
-    private String nickname;
 
-    public NicknameReplyMessage(String nickname, MessageType messageType) {
-        super(nickname, messageType);
+    public NicknameReplyMessage(String nickname) {
+        super(nickname, MessageType.NICKNAME_REPLY);
     }
 
     @Override
     public void handleMessage(Controller controller, View virtualView) {
-        controller.handleNicknameReplyMessage(nickname);
+        controller.handleNicknameReplyMessage(this.getNickname(),virtualView);
     }
 }
 

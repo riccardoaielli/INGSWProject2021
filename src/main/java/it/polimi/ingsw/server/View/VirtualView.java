@@ -1,7 +1,10 @@
 package it.polimi.ingsw.server.View;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import it.polimi.ingsw.common.Message;
+import it.polimi.ingsw.common.MessageToServer;
 import it.polimi.ingsw.common.View;
+import it.polimi.ingsw.common.MessageDeserializer;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.Observable;
 
@@ -18,6 +21,7 @@ public class VirtualView implements Runnable,View {
     private int clientPort;
     private PrintWriter out;
     private Gson gson;
+    private static final MessageDeserializer messageDeserializer = new MessageDeserializer();
 
     public VirtualView(Socket socket, Controller controller) {
         this.controller = controller;
@@ -25,7 +29,7 @@ public class VirtualView implements Runnable,View {
         clientAddress = socket.getInetAddress();
         clientPort = socket.getPort();
         gson = new Gson();
-
+        controller.addObserver(this);
     }
 
     public boolean checkIsTheCorrectVirtualView(InetAddress clientAddress,int clientPort){
@@ -45,9 +49,7 @@ public class VirtualView implements Runnable,View {
                 if (line.equals("quit")) {
                     break;
                 } else {
-                    //gestisci deserializzazione e inoltra al controller
-                    //l'attributo "line" contiene il messaggio in arrivo
-                    //chiamata metodo handler su messaggio
+                    messageDeserializer.deserializeMessage(line).handleMessage(controller,this);
                     out.flush();
                 }
             }
