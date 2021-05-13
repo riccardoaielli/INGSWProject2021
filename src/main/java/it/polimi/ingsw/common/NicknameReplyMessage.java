@@ -11,7 +11,7 @@ public class NicknameReplyMessage extends MessageToServer{
     }
 
     @Override
-    public void handleMessage(Controller controller) {
+    public void handleMessage(Controller controller, View virtualView) {
         controller.handleNicknameReplyMessage(nickname);
     }
 }

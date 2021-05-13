@@ -21,7 +21,7 @@ public class DiscardInitialLeaderMessage extends MessageToServer{
     }
 
     @Override
-    public void handleMessage(Controller controller) {
+    public void handleMessage(Controller controller, View virtualView) {
         controller.handleDiscardInitialLeaderMessage(this.getNickname(), indexLeaderCard1, indexLeaderCard2);
     }
 }
