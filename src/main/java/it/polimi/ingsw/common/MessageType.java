@@ -1,5 +1,8 @@
 package it.polimi.ingsw.common;
 
+/**
+ * Enum of every type of exchanged messages
+ */
 public enum MessageType {
     NICKNAME_REPLY,
     DISCARD_INITIAL_LEADER,

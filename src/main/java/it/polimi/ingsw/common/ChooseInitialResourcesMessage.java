@@ -5,6 +5,9 @@ import it.polimi.ingsw.server.model.enumerations.Resource;
 
 import java.util.Map;
 
+/**
+ * Message to let the player select the initial resources
+ */
 public class ChooseInitialResourcesMessage extends MessageToServer{
     Map<Resource, Integer> resourceIntegerMap;
 

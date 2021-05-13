@@ -92,42 +92,55 @@ public class Controller extends MessageObservable{
         }
     }
 
-    public synchronized void handleDiscardInitialLeaderMessage(View virtualView, String nickname, int indexLeaderCard1, int indexLeaderCard2){
+    /**
+     * Method used to discard the two leader card selected by the player
+     * @param view The view of the player whose leader cards have to be discarded
+     * @param nickname The nickname of the player
+     * @param indexLeaderCard1 The index of one of the two leader card to discard
+     * @param indexLeaderCard2 The index of one of the two leader card to discard
+     */
+    public synchronized void handleDiscardInitialLeaderMessage(View view, String nickname, int indexLeaderCard1, int indexLeaderCard2){
         if (match.getMatchPhase() != MatchPhase.LEADERCHOICE){
-            virtualView.update(new ErrorMessage(nickname, "Invalid command"));
+            view.update(new ErrorMessage(nickname, "Invalid command"));
             return;
         }
 
         PersonalBoard personalBoard = match.getPlayerByNickname(nickname).getPersonalBoard();
 
         if(personalBoard.getPersonalBoardPhase() != PersonalBoardPhase.LEADER_CHOICE){
-            virtualView.update(new ErrorMessage(nickname, "Invalid command"));
+            view.update(new ErrorMessage(nickname, "Invalid command"));
             return;
         }
 
         try {
             personalBoard.discardInitialLeader(indexLeaderCard1, indexLeaderCard2);
         } catch (InvalidParameterException e) {
-            virtualView.update(new ErrorMessage(nickname, "Invalid command"));
+            view.update(new ErrorMessage(nickname, "Invalid command"));
         }
     }
 
-    public synchronized void handleChooseInitialResourcesMessage(View virtualView, String nickname, Map<Resource, Integer> resourceIntegerMap){
+    /**
+     * Method used to communicate to the model the resources chosen by player
+     * @param view View of the player who has chosen the resources
+     * @param nickname Nickname of the player
+     * @param resourceIntegerMap Map of the resources and their quantities chosen by player
+     */
+    public synchronized void handleChooseInitialResourcesMessage(View view, String nickname, Map<Resource, Integer> resourceIntegerMap){
         if (match.getMatchPhase() != MatchPhase.RESOURCECHOICE){
-            virtualView.update(new ErrorMessage(nickname, "Invalid command"));
+            view.update(new ErrorMessage(nickname, "Invalid command"));
             return;
         }
         PersonalBoard personalBoard = match.getPlayerByNickname(nickname).getPersonalBoard();
 
         if(personalBoard.getPersonalBoardPhase() != PersonalBoardPhase.RESOURCE_CHOICE){
-            virtualView.update(new ErrorMessage(nickname, "Invalid command"));
+            view.update(new ErrorMessage(nickname, "Invalid command"));
             return;
         }
 
         try {
             personalBoard.addInitialResources(resourceIntegerMap);
         } catch (InvalidParameterException e) {
-            virtualView.update(new ErrorMessage(nickname, "Invalid command"));
+            view.update(new ErrorMessage(nickname, "Invalid command"));
         }
     }
 }

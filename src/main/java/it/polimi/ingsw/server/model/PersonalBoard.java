@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.PersonalBoardPhase;
 import it.polimi.ingsw.server.model.enumerations.Resource;
@@ -10,7 +11,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PersonalBoard {
+public class PersonalBoard extends MessageObservable {
     private final int TOTPOWERPRODUCTIONS = 6;
     private int victoryPoints;
     private HashMap<Marble,Integer> temporaryMarbles;

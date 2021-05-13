@@ -1,8 +1,10 @@
 package it.polimi.ingsw.common;
 
 import it.polimi.ingsw.client.ClientView;
-import it.polimi.ingsw.client.MessageHandler;
 
+/**
+ * Message sent to client with an error message to display
+ */
 public class ErrorMessage extends MessageToClient{
     private String errorString;
     public ErrorMessage(String nickname, String errorString) {
