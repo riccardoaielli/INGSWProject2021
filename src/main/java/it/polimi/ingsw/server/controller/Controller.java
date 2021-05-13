@@ -4,14 +4,11 @@ import it.polimi.ingsw.common.ErrorMessage;
 import it.polimi.ingsw.common.View;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.Match;
-import it.polimi.ingsw.server.model.Observable;
 import it.polimi.ingsw.server.model.PersonalBoard;
 import it.polimi.ingsw.server.model.enumerations.MatchPhase;
 import it.polimi.ingsw.server.model.enumerations.PersonalBoardPhase;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
-
-import java.util.HashMap;
 import java.util.Map;
 
 public class Controller extends MessageObservable{
@@ -20,75 +17,106 @@ public class Controller extends MessageObservable{
     public Controller() {
     }
 
-    public synchronized void handleNicknameReplyMessage(String nickname, View virtualView){
+
+    /**
+     * Handles a nicknameReplyMessage
+     * @param nickname is the nickname to add to the match
+     * @param view is the view of the client that sends the message
+     */
+    public synchronized void handleNicknameReplyMessage(String nickname, View view){
         try {
             if(match.getMatchPhase() == MatchPhase.SETUP) {
                 match.addPlayer(nickname);
             }
             else{
-                //genera un messaggio di errore da madare a un metodo sulla virtualView
+                view.update(new ErrorMessage(nickname, "Invalid command"));
             }
         } catch (InvalidNickName invalidNickName) {
-            //genera un messaggio di errore da madare a un metodo sulla virtualView
+            view.update(new ErrorMessage(nickname, "Invalid nickname"));
         }
     }
 
-    public synchronized void handleCreateMatchReplyMessage(int numOfPlayers,String nickname, View virtualView){
+    /**
+     * Handles a createMatchReplyMessage
+     * @param numOfPlayers is the number of players that the new match will require to start
+     * @param nickname is the nickname of the first player
+     * @param view is the view of the client that sends the message
+     */
+    public synchronized void handleCreateMatchReplyMessage(int numOfPlayers,String nickname, View view){
         try {
             if(match == null){
                 match = new Match(1,numOfPlayers);
                 //creates a player
-                handleNicknameReplyMessage(nickname,virtualView);
+                handleNicknameReplyMessage(nickname,view);
             }
             else{
-                //genera messaggio di match gia esitente da madare a un metodo sulla virtualView
+                view.update(new ErrorMessage(nickname, "Invalid command"));
             }
         }catch (InvalidParameterException exception) {
-            //genera messaggio di errore da mandare a un metodo sulla virtualView
+            view.update(new ErrorMessage(nickname, "Invalid number of players"));
         }
     }
 
-    public synchronized void handleTakeFromMarketMessage(int rowOrColumn, int value,String nickname, View virtualView){
+    /**
+     * Handles a TakeFromMarketMessage
+     * @param rowOrColumn 0 if row, 1 if column
+     * @param value from 0 to 2 if row, from 0 to 3 if column
+     * @param nickname is the nickname of the player that sends the message
+     * @param view is the view of the client that sends the message
+     */
+    public synchronized void handleTakeFromMarketMessage(int rowOrColumn, int value,String nickname, View view){
         try{
-            if((match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND) && match.getCurrentPlayer().getNickname().equals(nickname)){
+            if((match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND)
+                    && match.getCurrentPlayer().getNickname().equals(nickname)){
                 match.getCurrentPlayer().getPersonalBoard().takeFromMarket(rowOrColumn,value);
             }
             else{
-                //genera un messaggio di fase di gioco non adatta
+                view.update(new ErrorMessage(nickname, "Invalid command"));
             }
         } catch (InvalidParameterException exception) {
-            //genera messaggio di errore da mandare a un metodo sulla virtualView
+            view.update(new ErrorMessage(nickname, "Invalid command"));
         }
     }
 
-    public synchronized void handleTransformWhiteMarblesMessage(int leaderCard,int numOfTransformations, String nickname, View virtualView){
+    /**
+     * Handles a TransformWhiteMarblesMessage
+     * @param leaderCard is the number of the card to use to transform marbles
+     * @param numOfTransformations is the number of marbles that needs to be transformed
+     * @param nickname is the nickname of the player that sends the message
+     * @param view is the view of the client that sends the message
+     */
+    public synchronized void handleTransformWhiteMarblesMessage(int leaderCard,int numOfTransformations, String nickname, View view){
         try{
-            if((match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND) && match.getCurrentPlayer().getNickname().equals(nickname) /*&& todo: controllare lo stato della personal board*/){
+            if((match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND)
+                    && match.getCurrentPlayer().getNickname().equals(nickname)
+                    && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.TAKE_FROM_MARKET){
                 match.getCurrentPlayer().getPersonalBoard().transformWhiteMarble(leaderCard,numOfTransformations);
             }
             else{
-                //genera un messaggio di fase di gioco non adatta
+                view.update(new ErrorMessage(nickname, "Invalid command"));
             }
         } catch (InvalidLeaderAction invalidLeaderAction) {
-            //genera messaggio di carta leader non valida
+            view.update(new ErrorMessage(nickname, "Invalid leader card selected"));
         } catch (InvalidParameterException exception) {
-            //genera messaggio di errore da mandare a un metodo sulla virtualView
+            view.update(new ErrorMessage(nickname, "Invalid command"));
         } catch (NotEnoughWhiteMarblesException e) {
-            //genera messaggio di biglie bianche insufficienti
+            view.update(new ErrorMessage(nickname, "Not enough white marbles to transform"));
         }
     }
 
-    public synchronized void handleTransformMarblesMessage(int depotLevel, HashMap<Resource,Integer> singleResourceMap, String nickname){
-        try{
-            if((match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND) && match.getCurrentPlayer().getNickname().equals(nickname) /*&& todo: controllare lo stato della personal board*/){
-                match.getCurrentPlayer().getPersonalBoard().transformMarbles();
-                match.getCurrentPlayer().getPersonalBoard().addToWarehouseDepots(depotLevel,singleResourceMap);
-            }
-            else{
-                //genera un messaggio di fase di gioco non adatta
-            }
-        } catch (InvalidAdditionException e) {
-            //genera messaggio di operazione di deposito non valida
+    /**
+     * Handles a TransformMarblesMessage
+     * @param view is the view of the client that sends the message
+     * @param nickname is the nickname of the player that sends the message
+     */
+    public synchronized void handleTransformMarblesMessage(View view, String nickname){
+        if((match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND)
+                && match.getCurrentPlayer().getNickname().equals(nickname)
+                && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.TAKE_FROM_MARKET){
+            match.getCurrentPlayer().getPersonalBoard().transformMarbles();
+        }
+        else{
+            view.update(new ErrorMessage(nickname, "Invalid command"));
         }
     }
 

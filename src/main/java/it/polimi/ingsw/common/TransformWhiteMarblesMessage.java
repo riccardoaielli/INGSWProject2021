@@ -2,6 +2,9 @@ package it.polimi.ingsw.common;
 
 import it.polimi.ingsw.server.controller.Controller;
 
+/**
+ * This class represents the message sent from the client to transform the white marbles obtained from the market with a leader ability
+ */
 public class TransformWhiteMarblesMessage extends MessageToServer{
     private int leaderCard;
     private int numOfTransformations;

@@ -3,6 +3,9 @@ package it.polimi.ingsw.common;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.LeaderCard;
 
+/**
+ * This class represents the message sent from the client to take marbles from a row or column of the market
+ */
 public class TakeFromMarketMessage extends MessageToServer{
     private int rowOrColumn;
     private int value;

@@ -2,6 +2,9 @@ package it.polimi.ingsw.common;
 
 import it.polimi.ingsw.server.controller.Controller;
 
+/**
+ * This class represents the message sent from the client to create a match with a number of players and add a new player nickname to the match
+ */
 public class CreateMatchReplyMessage extends MessageToServer{
     int numOfPlayers;
 

@@ -5,16 +5,15 @@ import it.polimi.ingsw.server.model.enumerations.Resource;
 
 import java.util.HashMap;
 
+/**
+ * This class represents the message sent from the client when it wants to transform the marbles obtained from the market into resources
+ */
 public class TransformMarblesMessage extends MessageToServer{
-    private int depotLevel;
-    private HashMap<Resource,Integer> singleResourceMap;
 
-    public TransformMarblesMessage(String nickname, MessageType messageType, int depotLevel, HashMap<Resource,Integer> singleResourceMap) {
-        super(nickname, messageType);
-        this.depotLevel = depotLevel;
-        this.singleResourceMap = singleResourceMap;
+    public TransformMarblesMessage(String nickname) {
+        super(nickname, MessageType.TRANSFORM_MARBLES);
     }
 
     @Override
-    public void handleMessage(Controller controller, View virtualView) { controller.handleTransformMarblesMessage(depotLevel, singleResourceMap, this.getNickname()); }
+    public void handleMessage(Controller controller, View virtualView) { controller.handleTransformMarblesMessage(virtualView, this.getNickname()); }
 }
