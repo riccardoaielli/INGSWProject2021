@@ -11,9 +11,6 @@ public abstract class Message {
         this.nickname = nickname;
     }
 
-
-    public abstract void handleMessage(Controller controller);
-
     public String getNickname() {
         return nickname;
     }

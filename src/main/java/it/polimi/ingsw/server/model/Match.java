@@ -13,6 +13,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 
 public class Match implements EndGameConditionsObserver{
@@ -165,13 +166,38 @@ public class Match implements EndGameConditionsObserver{
         if(numOfPlayers == numOfPlayersReady){
             switch (matchPhase){
                 case SETUP:
-                    matchPhase = MatchPhase.LEADERCHOICE;
                     numOfPlayersReady = 0;
+                    matchPhase = MatchPhase.LEADERCHOICE;
                     return;
                 case LEADERCHOICE:
-                    matchPhase = MatchPhase.RESOURCECHOICE;
                     numOfPlayersReady = 0;
                     Collections.shuffle(players);
+                    //Assigning resources and faith points according to order
+                    for(int playerNumber = 1; playerNumber<=players.size(); playerNumber++){
+                        switch (playerNumber){
+                            case 1:
+                                players.get(0).getPersonalBoard().setNumOfResourcesToChoose(0);
+                                break;
+                            case 2:
+                                players.get(1).getPersonalBoard().setNumOfResourcesToChoose(1);
+                                break;
+                            case 3:
+                                players.get(2).getPersonalBoard().setNumOfResourcesToChoose(1);
+                                try {
+                                    players.get(2).getPersonalBoard().moveFaithMarker(1);
+                                } catch (InvalidParameterException ignored) {
+                                }
+                                break;
+                            case 4:
+                                players.get(3).getPersonalBoard().setNumOfResourcesToChoose(2);
+                                try {
+                                    players.get(2).getPersonalBoard().moveFaithMarker(1);
+                                } catch (InvalidParameterException ignored) {
+                                }
+                                break;
+                        }
+                    }
+                    matchPhase = MatchPhase.RESOURCECHOICE;
             }
         }
     }
@@ -263,6 +289,10 @@ public class Match implements EndGameConditionsObserver{
 
     public ArrayList<Player> getRank() {
         return rank;
+    }
+
+    public Player getPlayerByNickname(String nickname){
+        return players.stream().filter(player -> player.getNickname().equals(nickname)).findFirst().orElse(null);
     }
 
 /**

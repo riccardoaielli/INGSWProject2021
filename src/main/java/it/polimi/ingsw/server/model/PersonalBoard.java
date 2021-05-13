@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.model.enumerations.Marble;
+import it.polimi.ingsw.server.model.enumerations.PersonalBoardPhase;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
 
@@ -24,6 +25,8 @@ public class PersonalBoard {
     private DevelopmentCardSpace developmentCardSpace;
     //Array of booleans used to check if a powerOfProduction has already been used in the same turn
     private Boolean[] powerOfProductionUsed = new Boolean[TOTPOWERPRODUCTIONS];
+    private PersonalBoardPhase personalBoardPhase;
+    private int numOfResourcesToChoose;
 
     public PersonalBoard(ArrayList<LeaderCard> leaderCards, Match match) {
         this.victoryPoints = 0;
@@ -41,6 +44,8 @@ public class PersonalBoard {
         this.temporaryMarbles = new HashMap<>();
         Arrays.fill(this.powerOfProductionUsed, false);
         //TODO when the turn ends set power of production to null again
+        numOfResourcesToChoose = 0;
+        personalBoardPhase = PersonalBoardPhase.LEADER_CHOICE;
     }
 
     //Method used to check if the merged maps of cost strongbox and cost warehouseDepot are equal to costToPay
@@ -103,8 +108,6 @@ public class PersonalBoard {
         if (powerOfProductionUsed[indexDevelopmentCardSpace]) {
             throw new InvalidProductionException();
         }
-        //TODO what happens if card space is empty? What happens if the index is out of bound
-        //TODO wrong, the power of productions are dynamic, we have to use getCard but with an exception if there is no card
         PowerOfProduction powerOfProduction = developmentCardSpace.getPowerOfProduction(indexDevelopmentCardSpace);
         //Checking the correctness of costs
         mergeCostsAndVerify(costStrongbox, costWarehouseDepot, powerOfProduction.getCost());
@@ -112,6 +115,7 @@ public class PersonalBoard {
         produce(costStrongbox, costWarehouseDepot, powerOfProduction.getProduction());
         //Marking that the production has been done in this turn
         powerOfProductionUsed[indexDevelopmentCardSpace] = true;
+        personalBoardPhase = PersonalBoardPhase.PRODUCTION;
     }
 
     /**
@@ -150,6 +154,7 @@ public class PersonalBoard {
         produce(costStrongbox, costWarehouseDepot, resourceToAdd);
         //Marking that the production has been done in this turn
         powerOfProductionUsed[0] = true;
+        personalBoardPhase = PersonalBoardPhase.PRODUCTION;
     }
 
     /**
@@ -195,6 +200,7 @@ public class PersonalBoard {
         produce(costStrongbox, costWarehouseDepot, production);
         //Changing boolean of power of production for this turn
         powerOfProductionUsed[3+numLeaderCard] = true;
+        personalBoardPhase = PersonalBoardPhase.PRODUCTION;
     }
 
     /**
@@ -204,6 +210,7 @@ public class PersonalBoard {
      */
     public void takeFromMarket(int rowOrColumn, int value){
         temporaryMarbles = new HashMap<>(market.takeBoughtMarbles(rowOrColumn, value));
+        personalBoardPhase = PersonalBoardPhase.TAKE_FROM_MARKET;
     }
 
     /**
@@ -324,6 +331,7 @@ public class PersonalBoard {
         strongbox.uncheckedRemove(costStrongbox);
         warehouseDepots.uncheckedRemove(costWarehouseDepots);
         cardGrid.buyCard(row, column);
+        personalBoardPhase = PersonalBoardPhase.BUY_DEV_CARD;
     }
 
     /**
@@ -390,6 +398,23 @@ public class PersonalBoard {
         leaderCards.remove(indexLeaderCard1-1);
         leaderCards.remove(indexLeaderCard2-1);
         match.addPlayerReady();
+        personalBoardPhase = PersonalBoardPhase.RESOURCE_CHOICE;
+    }
+
+    /**
+     * Method used to add initial resources chosen by player according to its order
+     * @param initialResources Resources to add to the temporary resources
+     * @throws InvalidParameterException If the number of resources chosen doesn't match the possible number of resources the player can choose
+     */
+    public void addInitialResources(Map<Resource, Integer> initialResources) throws InvalidParameterException {
+        int totalResources = 0;
+        for(int singleResourceQuantity : initialResources.values()){
+            totalResources+= singleResourceQuantity;
+        }
+        if (totalResources != numOfResourcesToChoose){
+            throw new InvalidParameterException();
+        }
+        temporaryMapResource = new HashMap<>(initialResources);
     }
 
     /**
@@ -492,5 +517,13 @@ public class PersonalBoard {
 
     public DevelopmentCardSpace getDevelopmentCardSpace() {
         return developmentCardSpace;
+    }
+
+    public PersonalBoardPhase getPersonalBoardPhase() {
+        return personalBoardPhase;
+    }
+
+    public void setNumOfResourcesToChoose(int numOfResourcesToChoose) {
+        this.numOfResourcesToChoose = numOfResourcesToChoose;
     }
 }

@@ -2,12 +2,7 @@ package it.polimi.ingsw.server;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import it.polimi.ingsw.common.MessageType;
-import it.polimi.ingsw.common.NicknameReplyMessage;
-import it.polimi.ingsw.model.Message;
-import it.polimi.ingsw.model.Messaggio1;
-import it.polimi.ingsw.model.Messaggio2;
-import it.polimi.ingsw.model.enumProva;
+import it.polimi.ingsw.common.*;
 
 import java.lang.reflect.Type;
 
@@ -19,8 +14,11 @@ public class MessageDeserializer implements JsonDeserializer {
 
         switch (jsonObject.get("messageType").getAsString()){
             case "NICKNAME_REPLY":
-                Type massageType = new TypeToken<NicknameReplyMessage>(){}.getType();
-                return gson.fromJson(jsonObject, massageType);
+                return gson.fromJson(jsonObject, NicknameReplyMessage.class);
+            case "DISCARD_INITIAL_LEADER":
+                return gson.fromJson(jsonObject, DiscardInitialLeaderMessage.class);
+            case "CHOOSE_INITIAL_RESOURCES":
+                return gson.fromJson(jsonObject, ChooseInitialResourcesMessage.class);
         }
 
         return null;
