@@ -1,6 +1,9 @@
 package it.polimi.ingsw.server.View;
+import com.google.gson.Gson;
+import it.polimi.ingsw.common.Message;
 import it.polimi.ingsw.common.View;
 import it.polimi.ingsw.server.controller.Controller;
+import it.polimi.ingsw.server.model.Observable;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,12 +16,16 @@ public class VirtualView implements Runnable,View {
     private Controller controller;
     private InetAddress clientAddress;
     private int clientPort;
+    private PrintWriter out;
+    private Gson gson;
 
     public VirtualView(Socket socket, Controller controller) {
         this.controller = controller;
         this.socket = socket;
         clientAddress = socket.getInetAddress();
         clientPort = socket.getPort();
+        gson = new Gson();
+
     }
 
     public boolean checkIsTheCorrectVirtualView(InetAddress clientAddress,int clientPort){
@@ -31,7 +38,7 @@ public class VirtualView implements Runnable,View {
 
         try {
             Scanner in = new Scanner(socket.getInputStream());
-            PrintWriter out = new PrintWriter(socket.getOutputStream());
+            out = new PrintWriter(socket.getOutputStream());
             // Leggo e scrivo nella connessione finche' non ricevo "quit"
             while (true) {
                 String line = in.nextLine();
@@ -53,8 +60,20 @@ public class VirtualView implements Runnable,View {
         }
     }
 
+    /**
+     * Sends message to client
+     *
+     * @param message Message notified by {@link Observable}
+     */
     @Override
+    public void update(Message message) {
+        out.print(gson.toJson(message));
+    }
+
+    /*@Override
     public void showError(String errorString){
         //send(new ErrorMessage(nickname, errorString));
-    }
+        ErrorMessage errorMessage = new ErrorMessage()
+        out.print();
+    }*/
 }

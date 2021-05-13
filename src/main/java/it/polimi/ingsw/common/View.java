@@ -1,7 +1,7 @@
 package it.polimi.ingsw.common;
 
-public interface View {
+import it.polimi.ingsw.common.utils.observe.MessageObserver;
 
-    void showError(String errorString);
+public interface View extends MessageObserver {
 
 }
