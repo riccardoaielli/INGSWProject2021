@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.model;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import it.polimi.ingsw.common.View;
 import it.polimi.ingsw.server.model.enumerations.MatchPhase;
 import it.polimi.ingsw.server.model.exceptions.InvalidNickName;
 import it.polimi.ingsw.server.model.exceptions.InvalidParameterException;
@@ -142,7 +143,7 @@ public class Match implements EndGameConditionsObserver{
      * @param nickName represents the nickname of the player that's joining the match
      * @throws InvalidNickName when the nickname requested already exist
      */
-    public void addPlayer(String nickName) throws InvalidNickName {
+    public void addPlayer(String nickName, View view) throws InvalidNickName {
         //checks if the nickname is not taken in this match
         if(players.stream().noneMatch(x -> x.getNickname().equals(nickName))) {
             //draw 4 cards from the leader cards stack
@@ -150,7 +151,7 @@ public class Match implements EndGameConditionsObserver{
             for(int draws = 0; draws < 4; draws++)
                 drawnLeaderCards.add(leaderCards.pop());
             //creates the player and its personal board
-            players.add(new Player(nickName, new PersonalBoard(drawnLeaderCards, this)));
+            players.add(new Player(nickName, new PersonalBoard(drawnLeaderCards, this),view));
             //updates the number of players ready
             addPlayerReady();
         }
@@ -296,17 +297,21 @@ public class Match implements EndGameConditionsObserver{
         return players.stream().filter(player -> player.getNickname().equals(nickname)).findFirst().orElse(null);
     }
 
-/**
- * This method is called by the faithTracks and by the developmentCardSpaces when they reaches the condition to end the game
- */
+    /**
+    * This method is called by the faithTracks and by the developmentCardSpaces when they reaches the condition to end the game
+    */
     @Override
     public void update() {
         if(matchPhase == MatchPhase.STANDARDROUND)
             matchPhase = MatchPhase.LASTROUND;
     }
 
+    /**
+     * this method updates the view with the market, the card grid and the initial leader card for each player
+     */
     private void startMatchNotify(){
         market.doNotify();
-        //
+        cardGrid.doNotify();
+        //notifica i sigloli players delle loro carte leader
     }
 }

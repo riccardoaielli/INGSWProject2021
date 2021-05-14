@@ -26,7 +26,7 @@ public class Controller extends MessageObservable{
     public synchronized void handleNicknameReplyMessage(String nickname, View view){
         try {
             if(match.getMatchPhase() == MatchPhase.SETUP) {
-                match.addPlayer(nickname);
+                match.addPlayer(nickname,view);
             }
             else{
                 view.update(new ErrorMessage(nickname, "Invalid command"));

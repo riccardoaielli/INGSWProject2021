@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PersonalBoard extends MessageObservable {
+    private Player myPlayer;
     private final int TOTPOWERPRODUCTIONS = 6;
     private int victoryPoints;
     private HashMap<Marble,Integer> temporaryMarbles;
@@ -533,5 +534,9 @@ public class PersonalBoard extends MessageObservable {
 
     public void setNumOfResourcesToChoose(int numOfResourcesToChoose) {
         this.numOfResourcesToChoose = numOfResourcesToChoose;
+    }
+
+    public void setPlayer(Player myPlayer){
+        this.myPlayer = myPlayer;
     }
 }

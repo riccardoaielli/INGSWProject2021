@@ -2,6 +2,9 @@ package it.polimi.ingsw.server.model;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import it.polimi.ingsw.common.CardGridUpdate;
+import it.polimi.ingsw.common.MarketUpdate;
+import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.DevelopmentCardColor;
 import it.polimi.ingsw.server.model.exceptions.NoCardException;
 
@@ -12,7 +15,7 @@ import java.io.*;
 /**
  * This class represents the development card grid
  */
-public class CardGrid {
+public class CardGrid extends MessageObservable {
 
     private int i, j;
     private final int maxRow = 3, maxColumn = 4;
@@ -125,4 +128,16 @@ public class CardGrid {
         }
         return "Hai gia perso"; //caso che non dovrebbe mai verificarsi
     }
+
+    public void doNotify(){
+        int[][] cardGridMatrixUpdate = new int[maxRow][maxColumn];
+
+        for (i = 0; i < maxRow; i++)
+            for (j = 0; j < maxColumn; j++) {
+                cardGridMatrixUpdate[i][j] = cardGridMatrix[i][j].peek().getId();
+            }
+
+        notifyObservers(new CardGridUpdate(cardGridMatrixUpdate));
+    }
+
 }

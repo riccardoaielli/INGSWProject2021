@@ -9,8 +9,8 @@ public class TransformWhiteMarblesMessage extends MessageToServer{
     private int leaderCard;
     private int numOfTransformations;
 
-    public TransformWhiteMarblesMessage(String nickname, MessageType messageType, int leaderCard,int numOfTransformations) {
-        super(nickname, messageType);
+    public TransformWhiteMarblesMessage(String nickname, int leaderCard,int numOfTransformations) {
+        super(nickname, MessageType.TRANSFORM_WHITE_MARBLES);
         this.leaderCard = leaderCard;
         this.numOfTransformations = numOfTransformations;
     }

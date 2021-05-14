@@ -24,7 +24,7 @@ class PersonalBoardTest {
             assert false;
         }
         try {
-            match.addPlayer("Mario");
+            match.addPlayer("Mario",null);
         } catch (InvalidNickName invalidNickName) {
             assert false;
         }

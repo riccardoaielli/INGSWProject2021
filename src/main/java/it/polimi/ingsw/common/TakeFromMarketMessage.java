@@ -10,8 +10,8 @@ public class TakeFromMarketMessage extends MessageToServer{
     private int rowOrColumn;
     private int value;
 
-    public TakeFromMarketMessage(String nickname, MessageType messageType, int rowOrColumn,int value) {
-        super(nickname, messageType);
+    public TakeFromMarketMessage(String nickname, int rowOrColumn,int value) {
+        super(nickname, MessageType.TAKE_FROM_MARKET);
         this.rowOrColumn = rowOrColumn;
         this.value = value;
     }

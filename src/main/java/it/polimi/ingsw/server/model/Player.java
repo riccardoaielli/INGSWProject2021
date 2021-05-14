@@ -1,13 +1,18 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.common.View;
+
 public class Player {
     private final String nickname;
     private  PersonalBoard personalBoard;
+    private View view;
     private boolean connected;
 
-    public Player(String nickname,PersonalBoard personalBoard) {
+    public Player(String nickname, PersonalBoard personalBoard, View view) {
         this.nickname = nickname;
         this.personalBoard = personalBoard;
+        this.view = view;
+        personalBoard.setPlayer(this);
     }
 
     public String getNickname() {
