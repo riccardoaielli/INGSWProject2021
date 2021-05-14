@@ -312,6 +312,6 @@ public class Match implements EndGameConditionsObserver{
     private void startMatchNotify(){
         market.doNotify();
         cardGrid.doNotify();
-        //notifica i sigloli players delle loro carte leader
+        players.forEach(x-> x.getPersonalBoard().doNotifyLeaders());
     }
 }

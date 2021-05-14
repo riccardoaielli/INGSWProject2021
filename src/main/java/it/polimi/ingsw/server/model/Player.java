@@ -8,12 +8,15 @@ public class Player {
     private View view;
     private boolean connected;
 
+
     public Player(String nickname, PersonalBoard personalBoard, View view) {
         this.nickname = nickname;
         this.personalBoard = personalBoard;
         this.view = view;
         personalBoard.setPlayer(this);
     }
+
+    public View getView() { return view; }
 
     public String getNickname() {
         return nickname;
