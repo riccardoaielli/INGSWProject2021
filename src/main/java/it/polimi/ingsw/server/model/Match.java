@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.model;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.common.View;
+import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.MatchPhase;
 import it.polimi.ingsw.server.model.exceptions.InvalidNickName;
 import it.polimi.ingsw.server.model.exceptions.InvalidParameterException;
@@ -17,7 +18,7 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 
 
-public class Match implements EndGameConditionsObserver{
+public class Match extends MessageObservable implements EndGameConditionsObserver {
     private int matchID;
     private final int numOfPlayers;
     private int numOfPlayersReady;
@@ -38,7 +39,7 @@ public class Match implements EndGameConditionsObserver{
      * @param matchID an int that identifies the match
      * @param numOfPlayer the number of players that will join the match
      */
-    public Match(int matchID, int numOfPlayer) throws InvalidParameterException{
+    public Match(int matchID, int numOfPlayer) throws InvalidParameterException {
         if (numOfPlayer < 0 || numOfPlayer > 4)
             throw new InvalidParameterException();
         this.matchID = matchID;
@@ -154,6 +155,7 @@ public class Match implements EndGameConditionsObserver{
             players.add(new Player(nickName, new PersonalBoard(drawnLeaderCards, this),view));
             //updates the number of players ready
             addPlayerReady();
+            this.addObserver(view);
         }
         else
             throw new InvalidNickName();
@@ -169,6 +171,7 @@ public class Match implements EndGameConditionsObserver{
                 case SETUP:
                     numOfPlayersReady = 0;
                     matchPhase = MatchPhase.LEADERCHOICE;
+                    players.forEach(x->x.getPersonalBoard().addObserverList(this.getMessageObservers()));
                     startMatchNotify();
                     return;
                 case LEADERCHOICE:

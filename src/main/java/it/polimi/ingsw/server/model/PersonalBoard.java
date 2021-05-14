@@ -544,6 +544,7 @@ public class PersonalBoard extends MessageObservable {
     public void doNotifyLeaders() {
         ArrayList<Integer> initialLeaderCardsID = new ArrayList<>();
         leaderCards.forEach(x->initialLeaderCardsID.add(x.getId()));
-        myPlayer.getView().update(new InitialLeaderCardsUpdate(myPlayer.getNickname(),initialLeaderCardsID));
+        if(myPlayer.getView() != null)
+            myPlayer.getView().update(new InitialLeaderCardsUpdate(myPlayer.getNickname(),initialLeaderCardsID));
     }
 }

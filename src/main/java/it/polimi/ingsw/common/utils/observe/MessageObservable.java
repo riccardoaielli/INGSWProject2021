@@ -9,7 +9,7 @@ import java.util.List;
  * Observable class used to notify listeners registered through {@link MessageObservable} interface
  */
 public class MessageObservable {
-    private final List<MessageObserver> messageObservers = new ArrayList<>();
+    private List<MessageObserver> messageObservers = new ArrayList<>();
 
     /**
      * Adds an observer to the list of observer
@@ -17,6 +17,15 @@ public class MessageObservable {
      */
     public void addObserver(MessageObserver messageObserver){
         messageObservers.add(messageObserver);
+    }
+
+    public void addObserverList(List<MessageObserver> messageObservers){ this.messageObservers = messageObservers; }
+    /**
+     * Used to get the list of the observers
+     * @return the list of observers
+     */
+    public List<MessageObserver> getMessageObservers() {
+        return messageObservers;
     }
 
     /**
