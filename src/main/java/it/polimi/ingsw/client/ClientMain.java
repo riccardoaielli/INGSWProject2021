@@ -91,7 +91,7 @@ public class ClientMain {
         ) {
             String userInput;
             while ((userInput = stdIn.readLine()) != null) {
-                out.println(gson.toJson(userInput));
+                out.println(userInput);
                 System.out.println(in.readLine());
             }
         } catch (UnknownHostException e) {

@@ -1,9 +1,12 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.model.enumerations.MatchPhase;
+import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.InvalidNickName;
 import it.polimi.ingsw.server.model.exceptions.InvalidParameterException;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,19 +26,19 @@ class MatchTest {
         assertEquals(match.getMatchPhase(), MatchPhase.SETUP);
         try {
             //checks nickname insertions
-            match.addPlayer("marco");
-            match.addPlayer("mario");
+            match.addPlayer("marco", null);
+            match.addPlayer("mario",null);
             assertEquals(match.getPlayer("marco").getNickname(),"marco");
             assertEquals(match.getPlayer("mario").getNickname(),"mario");
             //checks adding invalid nickname
-            match.addPlayer("marco");
+            match.addPlayer("marco", null);
         }catch (InvalidNickName exception){
             assert true;
         }
         assertEquals(match.getMatchPhase(), MatchPhase.SETUP);
         try {
             //check the change of match phase when the necessary number of player is reached
-            match.addPlayer("massimo");
+            match.addPlayer("massimo",null);
             assertEquals(match.getMatchPhase(), MatchPhase.LEADERCHOICE);
         }catch (InvalidNickName exception){
             assert false;
@@ -77,7 +80,63 @@ class MatchTest {
         assertEquals(match.getMatchPhase(), MatchPhase.GAMEOVER);
     }
 
+    @Test
+    public void vaticanReportTest(){
+        Match match = null;
+        try {
+            match = new Match(1,2);
+        } catch (InvalidParameterException invalidParameterException) {
+            assert false;
+        }
 
+        try {
+            match.addPlayer("marco",null);
+            match.addPlayer("mario",null);
+        }catch (InvalidNickName exception){
+            assert false;
+        }
+
+        try {
+            match.getPlayer("marco").getPersonalBoard().discardInitialLeader(1,2);
+            match.getPlayer("mario").getPersonalBoard().discardInitialLeader(1,2);
+        } catch (InvalidNickName | InvalidParameterException invalidNickName) {
+            assert false;
+        }
+
+        HashMap<Resource,Integer> resourceMap =new HashMap<>();
+
+        try {
+            match.getCurrentPlayer().getPersonalBoard().addInitialResources(resourceMap);
+            match.nextPlayer();
+            resourceMap.put(Resource.SHIELD,1);
+            match.getCurrentPlayer().getPersonalBoard().addInitialResources(resourceMap);
+            match.nextPlayer();
+        } catch (InvalidParameterException exception) {
+            assert false;
+        }
+
+
+        try {
+            match.getCurrentPlayer().getPersonalBoard().moveFaithMarker(2);
+            match.getCurrentPlayer().getPersonalBoard().checkVaticanReport();
+
+            assertEquals(2,match.getCurrentPlayer().getPersonalBoard().getFaithTrack().getFaithTrackPosition());
+            assertEquals(0,match.getCurrentPlayer().getPersonalBoard().getFaithTrack().getPopeFavourTileValue(1));
+
+            match.getCurrentPlayer().getPersonalBoard().moveFaithMarker(4);
+            match.getCurrentPlayer().getPersonalBoard().checkVaticanReport();
+
+            assertEquals(6,match.getCurrentPlayer().getPersonalBoard().getFaithTrack().getFaithTrackPosition());
+            assertEquals(2,match.getCurrentPlayer().getPersonalBoard().getFaithTrack().getPopeFavourTileValue(1));
+            match.nextPlayer();
+            //checks the effect of the vatican report on other players
+
+            assertEquals(0,match.getCurrentPlayer().getPersonalBoard().getFaithTrack().getFaithTrackPosition());
+            assertEquals(1,match.getCurrentPlayer().getPersonalBoard().getFaithTrack().getPopeFavourTileValue(1));
+        } catch (InvalidParameterException exception) {
+            assert false;
+        }
+    }
 
 
 }

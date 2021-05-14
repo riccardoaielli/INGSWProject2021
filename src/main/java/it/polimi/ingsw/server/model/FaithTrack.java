@@ -30,6 +30,7 @@ public class FaithTrack implements Observable<EndGameConditionsObserver>{
         popeFavourTiles = new ArrayList<>(numOfPopeFavourTiles);
         for(int tile = 0; tile < numOfPopeFavourTiles; tile++)
             popeFavourTiles.add(nonActive);
+
     }
 
 
@@ -48,6 +49,13 @@ public class FaithTrack implements Observable<EndGameConditionsObserver>{
     public void moveFaithMarker(int numOfSteps) throws InvalidParameterException {
         if (numOfSteps >= 0) {
             faithTrackPosition = faithTrackPosition + numOfSteps;
+
+            for(int tileNumber = 0; tileNumber < numOfPopeFavourTiles; tileNumber++){
+                int firstValueInterval = 4 + (7 * tileNumber);
+                int secondValueInterval = 9 + (8 * tileNumber);
+                if (faithTrackPosition > firstValueInterval && faithTrackPosition < secondValueInterval)
+                    popeFavourTiles.set(tileNumber, active);
+            }
             if (faithTrackPosition > 20) {      // the maximum amount of space in the track is 20
                 faithTrackPosition = 20;
                 //notifies match

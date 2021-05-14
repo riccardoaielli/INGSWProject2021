@@ -6,7 +6,7 @@ import java.lang.reflect.Type;
 /**
  * This class offers a custom deserializer to deserialize a json string into a massage without knowing the type of the message
  */
-public class MessageDeserializer implements JsonDeserializer{
+public class MessageDeserializer implements JsonDeserializer <MessageToServer>{
     private GsonBuilder gsonBuilder;
     private Gson customGson;
 
@@ -39,7 +39,7 @@ public class MessageDeserializer implements JsonDeserializer{
                 return gson.fromJson(jsonObject, DiscardInitialLeaderMessage.class);
             case "CHOOSE_INITIAL_RESOURCES":
                 return gson.fromJson(jsonObject, ChooseInitialResourcesMessage.class);
-            case "CREATE_MESSAGE_REPLY":
+            case "CREATE_MATCH_REPLY":
                 return gson.fromJson(jsonObject, CreateMatchReplyMessage.class);
             case "TAKE_FROM_MARKET":
                 return gson.fromJson(jsonObject, TakeFromMarketMessage.class);

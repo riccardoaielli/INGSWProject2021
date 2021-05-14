@@ -177,6 +177,7 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
                 case LEADERCHOICE:
                     numOfPlayersReady = 0;
                     Collections.shuffle(players);
+                    currentPlayer = players.get(0);
                     //Assigning resources and faith points according to order
                     for(int playerNumber = 1; playerNumber<=players.size(); playerNumber++){
                         switch (playerNumber){
@@ -226,8 +227,6 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
      * This method is use to end every turn, it changes the current player and ends the game if the last round ends
      */
     public void nextPlayer(){
-        //changes the current player to the next player
-        currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % numOfPlayers);
         //changes from resource choice phase to standard round phase
         if(matchPhase == MatchPhase.RESOURCECHOICE && ((players.indexOf(currentPlayer) + 1) == numOfPlayers))
             matchPhase = MatchPhase.STANDARDROUND;
@@ -235,6 +234,8 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         if(matchPhase == MatchPhase.LASTROUND && ((players.indexOf(currentPlayer) + 1) == numOfPlayers)){
             endGame();
         }
+        //changes the current player to the next player
+        currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % numOfPlayers);
     }
 
     /**

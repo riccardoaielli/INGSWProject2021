@@ -537,6 +537,14 @@ public class PersonalBoard extends MessageObservable {
         this.numOfResourcesToChoose = numOfResourcesToChoose;
     }
 
+    /**
+     * this method is used only for testing purpose
+     * @return the faith track of teh personal board
+     */
+    public FaithTrack getFaithTrack() {
+        return faithTrack;
+    }
+
     public void setPlayer(Player myPlayer){
         this.myPlayer = myPlayer;
     }
