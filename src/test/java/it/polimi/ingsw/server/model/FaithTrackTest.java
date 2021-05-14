@@ -72,10 +72,10 @@ class FaithTrackTest {
     public void testCalculateVictoryPoints(){
         try {
             assertEquals(0, testFaithTrack.calculateVictoryPoints());
-            testFaithTrack.moveFaithMarker(7);
-            assertEquals(2, testFaithTrack.calculateVictoryPoints());
+            testFaithTrack.moveFaithMarker(5);
+            assertEquals(3, testFaithTrack.calculateVictoryPoints());
 
-            testFaithTrack.setPopeFavourTiles(1);
+            testFaithTrack.moveFaithMarker(2);
             testFaithTrack.setPopeFavourTiles(2);
             assertEquals(4,testFaithTrack.calculateVictoryPoints());
         }catch (Exception exception){
