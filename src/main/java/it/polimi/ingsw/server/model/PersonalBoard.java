@@ -1,9 +1,6 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.common.InitialLeaderDiscardedUpdate;
-import it.polimi.ingsw.common.TemporaryMarblesUpdate;
-import it.polimi.ingsw.common.TemporaryResourceMapUpdate;
-import it.polimi.ingsw.common.InitialLeaderCardsUpdate;
+import it.polimi.ingsw.common.*;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.PersonalBoardPhase;
@@ -396,6 +393,7 @@ public class PersonalBoard extends MessageObservable {
         }
         //Activate leader card
         leaderCard.activate();
+        notifyObservers(new LeaderCardActivatedUpdate(this.getNickname(), numLeaderCard, leaderCard.getId()));
     }
 
     /**
