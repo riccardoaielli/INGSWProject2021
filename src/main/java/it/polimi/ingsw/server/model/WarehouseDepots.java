@@ -190,6 +190,7 @@ public class WarehouseDepots extends MessageObservable {
         for (Depot depot: depots){
             depot.uncheckedRemove(resourceToRemoveMap);
         }
+        doNotify();
     }
 
     /**

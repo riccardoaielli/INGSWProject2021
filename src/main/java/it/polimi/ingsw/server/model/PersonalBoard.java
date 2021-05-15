@@ -42,6 +42,8 @@ public class PersonalBoard extends MessageObservable {
 
         this.developmentCardSpace = new DevelopmentCardSpace();
         developmentCardSpace.addObserver(match);
+        developmentCardSpace.addObserverList(this.getMessageObservers());
+        developmentCardSpace.setNickname(this.getNickname());
 
         this.match = match;
 

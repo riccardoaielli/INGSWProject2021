@@ -87,7 +87,7 @@ public class CardGrid extends MessageObservable {
         }catch(EmptyStackException e){
             throw new NoCardException();
         }
-
+        doNotify();
         return cardToBeReturned;
 
     }

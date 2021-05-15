@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.common.DevCardSpaceUpdate;
+import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.DevelopmentCardColor;
 import it.polimi.ingsw.server.model.exceptions.InvalidDevelopmentCardException;
 import it.polimi.ingsw.server.model.exceptions.InvalidParameterException;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 /**
  * This class represents the slots of development cards that each player has on its personal board
  */
-public class DevelopmentCardSpace implements Observable<EndGameConditionsObserver>{
+public class DevelopmentCardSpace extends MessageObservable implements Observable<EndGameConditionsObserver>{
     //Each of the three stack of cards is stored in an ArrayList and they are collected in another ArrayList
     private ArrayList<ArrayList<DevelopmentCard>> cards;
     private final int numOfStacks = 3;
@@ -27,6 +29,19 @@ public class DevelopmentCardSpace implements Observable<EndGameConditionsObserve
             cards.add(new ArrayList<>());
         }
         numOfcards = 0;
+    }
+
+    //Private method to notify observers with the updated state of development card space
+    private void doNotify(){
+        ArrayList<ArrayList<Integer>> cardsState = new ArrayList<ArrayList<Integer>>();
+        for (ArrayList<DevelopmentCard> developmentCardArrayList : cards){
+            ArrayList<Integer> devCardIdArray = new ArrayList<>();
+            for (DevelopmentCard developmentCard : developmentCardArrayList){
+                devCardIdArray.add(developmentCard.getId());
+            }
+            cardsState.add(devCardIdArray);
+        }
+        notifyObservers(new DevCardSpaceUpdate(this.getNickname(), cardsState));
     }
 
     /**
@@ -52,6 +67,7 @@ public class DevelopmentCardSpace implements Observable<EndGameConditionsObserve
         else{
             throw new InvalidParameterException();
         }
+        doNotify();
         //notifies match when reaches 7 cards in the development card space
         if(numOfcards == 7 && matchToNotify != null)
             matchToNotify.update();

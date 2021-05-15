@@ -3,6 +3,8 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.common.*;
 import it.polimi.ingsw.server.model.Observable;
 import it.polimi.ingsw.server.model.enumerations.Resource;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -102,6 +104,17 @@ public class CLI implements ClientView {
     public void showUpdatedWarehouse(String nickname, List<Map<Resource, Integer>> depots) {
 
     }
+
+    @Override
+    public void showUpdatedStrongbox(String nickname, Map<Resource, Integer> strongbox) {
+
+    }
+
+    @Override
+    public void showUpdatedDevCardSpace(String nickname, ArrayList<ArrayList<Integer>> cardsState) {
+
+    }
+
 
     /**
      * Sends message to client

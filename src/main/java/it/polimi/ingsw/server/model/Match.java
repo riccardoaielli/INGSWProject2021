@@ -150,6 +150,7 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
     public void addPlayer(String nickName, View view) throws InvalidNickName {
         //checks if the nickname is not taken in this match
         if(players.stream().noneMatch(x -> x.getNickname().equals(nickName))) {
+            this.addObserver(view);
             //draw 4 cards from the leader cards stack
             ArrayList<LeaderCard> drawnLeaderCards = new ArrayList<>();
             for(int draws = 0; draws < 4; draws++)
@@ -158,7 +159,6 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
             players.add(new Player(nickName, new PersonalBoard(drawnLeaderCards, this),view));
             //updates the number of players ready
             addPlayerReady();
-            this.addObserver(view);
         }
         else
             throw new InvalidNickName();

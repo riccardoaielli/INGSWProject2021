@@ -49,6 +49,10 @@ public class MessageDeserializer implements JsonDeserializer <MessageToServer>{
                 return gson.fromJson(jsonObject, TransformMarblesMessage.class);
             case "ACTIVATE_LEADER":
                 return gson.fromJson(jsonObject, ActivateLeaderMessage.class);
+            case "ADD_TO_WAREHOUSE" :
+                return gson.fromJson(jsonObject, AddToWarehouseMessage.class);
+            case "BUY_DEVELOPMENT_CARD" :
+                return gson.fromJson(jsonObject, BuyDevelopmentCardMessage.class);
             case "SWAP":
                 return gson.fromJson(jsonObject, SwapMessage.class);
             case "MOVE":

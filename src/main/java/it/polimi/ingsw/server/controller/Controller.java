@@ -295,4 +295,23 @@ public class Controller extends MessageObservable{
             match.getCurrentPlayer().getPersonalBoard().endProduction();
         }
     }
+
+    public synchronized void handleBuyDevelopmentCardMessage(View view, String nickname, int row, int column, Map<Resource, Integer> costStrongbox, Map<Resource, Integer> costWarehouse, int numLeaderCard, int cardPosition){
+        PersonalBoard personalBoard = match.getPlayerByNickname(nickname).getPersonalBoard();
+        try {
+            personalBoard.buyDevelopmentCard(row, column, costStrongbox, costWarehouse, numLeaderCard, cardPosition);
+        } catch (NoCardException e) {
+            view.update(new ErrorMessage(nickname, "There is no card in the specified position of card grid"));
+        } catch (InvalidCostException e) {
+            view.update(new ErrorMessage(nickname, "The specified cost is not valid"));
+        } catch (InvalidLeaderAction invalidLeaderAction) {
+            view.update(new ErrorMessage(nickname, "The specified leader cannot discount the price"));
+        } catch (InvalidRemovalException e) {
+            view.update(new ErrorMessage(nickname, "The are not enough resources to purchase the card"));
+        } catch (InvalidDevelopmentCardException e) {
+            view.update(new ErrorMessage(nickname, "The card cannot be placed in the chosen development card space slot"));
+        } catch (InvalidParameterException e) {
+            view.update(new ErrorMessage(nickname, "Invalid parameter"));
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.common.StrongboxUpdate;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 
@@ -22,6 +23,7 @@ public class Strongbox extends MessageObservable {
      */
     public void add(Map<Resource, Integer> resourceMap) {
         resourceMap.forEach((resource, quantity) -> strongbox.merge(resource, quantity, Integer::sum));
+        notifyObservers(new StrongboxUpdate(this.getNickname(), new HashMap<>(strongbox)));
     }
 
     /**
@@ -73,7 +75,7 @@ public class Strongbox extends MessageObservable {
             else
                 strongbox.merge(resource, -resourceMap.get(resource), Integer::sum);
         }
-
+        notifyObservers(new StrongboxUpdate(this.getNickname(), new HashMap<>(strongbox)));
     }
 
     /**
