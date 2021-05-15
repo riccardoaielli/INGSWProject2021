@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.common.InitialLeaderDiscardedUpdate;
+import it.polimi.ingsw.common.TemporaryMarblesUpdate;
 import it.polimi.ingsw.common.TemporaryResourceMapUpdate;
 import it.polimi.ingsw.common.InitialLeaderCardsUpdate;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
@@ -225,9 +226,11 @@ public class PersonalBoard extends MessageObservable {
      * @param rowOrColumn 0 if row, 1 if column
      * @param value from 0 to 2 if row, from 0 to 3 if column Todo ricontrollare
      */
-    public void takeFromMarket(int rowOrColumn, int value) throws InvalidParameterException{
-        if((rowOrColumn == 0 && value >= 0 && value <= 2) || (rowOrColumn == 1 && value >= 0 && value <= 3))
+    public void takeFromMarket(int rowOrColumn, int value) throws InvalidParameterException {
+        if ((rowOrColumn == 0 && value >= 0 && value <= 2) || (rowOrColumn == 1 && value >= 0 && value <= 3)){
             temporaryMarbles = new HashMap<>(market.takeBoughtMarbles(rowOrColumn, value));
+            notifyObservers(new TemporaryMarblesUpdate(this.getNickname(), new HashMap<>(temporaryMarbles)));
+        }
         else{
             throw new InvalidParameterException();
         }
@@ -241,8 +244,10 @@ public class PersonalBoard extends MessageObservable {
      * @throws NotEnoughWhiteMarblesException this exception is thrown when there are not enough white marbles in the given map of marbles
      */
     public void transformWhiteMarble(int leaderCard, int numOfTransformations) throws InvalidParameterException,NotEnoughWhiteMarblesException, InvalidLeaderAction {
-        if(leaderCard > 0 && leaderCard <=leaderCards.size() && numOfTransformations > 0)
-            leaderCards.get(leaderCard - 1).abilityMarble(temporaryMarbles,numOfTransformations);
+        if (leaderCard > 0 && leaderCard <= leaderCards.size() && numOfTransformations > 0){
+            leaderCards.get(leaderCard - 1).abilityMarble(temporaryMarbles, numOfTransformations);
+            notifyObservers(new TemporaryMarblesUpdate(this.getNickname(), new HashMap<>(temporaryMarbles)));
+        }
         else
             throw new InvalidParameterException();
     }
@@ -261,6 +266,7 @@ public class PersonalBoard extends MessageObservable {
             }
         }
         temporaryMarbles.clear();
+        notifyObservers(new TemporaryResourceMapUpdate(this.getNickname(), new HashMap<>(temporaryMapResource)));
     }
 
     /**
@@ -291,6 +297,9 @@ public class PersonalBoard extends MessageObservable {
         else{
             temporaryMapResource.put(resource, temporaryMapResource.get(resource) - singleResourceMap.get(resource));
         }
+        //if the temporaryResourceMap is empty and player is buying from the market the personalboard phase changes
+        if(temporaryMapResource.isEmpty() && personalBoardPhase == PersonalBoardPhase.TAKE_FROM_MARKET)
+            personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_DONE;
     }
 
     /**
@@ -355,7 +364,7 @@ public class PersonalBoard extends MessageObservable {
         strongbox.uncheckedRemove(costStrongbox);
         warehouseDepots.uncheckedRemove(costWarehouseDepots);
         cardGrid.buyCard(row, column);
-        personalBoardPhase = PersonalBoardPhase.BUY_DEV_CARD;
+        personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_DONE;
     }
 
     /**
@@ -443,6 +452,13 @@ public class PersonalBoard extends MessageObservable {
         temporaryMapResource = new HashMap<>(initialResources);
         //Notifying observers that temporary map resource has changed
         notifyObservers(new TemporaryResourceMapUpdate(myPlayer.getNickname(), new HashMap<>(temporaryMapResource)));
+    }
+
+    /**
+     * this method is used when the player decides
+     */
+    public void endProduction(){
+        personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_DONE;
     }
 
     /**

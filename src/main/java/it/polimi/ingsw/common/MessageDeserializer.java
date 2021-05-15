@@ -47,6 +47,8 @@ public class MessageDeserializer implements JsonDeserializer <MessageToServer>{
                 return gson.fromJson(jsonObject, TransformWhiteMarblesMessage.class);
             case "TRANSFORM_MARBLES":
                 return gson.fromJson(jsonObject, TransformMarblesMessage.class);
+            case "ACTIVATE_LEADER":
+                return gson.fromJson(jsonObject, ActivateLeaderMessage.class);
         }
 
         return null;

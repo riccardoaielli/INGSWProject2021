@@ -6,5 +6,6 @@ public enum PersonalBoardPhase {
     MAIN_TURN_ACTION_AVAILABLE,
     PRODUCTION,
     TAKE_FROM_MARKET,
-    BUY_DEV_CARD
+    BUY_DEV_CARD,
+    MAIN_TURN_ACTION_DONE
 }

@@ -59,6 +59,20 @@ public class Controller extends MessageObservable{
         }
     }
 
+    public synchronized void handleActivateLeader(int numLeaderCard, String nickname, View view){
+        try {
+            if(match.getCurrentPlayer().getNickname().equals(nickname)
+                && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE
+                    || match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_DONE){
+                match.getCurrentPlayer().getPersonalBoard().activateLeader(numLeaderCard);
+            }
+        } catch (InvalidParameterException exception) {
+            view.update(new ErrorMessage(nickname, "Invalid Leader Card"));
+        } catch (RequirementNotMetException e) {
+            view.update(new ErrorMessage(nickname, "Invalid Request"));
+        }
+    }
+
     /**
      * Handles a TakeFromMarketMessage
      * @param rowOrColumn 0 if row, 1 if column
