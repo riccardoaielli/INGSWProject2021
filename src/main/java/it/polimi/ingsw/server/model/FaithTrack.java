@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.common.PopeFavourTilesUpdate;
+import it.polimi.ingsw.common.RedcrossPositionUpdate;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.exceptions.InvalidParameterException;
 
@@ -50,6 +52,8 @@ public class FaithTrack extends MessageObservable implements Observable<EndGameC
     public void moveFaithMarker(int numOfSteps) throws InvalidParameterException {
         if (numOfSteps >= 0) {
             faithTrackPosition = faithTrackPosition + numOfSteps;
+
+            notifyObservers(new RedcrossPositionUpdate(getNickname(),faithTrackPosition));
 
             for(int tileNumber = 0; tileNumber < numOfPopeFavourTiles; tileNumber++){
                 int firstValueInterval = 4 + (7 * tileNumber);
@@ -107,6 +111,7 @@ public class FaithTrack extends MessageObservable implements Observable<EndGameC
                 else
                     popeFavourTiles.set(tileNumber, nonActivated);
             }
+            notifyObservers(new PopeFavourTilesUpdate(getNickname(),new ArrayList<>(popeFavourTiles)));
     }
 
     /**

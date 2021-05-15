@@ -53,10 +53,13 @@ public class MessageDeserializer implements JsonDeserializer <MessageToServer>{
                 return gson.fromJson(jsonObject, SwapMessage.class);
             case "MOVE":
                 return gson.fromJson(jsonObject, MoveMessage.class);
+            case "DISCARD_LEADER":
+                return gson.fromJson(jsonObject, DiscardLeaderMessage.class);
         }
 
         return null;
     }
+
 
     /**
      *This method deserializes a string into a massage of a specific type that extends MessageToServer

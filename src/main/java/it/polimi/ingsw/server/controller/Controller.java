@@ -210,11 +210,28 @@ public class Controller extends MessageObservable{
         }
 
     }
+
     public synchronized void handleMoveMessage(View view, String nickname, int sourceDepotNumber, int destinationDepotNumber, int quantity ){
         if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND){
             try {
                 match.getPlayer(nickname).getPersonalBoard().moveResourceSpecialDepot(sourceDepotNumber,destinationDepotNumber,quantity);
             } catch (InvalidNickName | InvalidAdditionException | InvalidRemovalException | InvalidMoveException e) {
+                view.update(new ErrorMessage(nickname, e.getMessage()));
+            }
+        }
+        else{
+            view.update(new ErrorMessage(nickname, "Invalid command in this phase of the match"));
+        }
+    }
+
+    public synchronized void discardLeaderMessage(View view, String nickname, int numLeaderCard){
+        if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND
+            && match.getCurrentPlayer().getNickname().equals(nickname)
+            && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE
+                || match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_DONE){
+            try {
+                match.getCurrentPlayer().getPersonalBoard().removeLeader(numLeaderCard);
+            } catch (InvalidParameterException e) {
                 view.update(new ErrorMessage(nickname, e.getMessage()));
             }
         }

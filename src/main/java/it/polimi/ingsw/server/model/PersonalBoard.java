@@ -413,6 +413,7 @@ public class PersonalBoard extends MessageObservable {
         moveFaithMarkerInternally(1);
         //Removing leader card
         leaderCards.remove(numLeaderCard-1);
+        notifyObservers(new DiscardedLeaderUpdate(getNickname(), numLeaderCard));
     }
 
     /**
