@@ -196,4 +196,30 @@ public class Controller extends MessageObservable{
             view.update(new ErrorMessage(nickname, e.getMessage()));
         }
     }
+
+    public synchronized void handleSwapMessage(View view, String nickname, int depot1, int depot2){
+        if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND){
+            try {
+                match.getPlayer(nickname).getPersonalBoard().swapResourceStandardDepot(depot1,depot2);
+            } catch (InvalidSwapException | InvalidNickName e) {
+                view.update(new ErrorMessage(nickname, e.getMessage()));
+            }
+        }
+        else{
+            view.update(new ErrorMessage(nickname, "Invalid command in this phase of the match"));
+        }
+
+    }
+    public synchronized void handleMoveMessage(View view, String nickname, int sourceDepotNumber, int destinationDepotNumber, int quantity ){
+        if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND){
+            try {
+                match.getPlayer(nickname).getPersonalBoard().moveResourceSpecialDepot(sourceDepotNumber,destinationDepotNumber,quantity);
+            } catch (InvalidNickName | InvalidAdditionException | InvalidRemovalException | InvalidMoveException e) {
+                view.update(new ErrorMessage(nickname, e.getMessage()));
+            }
+        }
+        else{
+            view.update(new ErrorMessage(nickname, "Invalid command in this phase of the match"));
+        }
+    }
 }

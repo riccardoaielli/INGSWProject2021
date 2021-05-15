@@ -64,12 +64,7 @@ public class WarehouseDepots extends MessageObservable {
         //Adding the resource
         depots.get(depotNumber-1).add(singleResourceMap);
 
-        List<Map<Resource, Integer>> warehouseState = new ArrayList<>();
-        for (Depot depot : depots){
-            warehouseState.add(depot.getMapResource());
-        }
-
-        notifyObservers(new WarehouseUpdate(this.getNickname(), warehouseState));
+        doNotify();
     }
 
     /**
@@ -113,6 +108,8 @@ public class WarehouseDepots extends MessageObservable {
         HashMap<Resource, Integer> tempmap1  = depot1.getMapResource();
         depot1.setMapResource(depot2.getMapResource());
         depot2.setMapResource(tempmap1);
+
+        doNotify();
     }
 
     /**
@@ -159,6 +156,7 @@ public class WarehouseDepots extends MessageObservable {
         sourceDepot.uncheckedRemove(resourceToRemove);
 
         destinationDepot.uncheckedAdd(resourceMap);
+        doNotify();
     }
 
 
@@ -216,5 +214,14 @@ public class WarehouseDepots extends MessageObservable {
     //Method for testing purposes
     public Depot getDepot(int numberDepot){
         return depots.get(numberDepot-1);
+    }
+
+    public void doNotify(){
+        List<Map<Resource, Integer>> warehouseState = new ArrayList<>();
+        for (Depot depot : depots){
+            warehouseState.add(depot.getMapResource());
+        }
+
+        notifyObservers(new WarehouseUpdate(this.getNickname(), warehouseState));
     }
 }
