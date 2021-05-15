@@ -1,20 +1,12 @@
 package it.polimi.ingsw.client;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.lang.reflect.Type;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Stack;
 
+/**
+ * This class is the client App
+ */
 public class ClientMain {
 
     private static final String HOST_ARGUMENT = "-host";
@@ -29,14 +21,15 @@ public class ClientMain {
     private static int portNumber;
     private static String hostAddress;
 
-    private final static Gson gson = new Gson();
-
+    /**
+     * Main method parses the arguments and starts the CLI or GUI
+     */
     public static void main(String[] args) {
 
         List<String> arguments = new ArrayList<>(Arrays.asList(args));
-
         boolean cliMode = false;
 
+        //Parsing argomenti
         if(arguments.contains(HELP_ARGUMENT)) {
             String helpString = "The default server host is " + DEFAULT_HOST + "\n" +
                     "The default server port is " + DEFAULT_PORT + "\n\n" +
@@ -48,11 +41,13 @@ public class ClientMain {
             System.out.println(helpString);
             return;
         }
+
         if(arguments.contains(HOST_ARGUMENT)) {
             hostAddress = args[arguments.indexOf(HOST_ARGUMENT) + 1];
         }else{
             hostAddress = DEFAULT_HOST;
         }
+
         if(arguments.contains(PORT_ARGUMENT)){
             try {
                 portNumber = Integer.parseInt(args[arguments.indexOf(PORT_ARGUMENT) + 1]);
@@ -67,40 +62,20 @@ public class ClientMain {
         }else{
             portNumber = DEFAULT_PORT;
         }
+
         if(arguments.contains(CLI_ARGUMENT)){
-            System.out.println("Cli mode selected");
+            System.out.println("CLI mode selected");
             cliMode = true;
-            //avvia cli
-        }
-
-        if(!cliMode){
+        }else{
             System.out.println("Default gui mode");
-            //avvia gui
         }
+        //End parsing
 
-        try (
-                Socket clientSocket = new Socket(hostAddress, portNumber);
-                PrintWriter out =
-                        new PrintWriter(clientSocket.getOutputStream(), true);
-                BufferedReader in =
-                        new BufferedReader(
-                                new InputStreamReader(clientSocket.getInputStream()));
-                BufferedReader stdIn =
-                        new BufferedReader(
-                                new InputStreamReader(System.in))
-        ) {
-            String userInput;
-            while ((userInput = stdIn.readLine()) != null) {
-                out.println(userInput);
-                System.out.println(in.readLine());
-            }
-        } catch (UnknownHostException e) {
-            System.err.println("Don't know about host, please insert a valid host " + hostAddress);
-            System.exit(1);
-        } catch (IOException e) {
-            System.err.println("Couldn't get I/O for the connection to " +
-                    hostAddress);
-            System.exit(1);
+        if(cliMode){
+            //avvia cli
+            CLI cli = new CLI(hostAddress, portNumber);
+        }else{
+            //avvia gui
         }
     }
 }

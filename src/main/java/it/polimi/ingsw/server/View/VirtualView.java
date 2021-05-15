@@ -42,7 +42,7 @@ public class VirtualView implements Runnable,View {
 
         try {
             Scanner in = new Scanner(socket.getInputStream());
-            out = new PrintWriter(socket.getOutputStream());
+            out = new PrintWriter(socket.getOutputStream(), true);
             // Leggo e scrivo nella connessione finche' non ricevo "quit"
             while (true) {
                 String line = in.nextLine();
@@ -50,7 +50,6 @@ public class VirtualView implements Runnable,View {
                     break;
                 } else {
                     messageDeserializer.deserializeMessage(line).handleMessage(controller,this);
-                    out.flush();
                 }
             }
             // Chiudo gli stream e il socket
@@ -69,7 +68,7 @@ public class VirtualView implements Runnable,View {
      */
     @Override
     public void update(Message message) {
-        out.print(gson.toJson(message));
+        out.println(gson.toJson(message));
     }
 
     /*@Override
