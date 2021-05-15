@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.common.Message;
+import it.polimi.ingsw.common.messages.Message;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 
 import java.util.ArrayList;

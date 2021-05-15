@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.common.MessageToServer;
-import it.polimi.ingsw.common.View;
+import it.polimi.ingsw.common.messages.messagesToServer.MessageToServer;
 
 public class LocalSender implements MessageSender{
 

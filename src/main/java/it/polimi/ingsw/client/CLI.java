@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.common.*;
+import it.polimi.ingsw.common.messages.Message;
 import it.polimi.ingsw.server.model.Observable;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.common.WarehouseUpdate;
-import it.polimi.ingsw.common.AddSpecialDepotUpdate;
+import it.polimi.ingsw.common.messages.messagesToClient.WarehouseUpdate;
+import it.polimi.ingsw.common.messages.messagesToClient.AddSpecialDepotUpdate;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.InvalidAdditionException;

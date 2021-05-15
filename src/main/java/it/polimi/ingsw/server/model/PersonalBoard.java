@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.common.*;
+import it.polimi.ingsw.common.messages.messagesToClient.*;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.PersonalBoardPhase;

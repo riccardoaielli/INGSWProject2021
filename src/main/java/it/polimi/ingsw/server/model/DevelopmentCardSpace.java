@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.common.DevCardSpaceUpdate;
+import it.polimi.ingsw.common.messages.messagesToClient.DevCardSpaceUpdate;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.DevelopmentCardColor;
 import it.polimi.ingsw.server.model.exceptions.InvalidDevelopmentCardException;

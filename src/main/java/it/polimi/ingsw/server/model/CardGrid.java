@@ -2,8 +2,7 @@ package it.polimi.ingsw.server.model;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import it.polimi.ingsw.common.CardGridUpdate;
-import it.polimi.ingsw.common.MarketUpdate;
+import it.polimi.ingsw.common.messages.messagesToClient.CardGridUpdate;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.DevelopmentCardColor;
 import it.polimi.ingsw.server.model.exceptions.NoCardException;
