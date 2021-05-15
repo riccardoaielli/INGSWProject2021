@@ -1,11 +1,15 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.common.View;
+import it.polimi.ingsw.server.View.VirtualView;
+import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.enumerations.MatchPhase;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.InvalidNickName;
 import it.polimi.ingsw.server.model.exceptions.InvalidParameterException;
 import org.junit.jupiter.api.Test;
 
+import java.net.Socket;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,19 +30,19 @@ class MatchTest {
         assertEquals(match.getMatchPhase(), MatchPhase.SETUP);
         try {
             //checks nickname insertions
-            match.addPlayer("marco", null);
-            match.addPlayer("mario",null);
+            match.addPlayer("marco", new ViewStub());
+            match.addPlayer("mario",new ViewStub());
             assertEquals(match.getPlayer("marco").getNickname(),"marco");
             assertEquals(match.getPlayer("mario").getNickname(),"mario");
             //checks adding invalid nickname
-            match.addPlayer("marco", null);
+            match.addPlayer("marco", new ViewStub());
         }catch (InvalidNickName exception){
             assert true;
         }
         assertEquals(match.getMatchPhase(), MatchPhase.SETUP);
         try {
             //check the change of match phase when the necessary number of player is reached
-            match.addPlayer("massimo",null);
+            match.addPlayer("massimo",new ViewStub());
             assertEquals(match.getMatchPhase(), MatchPhase.LEADERCHOICE);
         }catch (InvalidNickName exception){
             assert false;
@@ -90,8 +94,8 @@ class MatchTest {
         }
 
         try {
-            match.addPlayer("marco",null);
-            match.addPlayer("mario",null);
+            match.addPlayer("marco",new ViewStub());
+            match.addPlayer("mario",new ViewStub());
         }catch (InvalidNickName exception){
             assert false;
         }

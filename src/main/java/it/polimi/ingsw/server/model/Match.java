@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.model;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import it.polimi.ingsw.common.PlayerTurnUpdate;
 import it.polimi.ingsw.common.View;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.MatchPhase;
@@ -236,6 +237,7 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         }
         //changes the current player to the next player
         currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % numOfPlayers);
+        notifyObservers(new PlayerTurnUpdate(currentPlayer.getNickname()));//updates every player about the new current player
     }
 
     /**
