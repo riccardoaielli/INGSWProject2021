@@ -10,7 +10,7 @@ import it.polimi.ingsw.server.model.enumerations.PersonalBoardPhase;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Map;
 
 public class Controller extends MessageObservable{
@@ -188,7 +188,7 @@ public class Controller extends MessageObservable{
         }
     }
 
-    public synchronized void handleAddToWarehouseMessage(View view, String nickname, int depotLevel, HashMap<Resource,Integer> singleResourceMap){
+    public synchronized void handleAddToWarehouseMessage(View view, String nickname, int depotLevel, Map<Resource,Integer> singleResourceMap){
         PersonalBoard personalBoard = match.getPlayerByNickname(nickname).getPersonalBoard();
         try {
             personalBoard.addToWarehouseDepots(depotLevel, singleResourceMap);

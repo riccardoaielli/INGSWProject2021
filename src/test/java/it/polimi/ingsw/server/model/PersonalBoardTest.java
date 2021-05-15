@@ -8,7 +8,9 @@ import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,10 +44,10 @@ class PersonalBoardTest {
 
     @Test
     void activateBasicProduction() {
-        HashMap<Resource, Integer> resourceInWarehouse = new HashMap<>();
-        HashMap<Resource, Integer> resourceInStrongbox = new HashMap<>();
-        HashMap<Resource, Integer> costWarehouseDepot = new HashMap<>();
-        HashMap<Resource, Integer> costStrongbox = new HashMap<>();
+        Map<Resource, Integer> resourceInWarehouse = new HashMap<>();
+        Map<Resource, Integer> resourceInStrongbox = new HashMap<>();
+        Map<Resource, Integer> costWarehouseDepot = new HashMap<>();
+        Map<Resource, Integer> costStrongbox = new HashMap<>();
 
         resourceInWarehouse.put(Resource.COIN, 1);
         try {
@@ -104,21 +106,21 @@ class PersonalBoardTest {
 
     @Test
     void transformMarbles() {
-        HashMap<Marble, Integer> personalBoardTemporaryMarbles = personalBoard.getTemporaryMarbles();
+        Map<Marble, Integer> personalBoardTemporaryMarbles = personalBoard.getTemporaryMarbles();
         personalBoardTemporaryMarbles.put(Marble.BLUEMARBLE, 2);
         personalBoardTemporaryMarbles.put(Marble.REDMARBLE, 1);
         personalBoardTemporaryMarbles.put(Marble.WHITEMARBLE, 1);
         personalBoard.transformMarbles();
-        HashMap<Resource, Integer> personalBoardTemporaryMapResource = personalBoard.getTemporaryMapResource();
+        Map<Resource, Integer> personalBoardTemporaryMapResource = personalBoard.getTemporaryMapResource();
         assertEquals(2, personalBoardTemporaryMapResource.get(Resource.SHIELD));
         assertNull(personalBoardTemporaryMapResource.get(Resource.FAITH));
     }
 
     @Test
     void addToWarehouseDepots() {
-        HashMap<Resource, Integer> personalBoardTemporaryMapResource = personalBoard.getTemporaryMapResource();
-        HashMap<Resource, Integer> singleMapResource1 = new HashMap<>();
-        HashMap<Resource, Integer> singleMapResource2 = new HashMap<>();
+        Map<Resource, Integer> personalBoardTemporaryMapResource = personalBoard.getTemporaryMapResource();
+        Map<Resource, Integer> singleMapResource1 = new HashMap<>();
+        Map<Resource, Integer> singleMapResource2 = new HashMap<>();
         personalBoardTemporaryMapResource.put(Resource.SHIELD, 3);
         personalBoardTemporaryMapResource.put(Resource.COIN, 1);
         //Adding 1 coin to depot 1

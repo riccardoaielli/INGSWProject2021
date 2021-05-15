@@ -4,11 +4,12 @@ import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.InvalidAdditionException;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Depot {
     private final int SIZE;
 
-    private HashMap<Resource, Integer> mapResource;
+    private Map<Resource, Integer> mapResource;
 
     public Depot(int size) {
         SIZE = size;
@@ -19,10 +20,10 @@ public class Depot {
         return SIZE;
     }
 
-    public HashMap<Resource, Integer> getMapResource() {
+    public Map<Resource, Integer> getMapResource() {
         return mapResource;
     }
-    public void setMapResource(HashMap<Resource, Integer> mapResource) {
+    public void setMapResource(Map<Resource, Integer> mapResource) {
         this.mapResource = mapResource;
     }
 
@@ -40,7 +41,7 @@ public class Depot {
      * @param addedResourceMap The resource map to be added, must be a map with a single key
      * @throws InvalidAdditionException When there is not enough space or there is already another resource in the depot
      */
-    public void checkAdd(HashMap<Resource, Integer> addedResourceMap) throws InvalidAdditionException{
+    public void checkAdd(Map<Resource, Integer> addedResourceMap) throws InvalidAdditionException{
         Resource resource = addedResourceMap.keySet().iterator().next();
         //Making sure there isn't another resource in the depot
         if (!(this.checkResource(resource) || mapResource.isEmpty())) throw new InvalidAdditionException("There is another resource in the depot");
@@ -52,7 +53,7 @@ public class Depot {
      * Adds a resource to the depot, must be called only after performing checks with checkAdd
      * @param addedResourceMap resource map to add, must contain a single key
      */
-    public void uncheckedAdd(HashMap<Resource, Integer> addedResourceMap){
+    public void uncheckedAdd(Map<Resource, Integer> addedResourceMap){
         Resource resource = addedResourceMap.keySet().iterator().next();
         mapResource.merge(resource, addedResourceMap.get(resource), Integer::sum);
     }
@@ -62,7 +63,7 @@ public class Depot {
      * @param addedResourceMap The single resource map to be added, must be a map with a single key
      * @throws InvalidAdditionException When there is not enough space or there is already another resource in the depot
      */
-    public void add(HashMap<Resource, Integer> addedResourceMap) throws InvalidAdditionException {
+    public void add(Map<Resource, Integer> addedResourceMap) throws InvalidAdditionException {
         checkAdd(addedResourceMap);
         uncheckedAdd(addedResourceMap);
     }
@@ -71,7 +72,7 @@ public class Depot {
      * This method removes from toBeRemovedResourceMap the maximum quantity of resources that are both in depot and in the passed map
      * @param toBeRemovedResourceMap This map contains the resources that are not found to be stored in a depot yet
      */
-    public void checkAvailability(HashMap<Resource, Integer> toBeRemovedResourceMap){
+    public void checkAvailability(Map<Resource, Integer> toBeRemovedResourceMap){
         //Returns if depot is empty
         if(!mapResource.keySet().iterator().hasNext()) return;
         Resource resource = mapResource.keySet().iterator().next();
@@ -89,7 +90,7 @@ public class Depot {
      * must be called only after performing checks with checkAvailability
      * @param toBeRemovedResourceMap This map contains the resources that have to be removed from WarehouseDepots
      */
-    public void uncheckedRemove(HashMap<Resource, Integer> toBeRemovedResourceMap){
+    public void uncheckedRemove(Map<Resource, Integer> toBeRemovedResourceMap){
         //Checking if the depot is empty
         if(!mapResource.keySet().iterator().hasNext()) return;
         Resource resource = mapResource.keySet().iterator().next();
@@ -120,7 +121,7 @@ public class Depot {
      */
     public int getNumberResources(){
         int total = 0;
-        //Iterating in the Collection of values of the HashMap
+        //Iterating in the Collection of values of the Map
         for (int singleQuantity : mapResource.values()){
             total += singleQuantity;
         }

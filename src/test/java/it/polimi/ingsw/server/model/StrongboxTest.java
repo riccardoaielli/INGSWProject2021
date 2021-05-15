@@ -5,6 +5,7 @@ import it.polimi.ingsw.server.model.enumerations.Resource;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,7 +14,7 @@ class StrongboxTest {
     @Test
     void testAdd() {
         Strongbox strongbox1 = new Strongbox();
-        HashMap<Resource, Integer> resourceMap = new HashMap<>();
+        Map<Resource, Integer> resourceMap = new HashMap<>();
         resourceMap.put(Resource.SHIELD, 5);
         resourceMap.put(Resource.STONE, 4);
         resourceMap.put(Resource.COIN, 1);
@@ -39,7 +40,7 @@ class StrongboxTest {
     @Test
     void testRemove() {
         Strongbox strongbox1 = new Strongbox();
-        HashMap<Resource, Integer> resourceMap = new HashMap<>();
+        Map<Resource, Integer> resourceMap = new HashMap<>();
         resourceMap.put(Resource.STONE, 10);
         //Testing the presence of a resource not in strongbox
         assertFalse(strongbox1.isAvailable(resourceMap));
@@ -87,7 +88,7 @@ class StrongboxTest {
         Strongbox strongbox1 = new Strongbox();
         assertEquals(0, strongbox1.getTotalResources());
 
-        HashMap<Resource, Integer> resourceMap = new HashMap<>();
+        Map<Resource, Integer> resourceMap = new HashMap<>();
         resourceMap.put(Resource.SHIELD, 3);
         resourceMap.put(Resource.STONE, 2);
         resourceMap.put(Resource.COIN, 7);

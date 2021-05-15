@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.model.enumerations.Resource;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class LeaderDiscount extends LeaderCard{
     private int discount;
@@ -19,7 +19,7 @@ public class LeaderDiscount extends LeaderCard{
      * @param resources is the map of resources to discount
      */
     @Override
-    public void abilityDiscount(HashMap<Resource, Integer> resources) {
+    public void abilityDiscount(Map<Resource, Integer> resources) {
         if (resources.containsKey(resourceDiscounted)) {
             Integer newValue = resources.get(resourceDiscounted) - discount;
             if (newValue >= 0)

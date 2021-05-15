@@ -9,9 +9,7 @@ import it.polimi.ingsw.server.model.exceptions.InvalidMoveException;
 import it.polimi.ingsw.server.model.exceptions.InvalidSwapException;
 import it.polimi.ingsw.server.model.exceptions.InvalidRemovalException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map;
 
 public class WarehouseDepots extends MessageObservable {
@@ -26,7 +24,7 @@ public class WarehouseDepots extends MessageObservable {
     }
 
     //Method used to perform checks before adding resources
-    private void checkAdd(int depotNumber, HashMap<Resource, Integer> singleResourceMap) throws InvalidAdditionException{
+    private void checkAdd(int depotNumber, Map<Resource, Integer> singleResourceMap) throws InvalidAdditionException{
         if (depotNumber > depots.size()) {
             throw new InvalidAdditionException("Invalid depot");
         }
@@ -58,7 +56,7 @@ public class WarehouseDepots extends MessageObservable {
      * "Same resource in other depots": when trying to add a resource to a standard depot and the same resource is in another standard depot
      * The exception can be thrown by the depot itself when there is not enough space or there is already another resource in the depot
      */
-    public void add(int depotNumber, HashMap<Resource, Integer> singleResourceMap) throws InvalidAdditionException {
+    public void add(int depotNumber, Map<Resource, Integer> singleResourceMap) throws InvalidAdditionException {
         //Performing checks
         checkAdd(depotNumber,singleResourceMap);
         //Adding the resource
@@ -105,7 +103,7 @@ public class WarehouseDepots extends MessageObservable {
         }
 
         //Swapping the resources
-        HashMap<Resource, Integer> tempmap1  = depot1.getMapResource();
+        Map<Resource, Integer> tempmap1  = depot1.getMapResource();
         depot1.setMapResource(depot2.getMapResource());
         depot2.setMapResource(tempmap1);
 
@@ -135,7 +133,7 @@ public class WarehouseDepots extends MessageObservable {
         Depot destinationDepot = depots.get(destinationDepotNumber-1);
 
         //Instantiating the resource map that has to be moved
-        HashMap<Resource, Integer> resourceMap = new HashMap<>();
+        Map<Resource, Integer> resourceMap = new HashMap<>();
         //Throws exception if the source depot is empty
         if (!sourceDepot.getMapResource().keySet().iterator().hasNext()){
             throw new InvalidRemovalException();
@@ -143,7 +141,7 @@ public class WarehouseDepots extends MessageObservable {
         Resource resourceToMove = sourceDepot.getMapResource().keySet().iterator().next();
         resourceMap.put(resourceToMove, quantity);
         //Checking if the move can be performed
-        HashMap<Resource, Integer> resourceToCheckMap = new HashMap<>(resourceMap);
+        Map<Resource, Integer> resourceToCheckMap = new HashMap<>(resourceMap);
         sourceDepot.checkAvailability(resourceToCheckMap);
         if (!resourceToCheckMap.isEmpty()) {
             throw new InvalidRemovalException();
@@ -152,7 +150,7 @@ public class WarehouseDepots extends MessageObservable {
         destinationDepot.checkAdd(resourceMap);
 
         //Moving the resource
-        HashMap<Resource, Integer> resourceToRemove = new HashMap<>(resourceMap);
+        Map<Resource, Integer> resourceToRemove = new HashMap<>(resourceMap);
         sourceDepot.uncheckedRemove(resourceToRemove);
 
         destinationDepot.uncheckedAdd(resourceMap);
@@ -166,7 +164,7 @@ public class WarehouseDepots extends MessageObservable {
      * @param resourceMap The resources and their quantities whose availability in WarehouseDepot is verified
      * @return true if all the resources in resourceMap are in WareHouseDepot, false otherwise
      */
-    public boolean isAvailable(HashMap<Resource, Integer> resourceMap) {
+    public boolean isAvailable(Map<Resource, Integer> resourceMap) {
         return resourcesNotAvailable(resourceMap).isEmpty();
     }
 
@@ -174,8 +172,8 @@ public class WarehouseDepots extends MessageObservable {
      * @param resourceMap Resources whose presence in WarehouseDepots is checked
      * @return a map of the resources not available in WarehouseDepots among those in resourceMap
      */
-    public HashMap<Resource, Integer> resourcesNotAvailable(HashMap<Resource, Integer> resourceMap){
-        HashMap<Resource, Integer> resourceToCheckMap = new HashMap<>(resourceMap);
+    public Map<Resource, Integer> resourcesNotAvailable(Map<Resource, Integer> resourceMap){
+        Map<Resource, Integer> resourceToCheckMap = new HashMap<>(resourceMap);
         for (Depot depot: depots){
             depot.checkAvailability(resourceToCheckMap);
         }
@@ -187,8 +185,8 @@ public class WarehouseDepots extends MessageObservable {
      * Method to remove a resource from a depot, must be called only after performing checks with checkAvailability
      * @param resourceMap The map that contains the resources and the quantity of the resources to remove
      */
-    public void uncheckedRemove(HashMap<Resource, Integer> resourceMap){
-        HashMap<Resource, Integer> resourceToRemoveMap = new HashMap<>(resourceMap);
+    public void uncheckedRemove(Map<Resource, Integer> resourceMap){
+        Map<Resource, Integer> resourceToRemoveMap = new HashMap<>(resourceMap);
         for (Depot depot: depots){
             depot.uncheckedRemove(resourceToRemoveMap);
         }

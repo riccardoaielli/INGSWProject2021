@@ -5,7 +5,7 @@ import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.InvalidLeaderAction;
 import it.polimi.ingsw.server.model.exceptions.NotEnoughWhiteMarblesException;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * this class represent the abstract leader card
@@ -45,7 +45,7 @@ public abstract class LeaderCard {
         return requirement;
     }
 
-    public void abilityDiscount(HashMap<Resource,Integer> resources) throws InvalidLeaderAction {
+    public void abilityDiscount(Map<Resource,Integer> resources) throws InvalidLeaderAction {
         throw new InvalidLeaderAction();
     }
 
@@ -53,7 +53,7 @@ public abstract class LeaderCard {
         throw new InvalidLeaderAction();
     }
 
-    public  void abilityMarble(HashMap<Marble,Integer> temporaryMapMarble, int numOfTransformation) throws NotEnoughWhiteMarblesException, InvalidLeaderAction{
+    public  void abilityMarble(Map<Marble,Integer> temporaryMapMarble, int numOfTransformation) throws NotEnoughWhiteMarblesException, InvalidLeaderAction{
         throw new InvalidLeaderAction();
     }
 

@@ -7,17 +7,15 @@ import it.polimi.ingsw.server.model.enumerations.PersonalBoardPhase;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 import java.util.Map;
 
 public class PersonalBoard extends MessageObservable {
     private Player myPlayer;
     private final int TOTPOWERPRODUCTIONS = 6;
     private int victoryPoints;
-    private HashMap<Marble,Integer> temporaryMarbles;
-    private HashMap<Resource, Integer> temporaryMapResource;
+    private Map<Marble,Integer> temporaryMarbles;
+    private Map<Resource, Integer> temporaryMapResource;
     private ArrayList<LeaderCard> leaderCards;
     private FaithTrack faithTrack;
     private Match match;
@@ -64,9 +62,9 @@ public class PersonalBoard extends MessageObservable {
     }
 
     //Method used to check if the merged maps of cost strongbox and cost warehouseDepot are equal to costToPay
-    private void mergeCostsAndVerify(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, HashMap<Resource,Integer> costToPay) throws InvalidCostException {
+    private void mergeCostsAndVerify(Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, Map<Resource,Integer> costToPay) throws InvalidCostException {
         //Merging maps in a temporary cost map and checking it is equal to cost of power of production
-        HashMap<Resource,Integer> totalCostResourceMap =  new HashMap<>(costStrongbox);
+        Map<Resource,Integer> totalCostResourceMap =  new HashMap<>(costStrongbox);
         costWarehouseDepot.forEach(
                 (key, value) -> totalCostResourceMap.merge(key, value, Integer::sum)
         );
@@ -77,7 +75,7 @@ public class PersonalBoard extends MessageObservable {
     }
 
     //Method used to remove resources from strongbox and warehouseDepot
-    private void pay(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot) throws InvalidRemovalException {
+    private void pay(Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot) throws InvalidRemovalException {
         //Checking resource availability
         if(!strongbox.isAvailable(costStrongbox) || !warehouseDepots.isAvailable(costWarehouseDepot)){
             throw new InvalidRemovalException();
@@ -88,7 +86,7 @@ public class PersonalBoard extends MessageObservable {
     }
 
     //Method used to pay and add production to faithTrack and/or strongbox
-    private void produce(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, HashMap<Resource,Integer> production) throws InvalidRemovalException {
+    private void produce(Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, Map<Resource,Integer> production) throws InvalidRemovalException {
         pay(costStrongbox, costWarehouseDepot);
         //Adding production to strongbox and/or faithTrack
         dispatch(production);
@@ -103,8 +101,8 @@ public class PersonalBoard extends MessageObservable {
     }
 
     //Returns true if all the resources in resourceRequirement are present in strongbox and/or warehouse
-    private boolean checkResourceRequirement(HashMap<Resource,Integer> resourceRequirement){
-        HashMap<Resource,Integer> resourcesNotAvailable = warehouseDepots.resourcesNotAvailable(resourceRequirement);
+    private boolean checkResourceRequirement(Map<Resource,Integer> resourceRequirement){
+        Map<Resource,Integer> resourcesNotAvailable = warehouseDepots.resourcesNotAvailable(resourceRequirement);
         resourcesNotAvailable = strongbox.resourcesNotAvailable(resourcesNotAvailable);
         return resourcesNotAvailable.isEmpty();
     }
@@ -118,7 +116,7 @@ public class PersonalBoard extends MessageObservable {
      * @throws InvalidRemovalException If the payment can't be made
      * @throws InvalidCostException If the specified costs do not match the cost required by the power of production
      */
-    public void activateCardProduction(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, int indexDevelopmentCardSpace) throws InvalidProductionException, InvalidRemovalException, InvalidCostException, InvalidParameterException {
+    public void activateCardProduction(Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, int indexDevelopmentCardSpace) throws InvalidProductionException, InvalidRemovalException, InvalidCostException, InvalidParameterException {
         //Checking that this production has not already been used in this turn
         if (powerOfProductionUsed[indexDevelopmentCardSpace]) {
             throw new InvalidProductionException();
@@ -142,7 +140,7 @@ public class PersonalBoard extends MessageObservable {
      * @throws InvalidRemovalException If the payment can't be made
      * @throws InvalidCostException If the total resources are not two
      */
-    public void activateBasicProduction(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, Resource resource) throws InvalidProductionException, InvalidRemovalException, InvalidCostException {
+    public void activateBasicProduction(Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, Resource resource) throws InvalidProductionException, InvalidRemovalException, InvalidCostException {
         //Checking that this production has not already been used in this turn
         if (powerOfProductionUsed[0]) {
             throw new InvalidProductionException();
@@ -163,7 +161,7 @@ public class PersonalBoard extends MessageObservable {
             throw new InvalidCostException();
         }
         //Creating a resource map with the single resource
-        HashMap<Resource, Integer> resourceToAdd = new HashMap<>();
+        Map<Resource, Integer> resourceToAdd = new HashMap<>();
         resourceToAdd.put(resource, 1);
         //Activating production
         produce(costStrongbox, costWarehouseDepot, resourceToAdd);
@@ -183,7 +181,7 @@ public class PersonalBoard extends MessageObservable {
      * @throws InvalidLeaderAction If the chosen leader card does not have the proper power
      * @throws InvalidCostException If the specified costs do not match the cost required by the power of production
      */
-    public void activateLeaderProduction(HashMap<Resource,Integer> costStrongbox, HashMap<Resource,Integer> costWarehouseDepot, int numLeaderCard, Resource resource) throws InvalidProductionException, InvalidRemovalException, InvalidLeaderAction, InvalidCostException {
+    public void activateLeaderProduction(Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, int numLeaderCard, Resource resource) throws InvalidProductionException, InvalidRemovalException, InvalidLeaderAction, InvalidCostException {
         //Checking that the specified leader card exists
         if (numLeaderCard <= 0 || numLeaderCard > leaderCards.size()){
             throw new InvalidProductionException();
@@ -207,7 +205,7 @@ public class PersonalBoard extends MessageObservable {
             throw new InvalidProductionException();
         }
         //Add resource chosen by player
-        HashMap<Resource, Integer> production = powerOfProduction.getProduction();
+        Map<Resource, Integer> production = powerOfProduction.getProduction();
         production.put(resource, 1);
 
         //checking that the resources the specified cost are right for this production
@@ -273,7 +271,7 @@ public class PersonalBoard extends MessageObservable {
      * @throws InvalidAdditionException If there is not a single resource type, if the resource is not in the temporary resource map or is not enough,
      * or if the rules of the warehouse depot are not followed
      */
-    public void addToWarehouseDepots(int depotLevel, HashMap<Resource,Integer> singleResourceMap) throws InvalidAdditionException {
+    public void addToWarehouseDepots(int depotLevel, Map<Resource,Integer> singleResourceMap) throws InvalidAdditionException {
         //Checking if the request is correct
         if (singleResourceMap.size() != 1) {
             throw new InvalidAdditionException("Not one resource");
@@ -339,9 +337,9 @@ public class PersonalBoard extends MessageObservable {
      * @throws InvalidDevelopmentCardException If the card cannot be placed in the chosen development card space slot
      * @throws InvalidParameterException If the specified development card space slot does not exist
      */
-    public void buyDevelopmentCard(int row, int column,HashMap<Resource, Integer> costStrongbox, HashMap<Resource, Integer> costWarehouseDepots, int numLeaderCard, int cardPosition) throws NoCardException, InvalidCostException, InvalidLeaderAction, InvalidRemovalException, InvalidDevelopmentCardException, InvalidParameterException {
+    public void buyDevelopmentCard(int row, int column,Map<Resource, Integer> costStrongbox, Map<Resource, Integer> costWarehouseDepots, int numLeaderCard, int cardPosition) throws NoCardException, InvalidCostException, InvalidLeaderAction, InvalidRemovalException, InvalidDevelopmentCardException, InvalidParameterException {
         DevelopmentCard cardToBuy = cardGrid.getCard(row, column);
-        HashMap<Resource, Integer> price = new HashMap<>(cardToBuy.getPrice());
+        Map<Resource, Integer> price = new HashMap<>(cardToBuy.getPrice());
         //if numLeaderCard is 1 or 2 method tries to discount price
         if (numLeaderCard != 0){
             if (numLeaderCard < 0 || numLeaderCard > leaderCards.size())
@@ -536,13 +534,13 @@ public class PersonalBoard extends MessageObservable {
     /**
      * @return The temporary resource map of the resources not yet stored
      */
-    public HashMap<Resource, Integer> getTemporaryMapResource() {
+    public Map<Resource, Integer> getTemporaryMapResource() {
         return temporaryMapResource;
     }
     /**
      * @return The temporary marble map of the marbles not yet transformed
      */
-    public HashMap<Marble, Integer> getTemporaryMarbles() {
+    public Map<Marble, Integer> getTemporaryMarbles() {
         return temporaryMarbles;
     }
 

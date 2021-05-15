@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -107,7 +108,7 @@ class MatchTest {
             assert false;
         }
 
-        HashMap<Resource,Integer> resourceMap =new HashMap<>();
+        Map<Resource,Integer> resourceMap =new HashMap<>();
 
         try {
             match.getCurrentPlayer().getPersonalBoard().addInitialResources(resourceMap);

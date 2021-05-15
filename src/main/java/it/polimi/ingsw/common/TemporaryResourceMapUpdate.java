@@ -3,7 +3,7 @@ package it.polimi.ingsw.common;
 import it.polimi.ingsw.client.ClientView;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Map;
 
 public class TemporaryResourceMapUpdate extends MessageToClient{

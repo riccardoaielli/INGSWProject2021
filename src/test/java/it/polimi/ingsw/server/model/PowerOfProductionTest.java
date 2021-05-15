@@ -5,6 +5,7 @@ import it.polimi.ingsw.server.model.enumerations.Resource;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,8 +16,8 @@ class PowerOfProductionTest {
      */
     @Test
     void setgetCost() throws Exception{
-        HashMap<Resource,Integer> costTest = new HashMap<>();
-        HashMap<Resource,Integer> productionTest = new HashMap<>();
+        Map<Resource,Integer> costTest = new HashMap<>();
+        Map<Resource,Integer> productionTest = new HashMap<>();
         Resource resourceTest1 = Resource.SHIELD;
         Resource resourceTest2 = Resource.SERVANT;
         costTest.put(resourceTest1,4);
@@ -40,8 +41,8 @@ class PowerOfProductionTest {
      */
     @Test
     void setgetProduction() throws Exception{
-        HashMap<Resource,Integer> costTest = new HashMap<>();
-        HashMap<Resource,Integer> productionTest = new HashMap<>();
+        Map<Resource,Integer> costTest = new HashMap<>();
+        Map<Resource,Integer> productionTest = new HashMap<>();
         Resource resourceTest1 = Resource.SHIELD;
         Resource resourceTest2 = Resource.SERVANT;
         costTest.put(resourceTest1,4);

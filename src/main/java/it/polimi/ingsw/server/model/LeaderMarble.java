@@ -3,7 +3,7 @@ package it.polimi.ingsw.server.model;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.exceptions.NotEnoughWhiteMarblesException;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class LeaderMarble extends LeaderCard{
     private Marble marble;
@@ -22,7 +22,7 @@ public class LeaderMarble extends LeaderCard{
      * @throws NotEnoughWhiteMarblesException this exception is thrown when there are not enough white marbles in the given map of marbles
      */
     @Override
-    public void abilityMarble(HashMap<Marble, Integer> temporaryMapMarble, int numOfTransformation) throws NotEnoughWhiteMarblesException {
+    public void abilityMarble(Map<Marble, Integer> temporaryMapMarble, int numOfTransformation) throws NotEnoughWhiteMarblesException {
         if(!temporaryMapMarble.containsKey(whiteMarble) || temporaryMapMarble.get(whiteMarble) < numOfTransformation){
             throw new NotEnoughWhiteMarblesException();
         }

@@ -6,6 +6,7 @@ import it.polimi.ingsw.server.model.exceptions.InvalidAdditionException;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +15,7 @@ class DepotTest {
     void testCheckResource() {
         Depot depot1 = new Depot(1);
         assertFalse(depot1.checkResource(Resource.SHIELD));
-        HashMap<Resource, Integer> resourceMap = new HashMap<>();
+        Map<Resource, Integer> resourceMap = new HashMap<>();
         resourceMap.put(Resource.SHIELD, 1);
         try {
             depot1.add(resourceMap);
@@ -28,7 +29,7 @@ class DepotTest {
     @Test
     void testAdd() {
         Depot depot1 = new Depot(3);
-        HashMap<Resource, Integer> resourceMap = new HashMap<>();
+        Map<Resource, Integer> resourceMap = new HashMap<>();
         resourceMap.put(Resource.SHIELD, 2);
         try {
             depot1.add(resourceMap);
@@ -73,7 +74,7 @@ class DepotTest {
     void getNumberResources() {
         Depot depot = new Depot(3);
         assertEquals(0, depot.getNumberResources());
-        HashMap<Resource, Integer> resourceMap = new HashMap<>();
+        Map<Resource, Integer> resourceMap = new HashMap<>();
         resourceMap.put(Resource.SERVANT, 3);
         try {
             depot.add(resourceMap);
@@ -87,11 +88,11 @@ class DepotTest {
 
     @Test
     void uncheckedRemove() {
-        HashMap<Resource, Integer> resourceMap1 = new HashMap<>();
+        Map<Resource, Integer> resourceMap1 = new HashMap<>();
         resourceMap1.put(Resource.COIN, 3);
         resourceMap1.put(Resource.SHIELD,4);
 
-        HashMap<Resource, Integer> resourceMap2 = new HashMap<>();
+        Map<Resource, Integer> resourceMap2 = new HashMap<>();
         resourceMap2.put(Resource.COIN,2);
 
         Depot depot = new Depot(3);

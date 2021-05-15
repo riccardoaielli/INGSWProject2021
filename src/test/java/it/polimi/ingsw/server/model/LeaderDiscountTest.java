@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,7 +21,7 @@ class LeaderDiscountTest {
         Requirement requirement = new Requirement(new ArrayList<>(),new HashMap<>());
         LeaderCard leaderCardTest = new LeaderDiscount(10,requirement,2,resourcediscount);
 
-        HashMap<Resource,Integer> resourcesTest = new HashMap<>();
+        Map<Resource,Integer> resourcesTest = new HashMap<>();
         resourcesTest.put(Resource.SHIELD,1);
         try {
             leaderCardTest.abilityDiscount(resourcesTest);

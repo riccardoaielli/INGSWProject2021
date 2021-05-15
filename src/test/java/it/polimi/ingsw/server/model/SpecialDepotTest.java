@@ -6,6 +6,7 @@ import it.polimi.ingsw.server.model.exceptions.InvalidAdditionException;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +15,7 @@ class SpecialDepotTest {
     @Test
     void add() {
         SpecialDepot specialDepot1 = new SpecialDepot(Resource.SHIELD);
-        HashMap<Resource, Integer> resourceMap = new HashMap<>();
+        Map<Resource, Integer> resourceMap = new HashMap<>();
         resourceMap.put(Resource.COIN, 1);
         try {
             specialDepot1.add(resourceMap);

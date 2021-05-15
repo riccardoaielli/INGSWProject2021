@@ -8,6 +8,7 @@ import it.polimi.ingsw.server.model.exceptions.InvalidParameterException;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,11 +20,11 @@ class DevelopmentCardTest {
     void constructorTest() throws InvalidParameterException {
         DevelopmentCardColor colorTest = DevelopmentCardColor.PURPLE;
         int levelTest = 1;
-        HashMap<Resource,Integer> priceTest = new HashMap<>();
+        Map<Resource,Integer> priceTest = new HashMap<>();
         int victoryPointsTest = 2;
 
-        HashMap<Resource,Integer> costTest = new HashMap<>();
-        HashMap<Resource,Integer> productionTest = new HashMap<>();
+        Map<Resource,Integer> costTest = new HashMap<>();
+        Map<Resource,Integer> productionTest = new HashMap<>();
         PowerOfProduction powerOfProductionTest = new PowerOfProduction(costTest, productionTest);
 
         DevelopmentCard developmentCardTest = new DevelopmentCard(colorTest,levelTest,priceTest,victoryPointsTest,powerOfProductionTest);

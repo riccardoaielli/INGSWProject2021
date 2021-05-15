@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,7 +23,7 @@ class LeaderMarbleTest {
         Requirement requirement = new Requirement(new ArrayList<>(),new HashMap<>());
         LeaderCard leaderCardTest = new LeaderMarble(10,requirement,marbleTest);
 
-        HashMap<Marble,Integer> marblesTest = new HashMap<>();
+        Map<Marble,Integer> marblesTest = new HashMap<>();
         marblesTest.put(Marble.WHITEMARBLE,5);
         marblesTest.put(Marble.BLUEMARBLE,2);
 

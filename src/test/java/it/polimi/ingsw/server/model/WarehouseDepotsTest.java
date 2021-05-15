@@ -10,6 +10,7 @@ import it.polimi.ingsw.server.model.exceptions.InvalidRemovalException;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +19,7 @@ class WarehouseDepotsTest {
     @Test
     void add() {
         WarehouseDepots warehouseDepots = new WarehouseDepots();
-        HashMap<Resource, Integer> resourceMap = new HashMap<>();
+        Map<Resource, Integer> resourceMap = new HashMap<>();
         resourceMap.put(Resource.COIN,2);
         resourceMap.put(Resource.SHIELD,1);
         try {
@@ -75,7 +76,7 @@ class WarehouseDepotsTest {
         warehouseDepots.addSpecialDepot(Resource.SHIELD);
         assertEquals(4, warehouseDepots.getNumDepots());
 
-        HashMap<Resource, Integer> resourceMap = new HashMap<>();
+        Map<Resource, Integer> resourceMap = new HashMap<>();
         resourceMap.put(Resource.COIN,2);
         try {
             warehouseDepots.add(4, resourceMap);
@@ -89,7 +90,7 @@ class WarehouseDepotsTest {
     @Test
     void swap() {
         WarehouseDepots warehouseDepots = new WarehouseDepots();
-        HashMap<Resource, Integer> resourceMap1 = new HashMap<>();
+        Map<Resource, Integer> resourceMap1 = new HashMap<>();
 
         //Adding 2 coins to depot 2
         resourceMap1.put(Resource.COIN,2);
@@ -99,7 +100,7 @@ class WarehouseDepotsTest {
             assert false;
         }
         //Adding 2 stones to depot 3
-        HashMap<Resource, Integer> resourceMap2 = new HashMap<>();
+        Map<Resource, Integer> resourceMap2 = new HashMap<>();
         resourceMap2.put(Resource.STONE,2);
         try {
             warehouseDepots.add(3, resourceMap2);
@@ -146,11 +147,11 @@ class WarehouseDepotsTest {
     @Test
     void checkAndRemove() {
         WarehouseDepots warehouseDepots = new WarehouseDepots();
-        HashMap<Resource, Integer> resourceMap1 = new HashMap<>();
+        Map<Resource, Integer> resourceMap1 = new HashMap<>();
         resourceMap1.put(Resource.SHIELD, 4);
         resourceMap1.put(Resource.COIN, 2);
 
-        HashMap<Resource, Integer> resourceMap2 = new HashMap<>();
+        Map<Resource, Integer> resourceMap2 = new HashMap<>();
         resourceMap2.put(Resource.SHIELD, 2);
         try {
             warehouseDepots.add(2, resourceMap2);
@@ -164,7 +165,7 @@ class WarehouseDepotsTest {
             assert false;
         }
 
-        HashMap<Resource, Integer> resourceMap3 = new HashMap<>();
+        Map<Resource, Integer> resourceMap3 = new HashMap<>();
         resourceMap3.put(Resource.COIN, 3);
         try {
             warehouseDepots.add(3, resourceMap3);
@@ -183,9 +184,9 @@ class WarehouseDepotsTest {
     @Test
     void checkAndRemoveNull() {
         WarehouseDepots warehouseDepots = new WarehouseDepots();
-        HashMap<Resource, Integer> resourceMap1 = new HashMap<>();
-        HashMap<Resource, Integer> resourceMap2 = new HashMap<>();
-        HashMap<Resource, Integer> resourceMap3 = new HashMap<>();
+        Map<Resource, Integer> resourceMap1 = new HashMap<>();
+        Map<Resource, Integer> resourceMap2 = new HashMap<>();
+        Map<Resource, Integer> resourceMap3 = new HashMap<>();
         resourceMap1.put(Resource.SHIELD, 2);
         try {
             warehouseDepots.add(2, resourceMap1);
@@ -217,11 +218,11 @@ class WarehouseDepotsTest {
     @Test
     void resourcesNotAvailable() {
         WarehouseDepots warehouseDepots = new WarehouseDepots();
-        HashMap<Resource, Integer> resourceMap1 = new HashMap<>();
+        Map<Resource, Integer> resourceMap1 = new HashMap<>();
         resourceMap1.put(Resource.SERVANT, 2);
         resourceMap1.put(Resource.SHIELD, 1);
 
-        HashMap<Resource, Integer> resourceMap2 = new HashMap<>();
+        Map<Resource, Integer> resourceMap2 = new HashMap<>();
         resourceMap2.put(Resource.SHIELD, 2);
         try {
             warehouseDepots.add(2, resourceMap2);
@@ -235,7 +236,7 @@ class WarehouseDepotsTest {
             assert false;
         }
 
-        HashMap<Resource, Integer> resourceMap3 = new HashMap<>();
+        Map<Resource, Integer> resourceMap3 = new HashMap<>();
         resourceMap3.put(Resource.COIN, 3);
         try {
             warehouseDepots.add(3, resourceMap3);
@@ -251,11 +252,11 @@ class WarehouseDepotsTest {
         //Checking the sum of the resources when the warehouse depot is empty
         assertEquals(0, warehouseDepots.getTotalResources());
 
-        HashMap<Resource, Integer> resourceMap1 = new HashMap<>();
+        Map<Resource, Integer> resourceMap1 = new HashMap<>();
         resourceMap1.put(Resource.SERVANT, 1);
-        HashMap<Resource, Integer> resourceMap2 = new HashMap<>();
+        Map<Resource, Integer> resourceMap2 = new HashMap<>();
         resourceMap2.put(Resource.SHIELD, 2);
-        HashMap<Resource, Integer> resourceMap3 = new HashMap<>();
+        Map<Resource, Integer> resourceMap3 = new HashMap<>();
         resourceMap3.put(Resource.STONE, 3);
         //Adding 8 resources to warehouse depots
         try {
@@ -278,7 +279,7 @@ class WarehouseDepotsTest {
     @Test
     void moveToFromSpecialDepot() {
         WarehouseDepots warehouseDepots = new WarehouseDepots();
-        HashMap<Resource, Integer> resourceMap1 = new HashMap<>();
+        Map<Resource, Integer> resourceMap1 = new HashMap<>();
         resourceMap1.put(Resource.COIN, 3);
         //Putting 3 coins to depot 3
         try {
