@@ -55,6 +55,14 @@ public class MessageDeserializer implements JsonDeserializer <MessageToServer>{
                 return gson.fromJson(jsonObject, MoveMessage.class);
             case "DISCARD_LEADER":
                 return gson.fromJson(jsonObject, DiscardLeaderMessage.class);
+            case "ACTIVATE_CARD_PRODUCTION":
+                return gson.fromJson(jsonObject, ActivateCardProductionMessage.class);
+            case "ACTIVATE_BASIC_PRODUCTION":
+                return gson.fromJson(jsonObject, ActivateBasicProductionMessage.class);
+            case "ACTIVATE_LEADER_PRODUCTION":
+                return gson.fromJson(jsonObject, ActivateLeaderProductionMessage.class);
+            case "END_MESSAGE":
+                return gson.fromJson(jsonObject, EndProduction.class);
         }
 
         return null;

@@ -239,4 +239,60 @@ public class Controller extends MessageObservable{
             view.update(new ErrorMessage(nickname, "Invalid command in this phase of the match"));
         }
     }
+
+    public synchronized void activateCardProductionMessage(View view,String nickname, Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, int indexDevelopmentCardSpace){
+        if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND
+                && match.getCurrentPlayer().getNickname().equals(nickname)
+                && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE
+                || match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.PRODUCTION){
+            try {
+                match.getCurrentPlayer().getPersonalBoard().activateCardProduction(costStrongbox,costWarehouseDepot,indexDevelopmentCardSpace);
+            } catch (InvalidProductionException | InvalidParameterException | InvalidCostException | InvalidRemovalException e) {
+                view.update(new ErrorMessage(nickname, e.getMessage()));
+            }
+        }
+        else {
+            view.update(new ErrorMessage(nickname, "Invalid command in this phase of the match"));
+        }
+    }
+
+    public synchronized void activateBasicProductionMessage(View view,String nickname, Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, Resource resource){
+        if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND
+                && match.getCurrentPlayer().getNickname().equals(nickname)
+                && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE
+                || match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.PRODUCTION){
+            try {
+                match.getCurrentPlayer().getPersonalBoard().activateBasicProduction(costStrongbox,costWarehouseDepot,resource);
+            } catch (InvalidProductionException | InvalidCostException | InvalidRemovalException e) {
+                view.update(new ErrorMessage(nickname, e.getMessage()));
+            }
+        }
+        else {
+            view.update(new ErrorMessage(nickname, "Invalid command in this phase of the match"));
+        }
+    }
+
+    public synchronized void activateLeaderProductionMessage(View view,String nickname, Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, int numLeaderCard, Resource resource){
+        if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND
+                && match.getCurrentPlayer().getNickname().equals(nickname)
+                && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE
+                || match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.PRODUCTION){
+            try {
+                match.getCurrentPlayer().getPersonalBoard().activateLeaderProduction(costStrongbox,costWarehouseDepot,numLeaderCard,resource);
+            } catch (InvalidProductionException | InvalidCostException | InvalidLeaderAction | InvalidRemovalException e) {
+                view.update(new ErrorMessage(nickname, e.getMessage()));
+            }
+        }
+        else {
+            view.update(new ErrorMessage(nickname, "Invalid command in this phase of the match"));
+        }
+    }
+
+    public synchronized void endProductionMessage(View view,String nickname){
+        if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND
+                && match.getCurrentPlayer().getNickname().equals(nickname)
+                && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.PRODUCTION) {
+            match.getCurrentPlayer().getPersonalBoard().endProduction();
+        }
+    }
 }

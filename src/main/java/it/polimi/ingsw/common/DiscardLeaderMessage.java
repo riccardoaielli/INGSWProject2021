@@ -12,6 +12,6 @@ public class DiscardLeaderMessage extends MessageToServer{
 
     @Override
     public void handleMessage(Controller controller, View view) {
-
+        controller.discardLeaderMessage(view,getNickname(),numLeaderCard);
     }
 }
