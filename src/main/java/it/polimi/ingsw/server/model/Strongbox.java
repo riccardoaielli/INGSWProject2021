@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.common.StrongboxUpdate;
+import it.polimi.ingsw.common.messages.messagesToClient.StrongboxUpdate;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 

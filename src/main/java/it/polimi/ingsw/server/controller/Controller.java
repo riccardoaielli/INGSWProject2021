@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.controller;
 
-import it.polimi.ingsw.common.ErrorMessage;
+import it.polimi.ingsw.common.messages.messagesToServer.ErrorMessage;
 import it.polimi.ingsw.common.View;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.Match;
@@ -10,7 +10,6 @@ import it.polimi.ingsw.server.model.enumerations.PersonalBoardPhase;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
 
-import java.util.Map;
 import java.util.Map;
 
 public class Controller extends MessageObservable{

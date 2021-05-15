@@ -1,8 +1,8 @@
 package it.polimi.ingsw.client;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.common.MessageToClient;
-import it.polimi.ingsw.common.MessageToServer;
+import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
+import it.polimi.ingsw.common.messages.messagesToServer.MessageToServer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;

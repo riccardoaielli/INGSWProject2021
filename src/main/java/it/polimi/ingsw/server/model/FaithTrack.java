@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.common.PopeFavourTilesUpdate;
-import it.polimi.ingsw.common.RedcrossPositionUpdate;
+import it.polimi.ingsw.common.messages.messagesToClient.PopeFavourTilesUpdate;
+import it.polimi.ingsw.common.messages.messagesToClient.RedcrossPositionUpdate;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.exceptions.InvalidParameterException;
 

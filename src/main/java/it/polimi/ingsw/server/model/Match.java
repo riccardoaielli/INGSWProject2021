@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.model;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import it.polimi.ingsw.common.PlayerTurnUpdate;
+import it.polimi.ingsw.common.messages.messagesToClient.PlayerTurnUpdate;
 import it.polimi.ingsw.common.View;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.MatchPhase;
@@ -16,7 +16,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
-import java.util.stream.Collectors;
 
 
 public class Match extends MessageObservable implements EndGameConditionsObserver {

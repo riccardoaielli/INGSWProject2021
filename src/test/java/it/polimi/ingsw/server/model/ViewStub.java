@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.model;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import it.polimi.ingsw.common.Message;
+import it.polimi.ingsw.common.messages.Message;
 import it.polimi.ingsw.common.View;
 
 public class ViewStub implements View {

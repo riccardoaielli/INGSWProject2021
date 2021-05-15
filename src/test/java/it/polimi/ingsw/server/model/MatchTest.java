@@ -1,15 +1,11 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.common.View;
-import it.polimi.ingsw.server.View.VirtualView;
-import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.enumerations.MatchPhase;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.InvalidNickName;
 import it.polimi.ingsw.server.model.exceptions.InvalidParameterException;
 import org.junit.jupiter.api.Test;
 
-import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
