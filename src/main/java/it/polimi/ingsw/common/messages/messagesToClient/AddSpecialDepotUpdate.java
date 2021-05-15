@@ -5,7 +5,7 @@ import it.polimi.ingsw.common.messages.MessageType;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 
 public class AddSpecialDepotUpdate extends MessageToClient {
-    Resource depotResourceType;
+    private final Resource depotResourceType;
 
     public AddSpecialDepotUpdate(String nickname, Resource depotResourceType) {
         super(nickname, MessageType.ADD_SPECIALDEPOT_UPDATE);
@@ -14,6 +14,6 @@ public class AddSpecialDepotUpdate extends MessageToClient {
 
     @Override
     public void handleMessage(ClientView clientView) {
-
+        clientView.showUpdateAddSpecialDepotUpdate(getNickname(),depotResourceType);
     }
 }

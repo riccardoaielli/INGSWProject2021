@@ -5,8 +5,8 @@ import it.polimi.ingsw.common.messages.MessageType;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 
 public class MarketUpdate extends MessageToClient {
-    private Marble[][] marketMatrix;
-    private Marble marbleOut;
+    private final Marble[][] marketMatrix;
+    private final Marble marbleOut;
 
     public MarketUpdate(Marble[][] marketMatrix,Marble marbleOut) {
         super(null, MessageType.MARKET_UPDATE);
@@ -16,6 +16,6 @@ public class MarketUpdate extends MessageToClient {
 
     @Override
     public void handleMessage(ClientView clientView) {
-
+        clientView.showUpdateMarket(marketMatrix,marbleOut);
     }
 }

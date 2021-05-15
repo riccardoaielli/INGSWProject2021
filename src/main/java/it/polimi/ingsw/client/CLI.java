@@ -2,6 +2,7 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.common.messages.Message;
 import it.polimi.ingsw.server.model.Observable;
+import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 
 import java.util.ArrayList;
@@ -112,6 +113,51 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdatedDevCardSpace(String nickname, ArrayList<ArrayList<Integer>> cardsState) {
+
+    }
+
+    @Override
+    public void showUpdateTemporaryMarbles(String nickname, Map<Marble, Integer> temporaryMarbles) {
+
+    }
+
+    @Override
+    public void showUpdateRedcrossPosition(String nickname, int redcrossPosition) {
+
+    }
+
+    @Override
+    public void showUpdatePopeFavourTiles(String nickname, ArrayList<Integer> popeFavourTiles) {
+
+    }
+
+    @Override
+    public void showUpdatePlayerTurn(String nickname) {
+
+    }
+
+    @Override
+    public void showUpdateMarket(Marble[][] marketMatrix, Marble marbleOut) {
+
+    }
+
+    @Override
+    public void showUpdateAddSpecialDepotUpdate(String nickname, Resource depotResourceType) {
+
+    }
+
+    @Override
+    public void showUpdateCardGridUpdate(int[][] cardGridMatrixUpdate) {
+
+    }
+
+    @Override
+    public void showUpdateDiscardedLeaderUpdate(String nickname, int leaderPosition) {
+
+    }
+
+    @Override
+    public void showUpdateLeaderCardActivatedUpdate(String nickname, int numLeadercard, int leaderCardID) {
 
     }
 
