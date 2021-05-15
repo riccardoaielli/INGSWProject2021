@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.common.WarehouseUpdate;
+import it.polimi.ingsw.common.AddSpecialDepotUpdate;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.InvalidAdditionException;
@@ -77,6 +78,7 @@ public class WarehouseDepots extends MessageObservable {
      */
     public void addSpecialDepot(Resource resource){
         depots.add(new SpecialDepot(resource));
+        notifyObservers(new AddSpecialDepotUpdate(this.getNickname(), resource));
     }
 
     /**
