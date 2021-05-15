@@ -92,7 +92,8 @@ public class PersonalBoard extends MessageObservable {
         pay(costStrongbox, costWarehouseDepot);
         //Adding production to strongbox and/or faithTrack
         dispatch(production);
-        strongbox.add(production);
+        temporaryMapResource.forEach((resource, quantity) -> temporaryMapResource.merge(resource, quantity, Integer::sum));
+        notifyObservers(new TemporaryResourceMapUpdate(getNickname(), temporaryMapResource));
     }
 
     //Method that is used to remove faith from temporaryMapResource and to add it to faithTrack
@@ -454,9 +455,12 @@ public class PersonalBoard extends MessageObservable {
     }
 
     /**
-     * this method is used when the player decides
+     * This method is used when the player decides to end the production
      */
     public void endProduction(){
+        strongbox.add(temporaryMapResource);
+        temporaryMapResource.clear();
+        notifyObservers(new TemporaryResourceMapUpdate(getNickname(), temporaryMapResource));
         personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_DONE;
     }
 
