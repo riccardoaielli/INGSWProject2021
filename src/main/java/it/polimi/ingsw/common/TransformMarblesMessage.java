@@ -15,5 +15,5 @@ public class TransformMarblesMessage extends MessageToServer{
     }
 
     @Override
-    public void handleMessage(Controller controller, View virtualView) { controller.handleTransformMarblesMessage(virtualView, this.getNickname()); }
+    public void handleMessage(Controller controller, View view) { controller.handleTransformMarblesMessage(view, this.getNickname()); }
 }

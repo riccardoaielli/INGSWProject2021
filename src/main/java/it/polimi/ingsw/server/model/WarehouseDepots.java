@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.common.WarehouseUpdate;
+import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.InvalidAdditionException;
 import it.polimi.ingsw.server.model.exceptions.InvalidMoveException;
@@ -8,8 +10,10 @@ import it.polimi.ingsw.server.model.exceptions.InvalidRemovalException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class WarehouseDepots {
+public class WarehouseDepots extends MessageObservable {
     private final int STANDARDDEPOTS = 3;
     private final ArrayList<Depot> depots = new ArrayList<>();
 
@@ -59,6 +63,12 @@ public class WarehouseDepots {
         //Adding the resource
         depots.get(depotNumber-1).add(singleResourceMap);
 
+        List<Map<Resource, Integer>> warehouseState = new ArrayList<>();
+        for (Depot depot : depots){
+            warehouseState.add(depot.getMapResource());
+        }
+
+        notifyObservers(new WarehouseUpdate(this.getNickname(), warehouseState));
     }
 
     /**

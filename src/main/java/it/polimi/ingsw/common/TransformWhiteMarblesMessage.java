@@ -16,5 +16,5 @@ public class TransformWhiteMarblesMessage extends MessageToServer{
     }
 
     @Override
-    public void handleMessage(Controller controller, View virtualView) { controller.handleTransformWhiteMarblesMessage(leaderCard,numOfTransformations,this.getNickname(),virtualView); }
+    public void handleMessage(Controller controller, View view) { controller.handleTransformWhiteMarblesMessage(leaderCard,numOfTransformations,this.getNickname(), view); }
 }

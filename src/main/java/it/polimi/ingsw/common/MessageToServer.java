@@ -11,5 +11,5 @@ public abstract class MessageToServer extends Message{
         super(nickname, messageType);
     }
 
-    public abstract void handleMessage(Controller controller, View virtualView);
+    public abstract void handleMessage(Controller controller, View view);
 }

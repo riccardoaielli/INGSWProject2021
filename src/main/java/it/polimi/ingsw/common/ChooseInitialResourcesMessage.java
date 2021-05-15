@@ -17,7 +17,7 @@ public class ChooseInitialResourcesMessage extends MessageToServer{
     }
 
     @Override
-    public void handleMessage(Controller controller, View virtualView) {
-        controller.handleChooseInitialResourcesMessage(virtualView, this.getNickname(), resourceIntegerMap);
+    public void handleMessage(Controller controller, View view) {
+        controller.handleChooseInitialResourcesMessage(view, this.getNickname(), resourceIntegerMap);
     }
 }

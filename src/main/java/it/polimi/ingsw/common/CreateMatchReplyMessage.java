@@ -14,7 +14,7 @@ public class CreateMatchReplyMessage extends MessageToServer{
     }
 
     @Override
-    public void handleMessage(Controller controller, View virtualView) {
-        controller.handleCreateMatchReplyMessage(numOfPlayers, this.getNickname(),virtualView);
+    public void handleMessage(Controller controller, View view) {
+        controller.handleCreateMatchReplyMessage(numOfPlayers, this.getNickname(), view);
     }
 }

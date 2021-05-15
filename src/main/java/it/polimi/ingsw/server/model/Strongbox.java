@@ -1,10 +1,11 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 
 import java.util.HashMap;
 
-public class Strongbox {
+public class Strongbox extends MessageObservable {
     private HashMap<Resource, Integer> strongbox;
 
     /**

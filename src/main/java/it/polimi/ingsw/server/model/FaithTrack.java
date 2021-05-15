@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.exceptions.InvalidParameterException;
 
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 /**
  *this class represents the faith track of a player with the positions of the red cross and the tiles status
 */
-public class FaithTrack implements Observable<EndGameConditionsObserver>{
+public class FaithTrack extends MessageObservable implements Observable<EndGameConditionsObserver>{
     /**
      * tiles values:
      * 0 - value before vatican report

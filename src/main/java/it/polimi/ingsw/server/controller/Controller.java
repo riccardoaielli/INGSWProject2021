@@ -9,12 +9,14 @@ import it.polimi.ingsw.server.model.enumerations.MatchPhase;
 import it.polimi.ingsw.server.model.enumerations.PersonalBoardPhase;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
+
+import java.util.HashMap;
 import java.util.Map;
 
 public class Controller extends MessageObservable{
     private Match match;
 
-    public Controller() {
+    public Controller() { 
     }
 
 
@@ -169,6 +171,15 @@ public class Controller extends MessageObservable{
             personalBoard.addInitialResources(resourceIntegerMap);
         } catch (InvalidParameterException e) {
             view.update(new ErrorMessage(nickname, "Invalid command"));
+        }
+    }
+
+    public synchronized void handleAddToWarehouseMessage(View view, String nickname, int depotLevel, HashMap<Resource,Integer> singleResourceMap){
+        PersonalBoard personalBoard = match.getPlayerByNickname(nickname).getPersonalBoard();
+        try {
+            personalBoard.addToWarehouseDepots(depotLevel, singleResourceMap);
+        } catch (InvalidAdditionException e) {
+            view.update(new ErrorMessage(nickname, e.getMessage()));
         }
     }
 }

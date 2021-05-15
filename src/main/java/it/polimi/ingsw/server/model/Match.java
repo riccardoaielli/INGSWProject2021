@@ -54,8 +54,10 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         Collections.shuffle(leaderCards);
         //crates market and card grid
         market = new Market();
+        market.addObserverList(this.getMessageObservers());
         cardGrid = new CardGrid();
         cardGrid.AddMatchToNotify(this);
+        cardGrid.addObserverList(this.getMessageObservers());
         players = new ArrayList<>();
     }
 

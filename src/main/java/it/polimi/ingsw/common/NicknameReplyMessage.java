@@ -12,8 +12,8 @@ public class NicknameReplyMessage extends MessageToServer{
     }
 
     @Override
-    public void handleMessage(Controller controller, View virtualView) {
-        controller.handleNicknameReplyMessage(this.getNickname(),virtualView);
+    public void handleMessage(Controller controller, View view) {
+        controller.handleNicknameReplyMessage(this.getNickname(), view);
     }
 }
 

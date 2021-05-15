@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.common.InitialLeaderDiscardedUpdate;
+import it.polimi.ingsw.common.TemporaryResourceMapUpdate;
 import it.polimi.ingsw.common.InitialLeaderCardsUpdate;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.Marble;
@@ -36,13 +38,25 @@ public class PersonalBoard extends MessageObservable {
         this.market = match.getMarket();
         this.cardGrid = match.getCardGrid();
         this.leaderCards = leaderCards;
+
         this.faithTrack = new FaithTrack();
         faithTrack.addObserver(match);
+        faithTrack.addObserverList(this.getMessageObservers());
+        faithTrack.setNickname(this.getNickname());
+
         this.developmentCardSpace = new DevelopmentCardSpace();
         developmentCardSpace.addObserver(match);
+
         this.match = match;
+
         this.strongbox = new Strongbox();
+        strongbox.addObserverList(this.getMessageObservers());
+        strongbox.setNickname(this.getNickname());
+
         this.warehouseDepots = new WarehouseDepots();
+        warehouseDepots.addObserverList(this.getMessageObservers());
+        warehouseDepots.setNickname(this.getNickname());
+
         this.temporaryMapResource = new HashMap<>();
         this.temporaryMarbles = new HashMap<>();
         Arrays.fill(this.powerOfProductionUsed, false);
@@ -409,6 +423,8 @@ public class PersonalBoard extends MessageObservable {
         leaderCards.remove(indexLeaderCard2-1);
         match.addPlayerReady();
         personalBoardPhase = PersonalBoardPhase.RESOURCE_CHOICE;
+
+        notifyObservers(new InitialLeaderDiscardedUpdate(myPlayer.getNickname(), indexLeaderCard1, indexLeaderCard2));
     }
 
     /**
@@ -425,6 +441,8 @@ public class PersonalBoard extends MessageObservable {
             throw new InvalidParameterException();
         }
         temporaryMapResource = new HashMap<>(initialResources);
+        //Notifying observers that temporary map resource has changed
+        notifyObservers(new TemporaryResourceMapUpdate(myPlayer.getNickname(), new HashMap<>(temporaryMapResource)));
     }
 
     /**

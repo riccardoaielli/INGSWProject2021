@@ -17,7 +17,7 @@ public class TakeFromMarketMessage extends MessageToServer{
     }
 
     @Override
-    public void handleMessage(Controller controller, View virtualView) {
-        controller.handleTakeFromMarketMessage(rowOrColumn,value,this.getNickname(),virtualView);
+    public void handleMessage(Controller controller, View view) {
+        controller.handleTakeFromMarketMessage(rowOrColumn,value,this.getNickname(), view);
     }
 }

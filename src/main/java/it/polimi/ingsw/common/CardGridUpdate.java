@@ -7,7 +7,7 @@ public class CardGridUpdate extends MessageToClient{
     int[][] cardGridMatrixUpdate;
 
     public CardGridUpdate(int[][] cardGridMatrixUpdate) {
-        super(null, MessageType.CARDGRID_UPDATE);
+        super(null, MessageType.CARD_GRID_UPDATE);
         this.cardGridMatrixUpdate = cardGridMatrixUpdate;
     }
 

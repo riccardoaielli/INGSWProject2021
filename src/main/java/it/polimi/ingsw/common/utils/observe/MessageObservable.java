@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class MessageObservable {
     private List<MessageObserver> messageObservers = new ArrayList<>();
+    private String nickname;
 
     /**
      * Adds an observer to the list of observer
@@ -44,6 +45,22 @@ public class MessageObservable {
         for (MessageObserver messageObserver : messageObservers){
             messageObserver.update(message);
         }
+    }
+
+    /**
+     * Method to add the nickname of the player that owns the observed object in the game
+     * @param nickname nickname of the player whose object is observed, if null the object is shared by all players
+     */
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    /**
+     * Method that return the nickname of the player that owns the observed object in the game
+     * @return nickname of the player whose object is observed, if null the object is shared by all players
+     */
+    public String getNickname() {
+        return nickname;
     }
 
 }

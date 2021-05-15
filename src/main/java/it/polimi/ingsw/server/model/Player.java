@@ -12,6 +12,7 @@ public class Player {
     public Player(String nickname, PersonalBoard personalBoard, View view) {
         this.nickname = nickname;
         this.personalBoard = personalBoard;
+        this.personalBoard.setNickname(nickname);
         this.view = view;
         personalBoard.setPlayer(this);
     }
