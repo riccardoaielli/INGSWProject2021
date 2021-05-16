@@ -313,4 +313,18 @@ public class Controller extends MessageObservable{
             view.update(new ErrorMessage(nickname, "Invalid parameter"));
         }
     }
+
+    public synchronized void handleEndTurnMessage(View view, String nickname){
+        if (!match.getCurrentPlayer().getNickname().equals(nickname)){
+            view.update(new ErrorMessage(nickname, "Not your turn"));
+            return;
+        }
+        PersonalBoard personalBoard = match.getPlayerByNickname(nickname).getPersonalBoard();
+        if (!personalBoard.getPersonalBoardPhase().equals(PersonalBoardPhase.MAIN_TURN_ACTION_DONE)){
+            view.update(new ErrorMessage(nickname, "You haven't done your main turn action yet"));
+            return;
+        }
+        personalBoard.endTurn();
+        match.nextPlayer();
+    }
 }

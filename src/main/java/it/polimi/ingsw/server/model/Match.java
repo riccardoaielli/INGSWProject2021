@@ -173,7 +173,7 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
                 case SETUP:
                     numOfPlayersReady = 0;
                     matchPhase = MatchPhase.LEADERCHOICE;
-                    players.forEach(x->x.getPersonalBoard().addObserverList(this.getMessageObservers()));
+                    //players.forEach(x->x.getPersonalBoard().addObserverList(this.getMessageObservers()));
                     startMatchNotify();
                     return;
                 case LEADERCHOICE:

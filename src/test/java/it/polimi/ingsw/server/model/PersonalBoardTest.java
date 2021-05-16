@@ -26,7 +26,7 @@ class PersonalBoardTest {
             assert false;
         }
         try {
-            match.addPlayer("Mario",null);
+            match.addPlayer("Mario",new ViewStub());
         } catch (InvalidNickName invalidNickName) {
             assert false;
         }
@@ -76,6 +76,8 @@ class PersonalBoardTest {
         } catch (InvalidProductionException | InvalidCostException | InvalidRemovalException e) {
             assert false;
         }
+
+        personalBoard.endProduction();
 
         assertEquals(1, personalBoard.getStrongbox().getResourceQuantity(Resource.STONE));
         assertEquals(2, personalBoard.getStrongbox().getResourceQuantity(Resource.SERVANT));

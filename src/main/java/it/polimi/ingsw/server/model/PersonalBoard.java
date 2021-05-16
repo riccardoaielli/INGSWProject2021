@@ -30,6 +30,9 @@ public class PersonalBoard extends MessageObservable {
     private int numOfResourcesToChoose;
 
     public PersonalBoard(ArrayList<LeaderCard> leaderCards, Match match) {
+        this.addObserverList(match.getMessageObservers());
+        this.setNickname(match.getNickname());
+
         this.victoryPoints = 0;
         this.market = match.getMarket();
         this.cardGrid = match.getCardGrid();
@@ -38,22 +41,18 @@ public class PersonalBoard extends MessageObservable {
         this.faithTrack = new FaithTrack();
         faithTrack.addObserver(match);
         faithTrack.addObserverList(this.getMessageObservers());
-        faithTrack.setNickname(this.getNickname());
 
         this.developmentCardSpace = new DevelopmentCardSpace();
         developmentCardSpace.addObserver(match);
         developmentCardSpace.addObserverList(this.getMessageObservers());
-        developmentCardSpace.setNickname(this.getNickname());
 
         this.match = match;
 
         this.strongbox = new Strongbox();
         strongbox.addObserverList(this.getMessageObservers());
-        strongbox.setNickname(this.getNickname());
 
         this.warehouseDepots = new WarehouseDepots();
         warehouseDepots.addObserverList(this.getMessageObservers());
-        warehouseDepots.setNickname(this.getNickname());
 
         this.temporaryMapResource = new HashMap<>();
         this.temporaryMarbles = new HashMap<>();
@@ -92,8 +91,8 @@ public class PersonalBoard extends MessageObservable {
         pay(costStrongbox, costWarehouseDepot);
         //Adding production to strongbox and/or faithTrack
         dispatch(production);
-        temporaryMapResource.forEach((resource, quantity) -> temporaryMapResource.merge(resource, quantity, Integer::sum));
-        notifyObservers(new TemporaryResourceMapUpdate(getNickname(), temporaryMapResource));
+        production.forEach((resource, quantity) -> temporaryMapResource.merge(resource, quantity, Integer::sum));
+        notifyObservers(new TemporaryResourceMapUpdate(getNickname(), new HashMap<>(temporaryMapResource)));
     }
 
     //Method that is used to remove faith from temporaryMapResource and to add it to faithTrack
@@ -295,6 +294,7 @@ public class PersonalBoard extends MessageObservable {
         else{
             temporaryMapResource.put(resource, temporaryMapResource.get(resource) - singleResourceMap.get(resource));
         }
+        notifyObservers(new TemporaryResourceMapUpdate(getNickname(), new HashMap<>(temporaryMapResource)));
         //if the temporaryResourceMap is empty and player is buying from the market the personalboard phase changes
         if(temporaryMapResource.isEmpty() && personalBoardPhase == PersonalBoardPhase.TAKE_FROM_MARKET)
             personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_DONE;
@@ -460,7 +460,7 @@ public class PersonalBoard extends MessageObservable {
     public void endProduction(){
         strongbox.add(temporaryMapResource);
         temporaryMapResource.clear();
-        notifyObservers(new TemporaryResourceMapUpdate(getNickname(), temporaryMapResource));
+        notifyObservers(new TemporaryResourceMapUpdate(getNickname(), new HashMap<>(temporaryMapResource)));
         personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_DONE;
     }
 
@@ -584,6 +584,11 @@ public class PersonalBoard extends MessageObservable {
 
     public void setPlayer(Player myPlayer){
         this.myPlayer = myPlayer;
+        this.setNickname(myPlayer.getNickname());
+        faithTrack.setNickname(this.getNickname());
+        developmentCardSpace.setNickname(this.getNickname());
+        strongbox.setNickname(this.getNickname());
+        warehouseDepots.setNickname(this.getNickname());
     }
 
     public void doNotifyLeaders() {
@@ -591,5 +596,9 @@ public class PersonalBoard extends MessageObservable {
         leaderCards.forEach(x->initialLeaderCardsID.add(x.getId()));
         if(myPlayer.getView() != null)
             myPlayer.getView().update(new InitialLeaderCardsUpdate(myPlayer.getNickname(),initialLeaderCardsID));
+    }
+
+    public void endTurn(){
+        personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE;
     }
 }
