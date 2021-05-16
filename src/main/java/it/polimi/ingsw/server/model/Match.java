@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.common.messages.messagesToClient.PlayerTurnUpdate;
 import it.polimi.ingsw.common.View;
+import it.polimi.ingsw.common.messages.messagesToClient.RankUpdate;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.MatchPhase;
 import it.polimi.ingsw.server.model.exceptions.InvalidNickName;
@@ -19,7 +20,7 @@ import java.util.Stack;
 
 
 public class Match extends MessageObservable implements EndGameConditionsObserver {
-    private int matchID;
+    private final int matchID;
     private final int numOfPlayers;
     private int numOfPlayersReady;
     private Player currentPlayer;
@@ -235,6 +236,7 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         //at the end of the last round ends the game
         if(matchPhase == MatchPhase.LASTROUND && ((players.indexOf(currentPlayer) + 1) == numOfPlayers)){
             endGame();
+            return;
         }
         //changes the current player to the next player
         currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % numOfPlayers);
@@ -272,8 +274,13 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
     public void endGame() {
         players.forEach(x -> x.getPersonalBoard().sumVictoryPoints());
         rank = new ArrayList<>(players);
-        Collections.sort(rank, new CustomPlayerComparator());
+        rank.sort(new CustomPlayerComparator());
+
+        ArrayList<RankPosition> finalRank = new ArrayList<RankPosition>();
+        rank.forEach(x-> finalRank.add(new RankPosition(x.getNickname(),x.getPersonalBoard().getVictoryPoints())));
+
         matchPhase = MatchPhase.GAMEOVER;
+        notifyObservers(new RankUpdate(finalRank));
     }
 
 

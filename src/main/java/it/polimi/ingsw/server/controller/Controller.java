@@ -293,6 +293,9 @@ public class Controller extends MessageObservable{
                 && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.PRODUCTION) {
             match.getCurrentPlayer().getPersonalBoard().endProduction();
         }
+        else{
+            view.update(new ErrorMessage(nickname, "Invalid command in this phase of the match"));
+        }
     }
 
     public synchronized void handleBuyDevelopmentCardMessage(View view, String nickname, int row, int column, Map<Resource, Integer> costStrongbox, Map<Resource, Integer> costWarehouse, int numLeaderCard, int cardPosition){

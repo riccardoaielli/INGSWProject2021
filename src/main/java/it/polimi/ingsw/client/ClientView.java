@@ -1,6 +1,9 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.common.View;
+import it.polimi.ingsw.common.messages.messagesToClient.RankUpdate;
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.RankPosition;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 
@@ -27,4 +30,5 @@ public interface ClientView extends View {
     void showUpdateCardGridUpdate(int[][] cardGridMatrixUpdate);
     void showUpdateDiscardedLeaderUpdate(String nickname, int leaderPosition);
     void showUpdateLeaderCardActivatedUpdate(String nickname, int numLeadercard, int leaderCardID);
+    void showUpdateRank(String nickname,ArrayList<RankPosition> rank);
 }

@@ -1,7 +1,10 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.common.messages.Message;
+import it.polimi.ingsw.common.messages.messagesToClient.RankUpdate;
 import it.polimi.ingsw.server.model.Observable;
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.RankPosition;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 
@@ -158,6 +161,11 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdateLeaderCardActivatedUpdate(String nickname, int numLeadercard, int leaderCardID) {
+
+    }
+
+    @Override
+    public void showUpdateRank(String nickname, ArrayList<RankPosition> rank) {
 
     }
 

@@ -299,6 +299,17 @@ public class PersonalBoard extends MessageObservable {
         if(temporaryMapResource.isEmpty() && personalBoardPhase == PersonalBoardPhase.TAKE_FROM_MARKET)
             personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_DONE;
     }
+    
+    public void discardResourcesFromMarket(){
+        int total = 0;
+        for (int singleQuantity : temporaryMapResource.values()){
+            total += singleQuantity;
+        }
+
+        temporaryMapResource.clear();
+        match.moveFaithMarkerAll(total);
+        personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_DONE;
+    }
 
     /**
      * Method used to swap resources between two standard depots
