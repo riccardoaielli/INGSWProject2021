@@ -55,7 +55,14 @@ public class MessageToClientDeserializer implements JsonDeserializer <MessageToC
                 return gson.fromJson(jsonObject, LeaderCardActivatedUpdate.class);
             case "ADD_SPECIALDEPOT_UPDATE":
                 return gson.fromJson(jsonObject, AddSpecialDepotUpdate.class);
-
+            case "STRONGBOX_UPDATE":
+                return gson.fromJson(jsonObject, StrongboxUpdate.class);
+            case "REDCROSS_POSITION_UPDATE":
+                return gson.fromJson(jsonObject, RedcrossPositionUpdate.class);
+            case "RANK_UPDATE":
+                return gson.fromJson(jsonObject, RankUpdate.class);
+            case "POPE_FAVOUR_TILES_UPDATE":
+                return gson.fromJson(jsonObject, PopeFavourTilesUpdate.class);
         }
         return null;
     }
