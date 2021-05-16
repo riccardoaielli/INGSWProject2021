@@ -32,4 +32,5 @@ public interface ClientView extends View {
     void showUpdateDiscardedLeaderUpdate(String nickname, int leaderPosition);
     void showUpdateLeaderCardActivatedUpdate(String nickname, int numLeadercard, int leaderCardID);
     void showUpdateRank(String nickname,ArrayList<RankPosition> rank);
+    void showUpdateFirstConnection(boolean firstPlayer);
 }

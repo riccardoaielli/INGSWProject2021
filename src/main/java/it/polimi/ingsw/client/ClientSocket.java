@@ -31,8 +31,7 @@ public class ClientSocket implements MessageSender {
 
         try {
             socket = new Socket(hostAddress, portNumber);
-            PrintWriter out =
-                    new PrintWriter(socket.getOutputStream(), true);//stream su cui scrivere per mandare al server
+            out = new PrintWriter(socket.getOutputStream(), true);//stream su cui scrivere per mandare al server
 
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host, please insert a valid host " + hostAddress);

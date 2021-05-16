@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.controller;
 
+import it.polimi.ingsw.common.messages.messagesToClient.FirstConnectedUpdate;
 import it.polimi.ingsw.common.messages.messagesToServer.ErrorMessage;
 import it.polimi.ingsw.common.View;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
@@ -49,6 +50,7 @@ public class Controller extends MessageObservable{
                 match = new Match(1,numOfPlayers);
                 //creates a player
                 handleNicknameReplyMessage(nickname,view);
+                firstConnected = true;
             }
             else{
                 view.update(new ErrorMessage(nickname, "Invalid command"));

@@ -40,6 +40,7 @@ public class VirtualView implements Runnable,View {
         try {
             Scanner in = new Scanner(socket.getInputStream());
             out = new PrintWriter(socket.getOutputStream(), true);
+            controller.isFirstPlayer(this);
             // Leggo e scrivo nella connessione finche' non ricevo "quit"
             while (true) {
                 String line = in.nextLine();
@@ -68,10 +69,4 @@ public class VirtualView implements Runnable,View {
         out.println(gson.toJson(message));
     }
 
-    /*@Override
-    public void showError(String errorString){
-        //send(new ErrorMessage(nickname, errorString));
-        ErrorMessage errorMessage = new ErrorMessage()
-        out.print();
-    }*/
 }

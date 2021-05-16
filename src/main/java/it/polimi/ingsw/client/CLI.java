@@ -1,6 +1,8 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
+import it.polimi.ingsw.common.messages.messagesToServer.CreateMatchReplyMessage;
+import it.polimi.ingsw.common.messages.messagesToServer.NicknameReplyMessage;
 import it.polimi.ingsw.server.model.Observable;
 import it.polimi.ingsw.server.model.RankPosition;
 import it.polimi.ingsw.server.model.enumerations.Marble;
@@ -99,11 +101,22 @@ public class CLI implements ClientView {
         System.out.println("Message created");
     }*/
 
-    public void showUpdateFirstConnected(boolean firstPlayer){
-        String numPlayerInput = readInput("Con quanti giocatori vuoi giocare?");
-        String nicknameInput = readInput("Inserisci nickname");
+    /**
+     * This method tells the client if the player is the first one to connect
+     * @param firstPlayer True if the player that is trying to connect is the first one, false if another player has already chosen the number of players
+     */
+    @Override
+    public void showUpdateFirstConnection(boolean firstPlayer){
+        if (firstPlayer){
+            String numPlayerInput = readInput("How many players?");
+            String nicknameInput = readInput("Insert nickname");
+            messageSender.sendMessage(new CreateMatchReplyMessage(nicknameInput, Integer.parseInt(numPlayerInput)));}
+        else{
+            String nicknameInput = readInput("Insert nickname");
+            messageSender.sendMessage(new NicknameReplyMessage(nicknameInput));
 
-    }
+            }
+        }
 
     @Override
     public void showError(String errorString) {
