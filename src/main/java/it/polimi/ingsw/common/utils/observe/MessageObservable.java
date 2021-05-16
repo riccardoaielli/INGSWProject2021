@@ -1,6 +1,7 @@
 package it.polimi.ingsw.common.utils.observe;
 
 import it.polimi.ingsw.common.messages.Message;
+import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class MessageObservable {
      * Notifies all observers with a message
      * @param message Message notified to all observers
      */
-    public void notifyObservers(Message message){
+    public void notifyObservers(MessageToClient message){
         for (MessageObserver messageObserver : messageObservers){
             messageObserver.update(message);
         }

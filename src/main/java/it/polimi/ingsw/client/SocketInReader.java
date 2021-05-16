@@ -10,7 +10,7 @@ import java.net.Socket;
  */
 public class SocketInReader implements Runnable {
 
-    String line;
+    String line = "";
     Socket socket;
     BufferedReader in;
     ClientSocket clientSocket;
@@ -27,8 +27,7 @@ public class SocketInReader implements Runnable {
     public void run() {
 
         try {
-            in = new BufferedReader(
-                            new InputStreamReader(socket.getInputStream()));//stream da cui leggere dal server
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));//stream da cui leggere dal server
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -38,7 +37,7 @@ public class SocketInReader implements Runnable {
                 //System.out.println("Read this line from socket: " + line);
                 clientSocket.messageRead(line);
             }
-            System.out.println("Aborted StdinReader thread");
+            //System.out.println("Aborted StdinReader thread");
         } catch (IOException ex) {
             ex.printStackTrace();
         }

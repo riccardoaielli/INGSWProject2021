@@ -28,6 +28,7 @@ public class ClientMain {
 
         List<String> arguments = new ArrayList<>(Arrays.asList(args));
         boolean cliMode = false;
+        ClientView clientView;
 
         //Parsing argomenti
         if(arguments.contains(HELP_ARGUMENT)) {
@@ -73,9 +74,12 @@ public class ClientMain {
 
         if(cliMode){
             //avvia cli
-            CLI cli = new CLI(hostAddress, portNumber);
+            clientView = new CLI(hostAddress, portNumber);
         }else{
             //avvia gui
+            clientView = new GUI();
         }
+        clientView.start();
+        System.out.println("fine main");
     }
 }

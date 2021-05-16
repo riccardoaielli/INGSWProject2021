@@ -1,9 +1,7 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.common.messages.Message;
-import it.polimi.ingsw.common.messages.messagesToClient.RankUpdate;
+import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.server.model.Observable;
-import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.RankPosition;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
@@ -32,6 +30,9 @@ public class CLI implements ClientView {
     public CLI(String hostAddress, int portNumber){
         this.hostAddress = hostAddress;
         this.portNumber = portNumber;
+    }
+
+    public void start(){
         setMessageSender();
     }
 
@@ -49,15 +50,24 @@ public class CLI implements ClientView {
             System.out.println("LocalSender created");
             messageSender = new LocalSender(this);
         } else if (input.equalsIgnoreCase("O")) {
-            System.out.println("ClientSocket created");
             //nel caso volessimo leggere l'input dell'hostname e della porta direttamente nella cli (ovviamente va fatto duale nella gui) e va sistemato clientMain
             //input = readInput("Press game");
             //input = readInput("Press L");
             messageSender = new ClientSocket(hostAddress, portNumber, this);
+            System.out.println("ClientSocket created");
         }
     }
 
 
+    /**
+     * Receive a message from the SocketInReader and update the clientView.
+     */
+    /*public void messageReadStdIn(String line) {
+        this.SocketInReaderLine = line;
+        message = messageToClientDeserializer.deserializeMessage(line);
+        clientView.update(message);
+    }
+*/
     /**
      * This method sets a thread of StdInReader and returns the line read from the StdInReader thread
      */
@@ -88,6 +98,12 @@ public class CLI implements ClientView {
         CreateMatchReplyMessage createMatchReplyMessage = new CreateMatchReplyMessage(readInput("Inserisci nickname:"), numberPlayer);
         System.out.println("Message created");
     }*/
+
+    public void showUpdateFirstConnected(boolean firstPlayer){
+        String numPlayerInput = readInput("Con quanti giocatori vuoi giocare?");
+        String nicknameInput = readInput("Inserisci nickname");
+
+    }
 
     @Override
     public void showError(String errorString) {
@@ -175,8 +191,8 @@ public class CLI implements ClientView {
      * @param message Message notified by {@link Observable}
      */
     @Override
-    public void update(Message message) { //todo sistemare parametro Message in MessageToClient
-
+    public void update(MessageToClient message) {
+        message.handleMessage(this);
     }
     
 }

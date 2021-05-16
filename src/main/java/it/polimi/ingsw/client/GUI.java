@@ -1,8 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.common.messages.Message;
-import it.polimi.ingsw.common.messages.messagesToClient.RankUpdate;
-import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.server.model.RankPosition;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
@@ -14,6 +12,11 @@ import java.util.Map;
 public class GUI implements ClientView{
 
     private void setMessageSender(){
+
+    }
+
+    @Override
+    public void start() {
 
     }
 
@@ -98,7 +101,7 @@ public class GUI implements ClientView{
     }
 
     @Override
-    public void update(Message message) {
+    public void update(MessageToClient message) {
 
     }
 }

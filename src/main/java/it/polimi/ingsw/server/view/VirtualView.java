@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.view;
 import com.google.gson.Gson;
-import it.polimi.ingsw.common.messages.Message;
 import it.polimi.ingsw.common.View;
+import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.Observable;
 
@@ -64,7 +64,7 @@ public class VirtualView implements Runnable,View {
      * @param message Message notified by {@link Observable}
      */
     @Override
-    public void update(Message message) {
+    public void update(MessageToClient message) {
         out.println(gson.toJson(message));
     }
 

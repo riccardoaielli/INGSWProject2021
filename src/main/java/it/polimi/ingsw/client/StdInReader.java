@@ -10,16 +10,15 @@ import java.util.concurrent.Callable;
  */
 public class StdInReader implements Callable<String> {
 
-    String line;
+    String line = "";
 
     @Override
     public String call() {
-        BufferedReader stdIn =
-                new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 
         try {
             while ((line = stdIn.readLine()) != null) {
-                System.out.println("StdinReader thread reading line...");
+                //System.out.println("StdinReader thread reading line... :" + line);
                 return line;
             }
             System.out.println("Aborted StdinReader thread");
