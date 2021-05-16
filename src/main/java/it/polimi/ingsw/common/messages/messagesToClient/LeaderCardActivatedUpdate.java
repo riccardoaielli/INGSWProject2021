@@ -15,6 +15,6 @@ public class LeaderCardActivatedUpdate extends MessageToClient {
 
     @Override
     public void handleMessage(ClientView clientView) {
-
+        clientView.showUpdateLeaderCardActivatedUpdate(getNickname(),numLeadercard,leaderCardID);
     }
 }

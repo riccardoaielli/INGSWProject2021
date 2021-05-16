@@ -6,7 +6,7 @@ import it.polimi.ingsw.common.messages.MessageType;
 import java.util.ArrayList;
 
 public class PopeFavourTilesUpdate extends MessageToClient {
-    private ArrayList<Integer> popeFavourTiles;
+    private final ArrayList<Integer> popeFavourTiles;
 
     public PopeFavourTilesUpdate(String nickname, ArrayList<Integer> popeFavourTiles) {
         super(nickname, MessageType.POPE_FAVOUR_TILES_UPDATE);
@@ -15,6 +15,6 @@ public class PopeFavourTilesUpdate extends MessageToClient {
 
     @Override
     public void handleMessage(ClientView clientView) {
-
+        clientView.showUpdatePopeFavourTiles(getNickname(),popeFavourTiles);
     }
 }

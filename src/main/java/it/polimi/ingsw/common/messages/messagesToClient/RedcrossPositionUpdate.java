@@ -4,7 +4,7 @@ import it.polimi.ingsw.client.ClientView;
 import it.polimi.ingsw.common.messages.MessageType;
 
 public class RedcrossPositionUpdate extends MessageToClient {
-    int redcrossPosition;
+    private final int redcrossPosition;
     public RedcrossPositionUpdate(String nickname,int redcrossPosition) {
         super(nickname, MessageType.REDCROSS_POSITION_UPDATE);
         this.redcrossPosition = redcrossPosition;
@@ -12,6 +12,6 @@ public class RedcrossPositionUpdate extends MessageToClient {
 
     @Override
     public void handleMessage(ClientView clientView) {
-
+        clientView.showUpdateRedcrossPosition(getNickname(),redcrossPosition);
     }
 }

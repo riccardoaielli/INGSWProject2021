@@ -10,6 +10,6 @@ public class PlayerTurnUpdate extends MessageToClient {
 
     @Override
     public void handleMessage(ClientView clientView) {
-
+        clientView.showUpdatePlayerTurn(getNickname());
     }
 }

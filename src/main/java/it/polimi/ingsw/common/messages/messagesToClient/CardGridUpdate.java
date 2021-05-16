@@ -14,6 +14,6 @@ public class CardGridUpdate extends MessageToClient {
 
     @Override
     public void handleMessage(ClientView clientView) {
-
+        clientView.showUpdateCardGridUpdate(cardGridMatrixUpdate);
     }
 }

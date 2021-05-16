@@ -14,7 +14,6 @@ public class StrongboxUpdate extends MessageToClient {
     }
 
     @Override
-    public void handleMessage(ClientView clientView) {
-        clientView.showUpdatedStrongbox(this.getNickname(), strongbox);
+    public void handleMessage(ClientView clientView) { clientView.showUpdatedStrongbox(this.getNickname(), strongbox);
     }
 }
