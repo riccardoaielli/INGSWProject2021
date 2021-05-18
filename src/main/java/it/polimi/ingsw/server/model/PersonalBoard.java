@@ -439,8 +439,13 @@ public class PersonalBoard extends MessageObservable {
                 || indexLeaderCard2 <= 0 || indexLeaderCard2 > leaderCards.size()
                 || indexLeaderCard1 == indexLeaderCard2 )
             throw new InvalidParameterException();
-        leaderCards.remove(indexLeaderCard1-1);
-        leaderCards.remove(indexLeaderCard2-1);
+        List<Integer> indexesLeaderCard = new ArrayList<>();
+        indexesLeaderCard.add(indexLeaderCard1);
+        indexesLeaderCard.add(indexLeaderCard2);
+        indexesLeaderCard.sort(Collections.reverseOrder());
+        for (int indexLeaderCard: indexesLeaderCard){
+            leaderCards.remove(indexLeaderCard-1);
+        }
         match.addPlayerReady();
         personalBoardPhase = PersonalBoardPhase.RESOURCE_CHOICE;
 

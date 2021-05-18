@@ -40,13 +40,14 @@ public class VirtualView implements Runnable,View {
         try {
             Scanner in = new Scanner(socket.getInputStream());
             out = new PrintWriter(socket.getOutputStream(), true);
-            controller.isFirstPlayer(this);
+            controller.newConnection(this);
             // Leggo e scrivo nella connessione finche' non ricevo "quit"
             while (true) {
                 String line = in.nextLine();
                 if (line.equals("quit")) {
                     break;
                 } else {
+                    System.out.println("Received: " + line);
                     messageDeserializer.deserializeMessage(line).handleMessage(controller,this);
                 }
             }
