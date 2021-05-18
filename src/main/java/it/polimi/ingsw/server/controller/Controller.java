@@ -15,10 +15,21 @@ import java.util.Map;
 
 public class Controller extends MessageObservable{
     private Match match;
+    private Boolean firstConnected;
 
-    public Controller() { 
+    public Controller() {
+        firstConnected = false;
     }
 
+    public synchronized void newConnection(View view){
+        if(!firstConnected){
+            firstConnected = true;
+            view.update(new FirstConnectedUpdate(true));
+        }
+        else if (match != null)
+            view.update(new FirstConnectedUpdate(false));
+        else view.update(new ErrorMessage(null, "The first connected player is choosing the number of players. Wait..."));
+    }
 
     /**
      * Handles a nicknameReplyMessage
