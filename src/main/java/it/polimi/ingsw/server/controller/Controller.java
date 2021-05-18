@@ -10,7 +10,9 @@ import it.polimi.ingsw.server.model.enumerations.MatchPhase;
 import it.polimi.ingsw.server.model.enumerations.PersonalBoardPhase;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
+import it.polimi.ingsw.server.view.VirtualView;
 
+import java.util.List;
 import java.util.Map;
 
 public class Controller extends MessageObservable{
@@ -20,6 +22,7 @@ public class Controller extends MessageObservable{
     public Controller() {
         firstConnected = false;
     }
+
 
     public synchronized void newConnection(View view){
         if(!firstConnected){
@@ -42,7 +45,7 @@ public class Controller extends MessageObservable{
                 match.addPlayer(nickname,view);
             }
             else{
-                view.update(new ErrorMessage(nickname, "Invalid command"));
+                view.update(new ErrorMessage(nickname, "Match has already started"));
             }
         } catch (InvalidNickName invalidNickName) {
             view.update(new ErrorMessage(nickname, "Invalid nickname"));

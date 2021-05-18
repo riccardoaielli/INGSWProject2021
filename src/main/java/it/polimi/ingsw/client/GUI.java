@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.LocalModel.LocalModel;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.server.model.RankPosition;
 import it.polimi.ingsw.server.model.enumerations.Marble;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GUI implements ClientView{
-
+    LocalModel localModel;
     private void setMessageSender(){
 
     }
@@ -18,6 +19,11 @@ public class GUI implements ClientView{
     @Override
     public void start() {
 
+    }
+
+    @Override
+    public LocalModel getLocalModel() {
+        return localModel;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.LocalModel.LocalModel;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.common.messages.messagesToServer.CreateMatchReplyMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.NicknameReplyMessage;
@@ -20,9 +21,10 @@ import java.util.concurrent.FutureTask;
 public class CLI implements ClientView {
 
     private static String stdInLine;
-    MessageSender messageSender;
-    String hostAddress;
-    int portNumber;
+    private MessageSender messageSender;
+    private String hostAddress;
+    private int portNumber;
+    private LocalModel localModel;
 
     /**
      * This constructor creates the CLI and calls setMessageSender
@@ -32,11 +34,37 @@ public class CLI implements ClientView {
     public CLI(String hostAddress, int portNumber){
         this.hostAddress = hostAddress;
         this.portNumber = portNumber;
+        localModel = new LocalModel();
     }
 
     public void start(){
+        System.out.println("\n" +
+                " _______  _______  _______ _________ _______  _______  _______      _______  _______               \n" +
+                "(       )(  ___  )(  ____ \\\\__   __/(  ____ \\(  ____ )(  ____ \\    (  ___  )(  ____ \\              \n" +
+                "| () () || (   ) || (    \\/   ) (   | (    \\/| (    )|| (    \\/    | (   ) || (    \\/              \n" +
+                "| || || || (___) || (_____    | |   | (__    | (____)|| (_____     | |   | || (__                  \n" +
+                "| |(_)| ||  ___  |(_____  )   | |   |  __)   |     __)(_____  )    | |   | ||  __)                 \n" +
+                "| |   | || (   ) |      ) |   | |   | (      | (\\ (         ) |    | |   | || (                    \n" +
+                "| )   ( || )   ( |/\\____) |   | |   | (____/\\| ) \\ \\__/\\____) |    | (___) || )                    \n" +
+                "|/     \\||/     \\|\\_______)   )_(   (_______/|/   \\__/\\_______)    (_______)|/                     \n" +
+                "                                                                                                   \n" +
+                " _______  _______ _________ _        _______  _______  _______  _______  _        _______  _______ \n" +
+                "(  ____ )(  ____ \\\\__   __/( (    /|(  ____ \\(  ____ \\(  ____ \\(  ___  )( (    /|(  ____ \\(  ____ \\\n" +
+                "| (    )|| (    \\/   ) (   |  \\  ( || (    \\/| (    \\/| (    \\/| (   ) ||  \\  ( || (    \\/| (    \\/\n" +
+                "| (____)|| (__       | |   |   \\ | || (__    | (_____ | (_____ | (___) ||   \\ | || |      | (__    \n" +
+                "|     __)|  __)      | |   | (\\ \\) ||  __)   (_____  )(_____  )|  ___  || (\\ \\) || |      |  __)   \n" +
+                "| (\\ (   | (         | |   | | \\   || (            ) |      ) || (   ) || | \\   || |      | (      \n" +
+                "| ) \\ \\__| (____/\\___) (___| )  \\  || (____/\\/\\____) |/\\____) || )   ( || )  \\  || (____/\\| (____/\\\n" +
+                "|/   \\__/(_______/\\_______/|/    )_)(_______/\\_______)\\_______)|/     \\||/    )_)(_______/(_______/\n" +
+                "                                                                                                   \n");
         setMessageSender();
     }
+
+    @Override
+    public LocalModel getLocalModel() {
+        return localModel;
+    }
+
 
     /**
      * This method set the MessageSender accordingly to the chosen mode, local or online
@@ -101,6 +129,7 @@ public class CLI implements ClientView {
         System.out.println("Message created");
     }*/
 
+
     /**
      * This method tells the client if the player is the first one to connect
      * @param firstPlayer True if the player that is trying to connect is the first one, false if another player has already chosen the number of players
@@ -120,7 +149,7 @@ public class CLI implements ClientView {
 
     @Override
     public void showError(String errorString) {
-
+        System.out.println(errorString);
     }
 
     @Override

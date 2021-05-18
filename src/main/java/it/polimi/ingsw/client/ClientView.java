@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.LocalModel.LocalModel;
 import it.polimi.ingsw.common.View;
 import it.polimi.ingsw.common.messages.messagesToClient.RankUpdate;
 import it.polimi.ingsw.server.model.Player;
@@ -16,6 +17,7 @@ import java.util.Map;
  */
 public interface ClientView extends View {
     void start();
+    LocalModel getLocalModel();
     void showError(String errorString);
     void showInitialLeaderCardDiscard(String nickname, int indexLeaderCard1 , int indexLeaderCard2);
     void showUpdatedTemporaryMapResource(String nickname, Map<Resource, Integer> temporaryMapResource);

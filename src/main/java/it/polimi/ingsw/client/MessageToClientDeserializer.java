@@ -2,6 +2,7 @@ package it.polimi.ingsw.client;
 
 import com.google.gson.*;
 import it.polimi.ingsw.common.messages.messagesToClient.*;
+import it.polimi.ingsw.common.messages.messagesToServer.ErrorMessage;
 
 import java.lang.reflect.Type;
 
@@ -65,6 +66,8 @@ public class MessageToClientDeserializer implements JsonDeserializer <MessageToC
                 return gson.fromJson(jsonObject, PopeFavourTilesUpdate.class);
             case "FIRST_CONNECTION_UPDATE":
                 return gson.fromJson(jsonObject, FirstConnectedUpdate.class);
+            case "ERROR":
+                return gson.fromJson(jsonObject, ErrorMessage.class);
         }
         return null;
     }

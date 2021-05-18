@@ -1,6 +1,7 @@
 package it.polimi.ingsw.common.messages.messagesToClient;
 
 import it.polimi.ingsw.client.ClientView;
+import it.polimi.ingsw.client.LocalModel.LocalPhase;
 import it.polimi.ingsw.common.messages.MessageType;
 
 public class FirstConnectedUpdate extends MessageToClient{
@@ -12,6 +13,10 @@ public class FirstConnectedUpdate extends MessageToClient{
 
     @Override
     public void handleMessage(ClientView clientView) {
-        clientView.showUpdateFirstConnection(firstConnection);
+        if(firstConnection)
+            clientView.getLocalModel().setPhase(LocalPhase.FIRST_PLAYER);
+        else
+            clientView.getLocalModel().setPhase(LocalPhase.NICKNAME);
+        clientView.getLocalModel().getPhase().handlePhase(clientView);
     }
 }
