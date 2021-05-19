@@ -1,4 +1,4 @@
-package it.polimi.ingsw.common.messages.messagesToServer;
+package it.polimi.ingsw.common.messages.messagesToClient;
 
 import it.polimi.ingsw.client.ClientView;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
@@ -17,5 +17,6 @@ public class ErrorMessage extends MessageToClient {
     @Override
     public void handleMessage(ClientView clientView) {
         clientView.showError(errorString);
+        clientView.getLocalModel().getPhase().handlePhase(clientView);
     }
 }

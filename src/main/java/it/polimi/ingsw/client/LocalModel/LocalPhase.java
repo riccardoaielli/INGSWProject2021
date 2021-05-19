@@ -3,6 +3,12 @@ package it.polimi.ingsw.client.LocalModel;
 import it.polimi.ingsw.client.ClientView;
 
 public enum LocalPhase {
+    DEFAULT{
+        @Override
+        public void handlePhase(ClientView clientView) {
+
+        }
+    },
     FIRST_PLAYER{
         @Override
         public void handlePhase(ClientView clientView) {

@@ -2,7 +2,7 @@ package it.polimi.ingsw.client;
 
 import com.google.gson.*;
 import it.polimi.ingsw.common.messages.messagesToClient.*;
-import it.polimi.ingsw.common.messages.messagesToServer.ErrorMessage;
+import it.polimi.ingsw.common.messages.messagesToClient.ErrorMessage;
 
 import java.lang.reflect.Type;
 
