@@ -156,6 +156,25 @@ public class CLI implements ClientView {
     }
 
     @Override
+    public void askResourceChoice() {
+        int totalResources = 0;
+        int numOfResourceToChoose = localModel.getNumOfResourceToChoose();
+        System.out.println("Choose " + numOfResourceToChoose + " resource to add to your depot");
+        Map<Resource,Integer> resources = new HashMap<>();
+        String resourceType = "";
+        String numOfResourceType = "";
+
+        do {
+            resourceType = readInput("Choose a resource type(COIN,SHIELD,SERVANT,STONE):");
+            numOfResourceType = readInput("Choose how many resources you want of this type:");
+            totalResources += Integer.parseInt(numOfResourceType);
+            resources.put(Resource.valueOf(resourceType),Integer.parseInt(numOfResourceType));
+        }while (totalResources < numOfResourceToChoose);
+        messageSender.sendMessage(new ChooseInitialResourcesMessage(localModel.getLocalPlayer(),resources));
+    }
+
+
+    @Override
     public void showUpdateInitialLeaderCard(ArrayList<Integer> initialLeaderCardsID) {
         phase = LocalPhase.LEADER_CHOICE;
         localModel.setInitialLeaderCards(initialLeaderCardsID);
@@ -202,7 +221,7 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdatedTemporaryMapResource(String nickname, Map<Resource, Integer> temporaryMapResource) {
-
+        System.out.println(temporaryMapResource);
     }
 
     @Override
@@ -237,22 +256,17 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdatePlayerTurn(String nickname) {
-        if(phase == LocalPhase.RESOURCE_CHOICE){
-            int totalResources = 0;
-            int numOfResourceToChoose = localModel.getNumOfResourceToChoose();
-            System.out.println("Choose " + numOfResourceToChoose + " resource to add to your depot");
-            Map<Resource,Integer> resources = new HashMap<>();
-            String resourceType = "";
-            String numOfResourceType = "";
-
-            do {
-                resourceType = readInput("Choose a resource type(COIN,SHIELD,SERVANT,STONE):");
-                numOfResourceType = readInput("Choose how many resources you want of this type:");
-                totalResources += Integer.parseInt(numOfResourceType);
-                resources.put(Resource.valueOf(resourceType),Integer.parseInt(numOfResourceType));
-            }while (totalResources < numOfResourceToChoose);
-            messageSender.sendMessage(new ChooseInitialResourcesMessage(localModel.getLocalPlayer(),resources));
+        if (nickname.equals(localModel.getLocalPlayer())){
+            System.out.println("It's your turn");
+            phase.handlePhase(this);
         }
+        else {
+            System.out.println("It's" + nickname + "'s turn");
+        }
+
+
+
+
 
     }
 

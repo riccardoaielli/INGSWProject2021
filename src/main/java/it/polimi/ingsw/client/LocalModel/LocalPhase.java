@@ -28,7 +28,7 @@ public enum LocalPhase {
     RESOURCE_CHOICE {
         @Override
         public void handlePhase(ClientView clientView) {
-
+            clientView.askResourceChoice();
         }
     };
 

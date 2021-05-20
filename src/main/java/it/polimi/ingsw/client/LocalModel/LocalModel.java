@@ -96,6 +96,6 @@ public class LocalModel {
     }
 
     public int getNumOfResourceToChoose(){
-        return 2;//todo: ritornare il numero di risorse da scegliere in base al turno del giocatore
+        return 1;//todo: ritornare il numero di risorse da scegliere in base al turno del giocatore
     }
 }

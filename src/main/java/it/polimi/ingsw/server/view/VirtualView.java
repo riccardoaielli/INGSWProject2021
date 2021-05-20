@@ -93,6 +93,7 @@ public class VirtualView implements Runnable,View {
     @Override
     public void update(MessageToClient message) {
         out.println(gson.toJson(message));
+        System.out.println("Sent:" + gson.toJson(message));
     }
 
 }

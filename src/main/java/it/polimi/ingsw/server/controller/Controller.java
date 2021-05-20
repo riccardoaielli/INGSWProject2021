@@ -65,6 +65,7 @@ public class Controller extends MessageObservable{
                 //creates a player
                 handleNicknameReplyMessage(nickname,view);
                 firstConnected = true;
+                this.getMessageObservers().stream().filter(x -> !x.equals(view)).forEach(x -> x.update(new FirstConnectedUpdate(false)));
             }
             else{
                 view.update(new ErrorMessage(nickname, "Invalid command"));

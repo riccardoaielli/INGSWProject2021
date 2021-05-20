@@ -38,6 +38,11 @@ public class GUI implements ClientView{
     }
 
     @Override
+    public void askResourceChoice() {
+
+    }
+
+    @Override
     public void showError(String errorString) {
 
     }

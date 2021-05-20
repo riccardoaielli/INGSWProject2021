@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.LocalModel;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +50,12 @@ public class Player {
 
 
     public void discardInitialLeaders(int indexLeaderCard1, int indexLeaderCard2) {
-        leaderCards.remove(indexLeaderCard1 - 1);
-        leaderCards.remove(indexLeaderCard2 - 1);
+        List<Integer> indexesLeaderCard = new ArrayList<>();
+        indexesLeaderCard.add(indexLeaderCard1);
+        indexesLeaderCard.add(indexLeaderCard2);
+        indexesLeaderCard.sort(Collections.reverseOrder());
+        for (int indexLeaderCard: indexesLeaderCard){
+            leaderCards.remove(indexLeaderCard-1);
+        }
     }
 }

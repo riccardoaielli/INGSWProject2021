@@ -18,6 +18,7 @@ public interface ClientView extends View {
     void start();
     void askCreateMatch();
     void askNickname();
+    void askResourceChoice();
     LocalModel getLocalModel();
     void showError(String errorString);
     void showInitialLeaderCardDiscard(String nickname, int indexLeaderCard1 , int indexLeaderCard2);
