@@ -65,7 +65,7 @@ public class ClientMain {
         }
 
         if(arguments.contains(CLI_ARGUMENT)){
-            System.out.println("CLI mode selected \033[38;5;247mT \033[38;5;11me \033[38;5;5ms \033[38;5;39mt \033[0m");
+            System.out.println("CLI mode selected");
             cliMode = true;
         }else{
             System.out.println("Default gui mode");

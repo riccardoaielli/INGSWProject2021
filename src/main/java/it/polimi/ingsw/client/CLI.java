@@ -125,18 +125,6 @@ public class CLI implements ClientView {
         return stdInLine;
     }
 
-    /*public void createMatchReplyMessage(){
-        int numberPlayer = 0;
-        try {
-            numberPlayer = Integer.parseInt(readInput("Inserisci numero di giocatori:"));
-        }catch(NumberFormatException numberFormatException) {
-            System.out.println("Invalid numberFormatException");
-        }
-        CreateMatchReplyMessage createMatchReplyMessage = new CreateMatchReplyMessage(readInput("Inserisci nickname:"), numberPlayer);
-        System.out.println("Message created");
-    }*/
-
-
     /**
      * This method tells the client if the player is the first one to connect
      */

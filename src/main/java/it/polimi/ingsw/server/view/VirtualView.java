@@ -50,6 +50,7 @@ public class VirtualView implements Runnable,View {
             while (true) {
                 String line = in.nextLine();
                 if (line.equals("quit")) { //todo capire come gestire la disconnessione
+                    System.out.println("quit ricevuto, esco dal while");
                     break;
                 } else {
                     System.out.println("Received: " + line);
