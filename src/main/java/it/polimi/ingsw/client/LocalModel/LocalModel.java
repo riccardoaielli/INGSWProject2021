@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class LocalModel {
     private LocalPhase phase;
     private ArrayList <Player> players;
+    private String localPlayer;
     private String currentPlayer;
     private Market market;
     private CardGrid cardGrid;
@@ -17,6 +18,11 @@ public class LocalModel {
     private DevelopmentCardSpace developmentCardSpace;
     private WareHouseDepots wareHouseDepots;
     private Strongbox strongbox;
+
+    public LocalModel() {
+        players = new ArrayList<>();
+        phase = LocalPhase.DEFAULT;
+    }
 
     public LocalPhase getPhase() {
         return phase;
@@ -47,6 +53,14 @@ public class LocalModel {
 
     }
 
+    /**
+     * this method updates the first four cards that the player receives at the beginning of the game
+     * @param initialLeaderCards a list of cards
+     */
+    public void setInitialLeaderCards(ArrayList<Integer> initialLeaderCards){
+        players.stream().filter(x->x.getNickname().equals(localPlayer)).forEach(x->x.setLeaderCards(initialLeaderCards));
+    }
+
 
     public void getPlayer(String Nickname){
 
@@ -54,15 +68,25 @@ public class LocalModel {
 
 
 
-    private void printMarket(){
+    public void printMarket(){
+        System.out.println(market);
 
     }
-    private void printCardGrid(){
-
+    public void printCardGrid(){
+        System.out.println(cardGrid);
     }
 
 
     public void printView(){
 
+    }
+
+    public void printLeaderCards() {
+        System.out.println(localPlayer + "stampare carte leader del giocatore locale");
+    }
+
+    public void setLocalPlayer(String localPlayer) {
+        this.localPlayer = localPlayer;
+        players.add(new Player(localPlayer));
     }
 }

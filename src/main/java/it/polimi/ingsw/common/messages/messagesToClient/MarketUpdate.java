@@ -1,6 +1,7 @@
 package it.polimi.ingsw.common.messages.messagesToClient;
 
 import it.polimi.ingsw.client.ClientView;
+import it.polimi.ingsw.client.LocalModel.LocalPhase;
 import it.polimi.ingsw.common.messages.MessageType;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 
@@ -16,6 +17,7 @@ public class MarketUpdate extends MessageToClient {
 
     @Override
     public void handleMessage(ClientView clientView) {
+        clientView.getLocalModel().setPhase(LocalPhase.LEADER_CHOICE);
         clientView.showUpdateMarket(marketMatrix,marbleOut);
     }
 }

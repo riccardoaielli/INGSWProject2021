@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.LocalModel.LocalModel;
+import it.polimi.ingsw.client.LocalModel.LocalPhase;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.common.messages.messagesToServer.CreateMatchReplyMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.NicknameReplyMessage;
@@ -118,17 +119,40 @@ public class CLI implements ClientView {
         return stdInLine;
     }
 
+    /*public void createMatchReplyMessage(){
+        int numberPlayer = 0;
+        try {
+            numberPlayer = Integer.parseInt(readInput("Inserisci numero di giocatori:"));
+        }catch(NumberFormatException numberFormatException) {
+            System.out.println("Invalid numberFormatException");
+        }
+        CreateMatchReplyMessage createMatchReplyMessage = new CreateMatchReplyMessage(readInput("Inserisci nickname:"), numberPlayer);
+        System.out.println("Message created");
+    }*/
+
+
+    /**
+     * This method tells the client if the player is the first one to connect
+     */
     @Override
     public void askCreateMatch(){
         String numPlayerInput = readInput("How many players?");
         String nicknameInput = readInput("Insert nickname");
         messageSender.sendMessage(new CreateMatchReplyMessage(nicknameInput, Integer.parseInt(numPlayerInput)));
+        localModel.setLocalPlayer(nicknameInput);
     }
 
     @Override
     public void askNickname(){
         String nicknameInput = readInput("Insert nickname");
         messageSender.sendMessage(new NicknameReplyMessage(nicknameInput));
+        localModel.setLocalPlayer(nicknameInput);
+    }
+
+    @Override
+    public void showUpdateInitialLeaderCard(ArrayList<Integer> initialLeaderCardsID) {
+        localModel.setInitialLeaderCards(initialLeaderCardsID);
+        localModel.printLeaderCards();
     }
 
     @Override
@@ -183,7 +207,9 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdateMarket(Marble[][] marketMatrix, Marble marbleOut) {
-
+        localModel.setMarket(marketMatrix,marbleOut);
+        if(localModel.getPhase() == LocalPhase.LEADER_CHOICE)
+            localModel.printMarket();
     }
 
     @Override
@@ -193,7 +219,9 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdateCardGridUpdate(int[][] cardGridMatrixUpdate) {
-
+        localModel.setCardGrid(cardGridMatrixUpdate);
+        if(localModel.getPhase() == LocalPhase.LEADER_CHOICE)
+            localModel.printCardGrid();
     }
 
     @Override
@@ -210,6 +238,12 @@ public class CLI implements ClientView {
     public void showUpdateRank(String nickname, ArrayList<RankPosition> rank) {
 
     }
+
+    @Override
+    public void showUpdateFirstConnection(boolean firstPlayer) {
+
+    }
+
 
     /**
      * Sends message to client

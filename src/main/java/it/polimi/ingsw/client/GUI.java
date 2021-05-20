@@ -117,6 +117,16 @@ public class GUI implements ClientView{
     }
 
     @Override
+    public void showUpdateFirstConnection(boolean firstPlayer) {
+
+    }
+
+    @Override
+    public void showUpdateInitialLeaderCard(ArrayList<Integer> initialLeaderCardsID) {
+
+    }
+
+    @Override
     public void update(MessageToClient message) {
 
     }

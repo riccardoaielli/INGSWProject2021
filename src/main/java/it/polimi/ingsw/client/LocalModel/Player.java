@@ -14,6 +14,15 @@ public class Player {
     WareHouseDepots wareHouseDepots;
     Strongbox strongbox;
 
+    public Player(String nickname) {
+        this.nickname = nickname;
+        leaderCards = new ArrayList<>();
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
     public void setRedCrossPosition(int redcrossPosition){
 
     }
@@ -29,8 +38,9 @@ public class Player {
     public void setStrongbox(Map<Resource, Integer> strongbox){
 
     }
-    public void setLeaderCards(ArrayList<Integer> id){
 
+    public void setLeaderCards(ArrayList<Integer> leaderCards) {
+        this.leaderCards = leaderCards;
     }
 
     private void printPersonalBoards(){
