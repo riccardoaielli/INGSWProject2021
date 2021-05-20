@@ -1,20 +1,15 @@
 package it.polimi.ingsw.server.model;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.common.messages.messagesToClient.PlayerTurnUpdate;
 import it.polimi.ingsw.common.View;
 import it.polimi.ingsw.common.messages.messagesToClient.PlayersOrderUpdate;
 import it.polimi.ingsw.common.messages.messagesToClient.RankUpdate;
+import it.polimi.ingsw.common.utils.LeaderCardParser;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.MatchPhase;
 import it.polimi.ingsw.server.model.exceptions.InvalidNickName;
 import it.polimi.ingsw.server.model.exceptions.InvalidParameterException;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -50,8 +45,8 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         numOfPlayersReady = 0;
         matchPhase = MatchPhase.SETUP;
         //deserialize leader cards from json file
-        leaderCards = new Stack<>();
-        loadLeaderCards();
+        LeaderCardParser leaderCardParser= new LeaderCardParser();
+        leaderCards = leaderCardParser.loadLeaderCards();
         //shuffle leader cards
         Collections.shuffle(leaderCards);
         //crates market and card grid
@@ -70,79 +65,6 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         this.cardGrid = cardGrid;
     }
 
-    /**
-     * this method loads all the leader cards from the resources of the model
-     */
-    private void loadLeaderCards(){
-
-        Gson gson = new Gson();
-
-        String pathLeaderCardDepot = "src/main/resources/server/leaderCardDepot.json";
-        String pathLeaderCardDiscount = "src/main/resources/server/leaderCardDiscount.json";
-        String pathLeaderCardMarble = "src/main/resources/server/leaderCardMarble.json";
-        String pathLeaderCardProduction = "src/main/resources/server/leaderCardProduction.json";
-
-        Reader reader = null;
-
-        //Deserializing leaderCardDepot
-        try {
-            reader = new FileReader(pathLeaderCardDepot);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        Type myDataType = new TypeToken<Stack<LeaderDepot>>(){}.getType();
-        leaderCardDepot = gson.fromJson(reader, myDataType);
-
-        //Deserializing leaderCardDiscount
-        try {
-            reader = new FileReader(pathLeaderCardDiscount);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        myDataType = new TypeToken<Stack<LeaderDiscount>>(){}.getType();
-        leaderCardDiscount = gson.fromJson(reader, myDataType);
-
-        //Deserializing leaderCardMarble
-        try {
-            reader = new FileReader(pathLeaderCardMarble);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        myDataType = new TypeToken<Stack<LeaderMarble>>(){}.getType();
-        leaderCardMarble = gson.fromJson(reader, myDataType);
-
-        //Deserializing leaderCardProduction
-        try {
-            reader = new FileReader(pathLeaderCardProduction);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        myDataType = new TypeToken<Stack<LeaderProduction>>(){}.getType();
-        leaderCardProduction = gson.fromJson(reader, myDataType);
-
-        //Creating one list with all leader cards
-        // Push contents from all leader stacks in leaderCards stack
-        while (leaderCardDepot.size() != 0) {
-            leaderCards.push(leaderCardDepot.pop());
-        }
-
-        while (leaderCardDiscount.size() != 0) {
-            leaderCards.push(leaderCardDiscount.pop());
-        }
-
-        while (leaderCardMarble.size() != 0) {
-            leaderCards.push(leaderCardMarble.pop());
-        }
-
-        while (leaderCardProduction.size() != 0) {
-            leaderCards.push(leaderCardProduction.pop());
-        }
-
-    }
 
     /**
      * This method is called when a player wants to join the match
