@@ -14,13 +14,14 @@ import java.io.FileReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.List;
 
 /***
  * This class contains a local model with the necessary information to update the CLI or the GUI
  */
 public class LocalModel {
     private ArrayList <Player> players;
-    private String localPlayer;
+    private Player localPlayer;
     private String currentPlayer;
     private Market market;
     private CardGrid cardGrid;
@@ -42,10 +43,16 @@ public class LocalModel {
 
     public LocalModel() {
         players = new ArrayList<>();
+        market = new Market();
+        cardGrid = new CardGrid();
+        faithTrack = new FaithTrack();
+        developmentCardSpace = new DevelopmentCardSpace();
+        wareHouseDepots = new WareHouseDepots();
+        strongbox = new Strongbox();
         cliCardStringCreator();
     }
 
-    public String getLocalPlayer() {
+    public Player getLocalPlayer() {
         return localPlayer;
     }
 
@@ -75,7 +82,7 @@ public class LocalModel {
      * @param initialLeaderCards a list of cards
      */
     public void setInitialLeaderCards(ArrayList<Integer> initialLeaderCards){
-        players.stream().filter(x->x.getNickname().equals(localPlayer)).forEach(x->x.setLeaderCards(initialLeaderCards));
+        players.stream().filter(x->x.getNickname().equals(localPlayer.getNickname())).forEach(x->x.setLeaderCards(initialLeaderCards));
     }
 
 
@@ -83,12 +90,13 @@ public class LocalModel {
 
     }
 
+
+
     public void printMarket(){
         /*System.out.println(marketMatrix);
         for(int i=0; i<marketMatrix.size(); i++)
             for(Marble[] marbleElem : marketMatrix)*/
     }
-
     public void printCardGrid(){
         System.out.println(cardGrid.toString());
     }
@@ -103,8 +111,8 @@ public class LocalModel {
     }
 
     public void setLocalPlayer(String localPlayer) {
-        this.localPlayer = localPlayer;
-        players.add(new Player(localPlayer));
+        this.localPlayer = new Player(localPlayer);
+        players.add(this.localPlayer);
     }
 
 
@@ -113,7 +121,30 @@ public class LocalModel {
     }
 
     public int getNumOfResourceToChoose(){
-        return 1;//todo: ritornare il numero di risorse da scegliere in base al turno del giocatore
+        int turnOfPlayer = players.indexOf(localPlayer) ;
+        switch(turnOfPlayer){
+            case 0:
+                return 0;
+            case 1:
+                return 1;
+            case 2:
+                return 1;
+            case 3:
+                return 2;
+            default:
+                return 3;
+        }
+    }
+
+    public void setPlayersOrder(List<String> playersOrder) {
+        ArrayList <Player> players = new ArrayList<>();
+        for(String x : playersOrder){
+            if (x.equals(localPlayer.getNickname()))
+                players.add(this.players.get(0));
+            else
+                players.add(new Player(x));
+        }
+        this.players = new ArrayList<>(players);
     }
 
     public void cliCardStringCreator(){

@@ -158,7 +158,7 @@ public class CLI implements ClientView {
             totalResources += Integer.parseInt(numOfResourceType);
             resources.put(Resource.valueOf(resourceType),Integer.parseInt(numOfResourceType));
         }while (totalResources < numOfResourceToChoose);
-        messageSender.sendMessage(new ChooseInitialResourcesMessage(localModel.getLocalPlayer(),resources));
+        messageSender.sendMessage(new ChooseInitialResourcesMessage(localModel.getLocalPlayer().getNickname(),resources));
     }
 
 
@@ -174,7 +174,7 @@ public class CLI implements ClientView {
         localModel.printLeaderCards();
         String firstCard = readInput("Choose a card to discard");
         String secondCard = readInput("Choose another card to discard");
-        messageSender.sendMessage(new DiscardInitialLeaderMessage(localModel.getLocalPlayer(),Integer.parseInt(firstCard),Integer.parseInt(secondCard)));
+        messageSender.sendMessage(new DiscardInitialLeaderMessage(localModel.getLocalPlayer().getNickname(),Integer.parseInt(firstCard),Integer.parseInt(secondCard)));
     }
 
     @Override
@@ -185,6 +185,11 @@ public class CLI implements ClientView {
     @Override
     public LocalPhase getPhase() {
         return phase;
+    }
+
+    @Override
+    public void showCurrentPlayer(String nickname) {
+        System.out.println("wait, " + nickname +" is playing");
     }
 
 
@@ -202,7 +207,8 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdatePlayersOrder(List<String> playersOrder) {
-        int playerNumber = playersOrder.indexOf(localModel.getLocalPlayer())+1;
+        localModel.setPlayersOrder(playersOrder);
+        int playerNumber = playersOrder.indexOf(localModel.getLocalPlayer().getNickname())+1;
         System.out.println("You are player n°" + playerNumber);
 
     }
@@ -244,16 +250,13 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdatePlayerTurn(String nickname) {
-        if (nickname.equals(localModel.getLocalPlayer())){
+        if (nickname.equals(localModel.getLocalPlayer().getNickname())){
             System.out.println("It's your turn");
             phase.handlePhase(this);
         }
         else {
             System.out.println("It's" + nickname + "'s turn");
         }
-
-
-
 
 
     }

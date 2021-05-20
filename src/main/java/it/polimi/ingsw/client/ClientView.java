@@ -42,4 +42,6 @@ public interface ClientView extends View {
     void askForLeaderCards();
     void setPhase(LocalPhase phase);
     LocalPhase getPhase();
+
+    void showCurrentPlayer(String nickname);
 }

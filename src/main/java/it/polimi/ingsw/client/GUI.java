@@ -153,6 +153,11 @@ public class GUI implements ClientView{
     }
 
     @Override
+    public void showCurrentPlayer(String nickname) {
+
+    }
+
+    @Override
     public void update(MessageToClient message) {
 
     }
