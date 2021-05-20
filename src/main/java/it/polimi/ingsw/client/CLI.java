@@ -3,6 +3,7 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.client.LocalModel.LocalModel;
 import it.polimi.ingsw.client.LocalModel.LocalPhase;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
+import it.polimi.ingsw.common.messages.messagesToServer.ChooseInitialResourcesMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.CreateMatchReplyMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.DiscardInitialLeaderMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.NicknameReplyMessage;
@@ -12,6 +13,7 @@ import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -155,6 +157,7 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdateInitialLeaderCard(ArrayList<Integer> initialLeaderCardsID) {
+        phase = LocalPhase.LEADER_CHOICE;
         localModel.setInitialLeaderCards(initialLeaderCardsID);
         askForLeaderCards();
     }
@@ -185,7 +188,9 @@ public class CLI implements ClientView {
 
     @Override
     public void showInitialLeaderCardDiscard(String nickname, int indexLeaderCard1, int indexLeaderCard2) {
-
+        localModel.discardInitialLeaders(nickname,indexLeaderCard1,indexLeaderCard2);
+        if(localModel.getLocalPlayer().equals(nickname))
+            System.out.println("Wait for other players to choose their cards");
     }
 
     @Override
@@ -231,6 +236,22 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdatePlayerTurn(String nickname) {
+        if(phase == LocalPhase.RESOURCE_CHOICE){
+            int totalResources = 0;
+            int numOfResourceToChoose = localModel.getNumOfResourceToChoose();
+            System.out.println("Choose " + numOfResourceToChoose + " resource to add to your depot");
+            Map<Resource,Integer> resources = new HashMap<>();
+            String resourceType = "";
+            String numOfResourceType = "";
+
+            do {
+                resourceType = readInput("Choose a resource type(COIN,SHIELD,SERVANT,STONE):");
+                numOfResourceType = readInput("Choose how many resources you want of this type:");
+                totalResources += Integer.parseInt(numOfResourceType);
+                resources.put(Resource.valueOf(resourceType),Integer.parseInt(numOfResourceType));
+            }while (totalResources < numOfResourceToChoose);
+            messageSender.sendMessage(new ChooseInitialResourcesMessage(localModel.getLocalPlayer(),resources));
+        }
 
     }
 

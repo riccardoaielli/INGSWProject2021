@@ -40,7 +40,7 @@ public class Player {
     }
 
     public void setLeaderCards(ArrayList<Integer> leaderCards) {
-        this.leaderCards = leaderCards;
+        this.leaderCards = new ArrayList<>(leaderCards);
     }
 
     private void printPersonalBoards(){
@@ -48,4 +48,8 @@ public class Player {
     }
 
 
+    public void discardInitialLeaders(int indexLeaderCard1, int indexLeaderCard2) {
+        leaderCards.remove(indexLeaderCard1 - 1);
+        leaderCards.remove(indexLeaderCard2 - 1);
+    }
 }

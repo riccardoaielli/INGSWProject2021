@@ -90,7 +90,12 @@ public class LocalModel {
         players.add(new Player(localPlayer));
     }
 
-    public String getLocalPlayer() {
-        return localPlayer;
+
+    public void discardInitialLeaders(String nickname, int indexLeaderCard1, int indexLeaderCard2) {
+        players.stream().filter(x->x.getNickname().equals(nickname)).forEach(x->x.discardInitialLeaders(indexLeaderCard1,indexLeaderCard2));
+    }
+
+    public int getNumOfResourceToChoose(){
+        return 2;//todo: ritornare il numero di risorse da scegliere in base al turno del giocatore
     }
 }

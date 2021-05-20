@@ -24,6 +24,12 @@ public enum LocalPhase {
     LEADER_CHOICE {
         @Override
         public void handlePhase(ClientView clientView) { clientView.askForLeaderCards(); }
+    },
+    RESOURCE_CHOICE {
+        @Override
+        public void handlePhase(ClientView clientView) {
+
+        }
     };
 
 
