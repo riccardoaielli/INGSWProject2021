@@ -195,7 +195,8 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdatePlayersOrder(List<String> playersOrder) {
-        System.out.println("You are player n°" + playersOrder.indexOf(localModel.getLocalPlayer()+1));
+        int playerNumber = playersOrder.indexOf(localModel.getLocalPlayer())+1;
+        System.out.println("You are player n°" + playerNumber);
 
     }
 
