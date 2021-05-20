@@ -12,8 +12,12 @@ public class PlayerTurnUpdate extends MessageToClient {
 
     @Override
     public void handleMessage(ClientView clientView) {
-        if(clientView.getPhase() == LocalPhase.LEADER_CHOICE)
-            clientView.setPhase(LocalPhase.RESOURCE_CHOICE);
-        clientView.showUpdatePlayerTurn(getNickname());
+        if(clientView.getLocalModel().getLocalPlayer().equals(getNickname())){
+            if(clientView.getPhase() == LocalPhase.LEADER_CHOICE)
+                clientView.setPhase(LocalPhase.RESOURCE_CHOICE);
+            clientView.showUpdatePlayerTurn(getNickname());
+        }
+        else
+            clientView.showCurrentPlayer(getNickname());
     }
 }
