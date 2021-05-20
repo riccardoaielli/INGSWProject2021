@@ -47,6 +47,11 @@ public class GUI implements ClientView{
     }
 
     @Override
+    public void showUpdatePlayersOrder(List<String> playersOrder) {
+
+    }
+
+    @Override
     public void showUpdatedTemporaryMapResource(String nickname, Map<Resource, Integer> temporaryMapResource) {
 
     }

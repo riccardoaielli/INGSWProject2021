@@ -95,6 +95,7 @@ public class Market extends MessageObservable {
         }
 
         changeMarket(rowOrColumn, value);
+        doNotify();
         return temporaryMapMarble;
     }
 

@@ -239,6 +239,8 @@ public class PersonalBoard extends MessageObservable {
      * @param leaderCard is the number of the card to use to transform marbles
      * @param numOfTransformations is the number of marbles that needs to be transformed
      * @throws NotEnoughWhiteMarblesException this exception is thrown when there are not enough white marbles in the given map of marbles
+     * @throws InvalidParameterException if the provided parameters contain not admitted values
+     * @throws InvalidLeaderAction this exception is thrown when the selected leader does not have a suitable power
      */
     public void transformWhiteMarble(int leaderCard, int numOfTransformations) throws InvalidParameterException,NotEnoughWhiteMarblesException, InvalidLeaderAction {
         if (leaderCard > 0 && leaderCard <= leaderCards.size() && numOfTransformations > 0){
@@ -296,8 +298,14 @@ public class PersonalBoard extends MessageObservable {
         }
         notifyObservers(new TemporaryResourceMapUpdate(getNickname(), new HashMap<>(temporaryMapResource)));
         //if the temporaryResourceMap is empty and player is buying from the market the personalboard phase changes
-        if(temporaryMapResource.isEmpty() && personalBoardPhase == PersonalBoardPhase.TAKE_FROM_MARKET)
-            personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_DONE;
+        if(temporaryMapResource.isEmpty()){
+            if(personalBoardPhase == PersonalBoardPhase.TAKE_FROM_MARKET)
+                personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_DONE;
+            //Ends turn in the setup round before playing
+            else if(personalBoardPhase == PersonalBoardPhase.ADD_INITIAL_RESOURCES){
+                match.nextPlayer();
+            }
+        }
     }
     
     public void discardResourcesFromMarket(){
@@ -446,10 +454,9 @@ public class PersonalBoard extends MessageObservable {
         for (int indexLeaderCard: indexesLeaderCard){
             leaderCards.remove(indexLeaderCard-1);
         }
-        match.addPlayerReady();
         personalBoardPhase = PersonalBoardPhase.RESOURCE_CHOICE;
-
         notifyObservers(new InitialLeaderDiscardedUpdate(myPlayer.getNickname(), indexLeaderCard1, indexLeaderCard2));
+        match.addPlayerReady();
     }
 
     /**
@@ -468,6 +475,7 @@ public class PersonalBoard extends MessageObservable {
         temporaryMapResource = new HashMap<>(initialResources);
         //Notifying observers that temporary map resource has changed
         notifyObservers(new TemporaryResourceMapUpdate(myPlayer.getNickname(), new HashMap<>(temporaryMapResource)));
+        personalBoardPhase = PersonalBoardPhase.ADD_INITIAL_RESOURCES;
     }
 
     /**

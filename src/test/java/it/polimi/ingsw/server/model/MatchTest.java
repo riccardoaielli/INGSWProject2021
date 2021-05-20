@@ -57,7 +57,6 @@ class MatchTest {
         assertEquals(match.getMatchPhase(), MatchPhase.RESOURCECHOICE);
 
         match.nextPlayer();
-        match.nextPlayer();
         assertEquals(match.getMatchPhase(), MatchPhase.RESOURCECHOICE);
         match.nextPlayer();
         //check the change of match phase when all the players have played their first turn
@@ -107,8 +106,6 @@ class MatchTest {
         Map<Resource,Integer> resourceMap =new HashMap<>();
 
         try {
-            match.getCurrentPlayer().getPersonalBoard().addInitialResources(resourceMap);
-            match.nextPlayer();
             resourceMap.put(Resource.SHIELD,1);
             match.getCurrentPlayer().getPersonalBoard().addInitialResources(resourceMap);
             match.nextPlayer();

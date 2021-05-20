@@ -89,4 +89,8 @@ public class LocalModel {
         this.localPlayer = localPlayer;
         players.add(new Player(localPlayer));
     }
+
+    public String getLocalPlayer() {
+        return localPlayer;
+    }
 }

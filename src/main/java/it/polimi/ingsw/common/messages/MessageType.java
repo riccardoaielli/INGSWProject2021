@@ -6,6 +6,7 @@ package it.polimi.ingsw.common.messages;
 public enum MessageType {
     NICKNAME_REPLY,
     DISCARD_INITIAL_LEADER,
+    PLAYERS_ORDER_UPDATE,
     CHOOSE_INITIAL_RESOURCES,
     ERROR,
     CREATE_MATCH_REPLY,

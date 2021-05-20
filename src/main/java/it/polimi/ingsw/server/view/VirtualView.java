@@ -2,6 +2,8 @@ package it.polimi.ingsw.server.view;
 import com.google.gson.Gson;
 import it.polimi.ingsw.common.View;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
+import it.polimi.ingsw.common.messages.messagesToClient.ErrorMessage;
+import it.polimi.ingsw.common.messages.messagesToServer.MessageToServer;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.Observable;
 
@@ -19,6 +21,8 @@ public class VirtualView implements Runnable,View {
     private PrintWriter out;
     private Gson gson;
     private static final MessageDeserializer messageDeserializer = new MessageDeserializer();
+    private String nickname;
+
 
     public VirtualView(Socket socket, Controller controller) {
         this.controller = controller;
@@ -27,6 +31,7 @@ public class VirtualView implements Runnable,View {
         clientPort = socket.getPort();
         gson = new Gson();
         controller.addObserver(this);
+        nickname = null;
     }
 
     public boolean checkIsTheCorrectVirtualView(InetAddress clientAddress,int clientPort){
@@ -48,7 +53,20 @@ public class VirtualView implements Runnable,View {
                     break;
                 } else {
                     System.out.println("Received: " + line);
-                    messageDeserializer.deserializeMessage(line).handleMessage(controller,this);
+                    MessageToServer messageToServer = messageDeserializer.deserializeMessage(line);
+                    if (nickname!= null){
+                        if(!nickname.equals(messageToServer.getNickname())){
+                            this.update(new ErrorMessage(nickname, "This message cannot be sent by this client"));
+                            //TODO fare l'enum per questo messaggio
+                        }
+                        else{
+                            messageToServer.handleMessage(controller,this);
+                        }
+                    }
+                    else{
+                        messageToServer.handleMessage(controller,this);
+                    }
+
                 }
             }
             // Chiudo gli stream e il socket
@@ -61,6 +79,10 @@ public class VirtualView implements Runnable,View {
             System.out.println("stream di rete terminato");
             System.err.println(e.getMessage());
         }
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     /**

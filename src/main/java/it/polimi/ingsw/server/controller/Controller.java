@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.controller;
 
-import it.polimi.ingsw.common.messages.messagesToClient.FirstConnectedUpdate;
 import it.polimi.ingsw.common.messages.messagesToClient.ErrorMessage;
+import it.polimi.ingsw.common.messages.messagesToClient.FirstConnectedUpdate;
 import it.polimi.ingsw.common.View;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.Match;
@@ -10,7 +10,9 @@ import it.polimi.ingsw.server.model.enumerations.MatchPhase;
 import it.polimi.ingsw.server.model.enumerations.PersonalBoardPhase;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
+import it.polimi.ingsw.server.view.VirtualView;
 
+import java.util.List;
 import java.util.Map;
 
 public class Controller extends MessageObservable{
@@ -197,16 +199,30 @@ public class Controller extends MessageObservable{
         try {
             personalBoard.addInitialResources(resourceIntegerMap);
         } catch (InvalidParameterException e) {
-            view.update(new ErrorMessage(nickname, "Invalid command"));
+            view.update(new ErrorMessage(nickname, "The number of resources chosen does not match how many resources you can choose"));
         }
     }
 
     public synchronized void handleAddToWarehouseMessage(View view, String nickname, int depotLevel, Map<Resource,Integer> singleResourceMap){
-        PersonalBoard personalBoard = match.getPlayerByNickname(nickname).getPersonalBoard();
+        PersonalBoard personalBoard;
         try {
-            personalBoard.addToWarehouseDepots(depotLevel, singleResourceMap);
-        } catch (InvalidAdditionException e) {
-            view.update(new ErrorMessage(nickname, e.getMessage()));
+            personalBoard = match.getPlayer(nickname).getPersonalBoard();
+        } catch (InvalidNickName invalidNickName) {
+            view.update(new ErrorMessage(nickname, "Invalid action, nickname not found"));
+            return;
+        }
+
+        if(match.getMatchPhase() == MatchPhase.STANDARDROUND
+                || match.getMatchPhase() == MatchPhase.LASTROUND
+                || (match.getMatchPhase() == MatchPhase.RESOURCECHOICE && personalBoard.getPersonalBoardPhase()== PersonalBoardPhase.ADD_INITIAL_RESOURCES)){
+            try {
+                personalBoard.addToWarehouseDepots(depotLevel, singleResourceMap);
+            } catch (InvalidAdditionException e) {
+                view.update(new ErrorMessage(nickname, e.getMessage()));
+            }
+        }
+        else{
+            view.update(new ErrorMessage(nickname, "Invalid phase"));
         }
     }
 

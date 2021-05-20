@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.common.messages.messagesToClient.PlayerTurnUpdate;
 import it.polimi.ingsw.common.View;
+import it.polimi.ingsw.common.messages.messagesToClient.PlayersOrderUpdate;
 import it.polimi.ingsw.common.messages.messagesToClient.RankUpdate;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.MatchPhase;
@@ -16,6 +17,7 @@ import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 
@@ -180,7 +182,15 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
                 case LEADERCHOICE:
                     numOfPlayersReady = 0;
                     Collections.shuffle(players);
+
+                    //Sending order of players
+                    List<String> playerNicknames = new ArrayList<>();
+                    for(Player player : players){
+                       playerNicknames.add(player.getNickname());
+                    }
+                    notifyObservers(new PlayersOrderUpdate(null, playerNicknames));
                     currentPlayer = players.get(0);
+
                     //Assigning resources and faith points according to order
                     for(int playerNumber = 1; playerNumber<=players.size(); playerNumber++){
                         switch (playerNumber){
@@ -207,6 +217,7 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
                         }
                     }
                     matchPhase = MatchPhase.RESOURCECHOICE;
+                    nextPlayer();
             }
         }
     }
@@ -276,7 +287,7 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         rank = new ArrayList<>(players);
         rank.sort(new CustomPlayerComparator());
 
-        ArrayList<RankPosition> finalRank = new ArrayList<RankPosition>();
+        ArrayList<RankPosition> finalRank = new ArrayList<>();
         rank.forEach(x-> finalRank.add(new RankPosition(x.getNickname(),x.getPersonalBoard().getVictoryPoints())));
 
         matchPhase = MatchPhase.GAMEOVER;

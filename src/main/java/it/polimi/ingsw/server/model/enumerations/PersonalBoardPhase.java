@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.model.enumerations;
 public enum PersonalBoardPhase {
     LEADER_CHOICE,
     RESOURCE_CHOICE,
+    ADD_INITIAL_RESOURCES,
     MAIN_TURN_ACTION_AVAILABLE,
     PRODUCTION,
     TAKE_FROM_MARKET,

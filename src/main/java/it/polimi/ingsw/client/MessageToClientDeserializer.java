@@ -42,6 +42,8 @@ public class MessageToClientDeserializer implements JsonDeserializer <MessageToC
                 return gson.fromJson(jsonObject, CardGridUpdate.class);
             case "INITIAL_LEADER_DISCARDED_UPDATE":
                 return gson.fromJson(jsonObject, InitialLeaderDiscardedUpdate.class);
+            case "PLAYERS_ORDER_UPDATE":
+                return gson.fromJson(jsonObject, PlayersOrderUpdate.class);
             case "TEMPORARY_RESOURCE_MAP_UPDATE":
                 return gson.fromJson(jsonObject, TemporaryResourceMapUpdate.class);
             case "TEMPORARY_MARBLES_UPDATE":

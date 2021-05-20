@@ -89,7 +89,7 @@ public class CLI implements ClientView {
         }
     }
 
-
+/*
     /**
      * Receive a message from the SocketInReader and update the clientView.
      */
@@ -162,6 +162,12 @@ public class CLI implements ClientView {
 
     @Override
     public void showInitialLeaderCardDiscard(String nickname, int indexLeaderCard1, int indexLeaderCard2) {
+
+    }
+
+    @Override
+    public void showUpdatePlayersOrder(List<String> playersOrder) {
+        System.out.println("You are player n°" + playersOrder.indexOf(localModel.getLocalPlayer()+1));
 
     }
 
