@@ -27,6 +27,16 @@ public class GUI implements ClientView{
     }
 
     @Override
+    public void askCreateMatch() {
+
+    }
+
+    @Override
+    public void askNickname() {
+
+    }
+
+    @Override
     public void showError(String errorString) {
 
     }
@@ -103,11 +113,6 @@ public class GUI implements ClientView{
 
     @Override
     public void showUpdateRank(String nickname, ArrayList<RankPosition> rank) {
-
-    }
-
-    @Override
-    public void showUpdateFirstConnection(boolean firstPlayer) {
 
     }
 

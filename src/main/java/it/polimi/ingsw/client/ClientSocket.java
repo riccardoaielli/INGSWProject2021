@@ -50,7 +50,7 @@ public class ClientSocket implements MessageSender {
     /**
      * Receive a message from the SocketInReader and update the clientView.
      */
-    public void messageRead(String line) {
+    public void readMessage(String line) {
         MessageToClient message;
         this.SocketInReaderLine = line;
         message = messageToClientDeserializer.deserializeMessage(line);
@@ -70,14 +70,13 @@ public class ClientSocket implements MessageSender {
     /**
      * Disconnect the socket from the server.
      */
-    public void disconnect() {
-
-    }
-
-    /**
-     * Enable Ping messages between client and server sockets to keep the connection alive.
-     */
-    public void enablePinger(boolean enabled) {
-
-    }
+    /*public void disconnect() {
+        try {
+            if (!socket.isClosed()) {
+                socket.close();
+            }
+        } catch (IOException e) {
+            System.out.println("Could not disconnect.");
+        }
+    }*/
 }

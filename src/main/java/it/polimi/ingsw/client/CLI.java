@@ -118,34 +118,18 @@ public class CLI implements ClientView {
         return stdInLine;
     }
 
-    /*public void createMatchReplyMessage(){
-        int numberPlayer = 0;
-        try {
-            numberPlayer = Integer.parseInt(readInput("Inserisci numero di giocatori:"));
-        }catch(NumberFormatException numberFormatException) {
-            System.out.println("Invalid numberFormatException");
-        }
-        CreateMatchReplyMessage createMatchReplyMessage = new CreateMatchReplyMessage(readInput("Inserisci nickname:"), numberPlayer);
-        System.out.println("Message created");
-    }*/
-
-
-    /**
-     * This method tells the client if the player is the first one to connect
-     * @param firstPlayer True if the player that is trying to connect is the first one, false if another player has already chosen the number of players
-     */
     @Override
-    public void showUpdateFirstConnection(boolean firstPlayer){
-        if (firstPlayer){
-            String numPlayerInput = readInput("How many players?");
-            String nicknameInput = readInput("Insert nickname");
-            messageSender.sendMessage(new CreateMatchReplyMessage(nicknameInput, Integer.parseInt(numPlayerInput)));}
-        else{
-            String nicknameInput = readInput("Insert nickname");
-            messageSender.sendMessage(new NicknameReplyMessage(nicknameInput));
+    public void askCreateMatch(){
+        String numPlayerInput = readInput("How many players?");
+        String nicknameInput = readInput("Insert nickname");
+        messageSender.sendMessage(new CreateMatchReplyMessage(nicknameInput, Integer.parseInt(numPlayerInput)));
+    }
 
-            }
-        }
+    @Override
+    public void askNickname(){
+        String nicknameInput = readInput("Insert nickname");
+        messageSender.sendMessage(new NicknameReplyMessage(nicknameInput));
+    }
 
     @Override
     public void showError(String errorString) {
@@ -226,7 +210,6 @@ public class CLI implements ClientView {
     public void showUpdateRank(String nickname, ArrayList<RankPosition> rank) {
 
     }
-
 
     /**
      * Sends message to client

@@ -35,7 +35,7 @@ public class SocketInReader implements Runnable {
         try {
             while ((line = in.readLine()) != null) {
                 //System.out.println("Read this line from socket: " + line);
-                clientSocket.messageRead(line);
+                clientSocket.readMessage(line);
             }
             //System.out.println("Aborted StdinReader thread");
         } catch (IOException ex) {

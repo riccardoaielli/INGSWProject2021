@@ -17,6 +17,8 @@ import java.util.Map;
  */
 public interface ClientView extends View {
     void start();
+    void askCreateMatch();
+    void askNickname();
     LocalModel getLocalModel();
     void showError(String errorString);
     void showInitialLeaderCardDiscard(String nickname, int indexLeaderCard1 , int indexLeaderCard2);
@@ -34,5 +36,4 @@ public interface ClientView extends View {
     void showUpdateDiscardedLeaderUpdate(String nickname, int leaderPosition);
     void showUpdateLeaderCardActivatedUpdate(String nickname, int numLeadercard, int leaderCardID);
     void showUpdateRank(String nickname,ArrayList<RankPosition> rank);
-    void showUpdateFirstConnection(boolean firstPlayer);
 }

@@ -12,13 +12,13 @@ public enum LocalPhase {
     FIRST_PLAYER{
         @Override
         public void handlePhase(ClientView clientView) {
-            clientView.showUpdateFirstConnection(true);
+            clientView.askCreateMatch();
         }
     },
     NICKNAME {
         @Override
         public void handlePhase(ClientView clientView) {
-            clientView.showUpdateFirstConnection(false);
+            clientView.askNickname();
         }
     },
     LEADER_CHOICE {

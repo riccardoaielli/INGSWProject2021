@@ -44,7 +44,7 @@ public class VirtualView implements Runnable,View {
             // Leggo e scrivo nella connessione finche' non ricevo "quit"
             while (true) {
                 String line = in.nextLine();
-                if (line.equals("quit")) {
+                if (line.equals("quit")) { //todo capire come gestire la disconnessione
                     break;
                 } else {
                     System.out.println("Received: " + line);
@@ -56,6 +56,9 @@ public class VirtualView implements Runnable,View {
             out.close();
             socket.close();
         } catch (IOException e) {
+            System.err.println(e.getMessage());
+        } catch (IllegalStateException e) { //todo capire come funziona
+            System.out.println("stream di rete terminato");
             System.err.println(e.getMessage());
         }
     }
