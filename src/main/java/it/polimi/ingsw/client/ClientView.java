@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.LocalModel.LocalModel;
+import it.polimi.ingsw.client.LocalModel.LocalPhase;
 import it.polimi.ingsw.common.View;
 import it.polimi.ingsw.server.model.RankPosition;
 import it.polimi.ingsw.server.model.enumerations.Marble;
@@ -37,4 +38,7 @@ public interface ClientView extends View {
     void showUpdateRank(String nickname,ArrayList<RankPosition> rank);
     void showUpdateFirstConnection(boolean firstPlayer);
     void showUpdateInitialLeaderCard(ArrayList<Integer> initialLeaderCardsID);
+    void askForLeaderCards();
+    void setPhase(LocalPhase phase);
+    LocalPhase getPhase();
 }

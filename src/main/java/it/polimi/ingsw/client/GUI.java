@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.LocalModel.LocalModel;
+import it.polimi.ingsw.client.LocalModel.LocalPhase;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.server.model.RankPosition;
 import it.polimi.ingsw.server.model.enumerations.Marble;
@@ -129,6 +130,21 @@ public class GUI implements ClientView{
     @Override
     public void showUpdateInitialLeaderCard(ArrayList<Integer> initialLeaderCardsID) {
 
+    }
+
+    @Override
+    public void askForLeaderCards() {
+
+    }
+
+    @Override
+    public void setPhase(LocalPhase phase) {
+
+    }
+
+    @Override
+    public LocalPhase getPhase() {
+        return null;
     }
 
     @Override

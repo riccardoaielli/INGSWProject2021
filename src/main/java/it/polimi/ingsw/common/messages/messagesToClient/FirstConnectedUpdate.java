@@ -14,9 +14,9 @@ public class FirstConnectedUpdate extends MessageToClient{
     @Override
     public void handleMessage(ClientView clientView) {
         if(firstConnection)
-            clientView.getLocalModel().setPhase(LocalPhase.FIRST_PLAYER);
+            clientView.setPhase(LocalPhase.FIRST_PLAYER);
         else
-            clientView.getLocalModel().setPhase(LocalPhase.NICKNAME);
-        clientView.getLocalModel().getPhase().handlePhase(clientView);
+            clientView.setPhase(LocalPhase.NICKNAME);
+        clientView.getPhase().handlePhase(clientView);
     }
 }

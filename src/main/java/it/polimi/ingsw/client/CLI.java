@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.LocalModel.LocalModel;
 import it.polimi.ingsw.client.LocalModel.LocalPhase;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.common.messages.messagesToServer.CreateMatchReplyMessage;
+import it.polimi.ingsw.common.messages.messagesToServer.DiscardInitialLeaderMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.NicknameReplyMessage;
 import it.polimi.ingsw.server.model.Observable;
 import it.polimi.ingsw.server.model.RankPosition;
@@ -26,6 +27,8 @@ public class CLI implements ClientView {
     private String hostAddress;
     private int portNumber;
     private LocalModel localModel;
+    private LocalPhase phase;
+
 
     /**
      * This constructor creates the CLI and calls setMessageSender
@@ -36,6 +39,7 @@ public class CLI implements ClientView {
         this.hostAddress = hostAddress;
         this.portNumber = portNumber;
         localModel = new LocalModel();
+        phase = LocalPhase.DEFAULT;
     }
 
     public void start(){
@@ -152,8 +156,27 @@ public class CLI implements ClientView {
     @Override
     public void showUpdateInitialLeaderCard(ArrayList<Integer> initialLeaderCardsID) {
         localModel.setInitialLeaderCards(initialLeaderCardsID);
-        localModel.printLeaderCards();
+        askForLeaderCards();
     }
+
+    @Override
+    public void askForLeaderCards() {
+        localModel.printLeaderCards();
+        String firstCard = readInput("Choose a card to discard");
+        String secondCard = readInput("Choose another card to discard");
+        messageSender.sendMessage(new DiscardInitialLeaderMessage(localModel.getLocalPlayer(),Integer.parseInt(firstCard),Integer.parseInt(secondCard)));
+    }
+
+    @Override
+    public void setPhase(LocalPhase phase) {
+        this.phase = phase;
+    }
+
+    @Override
+    public LocalPhase getPhase() {
+        return phase;
+    }
+
 
     @Override
     public void showError(String errorString) {
@@ -214,7 +237,7 @@ public class CLI implements ClientView {
     @Override
     public void showUpdateMarket(Marble[][] marketMatrix, Marble marbleOut) {
         localModel.setMarket(marketMatrix,marbleOut);
-        if(localModel.getPhase() == LocalPhase.LEADER_CHOICE)
+        if(phase == LocalPhase.LEADER_CHOICE)
             localModel.printMarket();
     }
 
@@ -226,7 +249,7 @@ public class CLI implements ClientView {
     @Override
     public void showUpdateCardGridUpdate(int[][] cardGridMatrixUpdate) {
         localModel.setCardGrid(cardGridMatrixUpdate);
-        if(localModel.getPhase() == LocalPhase.LEADER_CHOICE)
+        if(phase == LocalPhase.LEADER_CHOICE)
             localModel.printCardGrid();
     }
 
