@@ -17,6 +17,6 @@ public class ErrorMessage extends MessageToClient {
     @Override
     public void handleMessage(ClientView clientView) {
         clientView.showError(errorString);
-        clientView.getLocalModel().getPhase().handlePhase(clientView);
+        clientView.getPhase().handlePhase(clientView);
     }
 }

@@ -17,7 +17,8 @@ public class MarketUpdate extends MessageToClient {
 
     @Override
     public void handleMessage(ClientView clientView) {
-        clientView.getLocalModel().setPhase(LocalPhase.LEADER_CHOICE);
+        if(clientView.getPhase() == LocalPhase.NICKNAME)
+            clientView.setPhase(LocalPhase.LEADER_CHOICE);
         clientView.showUpdateMarket(marketMatrix,marbleOut);
     }
 }

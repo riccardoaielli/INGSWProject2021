@@ -8,7 +8,6 @@ import java.util.ArrayList;
  * This class contains a local model with the necessary information to update the CLI or the GUI
  */
 public class LocalModel {
-    private LocalPhase phase;
     private ArrayList <Player> players;
     private String localPlayer;
     private String currentPlayer;
@@ -21,15 +20,16 @@ public class LocalModel {
 
     public LocalModel() {
         players = new ArrayList<>();
-        phase = LocalPhase.DEFAULT;
+        market = new Market();
+        cardGrid = new CardGrid();
+        faithTrack = new FaithTrack();
+        developmentCardSpace = new DevelopmentCardSpace();
+        wareHouseDepots = new WareHouseDepots();
+        strongbox = new Strongbox();
     }
 
-    public LocalPhase getPhase() {
-        return phase;
-    }
-
-    public void setPhase(LocalPhase phase) {
-        this.phase = phase;
+    public String getLocalPlayer() {
+        return localPlayer;
     }
 
     public void addPlayer(String Nickname){
@@ -69,11 +69,11 @@ public class LocalModel {
 
 
     public void printMarket(){
-        System.out.println(market);
+        System.out.println(market.toString());
 
     }
     public void printCardGrid(){
-        System.out.println(cardGrid);
+        System.out.println(cardGrid.toString());
     }
 
 
@@ -82,7 +82,7 @@ public class LocalModel {
     }
 
     public void printLeaderCards() {
-        System.out.println(localPlayer + "stampare carte leader del giocatore locale");
+        System.out.println(localPlayer + ": stampare carte leader del giocatore locale");
     }
 
     public void setLocalPlayer(String localPlayer) {
