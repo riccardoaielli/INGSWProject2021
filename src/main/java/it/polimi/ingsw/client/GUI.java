@@ -53,6 +53,11 @@ public class GUI implements ClientView{
     }
 
     @Override
+    public void askBuyDevCard() {
+
+    }
+
+    @Override
     public void showError(String errorString) {
 
     }

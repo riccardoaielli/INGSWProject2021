@@ -52,7 +52,7 @@ public enum LocalPhase {
     BUY_DEV_CARD{
         @Override
         public void handlePhase(ClientView clientView) {
-
+            clientView.askBuyDevCard();
         }
     },
     ACTIVATE_PRODUCTION{

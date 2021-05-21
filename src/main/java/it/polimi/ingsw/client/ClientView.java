@@ -21,6 +21,7 @@ public interface ClientView extends View {
     void askResourceChoice();
     void askAddToWareHouse();
     void askTurnAction();
+    void askBuyDevCard();
     LocalModel getLocalModel();
     void showError(String errorString);
     void showInitialLeaderCardDiscard(String nickname, int indexLeaderCard1 , int indexLeaderCard2);

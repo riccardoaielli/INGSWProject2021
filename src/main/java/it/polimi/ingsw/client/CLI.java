@@ -64,10 +64,10 @@ public class CLI implements ClientView {
         setMessageSender();
     }
 
-    public void clearConsole() {
+    public void clearConsoleAndReprint() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
-        //Reprint view
+        //Add reprint view
     }
 
     private Resource readResource(){
@@ -154,6 +154,25 @@ public class CLI implements ClientView {
             Thread.currentThread().interrupt();
         }
         return stdInLine;
+    }
+
+    /**
+     * Method to read an int from stdin
+     * @param stringPrint String to print before the users insert a value from keyboard
+     * @return the parsed int
+     */
+    public int readInt(String stringPrint) {
+        String intString = readInput(stringPrint);
+        int numOfResource;
+        while (true) {
+            try {
+                numOfResource = Integer.parseInt(intString);
+                return numOfResource;
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number");
+                System.out.println(stringPrint);
+            }
+        }
     }
 
     /**
@@ -257,6 +276,74 @@ public class CLI implements ClientView {
             }
             phase.handlePhase(this);
         }
+    }
+
+    @Override
+    public void askBuyDevCard() {
+        System.out.println("Insert the coordinates of the development card you want to buy");
+        String rowString = readInput("Insert the row of the card (number between 1 and 3)");
+        int row =  0;
+        try {
+            row =  Integer.parseInt(rowString);
+        } catch (NumberFormatException e) {
+            System.out.println("Not a number");
+        }
+        while(!(row>=1&&row <=3)){
+            rowString = readInput("Please insert a number between 1 and 3)");
+            try {
+                row =  Integer.parseInt(rowString);
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number");
+            }
+        }
+
+        String columnString = readInput("Insert the row of the card (number between 1 and 4)");
+        int column =  0;
+        try {
+            column =  Integer.parseInt(columnString);
+        } catch (NumberFormatException e) {
+            System.out.println("Not a number");
+        }
+        while(!(column>=1&&column <=4)){
+            columnString = readInput("Please insert a number between 1 and 4");
+            try {
+                column =  Integer.parseInt(columnString);
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number");
+            }
+        }
+        String paymentMethod = readInput("Choose how you want to pay: type S (Strongbox) or W (Warehouse)").toUpperCase();
+        while(!(paymentMethod.equals("S")||paymentMethod.equals("W"))){
+            paymentMethod = readInput("Invalid choice, type S or W").toUpperCase();
+        }
+        Map<Resource, Integer>costStrongbox = new HashMap<>();
+        Map<Resource, Integer>costWarehouse = new HashMap<>();
+        do{
+            Resource resource = readResource();
+            int resourceQuantity = readResourceQuantity();
+            if (paymentMethod.equals("S")){
+                costStrongbox.merge(resource, resourceQuantity, Integer::sum);
+            }
+            else{
+                costWarehouse.merge(resource, resourceQuantity, Integer::sum);
+            }
+
+            paymentMethod = readInput("Choose how you want to pay: type S (Strongbox), W (Warehouse) or Q to quit if you have finished choosing how to pay").toUpperCase();
+            while(!(paymentMethod.equals("S")||paymentMethod.equals("W")||paymentMethod.equals("Q"))){
+                paymentMethod = readInput("Invalid choice, type S, W or Q").toUpperCase();
+            }
+        }while (!paymentMethod.equals("Q"));
+
+        int numLeaderCard = readInt("Choose 0 if you do not want to use a leader card, otherwise insert the position of an active leader card with a discount power if you have it:");
+        while (!(numLeaderCard>= 0)){
+            numLeaderCard = readInt("Invalid number, choose a number >= 0");
+        }
+
+        int cardPosition = readInt("Choose the slot where you want to place the card, insert 1, 2 or 3 indicating the slots from left to right:");
+        while (!(cardPosition>= 1 && cardPosition<=3)){
+           cardPosition = readInt("Invalid number, choose a number between 1 and 3");
+        }
+        messageSender.sendMessage(new BuyDevelopmentCardMessage(localModel.getLocalPlayer().getNickname(), row, column,costStrongbox, costWarehouse, numLeaderCard, cardPosition));
     }
 
 

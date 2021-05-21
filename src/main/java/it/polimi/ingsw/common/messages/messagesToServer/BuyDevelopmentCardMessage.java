@@ -6,17 +6,18 @@ import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class BuyDevelopmentCardMessage extends MessageToServer {
 
     private final int row;
     private final int column;
-    private final HashMap<Resource, Integer> costStrongbox;
-    private final HashMap<Resource, Integer> costWarehouse;
+    private final Map<Resource, Integer> costStrongbox;
+    private final Map<Resource, Integer> costWarehouse;
     private final int numLeaderCard;
     private final int cardPosition;
 
-    public BuyDevelopmentCardMessage(String nickname, int row, int column, HashMap<Resource, Integer> costStrongbox, HashMap<Resource, Integer> costWarehouse, int numLeaderCard, int cardPosition) {
+    public BuyDevelopmentCardMessage(String nickname, int row, int column, Map<Resource, Integer> costStrongbox, Map<Resource, Integer> costWarehouse, int numLeaderCard, int cardPosition) {
         super(nickname, MessageType.BUY_DEVELOPMENT_CARD);
         this.row = row;
         this.column = column;
