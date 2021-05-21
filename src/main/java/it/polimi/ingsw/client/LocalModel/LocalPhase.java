@@ -37,7 +37,7 @@ public enum LocalPhase {
             clientView.askAddToWareHouse();
         }
     },
-    MAIN_TURN_ACTION_AVAILABLE{
+    MENU {
         @Override
         public void handlePhase(ClientView clientView) {
             clientView.askTurnAction();
@@ -74,7 +74,7 @@ public enum LocalPhase {
     ACTIVATE_LEADER {
         @Override
         public void handlePhase(ClientView clientView) {
-
+            clientView.askActivateLeader();
         }
     },
     DISCARD_LEADER {

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.common.messages.messagesToClient;
 
 import it.polimi.ingsw.client.ClientView;
+import it.polimi.ingsw.client.LocalModel.LocalPhase;
 import it.polimi.ingsw.common.messages.MessageType;
 
 public class LeaderCardActivatedUpdate extends MessageToClient {
@@ -16,5 +17,7 @@ public class LeaderCardActivatedUpdate extends MessageToClient {
     @Override
     public void handleMessage(ClientView clientView) {
         clientView.showUpdateLeaderCardActivatedUpdate(getNickname(),numLeadercard,leaderCardID);
+        clientView.setPhase(LocalPhase.MENU);
+        clientView.getPhase().handlePhase(clientView);
     }
 }

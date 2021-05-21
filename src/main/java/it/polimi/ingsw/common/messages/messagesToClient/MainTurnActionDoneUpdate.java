@@ -11,7 +11,8 @@ public class MainTurnActionDoneUpdate extends MessageToClient{
 
     @Override
     public void handleMessage(ClientView clientView) {
-        clientView.setPhase(LocalPhase.MAIN_TURN_ACTION_DONE);
+        clientView.setMainTurnActionDone(true);
+        clientView.setPhase(LocalPhase.MENU);
         clientView.getPhase().handlePhase(clientView);
     }
 }

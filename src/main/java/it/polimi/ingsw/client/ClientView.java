@@ -47,7 +47,12 @@ public interface ClientView extends View {
     void showUpdateInitialLeaderCard(ArrayList<Integer> initialLeaderCardsID);
     void askForLeaderCards();
     void setPhase(LocalPhase phase);
+
+    void setMainTurnActionDone(boolean mainTurnActionDone);
+
     LocalPhase getPhase();
 
     void showCurrentPlayer(String nickname);
+
+    void askActivateLeader();
 }

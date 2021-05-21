@@ -178,12 +178,22 @@ public class GUI implements ClientView{
     }
 
     @Override
+    public void setMainTurnActionDone(boolean mainTurnActionDone) {
+
+    }
+
+    @Override
     public LocalPhase getPhase() {
         return null;
     }
 
     @Override
     public void showCurrentPlayer(String nickname) {
+
+    }
+
+    @Override
+    public void askActivateLeader() {
 
     }
 

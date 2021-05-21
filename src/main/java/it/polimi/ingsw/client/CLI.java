@@ -27,6 +27,7 @@ public class CLI implements ClientView {
     private int portNumber;
     private LocalModel localModel;
     private LocalPhase phase;
+    private boolean mainTurnActionDone;
 
 
     /**
@@ -39,6 +40,7 @@ public class CLI implements ClientView {
         this.portNumber = portNumber;
         localModel = new LocalModel();
         phase = LocalPhase.DEFAULT;
+        mainTurnActionDone = false;
     }
 
     public void start(){
@@ -269,7 +271,7 @@ public class CLI implements ClientView {
         int numOfActions = 3;
         List<String> actions = new ArrayList<>();
         List<LocalPhase> actionPhases = new ArrayList<>();
-        if(phase == LocalPhase.MAIN_TURN_ACTION_AVAILABLE) {
+        if(!mainTurnActionDone) {
             actions.add("Take Resources from market");
             actionPhases.add(LocalPhase.TAKE_FROM_MARKET);
             actions.add("Buy one Development Card");
@@ -290,10 +292,10 @@ public class CLI implements ClientView {
             System.out.println((action+1) + ". " + actions.get(action));
         }
 
-        String actionString = readInput("Insert a number between 1 and 6:");
+        String actionString = readInput("Insert a number between 1 and "+numOfActions+":");
         int actionInt =  Integer.parseInt(actionString);
         while(!(actionInt >= 1 && actionInt <= numOfActions)){
-            actionString = readInput("Please insert a number between 1 and 6");
+            actionString = readInput("Please insert a number between 1 and "+numOfActions+":");
             try {
                 actionInt =  Integer.parseInt(actionString);
             } catch (NumberFormatException e) {
@@ -507,8 +509,23 @@ public class CLI implements ClientView {
     }
 
     @Override
+    public void askActivateLeader() {
+        int numLeaderCard = readInt("Choose the number of the card to activate: ");
+        while (numLeaderCard <= 0){
+            numLeaderCard = readInt("Choose the number of the card to activate: ");
+        }
+        messageSender.sendMessage(new ActivateLeaderMessage(localModel.getLocalPlayer().getNickname(),numLeaderCard));
+
+    }
+
+    @Override
     public void setPhase(LocalPhase phase) {
         this.phase = phase;
+    }
+
+    @Override
+    public void setMainTurnActionDone(boolean mainTurnActionDone) {
+        this.mainTurnActionDone = mainTurnActionDone;
     }
 
     @Override

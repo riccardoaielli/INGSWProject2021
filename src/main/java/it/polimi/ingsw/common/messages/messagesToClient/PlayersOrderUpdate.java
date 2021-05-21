@@ -20,7 +20,7 @@ public class PlayersOrderUpdate extends MessageToClient{
         clientView.showUpdatePlayersOrder(playerNicknames);
         //TODO in playerTurnUpdate would be better
         if (playerNicknames.indexOf(clientView.getLocalModel().getLocalPlayer().getNickname())== 0){
-            clientView.setPhase(LocalPhase.MAIN_TURN_ACTION_AVAILABLE);
+            clientView.setPhase(LocalPhase.MENU);
         }
 
     }
