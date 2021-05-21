@@ -266,6 +266,45 @@ public class CLI implements ClientView {
 
     @Override
     public void askTurnAction() {
+        int numOfActions = 3;
+        List<String> actions = new ArrayList<>();
+        List<LocalPhase> actionPhases = new ArrayList<>();
+        if(phase == LocalPhase.MAIN_TURN_ACTION_AVAILABLE) {
+            actions.add("Take Resources from market");
+            actionPhases.add(LocalPhase.TAKE_FROM_MARKET);
+            actions.add("Buy one Development Card");
+            actionPhases.add(LocalPhase.BUY_DEV_CARD);
+            actions.add("Activate the Production");
+            actionPhases.add(LocalPhase.ACTIVATE_PRODUCTION);
+            numOfActions = 6;
+        }
+        actions.add("Activate a leader card");
+        actionPhases.add(LocalPhase.ACTIVATE_LEADER);
+        actions.add("Discard a leader card");
+        actionPhases.add(LocalPhase.DISCARD_LEADER);
+        actions.add("Rearrange warehouse resources");
+        actionPhases.add(LocalPhase.REARRANGE_WAREHOUSE);
+
+        System.out.println("Choose an action:");
+        for(int action = 0; action < numOfActions; action++){
+            System.out.println((action+1) + ". " + actions.get(action));
+        }
+
+        String actionString = readInput("Insert a number between 1 and 6:");
+        int actionInt =  Integer.parseInt(actionString);
+        while(!(actionInt >= 1 && actionInt <= numOfActions)){
+            actionString = readInput("Please insert a number between 1 and 6");
+            try {
+                actionInt =  Integer.parseInt(actionString);
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number");
+            }
+        }
+
+        phase = actionPhases.get(actionInt - 1);
+        phase.handlePhase(this);
+
+        /*
         if (phase == LocalPhase.MAIN_TURN_ACTION_AVAILABLE){
             System.out.println("Choose an action:\n" +
                     "1. Take Resources from market\n" +
@@ -304,7 +343,7 @@ public class CLI implements ClientView {
                     phase = LocalPhase.REARRANGE_WAREHOUSE;
             }
             phase.handlePhase(this);
-        }
+        }*/
     }
 
     @Override
@@ -493,7 +532,7 @@ public class CLI implements ClientView {
     public void showInitialLeaderCardDiscard(String nickname, int indexLeaderCard1, int indexLeaderCard2) {
         localModel.discardInitialLeaders(nickname,indexLeaderCard1,indexLeaderCard2);
         if(localModel.getLocalPlayer().getNickname().equals(nickname))
-            System.out.println("Wait for other players to choose their cards");
+            System.out.println("Wait for other players to choose their cards...");
     }
 
     @Override

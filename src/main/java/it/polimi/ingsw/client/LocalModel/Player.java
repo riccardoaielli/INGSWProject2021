@@ -22,6 +22,7 @@ public class Player {
         this.nickname = nickname;
         leaderCards = new ArrayList<>();
         temporaryMarbles = new HashMap<>();
+        faithTrack = new FaithTrack();
     }
 
     public String getNickname() {

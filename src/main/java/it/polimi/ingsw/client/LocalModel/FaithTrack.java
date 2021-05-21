@@ -6,6 +6,13 @@ public class FaithTrack {
     private int redcrossPosition;
     private ArrayList<Integer> popeFavourTiles;
 
+    public FaithTrack() {
+        redcrossPosition = 0;
+        popeFavourTiles = new ArrayList<>();
+        popeFavourTiles.add(0);
+        popeFavourTiles.add(0);
+        popeFavourTiles.add(0);
+    }
 
     public void setRedcrossPosition(int redcrossPosition) {
         this.redcrossPosition = redcrossPosition;
@@ -39,14 +46,14 @@ public class FaithTrack {
             }
             switch (popeFavourTiles.get(i)){
                 case 1:
-                    popeFavourTilesString.replace(tile,"\\u001b[33m"+tile+"\\u001b[0m");
+                    popeFavourTilesString = popeFavourTilesString.replace(tile,"\\u001b[33m"+tile+"\\u001b[0m");
                 case 2:
-                    popeFavourTilesString.replace(tile,"\\u001b[32m"+tile+"\\u001b[0m");
+                    popeFavourTilesString = popeFavourTilesString.replace(tile,"\\u001b[32m"+tile+"\\u001b[0m");
             }
         }
-        popeFavourTilesString.replace("x","2");
-        popeFavourTilesString.replace("y","2");
-        popeFavourTilesString.replace("z","4");
+        popeFavourTilesString = popeFavourTilesString.replace("x","2");
+        popeFavourTilesString = popeFavourTilesString.replace("y","2");
+        popeFavourTilesString = popeFavourTilesString.replace("z","4");
 
         String outString = faithTrack.concat("\n").concat(popeFavourTilesString);
         System.out.println(outString);

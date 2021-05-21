@@ -43,6 +43,12 @@ public enum LocalPhase {
             clientView.askTurnAction();
         }
     },
+    MAIN_TURN_ACTION_DONE{
+        @Override
+        public void handlePhase(ClientView clientView) {
+            clientView.askTurnAction();
+        }
+    },
     TAKE_FROM_MARKET{
         @Override
         public void handlePhase(ClientView clientView) { clientView.askTakeFromMarketAction();}

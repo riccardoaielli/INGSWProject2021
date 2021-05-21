@@ -299,8 +299,10 @@ public class PersonalBoard extends MessageObservable {
         notifyObservers(new TemporaryResourceMapUpdate(getNickname(), new HashMap<>(temporaryMapResource)));
         //if the temporaryResourceMap is empty and player is buying from the market the personalboard phase changes
         if(temporaryMapResource.isEmpty()){
-            if(personalBoardPhase == PersonalBoardPhase.TAKE_FROM_MARKET)
+            if(personalBoardPhase == PersonalBoardPhase.TAKE_FROM_MARKET) {
                 personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_DONE;
+                myPlayer.getView().update(new MainTurnActionDoneUpdate(myPlayer.getNickname()));
+            }
             //Ends turn in the setup round before playing
             else if(personalBoardPhase == PersonalBoardPhase.ADD_INITIAL_RESOURCES){
                 match.nextPlayer();
