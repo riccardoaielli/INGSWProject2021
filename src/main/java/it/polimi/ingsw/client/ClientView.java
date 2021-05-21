@@ -46,6 +46,9 @@ public interface ClientView extends View {
     void showUpdateFirstConnection(boolean firstPlayer);
     void showUpdateInitialLeaderCard(ArrayList<Integer> initialLeaderCardsID);
     void askForLeaderCards();
+
+    void askDiscardLeader();
+
     void setPhase(LocalPhase phase);
 
     void setMainTurnActionDone(boolean mainTurnActionDone);

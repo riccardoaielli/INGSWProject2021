@@ -173,6 +173,11 @@ public class GUI implements ClientView{
     }
 
     @Override
+    public void askDiscardLeader() {
+
+    }
+
+    @Override
     public void setPhase(LocalPhase phase) {
 
     }

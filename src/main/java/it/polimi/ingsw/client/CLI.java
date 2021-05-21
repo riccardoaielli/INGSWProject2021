@@ -515,7 +515,15 @@ public class CLI implements ClientView {
             numLeaderCard = readInt("Choose the number of the card to activate: ");
         }
         messageSender.sendMessage(new ActivateLeaderMessage(localModel.getLocalPlayer().getNickname(),numLeaderCard));
+    }
 
+    @Override
+    public void askDiscardLeader(){
+        int numLeaderCard = readInt("Choose the number of the card to discard: ");
+        while (numLeaderCard <= 0){
+            numLeaderCard = readInt("Choose the number of the card to discard: ");
+        }
+        messageSender.sendMessage(new DiscardLeaderMessage(localModel.getLocalPlayer().getNickname(),numLeaderCard));
     }
 
     @Override
@@ -629,12 +637,14 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdateDiscardedLeaderUpdate(String nickname, int leaderPosition) {
-
+        //todo: rimuovere la carta leader dal localModel
+        System.out.println("The card has been discarded");
     }
 
     @Override
     public void showUpdateLeaderCardActivatedUpdate(String nickname, int numLeadercard, int leaderCardID) {
-
+        //todo: attivare la carta nel localModel
+        System.out.println("The card has been activated");
     }
 
     @Override

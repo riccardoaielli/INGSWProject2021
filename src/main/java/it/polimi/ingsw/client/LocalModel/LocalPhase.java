@@ -80,7 +80,7 @@ public enum LocalPhase {
     DISCARD_LEADER {
         @Override
         public void handlePhase(ClientView clientView) {
-
+            clientView.askDiscardLeader();
         }
     },
     REARRANGE_WAREHOUSE {
