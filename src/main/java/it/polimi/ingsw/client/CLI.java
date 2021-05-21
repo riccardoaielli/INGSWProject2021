@@ -98,6 +98,34 @@ public class CLI implements ClientView {
         return numOfResource;
     }
 
+    private List<Map<Resource, Integer>> readCostStrongboxWarehouse(){
+        String paymentMethod = readInput("Choose how you want to pay: type S (Strongbox) or W (Warehouse)").toUpperCase();
+        while(!(paymentMethod.equals("S")||paymentMethod.equals("W"))){
+            paymentMethod = readInput("Invalid choice, type S or W").toUpperCase();
+        }
+        Map<Resource, Integer>costStrongbox = new HashMap<>();
+        Map<Resource, Integer>costWarehouse = new HashMap<>();
+        do{
+            Resource resource = readResource();
+            int resourceQuantity = readResourceQuantity();
+            if (paymentMethod.equals("S")){
+                costStrongbox.merge(resource, resourceQuantity, Integer::sum);
+            }
+            else{
+                costWarehouse.merge(resource, resourceQuantity, Integer::sum);
+            }
+
+            paymentMethod = readInput("Choose how you want to pay: type S (Strongbox), W (Warehouse) or Q to quit if you have finished choosing how to pay").toUpperCase();
+            while(!(paymentMethod.equals("S")||paymentMethod.equals("W")||paymentMethod.equals("Q"))){
+                paymentMethod = readInput("Invalid choice, type S, W or Q").toUpperCase();
+            }
+        }while (!paymentMethod.equals("Q"));
+        List<Map<Resource, Integer>> costStrongboxWarehouse = new ArrayList<>();
+        costStrongboxWarehouse.add(costStrongbox);
+        costStrongboxWarehouse.add(costWarehouse);
+        return costStrongboxWarehouse;
+    }
+
     @Override
     public LocalModel getLocalModel() {
         return localModel;
@@ -376,28 +404,7 @@ public class CLI implements ClientView {
                 System.out.println("Not a number");
             }
         }
-        String paymentMethod = readInput("Choose how you want to pay: type S (Strongbox) or W (Warehouse)").toUpperCase();
-        while(!(paymentMethod.equals("S")||paymentMethod.equals("W"))){
-            paymentMethod = readInput("Invalid choice, type S or W").toUpperCase();
-        }
-        Map<Resource, Integer>costStrongbox = new HashMap<>();
-        Map<Resource, Integer>costWarehouse = new HashMap<>();
-        do{
-            Resource resource = readResource();
-            int resourceQuantity = readResourceQuantity();
-            if (paymentMethod.equals("S")){
-                costStrongbox.merge(resource, resourceQuantity, Integer::sum);
-            }
-            else{
-                costWarehouse.merge(resource, resourceQuantity, Integer::sum);
-            }
-
-            paymentMethod = readInput("Choose how you want to pay: type S (Strongbox), W (Warehouse) or Q to quit if you have finished choosing how to pay").toUpperCase();
-            while(!(paymentMethod.equals("S")||paymentMethod.equals("W")||paymentMethod.equals("Q"))){
-                paymentMethod = readInput("Invalid choice, type S, W or Q").toUpperCase();
-            }
-        }while (!paymentMethod.equals("Q"));
-
+        List<Map<Resource, Integer>> costStrongboxWarehouse = readCostStrongboxWarehouse();
         int numLeaderCard = readInt("Choose 0 if you do not want to use a leader card, otherwise insert the position of an active leader card with a discount power if you have it:");
         while (!(numLeaderCard>= 0)){
             numLeaderCard = readInt("Invalid number, choose a number >= 0");
@@ -407,7 +414,40 @@ public class CLI implements ClientView {
         while (!(cardPosition>= 1 && cardPosition<=3)){
            cardPosition = readInt("Invalid number, choose a number between 1 and 3");
         }
-        messageSender.sendMessage(new BuyDevelopmentCardMessage(localModel.getLocalPlayer().getNickname(), row, column,costStrongbox, costWarehouse, numLeaderCard, cardPosition));
+        messageSender.sendMessage(new BuyDevelopmentCardMessage(localModel.getLocalPlayer().getNickname(), row, column,costStrongboxWarehouse.get(0), costStrongboxWarehouse.get(1), numLeaderCard, cardPosition));
+    }
+
+    @Override
+    public void askProduction() {
+        int productionChoice = readInt("Choose which kind of production you want to activate:\n" +
+                "1. Basic Production\n" +
+                "2. Leader Production\n" +
+                "3. Card Production\n");
+        while (!(productionChoice>= 1 && productionChoice <=3)){
+            productionChoice = readInt("Invalid number, choose a number between 1 and 3");
+        }
+        switch (productionChoice){
+            case 1:
+                askBasicProduction();
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+        }
+
+    }
+
+    private void askBasicProduction(){
+        List<Map<Resource, Integer>> costStrongboxWarehouse = readCostStrongboxWarehouse();
+        Resource resource = readResource();
+        messageSender.sendMessage(new ActivateBasicProductionMessage(getLocalModel().getLocalPlayer().getNickname(), costStrongboxWarehouse.get(0), costStrongboxWarehouse.get(1), resource));
+    }
+
+    private void askLeaderProduction(){
+
     }
 
 

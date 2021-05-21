@@ -22,6 +22,7 @@ public interface ClientView extends View {
     void askAddToWareHouse();
     void askTurnAction();
     void askBuyDevCard();
+    void askProduction();
     void askForLeaderPower();
     void askTakeFromMarketAction();
     LocalModel getLocalModel();

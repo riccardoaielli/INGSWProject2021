@@ -58,6 +58,11 @@ public class GUI implements ClientView{
     }
 
     @Override
+    public void askProduction() {
+
+    }
+
+    @Override
     public void askForLeaderPower() {
 
     }
