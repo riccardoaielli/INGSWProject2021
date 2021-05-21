@@ -1,6 +1,7 @@
 package it.polimi.ingsw.common.messages.messagesToClient;
 
 import it.polimi.ingsw.client.ClientView;
+import it.polimi.ingsw.client.LocalModel.LocalPhase;
 import it.polimi.ingsw.common.messages.MessageType;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 
@@ -17,5 +18,11 @@ public class TemporaryResourceMapUpdate extends MessageToClient {
     @Override
     public void handleMessage(ClientView clientView) {
         clientView.showUpdatedTemporaryMapResource(this.getNickname(), temporaryMapResource);
+        if(clientView.getLocalModel().getLocalPlayer().getNickname().equals(getNickname())){
+            clientView.setPhase(LocalPhase.ADD_TO_WAREHOUSE);
+            if (!temporaryMapResource.isEmpty()){
+                clientView.getPhase().handlePhase(clientView);
+            }
+        }
     }
 }

@@ -43,6 +43,16 @@ public class GUI implements ClientView{
     }
 
     @Override
+    public void askAddToWareHouse() {
+
+    }
+
+    @Override
+    public void askTurnAction() {
+
+    }
+
+    @Override
     public void showError(String errorString) {
 
     }

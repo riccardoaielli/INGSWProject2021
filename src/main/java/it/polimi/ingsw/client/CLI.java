@@ -3,10 +3,7 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.client.LocalModel.LocalModel;
 import it.polimi.ingsw.client.LocalModel.LocalPhase;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
-import it.polimi.ingsw.common.messages.messagesToServer.ChooseInitialResourcesMessage;
-import it.polimi.ingsw.common.messages.messagesToServer.CreateMatchReplyMessage;
-import it.polimi.ingsw.common.messages.messagesToServer.DiscardInitialLeaderMessage;
-import it.polimi.ingsw.common.messages.messagesToServer.NicknameReplyMessage;
+import it.polimi.ingsw.common.messages.messagesToServer.*;
 import it.polimi.ingsw.server.model.Observable;
 import it.polimi.ingsw.server.model.RankPosition;
 import it.polimi.ingsw.server.model.enumerations.Marble;
@@ -65,6 +62,40 @@ public class CLI implements ClientView {
                 "|/   \\__/(_______/\\_______/|/    )_)(_______/\\_______)\\_______)|/     \\||/    )_)(_______/(_______/\n" +
                 "                                                                                                   \n");
         setMessageSender();
+    }
+
+    public void clearConsole() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+        //Reprint view
+    }
+
+    private Resource readResource(){
+        String resourceType;
+        resourceType = readInput("Choose a resource type(COIN,SHIELD,SERVANT,STONE):").toUpperCase();
+        while (!(resourceType.equals("COIN") || resourceType.equals("SHIELD") || resourceType.equals("SERVANT") || resourceType.equals("STONE"))){
+            resourceType = readInput("Incorrect value, please insert a value among COIN,SHIELD,SERVANT or STONE ").toUpperCase();
+        }
+        return Resource.valueOf(resourceType);
+    }
+
+    private int readResourceQuantity(){
+        String numOfResourceType = readInput("Choose how many resources you want of this type (insert a number >= 1");
+        int numOfResource =  0;
+        try {
+            numOfResource =  Integer.parseInt(numOfResourceType);
+        } catch (NumberFormatException e) {
+            System.out.println("Not a number");
+        }
+        while(numOfResource<=0){
+            numOfResourceType = readInput("Please insert a number >= 1");
+            try {
+                numOfResource =  Integer.parseInt(numOfResourceType);
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number");
+            }
+        }
+        return numOfResource;
     }
 
     @Override
@@ -149,16 +180,83 @@ public class CLI implements ClientView {
         int numOfResourceToChoose = localModel.getNumOfResourceToChoose();
         System.out.println("Choose " + numOfResourceToChoose + " resource to add to your depot");
         Map<Resource,Integer> resources = new HashMap<>();
-        String resourceType = "";
-        String numOfResourceType = "";
 
         do {
-            resourceType = readInput("Choose a resource type(COIN,SHIELD,SERVANT,STONE):");
-            numOfResourceType = readInput("Choose how many resources you want of this type:");
-            totalResources += Integer.parseInt(numOfResourceType);
-            resources.put(Resource.valueOf(resourceType),Integer.parseInt(numOfResourceType));
+            Resource resource = readResource();
+            int numOfResourceType = readResourceQuantity();
+            totalResources += numOfResourceType;
+            resources.put(resource,numOfResourceType);
         }while (totalResources < numOfResourceToChoose);
         messageSender.sendMessage(new ChooseInitialResourcesMessage(localModel.getLocalPlayer().getNickname(),resources));
+    }
+
+    @Override
+    public void askAddToWareHouse() {
+        System.out.println("Add your obtained resource to your warehouse");
+        Resource resource = readResource();
+        int numOfResourceType = readResourceQuantity();
+
+        Map<Resource, Integer> singleResourceMap = new HashMap<>();
+        singleResourceMap.put(resource, numOfResourceType);
+
+        int depotLevel=0;
+        try {
+            depotLevel = Integer.parseInt(readInput("Choose the depot level, insert a number between 1 and 5\n(1,2,3 Standard Depot, 4,5 special depot if active): "));
+        } catch (NumberFormatException e) {
+            System.out.println("Not a number");
+        }
+        while(!(depotLevel>=1 && depotLevel <= 5)){
+            try {
+                depotLevel = Integer.parseInt(readInput("Please insert a number between 1 and 5\n(1,2,3 Standard Depot or 4,5 Special depot if active): "));
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number");
+            }
+        }
+
+        messageSender.sendMessage(new AddToWarehouseMessage(localModel.getLocalPlayer().getNickname(), depotLevel, singleResourceMap));
+    }
+
+    @Override
+    public void askTurnAction() {
+        if (phase == LocalPhase.MAIN_TURN_ACTION_AVAILABLE){
+            System.out.println("Choose an action:\n" +
+                    "1. Take Resources from market\n" +
+                    "2. Buy one Development Card\n" +
+                    "3. Activate the Production\n" +
+                    "4. Activate a leader card\n" +
+                    "5. Discard a leader card\n" +
+                    "6. Rearrange warehouse resources");
+            String action = readInput("Insert a number between 1 and 6:");
+            int actionInt =  Integer.parseInt(action);
+            while(!(actionInt>=1 && actionInt<=6)){
+                action = readInput("Please insert a number between 1 and 6");
+                try {
+                    actionInt =  Integer.parseInt(action);
+                } catch (NumberFormatException e) {
+                    System.out.println("Not a number");
+                }
+            }
+            switch (actionInt){
+                case 1:
+                    phase = LocalPhase.TAKE_FROM_MARKET;
+                    break;
+                case 2:
+                    phase = LocalPhase.BUY_DEV_CARD;
+                    break;
+                case 3:
+                    phase = LocalPhase.ACTIVATE_PRODUCTION;
+                    break;
+                case 4:
+                    phase = LocalPhase.ACTIVATE_LEADER;
+                    break;
+                case 5:
+                    phase = LocalPhase.DISCARD_LEADER;
+                    break;
+                case 6:
+                    phase = LocalPhase.REARRANGE_WAREHOUSE;
+            }
+            phase.handlePhase(this);
+        }
     }
 
 
@@ -201,7 +299,7 @@ public class CLI implements ClientView {
     @Override
     public void showInitialLeaderCardDiscard(String nickname, int indexLeaderCard1, int indexLeaderCard2) {
         localModel.discardInitialLeaders(nickname,indexLeaderCard1,indexLeaderCard2);
-        if(localModel.getLocalPlayer().equals(nickname))
+        if(localModel.getLocalPlayer().getNickname().equals(nickname))
             System.out.println("Wait for other players to choose their cards");
     }
 
@@ -215,7 +313,7 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdatedTemporaryMapResource(String nickname, Map<Resource, Integer> temporaryMapResource) {
-        System.out.println(temporaryMapResource);
+        System.out.println(nickname + temporaryMapResource);
     }
 
     @Override
@@ -252,10 +350,9 @@ public class CLI implements ClientView {
     public void showUpdatePlayerTurn(String nickname) {
         if (nickname.equals(localModel.getLocalPlayer().getNickname())){
             System.out.println("It's your turn");
-            phase.handlePhase(this);
         }
         else {
-            System.out.println("It's" + nickname + "'s turn");
+            System.out.println("It's " + nickname + "'s turn");
         }
 
 
