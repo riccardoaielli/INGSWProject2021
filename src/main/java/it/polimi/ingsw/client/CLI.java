@@ -515,8 +515,7 @@ public class CLI implements ClientView {
     @Override
     public void showUpdateMarket(Marble[][] marketMatrix, Marble marbleOut) {
         localModel.setMarket(marketMatrix,marbleOut);
-        if(phase == LocalPhase.LEADER_CHOICE)
-            localModel.printMarket();
+        localModel.printMarket();
     }
 
     @Override

@@ -14,6 +14,10 @@ public class Player {
     Strongbox strongbox;
     Map<Marble, Integer> temporaryMarbles;
 
+    public ArrayList<Integer> getLeaderCards() {
+        return leaderCards;
+    }
+
     public Player(String nickname) {
         this.nickname = nickname;
         leaderCards = new ArrayList<>();

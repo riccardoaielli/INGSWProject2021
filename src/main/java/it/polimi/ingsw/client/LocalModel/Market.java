@@ -25,11 +25,11 @@ public class Market {
             for (j = 0; j < maxColumn; j++){
                 System.out.print( getColorString.getColorMarble(marketMatrix[i][j]) + "● ");
             }
-            System.out.print( cliColor.RESET + "" + i + "\n");
+            System.out.print( cliColor.RESET + "" + (i+1) + "\n");
         }
         for(j=0; j<maxColumn; j++)
-            System.out.print( cliColor.RESET + "" + j + " ");
-        System.out.print( cliColor.RESET + "\nMarble out: " + getColorString.getColorMarble(marbleOut) + "● \n");
+            System.out.print( cliColor.RESET + "" + (j+1) + " ");
+        System.out.print( cliColor.RESET + "\nMarble out: " + getColorString.getColorMarble(marbleOut) + "● \n" + cliColor.RESET);
     }
 
 }

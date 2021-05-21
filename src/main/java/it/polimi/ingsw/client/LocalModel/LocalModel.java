@@ -34,7 +34,7 @@ public class LocalModel {
         developmentCardSpace = new DevelopmentCardSpace();
         wareHouseDepots = new WareHouseDepots();
         strongbox = new Strongbox();
-        //cliCardStringCreator();
+        cliCardStringCreator();
     }
 
     public Player getLocalPlayer() {
@@ -51,7 +51,8 @@ public class LocalModel {
      * @param marbleOut is the marble out of the market
      */
     public void setMarket(Marble[][] marketMatrix,Marble marbleOut){
-
+        market.setMarketMatrix(marketMatrix);
+        market.setMarbleOut(marbleOut);
     }
 
     /**
@@ -79,22 +80,22 @@ public class LocalModel {
        return null;
     }
 
-
+    public void printCard(int x) {
+        System.out.println(cliCardString.get(x));
+    }
 
     public void printMarket(){
-
+        market.printMarket();
     }
+
     public void printCardGrid(){
-        System.out.println(cardGrid.toString());
-    }
-
-
-    public void printView(){
-
+        //System.out.println(cardGrid.toString());
     }
 
     public void printLeaderCards() {
-        System.out.println(localPlayer + ": stampare carte leader del giocatore locale");
+        ArrayList <Integer> leaderCard = localPlayer.getLeaderCards();
+        for(Integer x : leaderCard)
+        this.printCard(x);
     }
 
     public void setLocalPlayer(String localPlayer) {
@@ -102,6 +103,9 @@ public class LocalModel {
         players.add(this.localPlayer);
     }
 
+    public void printView(){
+
+    }
 
     public void discardInitialLeaders(String nickname, int indexLeaderCard1, int indexLeaderCard2) {
         players.stream().filter(x->x.getNickname().equals(nickname)).forEach(x->x.discardInitialLeaders(indexLeaderCard1,indexLeaderCard2));
@@ -211,9 +215,7 @@ public class LocalModel {
             //System.out.print(string);
             cliCardString.put(id, string);
         }
-
-        System.out.println("...");
-
+        //System.out.println("...");
     }
 
     private String cardRequirementStringParser(LeaderCard leaderCard){
