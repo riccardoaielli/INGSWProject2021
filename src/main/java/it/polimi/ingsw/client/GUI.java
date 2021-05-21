@@ -58,6 +58,16 @@ public class GUI implements ClientView{
     }
 
     @Override
+    public void askForLeaderPower() {
+
+    }
+
+    @Override
+    public void askTakeFromMarketAction() {
+
+    }
+
+    @Override
     public void showError(String errorString) {
 
     }

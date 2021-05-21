@@ -1,11 +1,9 @@
 package it.polimi.ingsw.client.LocalModel;
 
+import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Player {
     String nickname;
@@ -14,10 +12,12 @@ public class Player {
     DevelopmentCardSpace developmentCardSpace;
     WareHouseDepots wareHouseDepots;
     Strongbox strongbox;
+    Map<Marble, Integer> temporaryMarbles;
 
     public Player(String nickname) {
         this.nickname = nickname;
         leaderCards = new ArrayList<>();
+        temporaryMarbles = new HashMap<>();
     }
 
     public String getNickname() {
@@ -58,4 +58,19 @@ public class Player {
             leaderCards.remove(indexLeaderCard-1);
         }
     }
+
+    public void printTermporaryMarbles() {
+        GetColorString getColorString = new GetColorString();
+        String out = "[";
+        for(Marble marble: temporaryMarbles.keySet()){
+            out = out + getColorString.getColorMarble(marble) + "●: " + temporaryMarbles.get(marble) + " " + cliColor.RESET;
+        }
+        System.out.println(out.concat("]"));
+    }
+
+    public void setTemporaryMarbles(Map<Marble, Integer> temporaryMarbles) {
+        this.temporaryMarbles = new HashMap<>(temporaryMarbles);
+    }
+
+
 }

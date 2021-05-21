@@ -45,8 +45,12 @@ public enum LocalPhase {
     },
     TAKE_FROM_MARKET{
         @Override
+        public void handlePhase(ClientView clientView) { clientView.askTakeFromMarketAction();}
+    },
+    TEMPORARY_MARBLES{
+        @Override
         public void handlePhase(ClientView clientView) {
-
+            clientView.askForLeaderPower();
         }
     },
     BUY_DEV_CARD{

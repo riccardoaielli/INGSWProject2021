@@ -279,6 +279,70 @@ public class CLI implements ClientView {
     }
 
     @Override
+    public void askTakeFromMarketAction() {
+        String rowOrColumn;
+        do{
+            rowOrColumn = readInput("Choose if you want to buy from a 'row' or a 'column':");
+        }while (!(rowOrColumn.equals("row") || rowOrColumn.equals("column")));
+        String numOfRowOrColumn;
+        int numOfRowOrColumnInt = 0;
+        int rowOrColumnInt;
+        int max;
+        if (rowOrColumn.equals("row")) {
+            max = 3;
+            rowOrColumnInt = 0;
+        }
+        else {
+            max = 4;
+            rowOrColumnInt = 1;
+        }
+        do {
+            numOfRowOrColumn = readInput("Insert the number of " + rowOrColumn + " you want to buy from (a number from 1 to " + max + "): " );
+            try {
+                numOfRowOrColumnInt =  Integer.parseInt(numOfRowOrColumn);
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number");
+            }
+        }while ( !(numOfRowOrColumnInt > 0 && numOfRowOrColumnInt <= max) );
+
+        messageSender.sendMessage(new TakeFromMarketMessage(localModel.getLocalPlayer().getNickname(),rowOrColumnInt,(numOfRowOrColumnInt -1)));
+    }
+
+    @Override
+    public void askForLeaderPower() {
+        String firstAnswer;
+        do{
+            firstAnswer = readInput("Do you want to use a leader power to transform white marbles?[y/n]");
+        }while (!(firstAnswer.equals("y")||firstAnswer.equals("n")));
+        if (firstAnswer.equals("y")){
+            String leaderCard;
+            int leaderCardInt = 0;
+            String numOfTransformations;
+            int numOfTransformationsInt = 0;
+            do {
+                leaderCard = readInput("Choose the number of leader card to use:");
+                try {
+                    leaderCardInt =  Integer.parseInt(leaderCard);
+                } catch (NumberFormatException e) {
+                    System.out.println("Not a number");
+                }
+            }while (leaderCardInt < 0);
+            do {
+                numOfTransformations = readInput("Choose the number of white marbles to transform:");
+                try {
+                    numOfTransformationsInt =  Integer.parseInt(numOfTransformations);
+                } catch (NumberFormatException e) {
+                    System.out.println("Not a number");
+                }
+            }while (numOfTransformationsInt < 0);
+            messageSender.sendMessage(new TransformWhiteMarblesMessage(localModel.getLocalPlayer().getNickname(),leaderCardInt,numOfTransformationsInt));
+        }
+        else{
+            messageSender.sendMessage(new TransformMarblesMessage(localModel.getLocalPlayer().getNickname()));
+        }
+    }
+
+    @Override
     public void askBuyDevCard() {
         System.out.println("Insert the coordinates of the development card you want to buy");
         String rowString = readInput("Insert the row of the card (number between 1 and 3)");
@@ -378,6 +442,7 @@ public class CLI implements ClientView {
     }
 
 
+
     @Override
     public void showError(String errorString) {
         System.out.println(errorString);
@@ -420,7 +485,9 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdateTemporaryMarbles(String nickname, Map<Marble, Integer> temporaryMarbles) {
-
+        localModel.getPlayer(nickname).setTemporaryMarbles(temporaryMarbles);
+        System.out.println(nickname + " obtained these marbles from the market:");
+        localModel.getPlayer(nickname).printTermporaryMarbles();
     }
 
     @Override

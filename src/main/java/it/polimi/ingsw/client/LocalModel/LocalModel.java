@@ -86,8 +86,12 @@ public class LocalModel {
     }
 
 
-    public void getPlayer(String Nickname){
-
+    public Player getPlayer(String nickname){
+       for(Player player: players){
+           if (player.getNickname().equals(nickname))
+               return player;
+       }
+       return null;
     }
 
 

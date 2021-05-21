@@ -1,6 +1,7 @@
 package it.polimi.ingsw.common.messages.messagesToClient;
 
 import it.polimi.ingsw.client.ClientView;
+import it.polimi.ingsw.client.LocalModel.LocalPhase;
 import it.polimi.ingsw.common.messages.MessageType;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 
@@ -16,5 +17,9 @@ public class TemporaryMarblesUpdate extends MessageToClient {
     @Override
     public void handleMessage(ClientView clientView) {
         clientView.showUpdateTemporaryMarbles(getNickname(),temporaryMarbles);
+        if(clientView.getLocalModel().getLocalPlayer().getNickname().equals(getNickname())) {
+            clientView.setPhase(LocalPhase.TEMPORARY_MARBLES);
+            clientView.getPhase().handlePhase(clientView);
+        }
     }
 }
