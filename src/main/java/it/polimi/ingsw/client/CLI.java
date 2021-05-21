@@ -67,6 +67,7 @@ public class CLI implements ClientView {
     public void clearConsoleAndReprint() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
+        localModel.printView();
         //Add reprint view
     }
 

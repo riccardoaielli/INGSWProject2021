@@ -48,8 +48,10 @@ public class Player {
         this.leaderCards = new ArrayList<>(leaderCards);
     }
 
-    private void printPersonalBoards(){
-
+    public void printPersonalBoards(){
+        System.out.println("Personal board stampata");
+        printTermporaryMarbles();
+        faithTrack.printFaithTrack();
     }
 
 

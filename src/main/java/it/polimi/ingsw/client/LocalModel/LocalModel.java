@@ -104,7 +104,11 @@ public class LocalModel {
     }
 
     public void printView(){
-
+        printMarket();
+        printCardGrid();
+        printLeaderCards();
+        for(Player player : players)
+            player.printPersonalBoards();
     }
 
     public void discardInitialLeaders(String nickname, int indexLeaderCard1, int indexLeaderCard2) {
