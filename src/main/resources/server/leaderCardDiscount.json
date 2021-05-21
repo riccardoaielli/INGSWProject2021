@@ -6,11 +6,11 @@
       "cardRequirement": [
         {
           "color": "YELLOW",
-          "level": 1
+          "level": 0
         },
         {
           "color": "GREEN",
-          "level": 1
+          "level": 0
         }
       ],
       "resourceRequirement": null
@@ -26,11 +26,11 @@
       "cardRequirement": [
         {
           "color": "BLUE",
-          "level": 1
+          "level": 0
         },
         {
           "color": "PURPLE",
-          "level": 1
+          "level": 0
         }
       ],
       "resourceRequirement": null
@@ -46,11 +46,11 @@
       "cardRequirement": [
         {
           "color": "YELLOW",
-          "level": 1
+          "level": 0
         },
         {
           "color": "PURPLE",
-          "level": 1
+          "level": 0
         }
       ],
       "resourceRequirement": null
@@ -66,11 +66,11 @@
       "cardRequirement": [
         {
           "color": "GREEN",
-          "level": 1
+          "level": 0
         },
         {
           "color": "BLUE",
-          "level": 1
+          "level": 0
         }
       ],
       "resourceRequirement": null

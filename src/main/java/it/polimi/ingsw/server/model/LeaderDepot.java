@@ -15,4 +15,7 @@ public class LeaderDepot extends LeaderCard{
         warehouseDepots.addSpecialDepot(specialDepotResource);
     }
 
+    public Resource getSpecialDepotResource() {
+        return specialDepotResource;
+    }
 }

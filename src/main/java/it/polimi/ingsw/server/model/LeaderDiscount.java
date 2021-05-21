@@ -28,4 +28,12 @@ public class LeaderDiscount extends LeaderCard{
                 resources.replace(resourceDiscounted, 0);
         }
     }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public Resource getResourceDiscounted() {
+        return resourceDiscounted;
+    }
 }
