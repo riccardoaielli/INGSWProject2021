@@ -32,4 +32,7 @@ public class LeaderMarble extends LeaderCard{
         }
     }
 
+    public Marble getMarble() {
+        return marble;
+    }
 }
