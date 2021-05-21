@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.model;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.common.messages.messagesToClient.CardGridUpdate;
+import it.polimi.ingsw.common.utils.CardGridParser;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.DevelopmentCardColor;
 import it.polimi.ingsw.server.model.exceptions.NoCardException;
@@ -32,19 +33,8 @@ public class CardGrid extends MessageObservable {
      */
     public CardGrid(){
 
-        Gson gson = new Gson();
-
-        String path = "src/main/resources/server/developmentCards.json";
-
-        Reader reader = null;
-        try {
-            reader = new FileReader(path);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        Type myDataType = new TypeToken<Stack<DevelopmentCard>[][]>(){}.getType();
-        cardGridMatrix = gson.fromJson(reader, myDataType);
+        CardGridParser cardGridParser = new CardGridParser();
+        cardGridMatrix = cardGridParser.parse();
 
         for(i=0; i<maxRow; i++)
             for(j=0; j<maxColumn; j++){

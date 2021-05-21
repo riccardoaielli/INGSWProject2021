@@ -1,7 +1,9 @@
 package it.polimi.ingsw.client.LocalModel;
 
+import it.polimi.ingsw.common.utils.CardGridParser;
 import it.polimi.ingsw.common.utils.LeaderCardParser;
 import it.polimi.ingsw.server.model.*;
+import it.polimi.ingsw.server.model.DevelopmentCard;
 import it.polimi.ingsw.server.model.enumerations.DevelopmentCardColor;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
@@ -24,6 +26,8 @@ public class LocalModel {
     private Strongbox strongbox;
     private Map<Integer,String> cliCardString = new HashMap<>();
     private GetColorString getColorString = new GetColorString();
+    private int i, j;
+    private final int maxRow = 3, maxColumn = 4;
 
 
     public LocalModel() {
@@ -144,14 +148,60 @@ public class LocalModel {
 
     public void cliCardStringCreator(){
 
-        String stringTemp;
-        String string;
+        String stringTemp = "";
+        String string = "";
+        int i, j;
 
         LeaderCardParser leaderCardParser = new LeaderCardParser();
         Stack<LeaderDepot> leaderCardDepot = leaderCardParser.leaderCardDepotDeserializer();
         Stack<LeaderMarble> leaderCardMarble = leaderCardParser.leaderCardMarbleDeserializer();
         Stack<LeaderProduction> leaderCardProduction = leaderCardParser.leaderCardProductionDeserializer();
         Stack<LeaderDiscount> leaderCardDiscount = leaderCardParser.leaderCardDiscountDeserializer();
+
+        Stack<DevelopmentCard>[][] cardGridMatrix;
+        CardGridParser cardGridParser = new CardGridParser();
+        cardGridMatrix = cardGridParser.parse();
+        Stack<DevelopmentCard> cardGridMatrixStack;
+
+        for(i=0; i<maxRow; i++){
+            for(j=0; j<maxColumn; j++) {
+                cardGridMatrixStack = cardGridMatrix[i][j];
+
+                while (cardGridMatrixStack.size() != 0) {
+                    string = "";
+                    //codice di parsing della stringa che stampa la carta
+                    DevelopmentCard developmentCard = cardGridMatrixStack.pop();
+                    int id = developmentCard.getId();
+                    int level = developmentCard.getLevel();
+                    for (int k = 0; k < level; k++) {
+                        stringTemp = getColorString.getColorDevelopmentCard(developmentCard.getColor()) + "♦" + cliColor.RESET;
+                        string = string.concat(stringTemp);
+                    }
+                    string = string.concat("\n");
+
+                    stringTemp = getMapResourceIntegerParser(developmentCard.getPrice());
+                    string = string.concat(stringTemp);
+                    string = string.concat("\n");
+
+                    Map<Resource, Integer> cost = developmentCard.getPowerOfProduction().getCost();
+                    Map<Resource, Integer> production = developmentCard.getPowerOfProduction().getProduction();
+                    stringTemp = getMapResourceIntegerParser(cost);
+                    stringTemp = stringTemp.concat("=");
+                    string = string.concat(stringTemp);
+                    stringTemp = getMapResourceIntegerParser(production);
+                    string = string.concat(stringTemp);
+                    string = string.concat("\n");
+
+                    int victoryPoints = developmentCard.getVictoryPoints();
+                    stringTemp = String.valueOf(victoryPoints) + "\n\n";
+                    string = string.concat(stringTemp);
+
+
+                    System.out.print(string);
+                    cliCardString.put(id, string);
+                }
+            }
+        }
 
         while (leaderCardDepot.size() != 0) {
 
@@ -207,14 +257,15 @@ public class LocalModel {
             //codice di parsing della stringa che stampa la carta
             LeaderProduction leaderProduction = leaderCardProduction.pop();
             int id = leaderProduction.getId();
+            PowerOfProduction powerOfProduction = leaderProduction.getPowerOfProduction();
             stringTemp = cardRequirementStringParser(leaderProduction);
             string = string.concat(stringTemp);
 
-            stringTemp = cardPowerOfProductionStringParser(leaderProduction);
+            stringTemp = cardPowerOfProductionStringParser(powerOfProduction);
             string = string.concat(stringTemp);
 
-            stringTemp = "PRODUCT" + "\n" + cliColor.RESET;
-            string = string.concat(stringTemp);
+            //stringTemp = "PRODUCT" + "\n" + cliColor.RESET;
+            //string = string.concat(stringTemp);
 
             //System.out.print(string);
             cliCardString.put(id, string);
@@ -243,11 +294,10 @@ public class LocalModel {
         return string;
     }
 
-    private String cardPowerOfProductionStringParser(LeaderProduction leaderProduction){
+    private String cardPowerOfProductionStringParser(PowerOfProduction powerOfProduction){
 
         String string = "";
         String stringTemp;
-        PowerOfProduction powerOfProduction = leaderProduction.getPowerOfProduction();
         Map<Resource, Integer> cost = powerOfProduction.getCost();
         Map<Resource,Integer> production = powerOfProduction.getProduction();
 

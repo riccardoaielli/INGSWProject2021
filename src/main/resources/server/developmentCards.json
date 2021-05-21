@@ -11,7 +11,7 @@
         "victoryPoints" : 9,
         "powerOfProduction" : {
           "cost" : {
-            "COIN": 2
+            "SERVANT": 2
           },
           "production" : {
             "STONE": 3,
