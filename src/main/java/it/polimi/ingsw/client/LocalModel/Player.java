@@ -50,7 +50,7 @@ public class Player {
     }
 
     public void printPersonalBoards(){
-        System.out.println("Personal board stampata");
+        System.out.println("Personal board di " + nickname + ":");
         printTermporaryMarbles();
         faithTrack.printFaithTrack();
     }

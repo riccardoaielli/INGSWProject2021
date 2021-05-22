@@ -1,10 +1,13 @@
 package it.polimi.ingsw.client.LocalModel;
 
+import it.polimi.ingsw.server.model.enumerations.Resource;
+
 import java.util.ArrayList;
 
 public class FaithTrack {
     private int redcrossPosition;
     private ArrayList<Integer> popeFavourTiles;
+    private GetColorString getColorString = new GetColorString();
 
     public FaithTrack() {
         redcrossPosition = 0;
@@ -23,26 +26,27 @@ public class FaithTrack {
     }
 
     public void printFaithTrack(){
-        String cell = " |";
-        String redCross = "\\u001b[31m┼\\u001b[0m|";
-        String faithTrack = "|";
-        String popeFavourTilesString = "    --x-   --y--  --z---";
-        for (int pos = 0; pos<24; pos++){
+
+        String cell = "|";
+        String redCross = getColorString.getColorResource(Resource.FAITH)+"┼"+cliColor.RESET;
+        String faithTrack = "";
+        String popeFavourTilesString = "         └---x---┘       └-------y------┘     └----------z------┘";
+        for (int pos = 0; pos<=24; pos++){
             if(redcrossPosition == pos)
-                faithTrack.concat(redCross);
+                faithTrack = faithTrack.concat(redCross).concat(cell);
             else
-                faithTrack.concat(cell);
+                faithTrack = faithTrack.concat(String.valueOf(pos)).concat(cell);
         }
 
         String tile = "";
         for (int i = 0; i < popeFavourTiles.size(); i++){
             switch (i){
                 case 0:
-                    tile = "--x-";
+                    tile = "└---x---┘";
                 case 1:
-                    tile = "--y--";
+                    tile = "└-------y------┘";
                 case 2:
-                    tile = "--z---";
+                    tile = "└----------z------┘";
             }
             switch (popeFavourTiles.get(i)){
                 case 1:

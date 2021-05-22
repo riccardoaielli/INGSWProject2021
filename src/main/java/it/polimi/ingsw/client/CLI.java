@@ -268,10 +268,13 @@ public class CLI implements ClientView {
 
     @Override
     public void askTurnAction() {
+
+        localModel.printView();
+
         int numOfActions = 3;
         List<String> actions = new ArrayList<>();
         List<LocalPhase> actionPhases = new ArrayList<>();
-        if(!mainTurnActionDone) {
+        if (!mainTurnActionDone) {
             actions.add("Take Resources from market");
             actionPhases.add(LocalPhase.TAKE_FROM_MARKET);
             actions.add("Buy one Development Card");
@@ -280,6 +283,8 @@ public class CLI implements ClientView {
             actionPhases.add(LocalPhase.ACTIVATE_PRODUCTION);
             numOfActions = 6;
         }
+        else
+            System.out.println("0. End turn");
         actions.add("Activate a leader card");
         actionPhases.add(LocalPhase.ACTIVATE_LEADER);
         actions.add("Discard a leader card");
@@ -288,24 +293,21 @@ public class CLI implements ClientView {
         actionPhases.add(LocalPhase.REARRANGE_WAREHOUSE);
 
         System.out.println("Choose an action:");
-        for(int action = 0; action < numOfActions; action++){
-            System.out.println((action+1) + ". " + actions.get(action));
+        for (int action = 0; action < numOfActions; action++) {
+            System.out.println((action + 1) + ". " + actions.get(action));
         }
 
-        String actionString = readInput("Insert a number between 1 and "+numOfActions+":");
-        int actionInt =  Integer.parseInt(actionString);
-        while(!(actionInt >= 1 && actionInt <= numOfActions)){
-            actionString = readInput("Please insert a number between 1 and "+numOfActions+":");
-            try {
-                actionInt =  Integer.parseInt(actionString);
-            } catch (NumberFormatException e) {
-                System.out.println("Not a number");
+        int action = readInt("Insert a number between 1 and " + numOfActions + " :");
+        while (!(action >= 0 && action <= numOfActions)) {
+            action = readInt("Please insert a number between 1 and " + numOfActions + " :");
+        }
+
+        if (action == 0) {
+            messageSender.sendMessage(new EndTurnMessage(localModel.getLocalPlayer().getNickname()));
+        } else{
+            phase = actionPhases.get(action - 1);
+            phase.handlePhase(this);
             }
-        }
-
-        phase = actionPhases.get(actionInt - 1);
-        phase.handlePhase(this);
-
         /*
         if (phase == LocalPhase.MAIN_TURN_ACTION_AVAILABLE){
             System.out.println("Choose an action:\n" +
@@ -347,6 +349,7 @@ public class CLI implements ClientView {
             phase.handlePhase(this);
         }*/
     }
+
 
     @Override
     public void askTakeFromMarketAction() {
@@ -597,12 +600,12 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdateRedcrossPosition(String nickname, int redcrossPosition) {
-
+        localModel.getPlayer(nickname).setRedCrossPosition(redcrossPosition);
     }
 
     @Override
     public void showUpdatePopeFavourTiles(String nickname, ArrayList<Integer> popeFavourTiles) {
-
+        localModel.getPlayer(nickname).setPopeFavourTiles(popeFavourTiles);
     }
 
     @Override
