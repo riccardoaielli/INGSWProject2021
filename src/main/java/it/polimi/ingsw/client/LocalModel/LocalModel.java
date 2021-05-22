@@ -4,7 +4,6 @@ import it.polimi.ingsw.common.utils.CardGridParser;
 import it.polimi.ingsw.common.utils.LeaderCardParser;
 import it.polimi.ingsw.server.model.*;
 import it.polimi.ingsw.server.model.DevelopmentCard;
-import it.polimi.ingsw.server.model.enumerations.DevelopmentCardColor;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 
@@ -24,10 +23,13 @@ public class LocalModel {
     private DevelopmentCardSpace developmentCardSpace;
     private WareHouseDepots wareHouseDepots;
     private Strongbox strongbox;
-    private Map<Integer,String> cliCardString = new HashMap<>();
+    private Map<Integer,ArrayList <String>> cliCardString = new HashMap<>();
     private GetColorString getColorString = new GetColorString();
-    private int i, j;
     private final int maxRow = 3, maxColumn = 4;
+
+    int[][] cardGridMatrix;
+    ArrayList<String> stringArray = new ArrayList<>();
+    int k;
 
 
     public LocalModel() {
@@ -64,7 +66,7 @@ public class LocalModel {
      * @param cardGridMatrix is a matrix that represents the cardGrid, each position refers to a development card ID
      */
     public void setCardGrid(int[][] cardGridMatrix){
-
+        this.cardGridMatrix = cardGridMatrix;
     }
 
     /**
@@ -85,7 +87,9 @@ public class LocalModel {
     }
 
     public void printCard(int x) {
-        System.out.println(cliCardString.get(x));
+        ArrayList<String> arrayList = cliCardString.get(x);
+        for(int k=0; k<arrayList.size(); k++)
+            System.out.print(arrayList.get(k) + "\n");
     }
 
     public void printMarket(){
@@ -93,7 +97,13 @@ public class LocalModel {
     }
 
     public void printCardGrid(){
-        //System.out.println(cardGrid.toString());
+        int k = 0;
+        for(int i=0; i<maxRow; i++) {
+                for (int j = 0; j < maxColumn; j++) {
+                        int x = cardGridMatrix[i][j];
+                        printCard(x);
+                }
+        }
     }
 
     public void printLeaderCards() {
@@ -125,7 +135,6 @@ public class LocalModel {
             case 0:
                 return 0;
             case 1:
-                return 1;
             case 2:
                 return 1;
             case 3:
@@ -150,7 +159,6 @@ public class LocalModel {
 
         String stringTemp = "";
         String string = "";
-        int i, j;
 
         LeaderCardParser leaderCardParser = new LeaderCardParser();
         Stack<LeaderDepot> leaderCardDepot = leaderCardParser.leaderCardDepotDeserializer();
@@ -163,12 +171,14 @@ public class LocalModel {
         cardGridMatrix = cardGridParser.parse();
         Stack<DevelopmentCard> cardGridMatrixStack;
 
-        for(i=0; i<maxRow; i++){
-            for(j=0; j<maxColumn; j++) {
+        for(int i=0; i<maxRow; i++){
+            for(int j=0; j<maxColumn; j++) {
                 cardGridMatrixStack = cardGridMatrix[i][j];
 
                 while (cardGridMatrixStack.size() != 0) {
+
                     string = "";
+                    ArrayList <String> stringArray = new ArrayList<>();
                     //codice di parsing della stringa che stampa la carta
                     DevelopmentCard developmentCard = cardGridMatrixStack.pop();
                     int id = developmentCard.getId();
@@ -177,12 +187,16 @@ public class LocalModel {
                         stringTemp = getColorString.getColorDevelopmentCard(developmentCard.getColor()) + "♦" + cliColor.RESET;
                         string = string.concat(stringTemp);
                     }
-                    string = string.concat("\n");
+                    //addSpaces(string);
+                    stringArray.add(string);
 
+                    string = "";
                     stringTemp = getMapResourceIntegerParser(developmentCard.getPrice());
                     string = string.concat(stringTemp);
-                    string = string.concat("\n");
+                    //addSpaces(string);
+                    stringArray.add(string);
 
+                    string = "";
                     Map<Resource, Integer> cost = developmentCard.getPowerOfProduction().getCost();
                     Map<Resource, Integer> production = developmentCard.getPowerOfProduction().getProduction();
                     stringTemp = getMapResourceIntegerParser(cost);
@@ -190,15 +204,20 @@ public class LocalModel {
                     string = string.concat(stringTemp);
                     stringTemp = getMapResourceIntegerParser(production);
                     string = string.concat(stringTemp);
-                    string = string.concat("\n");
+                    //addSpaces(string);
+                    stringArray.add(string);
 
+                    string = "";
                     int victoryPoints = developmentCard.getVictoryPoints();
-                    stringTemp = String.valueOf(victoryPoints) + "\n\n";
+                    stringTemp = String.valueOf(victoryPoints);
                     string = string.concat(stringTemp);
+                    //addSpaces(string);
+                    stringArray.add(string);
 
+                    /*for(String x : stringArray)
+                        System.out.print(x + "\n");*/
 
-                    System.out.print(string);
-                    cliCardString.put(id, string);
+                    cliCardString.put(id, stringArray);
                 }
             }
         }
@@ -206,74 +225,95 @@ public class LocalModel {
         while (leaderCardDepot.size() != 0) {
 
             string = "";
+            ArrayList <String> stringArray = new ArrayList<>();
             //codice di parsing della stringa che stampa la carta
             LeaderDepot leaderDepot = leaderCardDepot.pop();
             int id = leaderDepot.getId();
-            stringTemp = cardRequirementStringParser(leaderDepot);
-            string = string.concat(stringTemp);
-            Resource resource = leaderDepot.getSpecialDepotResource();
-            stringTemp = getColorString.getColorResource(resource) + "DEPOT" + "\n" + cliColor.RESET;
-            string = string.concat(stringTemp);
+            cardRequirementStringParser(leaderDepot, stringArray);
 
-            //System.out.print(string);
-            cliCardString.put(id, string);
+            Resource resource = leaderDepot.getSpecialDepotResource();
+            string = "";
+            string = getColorString.getColorResource(resource) + "DEPOT" + cliColor.RESET;
+            //addSpaces(string);
+            stringArray.add(string);
+
+            /*for(String x : stringArray)
+                System.out.print(x + "\n");*/
+            cliCardString.put(id, stringArray);
         }
 
         while (leaderCardDiscount.size() != 0) {
 
             string = "";
+            ArrayList <String> stringArray = new ArrayList<>();
             //codice di parsing della stringa che stampa la carta
             LeaderDiscount leaderDiscount = leaderCardDiscount.pop();
             int id = leaderDiscount.getId();
-            stringTemp = cardRequirementStringParser(leaderDiscount);
-            string = string.concat(stringTemp);
-            Resource resource = leaderDiscount.getResourceDiscounted();
-            stringTemp = getColorString.getColorResource(resource) + "DISCOUNT" + "\n" + cliColor.RESET;
-            string = string.concat(stringTemp);
+            cardRequirementStringParser(leaderDiscount, stringArray);
 
-            //System.out.print(string);
-            cliCardString.put(id, string);
+            Resource resource = leaderDiscount.getResourceDiscounted();
+            string = "";
+            string = getColorString.getColorResource(resource) + "DISCOUNT" + cliColor.RESET;
+            //addSpaces(string);
+            stringArray.add(string);
+
+            /*for(String x : stringArray)
+                System.out.print(x + "\n");*/
+            cliCardString.put(id, stringArray);
         }
 
         while (leaderCardMarble.size() != 0) {
 
             string = "";
+            ArrayList <String> stringArray = new ArrayList<>();
             //codice di parsing della stringa che stampa la carta
             LeaderMarble leaderMarble = leaderCardMarble.pop();
             int id = leaderMarble.getId();
-            stringTemp = cardRequirementStringParser(leaderMarble);
-            string = string.concat(stringTemp);
-            Marble marble = leaderMarble.getMarble();
-            stringTemp = getColorString.getColorMarble(marble) + "MARBLE" + "\n" + cliColor.RESET;
-            string = string.concat(stringTemp);
+            cardRequirementStringParser(leaderMarble, stringArray);
 
-            //System.out.print(string);
-            cliCardString.put(id, string);
+            Marble marble = leaderMarble.getMarble();
+            string = "";
+            string = getColorString.getColorMarble(marble) + "MARBLE" + cliColor.RESET;
+            //addSpaces(string);
+            stringArray.add(string);
+
+            /*for(String x : stringArray)
+                System.out.print(x + "\n");*/
+            cliCardString.put(id, stringArray);
         }
 
         while (leaderCardProduction.size() != 0) {
 
             string = "";
+            ArrayList <String> stringArray = new ArrayList<>();
             //codice di parsing della stringa che stampa la carta
             LeaderProduction leaderProduction = leaderCardProduction.pop();
             int id = leaderProduction.getId();
             PowerOfProduction powerOfProduction = leaderProduction.getPowerOfProduction();
-            stringTemp = cardRequirementStringParser(leaderProduction);
-            string = string.concat(stringTemp);
 
-            stringTemp = cardPowerOfProductionStringParser(powerOfProduction);
-            string = string.concat(stringTemp);
+            cardRequirementStringParser(leaderProduction, stringArray);
 
-            //stringTemp = "PRODUCT" + "\n" + cliColor.RESET;
-            //string = string.concat(stringTemp);
 
-            //System.out.print(string);
-            cliCardString.put(id, string);
+            cardPowerOfProductionStringParser(powerOfProduction, stringArray);
+
+            /*for(String x : stringArray)
+                System.out.print(x + "\n");*/
+            cliCardString.put(id, stringArray);
         }
-        //System.out.println("...");
     }
 
-    private String cardRequirementStringParser(LeaderCard leaderCard){
+    /*private String addSpaces(String string){
+        String str = string;
+        int space =100 - str.length();
+        for (int k = 0; k < space; k++) {
+            str = str.concat("si");
+        }
+        str = str.concat("ok");
+        return str;
+    }*/
+
+    private ArrayList <String> cardRequirementStringParser(LeaderCard leaderCard, ArrayList <String> stringArray){
+
         String string = "";
         String stringTemp;
         Requirement requirement = leaderCard.getRequirement();
@@ -281,20 +321,27 @@ public class LocalModel {
         if(cardRequirement != null) {
             stringTemp = getCardRequirementStringParser(cardRequirement);
             string = string.concat(stringTemp);
+            //addSpaces(string);
+            stringArray.add(string);
         }
+
+        string = "";
         Map<Resource, Integer> resourceRequirement = leaderCard.getRequirement().getResourceRequirement();
         if(resourceRequirement != null) {
-            stringTemp = getMapResourceIntegerParser(resourceRequirement);
-            stringTemp = stringTemp.concat("\n");
-            string = string.concat(stringTemp);
+            string = getMapResourceIntegerParser(resourceRequirement);
+            //addSpaces(string);
+            stringArray.add(string);
         }
+
+        string = "";
         int victoryPoints = leaderCard.getVictoryPoints();
-        stringTemp = String.valueOf(victoryPoints) + "\n";
-        string = string.concat(stringTemp);
-        return string;
+        string = String.valueOf(victoryPoints);
+        //addSpaces(string);
+        stringArray.add(string);
+        return stringArray;
     }
 
-    private String cardPowerOfProductionStringParser(PowerOfProduction powerOfProduction){
+    private ArrayList <String> cardPowerOfProductionStringParser(PowerOfProduction powerOfProduction, ArrayList <String> stringArray){
 
         String string = "";
         String stringTemp;
@@ -308,9 +355,10 @@ public class LocalModel {
         stringTemp = getMapResourceIntegerParser(production);
         stringTemp = stringTemp.concat("+?");
         string = string.concat(stringTemp);
+        //addSpaces(string);
+        stringArray.add(string);
 
-        string = string.concat("\n");
-        return string;
+        return stringArray;
     }
 
     private String getCardRequirementStringParser(ArrayList<CardRequirement> cardRequirement){
@@ -330,7 +378,6 @@ public class LocalModel {
             for (int i = 0; i < freq; i++)
                 cardRequirement.remove(x);
         }
-        string = string.concat("\n");
         return string;
     }
 
