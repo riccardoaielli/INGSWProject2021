@@ -1,7 +1,9 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.LocalModel.GetColorString;
 import it.polimi.ingsw.client.LocalModel.LocalModel;
 import it.polimi.ingsw.client.LocalModel.LocalPhase;
+import it.polimi.ingsw.client.LocalModel.cliColor;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.common.messages.messagesToServer.*;
 import it.polimi.ingsw.server.model.Observable;
@@ -506,9 +508,15 @@ public class CLI implements ClientView {
     @Override
     public void askForLeaderCards() {
         localModel.printLeaderCards();
-        String firstCard = readInput("Choose a card to discard");
-        String secondCard = readInput("Choose another card to discard");
-        messageSender.sendMessage(new DiscardInitialLeaderMessage(localModel.getLocalPlayer().getNickname(),Integer.parseInt(firstCard),Integer.parseInt(secondCard)));
+        int firstCard = readInt("Choose a card to discard: ");
+        while (firstCard <= 0){
+            firstCard = readInt("Choose a card to discard: ");
+        }
+        int secondCard = readInt("Choose another card to discard");
+        while (secondCard <= 0){
+            secondCard = readInt("Choose another card to discard: ");
+        }
+        messageSender.sendMessage(new DiscardInitialLeaderMessage(localModel.getLocalPlayer().getNickname(),firstCard,secondCard));
     }
 
     @Override
@@ -578,12 +586,14 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdatedWarehouse(String nickname, List<Map<Resource, Integer>> depots) {
-
+        localModel.getPlayer(nickname).setWareHouseDepots(depots);
+        System.out.println("Warehouse depots updated");//this print id temporary
     }
 
     @Override
     public void showUpdatedStrongbox(String nickname, Map<Resource, Integer> strongbox) {
-
+        localModel.getPlayer(nickname).setStrongbox(strongbox);
+        System.out.println("Strongbox updated");//this print id temporary
     }
 
     @Override
@@ -601,11 +611,13 @@ public class CLI implements ClientView {
     @Override
     public void showUpdateRedcrossPosition(String nickname, int redcrossPosition) {
         localModel.getPlayer(nickname).setRedCrossPosition(redcrossPosition);
+        System.out.println("redCross Updated");//this print id temporary
     }
 
     @Override
     public void showUpdatePopeFavourTiles(String nickname, ArrayList<Integer> popeFavourTiles) {
         localModel.getPlayer(nickname).setPopeFavourTiles(popeFavourTiles);
+        System.out.println("pope favour tiles updated");//this print id temporary
     }
 
     @Override
@@ -652,7 +664,13 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdateRank(String nickname, ArrayList<RankPosition> rank) {
-
+        int pos = 0;
+        while (pos < rank.size()){
+            if (rank.get(pos).getNickname().equals(nickname))
+                System.out.println(pos + ") " + cliColor.COLOR_YELLOW + rank.get(pos).toString() + cliColor.RESET);
+            else
+                System.out.println(pos + ") " + rank.get(pos).toString());
+        }
     }
 
     @Override

@@ -8,4 +8,13 @@ public class RankPosition {
         this.nickname = nickname;
         this.victoryPoints = victoryPoints;
     }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    @Override
+    public String toString() {
+        return (nickname + ": " + victoryPoints);
+    }
 }

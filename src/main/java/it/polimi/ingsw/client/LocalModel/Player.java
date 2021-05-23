@@ -6,13 +6,13 @@ import it.polimi.ingsw.server.model.enumerations.Resource;
 import java.util.*;
 
 public class Player {
-    String nickname;
-    ArrayList <Integer> leaderCards;
-    FaithTrack faithTrack;
-    DevelopmentCardSpace developmentCardSpace;
-    WareHouseDepots wareHouseDepots;
-    Strongbox strongbox;
-    Map<Marble, Integer> temporaryMarbles;
+    private String nickname;
+    private ArrayList <Integer> leaderCards;
+    private FaithTrack faithTrack;
+    private DevelopmentCardSpace developmentCardSpace;
+    private WareHouseDepots wareHouseDepots;
+    private Strongbox strongbox;
+    private Map<Marble, Integer> temporaryMarbles;
 
     public ArrayList<Integer> getLeaderCards() {
         return leaderCards;
@@ -23,6 +23,8 @@ public class Player {
         leaderCards = new ArrayList<>();
         temporaryMarbles = new HashMap<>();
         faithTrack = new FaithTrack();
+        wareHouseDepots = new WareHouseDepots();
+        strongbox = new Strongbox();
     }
 
     public String getNickname() {
@@ -39,10 +41,10 @@ public class Player {
 
     }
     public void setWareHouseDepots(List<Map<Resource, Integer>> depots){
-
+        wareHouseDepots.setDepots(depots);
     }
     public void setStrongbox(Map<Resource, Integer> strongbox){
-
+        this.strongbox.setStrongbox(strongbox);
     }
 
     public void setLeaderCards(ArrayList<Integer> leaderCards) {
@@ -53,7 +55,11 @@ public class Player {
         System.out.println("Personal board di " + nickname + ":");
         printTermporaryMarbles();
         faithTrack.printFaithTrack();
+        strongbox.printStrongbox();
+        wareHouseDepots.printWhareHouseDepots();
     }
+
+
 
 
     public void discardInitialLeaders(int indexLeaderCard1, int indexLeaderCard2) {

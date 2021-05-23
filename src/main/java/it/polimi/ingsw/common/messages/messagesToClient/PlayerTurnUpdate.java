@@ -17,7 +17,7 @@ public class PlayerTurnUpdate extends MessageToClient {
                 clientView.setPhase(LocalPhase.RESOURCE_CHOICE);
             else
                 clientView.setPhase(LocalPhase.MENU);
-
+            clientView.setMainTurnActionDone(false);
             clientView.getPhase().handlePhase(clientView);
         }
     }
