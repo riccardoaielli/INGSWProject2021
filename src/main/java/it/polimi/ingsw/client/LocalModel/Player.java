@@ -13,6 +13,7 @@ public class Player {
     private WareHouseDepots wareHouseDepots;
     private Strongbox strongbox;
     private Map<Marble, Integer> temporaryMarbles;
+    private Map<Resource, Integer> temporaryMapResource;
 
     public ArrayList<Integer> getLeaderCards() {
         return leaderCards;
@@ -22,6 +23,7 @@ public class Player {
         this.nickname = nickname;
         leaderCards = new ArrayList<>();
         temporaryMarbles = new HashMap<>();
+        temporaryMapResource = new HashMap<>();
         faithTrack = new FaithTrack();
         wareHouseDepots = new WareHouseDepots();
         strongbox = new Strongbox();
@@ -86,4 +88,7 @@ public class Player {
     }
 
 
+    public void setTemporaryMapResource(Map<Resource, Integer> temporaryMapResource) {
+        this.temporaryMapResource = temporaryMapResource;
+    }
 }

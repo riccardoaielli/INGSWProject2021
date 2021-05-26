@@ -85,7 +85,7 @@ public class CLI implements ClientView {
     }
 
     private int readResourceQuantity(){
-        String numOfResourceType = readInput("Choose how many resources you want of this type (insert a number >= 1");
+        String numOfResourceType = readInput("Choose how many resources of this type (insert a number >= 1");
         int numOfResource =  0;
         try {
             numOfResource =  Integer.parseInt(numOfResourceType);
@@ -203,7 +203,7 @@ public class CLI implements ClientView {
                 return numOfResource;
             } catch (NumberFormatException e) {
                 System.out.println("Not a number");
-                System.out.println(stringPrint);
+                intString = readInput(stringPrint);
             }
         }
     }
@@ -244,25 +244,43 @@ public class CLI implements ClientView {
 
     @Override
     public void askAddToWareHouse() {
-        System.out.println("Add your obtained resource to your warehouse");
+        int addWarehouseChoice = readInt("Choose one of the following actions:\n" +
+                "1. Add your obtained resource to your warehouse\n" +
+                "2. Rearrange your warehouse\n" +
+                "3. Discard the obtained resources\n");
+        while (!(addWarehouseChoice>= 1 && addWarehouseChoice <=3)){
+            addWarehouseChoice = readInt("Invalid number, choose a number between 1 and 3");
+        }
+        switch (addWarehouseChoice){
+            case 1:
+                addResourceToDepot();
+                break;
+            case 2:
+                //TODO after rearrange we have to find a way to go back to add to warehouse menu
+                //TODO menu should not appear in the first turn
+                askRearrange();
+                break;
+            case 3:
+                //TODO add discard
+                break;
+        }
+
+
+
+
+
+    }
+
+    private void addResourceToDepot(){
         Resource resource = readResource();
         int numOfResourceType = readResourceQuantity();
 
         Map<Resource, Integer> singleResourceMap = new HashMap<>();
         singleResourceMap.put(resource, numOfResourceType);
 
-        int depotLevel=0;
-        try {
-            depotLevel = Integer.parseInt(readInput("Choose the depot level, insert a number between 1 and 5\n(1,2,3 Standard Depot, 4,5 special depot if active): "));
-        } catch (NumberFormatException e) {
-            System.out.println("Not a number");
-        }
+        int depotLevel = readInt("Choose the depot level, insert a number between 1 and 5\n(1,2,3 Standard Depot, 4,5 special depot if active): ");
         while(!(depotLevel>=1 && depotLevel <= 5)){
-            try {
-                depotLevel = Integer.parseInt(readInput("Please insert a number between 1 and 5\n(1,2,3 Standard Depot or 4,5 Special depot if active): "));
-            } catch (NumberFormatException e) {
-                System.out.println("Not a number");
-            }
+            depotLevel = readInt("Please insert a number between 1 and 5\n(1,2,3 Standard Depot or 4,5 Special depot if active): ");
         }
 
         messageSender.sendMessage(new AddToWarehouseMessage(localModel.getLocalPlayer().getNickname(), depotLevel, singleResourceMap));
@@ -276,6 +294,7 @@ public class CLI implements ClientView {
         int numOfActions = 3;
         List<String> actions = new ArrayList<>();
         List<LocalPhase> actionPhases = new ArrayList<>();
+        System.out.println("Choose an action:");
         if (!mainTurnActionDone) {
             actions.add("Take Resources from market");
             actionPhases.add(LocalPhase.TAKE_FROM_MARKET);
@@ -294,7 +313,7 @@ public class CLI implements ClientView {
         actions.add("Rearrange warehouse resources");
         actionPhases.add(LocalPhase.REARRANGE_WAREHOUSE);
 
-        System.out.println("Choose an action:");
+
         for (int action = 0; action < numOfActions; action++) {
             System.out.println((action + 1) + ". " + actions.get(action));
         }
@@ -357,7 +376,7 @@ public class CLI implements ClientView {
     public void askTakeFromMarketAction() {
         String rowOrColumn;
         do{
-            rowOrColumn = readInput("Choose if you want to buy from a 'row' or a 'column':");
+            rowOrColumn = readInput("Choose if you want to buy from a 'row' or a 'column':").toLowerCase();
         }while (!(rowOrColumn.equals("row") || rowOrColumn.equals("column")));
         String numOfRowOrColumn;
         int numOfRowOrColumnInt = 0;
@@ -381,6 +400,58 @@ public class CLI implements ClientView {
         }while ( !(numOfRowOrColumnInt > 0 && numOfRowOrColumnInt <= max) );
 
         messageSender.sendMessage(new TakeFromMarketMessage(localModel.getLocalPlayer().getNickname(),rowOrColumnInt,(numOfRowOrColumnInt -1)));
+    }
+
+    @Override
+    public void askRearrange() {
+        int rearrangeChoice = readInt("0. Go back\n" +
+                "1. Move to/from special depot\n" +
+                "2. Swap resources in standard depot shelves\n");
+        while (!(rearrangeChoice>= 0 && rearrangeChoice <=2)){
+            rearrangeChoice = readInt("Invalid number, choose a number between 0 and 2");
+        }
+        //Back to main menu
+        if (rearrangeChoice == 0){
+            phase = LocalPhase.MENU;
+            phase.handlePhase(this);
+        }
+        else if (rearrangeChoice == 1) askMoveSD();
+        else askSwap();
+    }
+
+    private void askMoveSD(){
+        int sourceDepotNumber = readInt("Insert the number of the depot from which you want to move resources, insert a number between 1 and 5\n" +
+                "(1,2,3 Standard Depot, 4,5 special depot): ");
+        while(!(sourceDepotNumber>=1 && sourceDepotNumber <= 5)){
+            sourceDepotNumber = readInt("Please insert a number between 1 and 5\n(1,2,3 Standard Depot or 4,5 Special depot if active): ");
+        }
+
+        int destinationDepotNumber = readInt("Insert the number of the depot to which you want to move resources, insert a number between 1 and 5\n" +
+                "(1,2,3 Standard Depot, 4,5 special depot): ");
+        while(!(destinationDepotNumber>=1 && destinationDepotNumber <= 5)){
+            destinationDepotNumber = readInt("Please insert a number between 1 and 5\n(1,2,3 Standard Depot or 4,5 Special depot if active): ");
+        }
+
+        int quantity = readInt("Insert how many resources you want to move");
+        while(!(quantity>=1)){
+            quantity = readInt("Please insert a positive number");
+        }
+
+        messageSender.sendMessage(new MoveMessage(localModel.getLocalPlayer().getNickname(), sourceDepotNumber, destinationDepotNumber, quantity));
+    }
+
+    private void askSwap(){
+        int[] depot = new int[2];
+        for(int i = 0; i < 2; i++){
+            int depotNumber = readInt("Insert the number of one of the two standard depots you want to swap, insert a number between 1 and 3\n" +
+                    "(1,2,3 Standard Depot, 4,5 special depot): ");
+            while(!(depotNumber>=1 && depotNumber <= 3)){
+                depotNumber = readInt("Please insert a number between 1 and 3\n");
+            }
+            depot[i] = depotNumber;
+        }
+
+        messageSender.sendMessage(new SwapMessage(localModel.getLocalPlayer().getNickname(), depot[0], depot[1]));
     }
 
     @Override
@@ -469,32 +540,65 @@ public class CLI implements ClientView {
         int productionChoice = readInt("Choose which kind of production you want to activate:\n" +
                 "1. Basic Production\n" +
                 "2. Leader Production\n" +
-                "3. Card Production\n");
-        while (!(productionChoice>= 1 && productionChoice <=3)){
-            productionChoice = readInt("Invalid number, choose a number between 1 and 3");
+                "3. Card Production\n" +
+                "4. Go back\n");
+        while (!(productionChoice>= 1 && productionChoice <=4)){
+            productionChoice = readInt("Invalid number, choose a number between 1 and 4");
         }
         switch (productionChoice){
             case 1:
                 askBasicProduction();
                 break;
             case 2:
-
+                askLeaderProduction();
                 break;
             case 3:
-
+                askCardProduction();
                 break;
+            case 4:
+                phase = LocalPhase.MENU;
+                phase.handlePhase(this);
         }
 
     }
 
+    /**
+     * Method used to request information to the player to perform a basic production
+     */
     private void askBasicProduction(){
         List<Map<Resource, Integer>> costStrongboxWarehouse = readCostStrongboxWarehouse();
         Resource resource = readResource();
         messageSender.sendMessage(new ActivateBasicProductionMessage(getLocalModel().getLocalPlayer().getNickname(), costStrongboxWarehouse.get(0), costStrongboxWarehouse.get(1), resource));
     }
 
+    /**
+     * Method used to request information to the player to perform a leader production
+     */
     private void askLeaderProduction(){
+        List<Map<Resource, Integer>> costStrongboxWarehouse = readCostStrongboxWarehouse();
 
+        int numLeaderCard = readInt("Insert the position of an active leader card with a production power:");
+        while (!(numLeaderCard>= 1)){
+            numLeaderCard = readInt("Invalid number, choose a number >= 1");
+        }
+        System.out.println("Choose the resource you want to produce");
+        Resource resource = readResource();
+
+        messageSender.sendMessage(new ActivateLeaderProductionMessage(getLocalModel().getLocalPlayer().getNickname(), costStrongboxWarehouse.get(0), costStrongboxWarehouse.get(1), numLeaderCard, resource));
+    }
+
+    /**
+     * Method used to request information to the player to perform a basic production
+     */
+    private void askCardProduction(){
+        List<Map<Resource, Integer>> costStrongboxWarehouse = readCostStrongboxWarehouse();
+
+        int cardPosition = readInt("Choose the slot of the card whose production you want to use:");
+        while (!(cardPosition>= 1 && cardPosition<=3)){
+            cardPosition = readInt("Invalid number, choose a number between 1 and 3");
+        }
+
+        messageSender.sendMessage(new ActivateCardProductionMessage(getLocalModel().getLocalPlayer().getNickname(), costStrongboxWarehouse.get(0), costStrongboxWarehouse.get(1), cardPosition));
     }
 
 
@@ -581,6 +685,8 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdatedTemporaryMapResource(String nickname, Map<Resource, Integer> temporaryMapResource) {
+        localModel.getPlayer(nickname).setTemporaryMapResource(temporaryMapResource);
+
         System.out.println(nickname + temporaryMapResource);
     }
 

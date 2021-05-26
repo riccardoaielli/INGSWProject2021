@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.client.GUI.GUI;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

@@ -68,6 +68,7 @@ public enum LocalPhase {
     ACTIVATE_PRODUCTION{
         @Override
         public void handlePhase(ClientView clientView) {
+            clientView.askProduction();
 
         }
     },
@@ -86,7 +87,7 @@ public enum LocalPhase {
     REARRANGE_WAREHOUSE {
         @Override
         public void handlePhase(ClientView clientView) {
-
+            clientView.askRearrange();
         }
     };
 

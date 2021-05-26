@@ -1,5 +1,6 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.client.GUI;
 
+import it.polimi.ingsw.client.ClientView;
 import it.polimi.ingsw.client.LocalModel.LocalModel;
 import it.polimi.ingsw.client.LocalModel.LocalPhase;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
@@ -11,15 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class GUI implements ClientView{
-    LocalModel localModel;
+public class GUI implements ClientView {
+    private LocalModel localModel;
+
     private void setMessageSender(){
 
     }
 
     @Override
     public void start() {
-
     }
 
     @Override
@@ -69,6 +70,11 @@ public class GUI implements ClientView{
 
     @Override
     public void askTakeFromMarketAction() {
+
+    }
+
+    @Override
+    public void askRearrange() {
 
     }
 

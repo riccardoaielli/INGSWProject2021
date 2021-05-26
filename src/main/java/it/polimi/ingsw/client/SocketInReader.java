@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * This class reads from the socket input stream of the client
@@ -37,9 +38,10 @@ public class SocketInReader implements Runnable {
                 //System.out.println("Read this line from socket: " + line);
                 clientSocket.readMessage(line);
             }
-            //System.out.println("Aborted StdinReader thread");
         } catch (IOException ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
+            System.out.println("Could not reach server");
         }
+
     }
 }
