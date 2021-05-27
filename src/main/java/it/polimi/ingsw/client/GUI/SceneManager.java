@@ -1,12 +1,15 @@
 package it.polimi.ingsw.client.GUI;
 
 import it.polimi.ingsw.client.GUI.Controller.AbstractController;
+import it.polimi.ingsw.client.GUI.Controller.StartController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Singleton class to manage scene switches
@@ -24,6 +27,7 @@ public class SceneManager {
     private Stage stage;
     private Scene activeScene;
     private AbstractController activeController;
+    private Map<String, AbstractController> controllerMap = new HashMap<>();
 
     public void setRoot(Parent root){
         if (activeScene == null){
@@ -40,10 +44,15 @@ public class SceneManager {
             Parent root = loader.load();
             getInstance().activeController = loader.getController();
             getInstance().activeController.setGui(getInstance().gui);
+            controllerMap.put(fxml, activeController);
             setRoot(root);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public AbstractController getController(String fxml){
+        return controllerMap.get(fxml);
     }
 
     public void setStage(Stage stage) {

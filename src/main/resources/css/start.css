@@ -1,0 +1,16 @@
+.label {
+    -fx-font-size: 50px;
+}
+
+.outline.label .text {
+    -fx-fill: #4b89bd;
+    -fx-stroke: #f2dc67;
+    -fx-stroke-width: 2px;
+    -fx-font-weight: bold;
+}
+
+.startBackground {
+    -fx-background-image: url("../../../src/main/resources/StartBackground.png");
+    -fx-background-size: stretch;
+    -fx-position: relative;
+}

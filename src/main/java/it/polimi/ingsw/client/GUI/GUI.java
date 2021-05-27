@@ -63,7 +63,7 @@ public class GUI implements ClientView {
 
     @Override
     public void askNickname() {
-        //SceneManager.getInstance().setRootFXML();
+        //SceneManager.getInstance().setRootFXML("nickname");
     }
 
     @Override
