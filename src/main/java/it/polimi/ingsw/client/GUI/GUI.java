@@ -1,8 +1,11 @@
 package it.polimi.ingsw.client.GUI;
 
+import it.polimi.ingsw.client.ClientSocket;
 import it.polimi.ingsw.client.ClientView;
 import it.polimi.ingsw.client.LocalModel.LocalModel;
 import it.polimi.ingsw.client.LocalModel.LocalPhase;
+import it.polimi.ingsw.client.LocalSender;
+import it.polimi.ingsw.client.MessageSender;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.server.model.RankPosition;
 import it.polimi.ingsw.server.model.enumerations.Marble;
@@ -14,9 +17,34 @@ import java.util.Map;
 
 public class GUI implements ClientView {
     private LocalModel localModel;
+    private MessageSender messageSender;
+    private String myNickname;
+    private LocalPhase localPhase;
+    private String hostAddress;
+    private int portNumber;
+    private boolean mainTurnActionDone;
 
-    private void setMessageSender(){
+    public GUI(String hostAddress, int portNumber) {
+        this.hostAddress = hostAddress;
+        this.portNumber = portNumber;
+        localPhase = LocalPhase.DEFAULT;
+        mainTurnActionDone = false;
+    }
 
+    public MessageSender getMessageSender() {
+        return messageSender;
+    }
+
+
+    public void setOnline(Boolean bool){
+        if(bool){
+            messageSender = new ClientSocket(hostAddress, portNumber, this);
+            System.out.println("Online Mode");
+        }
+        else{
+            messageSender = new LocalSender(this);
+            System.out.println("Local Mode");
+        }
     }
 
     @Override
@@ -30,12 +58,12 @@ public class GUI implements ClientView {
 
     @Override
     public void askCreateMatch() {
-
+        SceneManager.getInstance().setRootFXML("login");
     }
 
     @Override
     public void askNickname() {
-
+        //SceneManager.getInstance().setRootFXML();
     }
 
     @Override
@@ -185,7 +213,7 @@ public class GUI implements ClientView {
 
     @Override
     public void setPhase(LocalPhase phase) {
-
+        this.localPhase = phase;
     }
 
     @Override
@@ -195,7 +223,7 @@ public class GUI implements ClientView {
 
     @Override
     public LocalPhase getPhase() {
-        return null;
+        return localPhase;
     }
 
     @Override
@@ -210,6 +238,6 @@ public class GUI implements ClientView {
 
     @Override
     public void update(MessageToClient message) {
-
+        message.handleMessage(this);
     }
 }

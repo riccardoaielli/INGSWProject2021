@@ -1,6 +1,8 @@
 package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.GUI.GUI;
+import it.polimi.ingsw.client.GUI.JavaFXGUI;
+import javafx.application.Application;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +21,14 @@ public class ClientMain {
     private static final int DEFAULT_PORT = 1334;
     private static final int MIN_PORT = 1024;
     private static final int MAX_PORT = 65535;
+
+    public static int getPortNumber() {
+        return portNumber;
+    }
+
+    public static String getHostAddress() {
+        return hostAddress;
+    }
 
     private static int portNumber;
     private static String hostAddress;
@@ -77,11 +87,12 @@ public class ClientMain {
         if(cliMode){
             //avvia cli
             clientView = new CLI(hostAddress, portNumber);
+            clientView.start();
         }else{
             //avvia gui
-            clientView = new GUI();
+            Application.launch(JavaFXGUI.class);
         }
-        clientView.start();
+
         System.out.println("fine main");
     }
 }

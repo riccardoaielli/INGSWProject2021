@@ -1,0 +1,5 @@
+.menuBackground {
+    -fx-background-image: url("../../../src/main/resources/cardsImage/1.png");
+    -fx-background-size: stretch;
+    -fx-position: relative;
+}
