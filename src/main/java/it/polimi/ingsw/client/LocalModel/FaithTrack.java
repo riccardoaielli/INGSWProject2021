@@ -43,16 +43,21 @@ public class FaithTrack {
             switch (i){
                 case 0:
                     tile = "└---x---┘";
+                    break;
                 case 1:
                     tile = "└-------y------┘";
+                    break;
                 case 2:
                     tile = "└----------z------┘";
+                    break;
             }
             switch (popeFavourTiles.get(i)){
                 case 1:
-                    popeFavourTilesString = popeFavourTilesString.replace(tile,"\\u001b[33m"+tile+"\\u001b[0m");
+                    popeFavourTilesString = popeFavourTilesString.replace(tile,cliColor.COLOR_RED+tile+cliColor.RESET);
+                    break;
                 case 2:
-                    popeFavourTilesString = popeFavourTilesString.replace(tile,"\\u001b[32m"+tile+"\\u001b[0m");
+                    popeFavourTilesString = popeFavourTilesString.replace(tile,cliColor.COLOR_YELLOW+tile+cliColor.RESET);
+                    break;
             }
         }
         popeFavourTilesString = popeFavourTilesString.replace("x","2");

@@ -361,4 +361,12 @@ public class Controller extends MessageObservable{
         personalBoard.endTurn();
         match.nextPlayer();
     }
+
+    public synchronized void discardResourcesFromMarket(View view, String nickname) {
+        if(match.getCurrentPlayer().getNickname().equals(nickname)){
+            match.getPlayerByNickname(nickname).getPersonalBoard().discardResourcesFromMarket();
+        }
+        else
+            view.update(new ErrorMessage(nickname, "Not your turn"));
+    }
 }

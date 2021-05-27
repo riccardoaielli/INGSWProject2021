@@ -261,7 +261,7 @@ public class CLI implements ClientView {
                 askRearrange();
                 break;
             case 3:
-                //TODO add discard
+                messageSender.sendMessage(new DiscardResourcesFromMarketMessage(localModel.getLocalPlayer().getNickname()));
                 break;
         }
 
@@ -291,6 +291,7 @@ public class CLI implements ClientView {
 
         localModel.printView();
 
+        int firstAction = 0;
         int numOfActions = 3;
         List<String> actions = new ArrayList<>();
         List<LocalPhase> actionPhases = new ArrayList<>();
@@ -302,6 +303,7 @@ public class CLI implements ClientView {
             actionPhases.add(LocalPhase.BUY_DEV_CARD);
             actions.add("Activate the Production");
             actionPhases.add(LocalPhase.ACTIVATE_PRODUCTION);
+            firstAction = 1;
             numOfActions = 6;
         }
         else
@@ -318,9 +320,9 @@ public class CLI implements ClientView {
             System.out.println((action + 1) + ". " + actions.get(action));
         }
 
-        int action = readInt("Insert a number between 1 and " + numOfActions + " :");
+        int action = readInt("Insert a number between "+ firstAction + " and " + numOfActions + " :");
         while (!(action >= 0 && action <= numOfActions)) {
-            action = readInt("Please insert a number between 1 and " + numOfActions + " :");
+            action = readInt("Insert a number between "+ firstAction + " and " + numOfActions + " :");
         }
 
         if (action == 0) {
@@ -329,46 +331,7 @@ public class CLI implements ClientView {
             phase = actionPhases.get(action - 1);
             phase.handlePhase(this);
             }
-        /*
-        if (phase == LocalPhase.MAIN_TURN_ACTION_AVAILABLE){
-            System.out.println("Choose an action:\n" +
-                    "1. Take Resources from market\n" +
-                    "2. Buy one Development Card\n" +
-                    "3. Activate the Production\n" +
-                    "4. Activate a leader card\n" +
-                    "5. Discard a leader card\n" +
-                    "6. Rearrange warehouse resources");
-            String action = readInput("Insert a number between 1 and 6:");
-            int actionInt =  Integer.parseInt(action);
-            while(!(actionInt>=1 && actionInt<=6)){
-                action = readInput("Please insert a number between 1 and 6");
-                try {
-                    actionInt =  Integer.parseInt(action);
-                } catch (NumberFormatException e) {
-                    System.out.println("Not a number");
-                }
-            }
-            switch (actionInt){
-                case 1:
-                    phase = LocalPhase.TAKE_FROM_MARKET;
-                    break;
-                case 2:
-                    phase = LocalPhase.BUY_DEV_CARD;
-                    break;
-                case 3:
-                    phase = LocalPhase.ACTIVATE_PRODUCTION;
-                    break;
-                case 4:
-                    phase = LocalPhase.ACTIVATE_LEADER;
-                    break;
-                case 5:
-                    phase = LocalPhase.DISCARD_LEADER;
-                    break;
-                case 6:
-                    phase = LocalPhase.REARRANGE_WAREHOUSE;
-            }
-            phase.handlePhase(this);
-        }*/
+
     }
 
 

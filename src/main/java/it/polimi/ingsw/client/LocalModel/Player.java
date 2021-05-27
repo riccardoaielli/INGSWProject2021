@@ -34,10 +34,10 @@ public class Player {
     }
 
     public void setRedCrossPosition(int redcrossPosition){
-
+        faithTrack.setRedcrossPosition(redcrossPosition);
     }
     public void setPopeFavourTiles(ArrayList<Integer> popeFavourTiles){
-
+        faithTrack.setPopeFavourTiles(popeFavourTiles);
     }
     public void setDevelopmentCardSpace(ArrayList<ArrayList<Integer>> developmentCardSpace){
 
@@ -57,8 +57,8 @@ public class Player {
         System.out.println("Personal board di " + nickname + ":");
         printTermporaryMarbles();
         faithTrack.printFaithTrack();
-        strongbox.printStrongbox();
         wareHouseDepots.printWhareHouseDepots();
+        strongbox.printStrongbox();
     }
 
 
@@ -75,8 +75,10 @@ public class Player {
     }
 
     public void printTermporaryMarbles() {
+        if(temporaryMarbles.isEmpty())
+            return;
         GetColorString getColorString = new GetColorString();
-        String out = "[";
+        String out = "MARBLES OBTAINED FROM THE MARKET:[ ";
         for(Marble marble: temporaryMarbles.keySet()){
             out = out + getColorString.getColorMarble(marble) + "●: " + temporaryMarbles.get(marble) + " " + cliColor.RESET;
         }

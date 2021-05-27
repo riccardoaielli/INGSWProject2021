@@ -13,7 +13,7 @@ public class WareHouseDepots {
 
     public WareHouseDepots() {
         color = new GetColorString();
-        depots = new ArrayList<>();
+        depots = new ArrayList<>(3);
     }
 
     public void setDepots(List<Map<Resource, Integer>> depots) {
@@ -46,16 +46,16 @@ public class WareHouseDepots {
                 for (Resource resource : depot.keySet()) {
                     for (int j = 0, printed = 0; j < spaces; j++) {
                         if (printed < depot.get(resource)) {
-                            line = line.concat(color.getColorResource(resource) + "●" + cliColor.RESET);
+                            line = line.concat(color.getColorResource(resource) + "● " + cliColor.RESET);
                             printed++;
                         } else
-                            line = line.concat("◌");
+                            line = line.concat("◌ ");
                     }
                 }
             }
             else
                 for(int emptySpace = 0;emptySpace<spaces;emptySpace++)
-                    line = line.concat("◌");
+                    line = line.concat("◌ ");
             System.out.println(line);
         }
     }
