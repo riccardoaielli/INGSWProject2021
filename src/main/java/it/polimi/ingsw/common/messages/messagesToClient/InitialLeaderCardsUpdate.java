@@ -15,6 +15,7 @@ public class InitialLeaderCardsUpdate extends MessageToClient {
 
     @Override
     public void handleMessage(ClientView clientView) {
+        clientView.setPhase(LocalPhase.LEADER_CHOICE);
         clientView.showUpdateInitialLeaderCard(initialLeaderCardsID);
     }
 }

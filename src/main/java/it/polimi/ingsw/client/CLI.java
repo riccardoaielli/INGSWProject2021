@@ -567,7 +567,6 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdateInitialLeaderCard(ArrayList<Integer> initialLeaderCardsID) {
-        phase = LocalPhase.LEADER_CHOICE;
         localModel.setInitialLeaderCards(initialLeaderCardsID);
         askForLeaderCards();
     }
@@ -756,5 +755,9 @@ public class CLI implements ClientView {
     public void update(MessageToClient message) {
         message.handleMessage(this);
     }
-    
+
+    @Override
+    public String getNickname() {
+        return localModel.getLocalPlayer().getNickname();
+    }
 }

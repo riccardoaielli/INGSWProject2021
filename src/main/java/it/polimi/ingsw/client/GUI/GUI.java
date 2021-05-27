@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.GUI;
 
 import it.polimi.ingsw.client.ClientSocket;
 import it.polimi.ingsw.client.ClientView;
+import it.polimi.ingsw.client.GUI.Controller.InitialLeaderChoiceController;
 import it.polimi.ingsw.client.LocalModel.LocalModel;
 import it.polimi.ingsw.client.LocalModel.LocalPhase;
 import it.polimi.ingsw.client.LocalSender;
@@ -198,12 +199,15 @@ public class GUI implements ClientView {
 
     @Override
     public void showUpdateInitialLeaderCard(ArrayList<Integer> initialLeaderCardsID) {
-
+        SceneManager.getInstance().setRootFXML("InitialLeaderChoice");
+        InitialLeaderChoiceController controller = (InitialLeaderChoiceController) SceneManager.getInstance().getController("InitialLeaderChoice");
+        controller.setLeaderCards(initialLeaderCardsID);
     }
 
     @Override
     public void askForLeaderCards() {
-
+        InitialLeaderChoiceController controller = (InitialLeaderChoiceController) SceneManager.getInstance().getController("InitialLeaderChoice");
+        controller.resetChoices();
     }
 
     @Override
@@ -239,5 +243,14 @@ public class GUI implements ClientView {
     @Override
     public void update(MessageToClient message) {
         message.handleMessage(this);
+    }
+
+    @Override
+    public String getNickname() {
+        return myNickname;
+    }
+
+    public void setMyNickname(String myNickname) {
+        this.myNickname = myNickname;
     }
 }

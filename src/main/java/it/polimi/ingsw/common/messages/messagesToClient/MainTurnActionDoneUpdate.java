@@ -14,7 +14,7 @@ public class MainTurnActionDoneUpdate extends MessageToClient{
     @Override
     public void handleMessage(ClientView clientView) {
         if(clientView.getPhase() == LocalPhase.TAKE_FROM_MARKET)
-            clientView.getLocalModel().getPlayer(getNickname()).setTemporaryMarbles(new HashMap<>());
+            clientView.showUpdateTemporaryMarbles(getNickname(),new HashMap<>());
         clientView.setMainTurnActionDone(true);
         clientView.setPhase(LocalPhase.MENU);
         clientView.getPhase().handlePhase(clientView);

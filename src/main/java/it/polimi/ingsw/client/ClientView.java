@@ -47,6 +47,7 @@ public interface ClientView extends View {
     void showUpdateFirstConnection(boolean firstPlayer);
     void showUpdateInitialLeaderCard(ArrayList<Integer> initialLeaderCardsID);
     void askForLeaderCards();
+    String getNickname();
 
     void askDiscardLeader();
 
