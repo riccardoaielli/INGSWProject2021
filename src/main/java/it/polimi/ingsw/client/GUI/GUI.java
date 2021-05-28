@@ -241,6 +241,11 @@ public class GUI implements ClientView {
     }
 
     @Override
+    public void closeGame(String string) {
+
+    }
+
+    @Override
     public void update(MessageToClient message) {
         message.handleMessage(this);
     }
@@ -252,5 +257,10 @@ public class GUI implements ClientView {
 
     public void setMyNickname(String myNickname) {
         this.myNickname = myNickname;
+    }
+
+    @Override
+    public void setNickname(String nickname) {
+        //TODO move nickname here and implement method
     }
 }

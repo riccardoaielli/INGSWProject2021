@@ -595,6 +595,12 @@ public class CLI implements ClientView {
     }
 
     @Override
+    public void closeGame(String string) {
+        System.out.println(string);
+        System.exit(0);
+    }
+
+    @Override
     public void askDiscardLeader(){
         int numLeaderCard = readInt("Choose the number of the card to discard: ");
         while (numLeaderCard <= 0){
@@ -759,5 +765,10 @@ public class CLI implements ClientView {
     @Override
     public String getNickname() {
         return localModel.getLocalPlayer().getNickname();
+    }
+
+    @Override
+    public void setNickname(String nickname) {
+        //TODO move nickname here and implement method
     }
 }

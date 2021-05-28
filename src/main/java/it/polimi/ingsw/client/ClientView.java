@@ -60,4 +60,6 @@ public interface ClientView extends View {
     void showCurrentPlayer(String nickname);
 
     void askActivateLeader();
+
+    void closeGame(String string);
 }

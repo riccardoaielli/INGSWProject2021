@@ -13,6 +13,7 @@ public class Player {
         this.nickname = nickname;
         this.personalBoard = personalBoard;
         this.view = view;
+        this.view.setNickname(nickname);
         personalBoard.setPlayer(this);
     }
 

@@ -11,4 +11,8 @@ public class ViewStub implements View {
     public void update(MessageToClient message) {
         System.out.println(gson.toJson(message));
     }
+
+    @Override
+    public void setNickname(String nickname) {
+    }
 }

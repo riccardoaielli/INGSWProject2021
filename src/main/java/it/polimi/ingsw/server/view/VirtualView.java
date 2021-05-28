@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.view;
 import com.google.gson.Gson;
 import it.polimi.ingsw.common.View;
+import it.polimi.ingsw.common.messages.messagesToClient.DisconnectedUpdate;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.common.messages.messagesToClient.ErrorMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.MessageToServer;
@@ -99,6 +100,7 @@ public class VirtualView implements Runnable,View {
                 } catch (IOException | NullPointerException ioException) {
                     ioException.printStackTrace();
                 }
+                controller.notifyObservers(new DisconnectedUpdate(nickname));
                 //controller.notifyObservers(new ); // creare messaggio di disconnessione client
             }
         } catch (IllegalStateException e) {
@@ -107,6 +109,7 @@ public class VirtualView implements Runnable,View {
         }
     }
 
+    @Override
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
