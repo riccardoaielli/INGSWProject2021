@@ -287,7 +287,6 @@ public class CLI implements ClientView {
 
     @Override
     public void askTurnAction() {
-
         localModel.printView();
 
         int firstAction = 0;
@@ -318,18 +317,23 @@ public class CLI implements ClientView {
         for (int action = 0; action < numOfActions; action++) {
             System.out.println((action + 1) + ". " + actions.get(action));
         }
+        System.out.println((numOfActions+1) + ". Quit Game");
 
-        int action = readInt("Insert a number between "+ firstAction + " and " + numOfActions + " :");
-        while (!(action >= 0 && action <= numOfActions)) {
-            action = readInt("Insert a number between "+ firstAction + " and " + numOfActions + " :");
+        int action = readInt("Insert a number between "+ firstAction + " and " + (numOfActions + 1) + " :");
+        while (!(action >= 0 && action <= numOfActions + 1)) {
+            action = readInt("Insert a number between "+ firstAction + " and " + (numOfActions + 1) + " :");
         }
 
         if (action == 0) {
             messageSender.sendMessage(new EndTurnMessage(localModel.getLocalPlayer().getNickname()));
-        } else{
-            phase = actionPhases.get(action - 1);
-            phase.handlePhase(this);
+        } else if(action == numOfActions+1) {
+                closeGame("BUENO");
             }
+            else{
+                phase = actionPhases.get(action - 1);
+                phase.handlePhase(this);
+            }
+
 
     }
 
@@ -725,7 +729,7 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdateDiscardedLeaderUpdate(String nickname, int leaderPosition) {
-        //todo: rimuovere la carta leader dal localModel
+        localModel.removeLeaderCard(leaderPosition);
         System.out.println("The card has been discarded");
     }
 

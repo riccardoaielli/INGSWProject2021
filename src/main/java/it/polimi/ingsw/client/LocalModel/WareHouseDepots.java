@@ -14,6 +14,8 @@ public class WareHouseDepots {
     public WareHouseDepots() {
         color = new GetColorString();
         depots = new ArrayList<>(3);
+        //for(Map depot: depots)
+        //    depot = new HashMap();
     }
 
     public void setDepots(List<Map<Resource, Integer>> depots) {

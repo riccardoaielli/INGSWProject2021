@@ -94,4 +94,8 @@ public class Player {
     public void setTemporaryMapResource(Map<Resource, Integer> temporaryMapResource) {
         this.temporaryMapResource = temporaryMapResource;
     }
+
+    public void removeCard(int leaderPosition) {
+        leaderCards.remove(leaderCards.get(leaderPosition-1));
+    }
 }

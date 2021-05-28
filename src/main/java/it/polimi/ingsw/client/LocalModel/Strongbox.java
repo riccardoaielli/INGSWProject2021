@@ -13,6 +13,10 @@ public class Strongbox {
     public Strongbox() {
         color = new GetColorString();
         strongbox = new HashMap<>();
+        strongbox.put(Resource.COIN,0);
+        strongbox.put(Resource.STONE,0);
+        strongbox.put(Resource.SERVANT,0);
+        strongbox.put(Resource.SHIELD,0);
     }
 
     public void setStrongbox(Map<Resource, Integer> strongbox) {
@@ -21,7 +25,7 @@ public class Strongbox {
 
     public void printStrongbox(){
         System.out.print("STRONGBOX[");
-        strongbox.keySet().forEach(x -> System.out.print(color.getColorResource(x) + "●" + cliColor.RESET + " :" + strongbox.get(x) + " "));
+        strongbox.keySet().forEach(x -> System.out.print(color.getColorResource(x) + "●" + cliColor.RESET + ": " + strongbox.get(x) + " "));
         System.out.println("]");
     }
 }

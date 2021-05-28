@@ -68,10 +68,10 @@ public class LocalModel {
 
     /**
      * this method updates the first four cards that the player receives at the beginning of the game
-     * @param initialLeaderCards a list of cards
+     * @param initialLeaderCards a list of cards id
      */
     public void setInitialLeaderCards(ArrayList<Integer> initialLeaderCards){
-        players.stream().filter(x->x.getNickname().equals(localPlayer.getNickname())).forEach(x->x.setLeaderCards(initialLeaderCards));
+        localPlayer.setLeaderCards(initialLeaderCards);
     }
 
 
@@ -393,5 +393,9 @@ public class LocalModel {
             }
         }
         return string;
+    }
+
+    public void removeLeaderCard(int leaderPosition) {
+        localPlayer.removeCard(leaderPosition);
     }
 }
