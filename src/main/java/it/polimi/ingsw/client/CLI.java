@@ -11,6 +11,9 @@ import it.polimi.ingsw.server.model.RankPosition;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -170,23 +173,19 @@ public class CLI implements ClientView {
     }
 */
     /**
-     * This method sets a thread of StdInReader and returns the line read from the StdInReader thread
+     * This method prints a string and reads from stdIn
      */
     public String readInput(String stringPrint) {
         System.out.println(stringPrint);
-        FutureTask<String> futureTask = new FutureTask<>(new StdInReader());
-        Thread inputThread = new Thread(futureTask);
-        inputThread.start();
-
-        String stdInLine = null;
+        BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+        String line = "";
 
         try {
-            stdInLine = futureTask.get();
-        } catch (InterruptedException | ExecutionException e) {
-            futureTask.cancel(true);
-            Thread.currentThread().interrupt();
+            line = stdIn.readLine();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
-        return stdInLine;
+        return line;
     }
 
     /**
