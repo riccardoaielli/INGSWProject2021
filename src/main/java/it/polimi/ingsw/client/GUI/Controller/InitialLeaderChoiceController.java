@@ -26,9 +26,6 @@ public class InitialLeaderChoiceController extends AbstractController{
     @FXML
     public void initialize(){
         cardImagesArray = new ArrayList<>();
-
-        //cardImagesArray = new ArrayList<ImageView>((Collection<? extends ImageView>) cardsContainer.getChildren());
-
         for (Node node:cardsContainer.getChildren()){
             this.cardImagesArray.add((ImageView) node);
         }
@@ -53,12 +50,12 @@ public class InitialLeaderChoiceController extends AbstractController{
 
     private void onDiscardClick(Event event) {
         int firstCard = 0,secondCard = 0, numOfChoosenCards = 0;
-        for(boolean discard: choosenCards){
-            if(discard){
+        for(int discard = 0; discard < choosenCards.size(); discard++){
+            if(choosenCards.get(discard)){
                 if(firstCard == 0)
-                    firstCard = choosenCards.indexOf(discard);
+                    firstCard = discard + 1;
                 else if(secondCard == 0)
-                    secondCard = choosenCards.indexOf(discard);
+                    secondCard = discard + 1;
                 numOfChoosenCards++;
             }
         }

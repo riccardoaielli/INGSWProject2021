@@ -47,9 +47,6 @@ public class LocalModel {
         return localPlayer;
     }
 
-    public void addPlayer(String Nickname){
-
-    }
 
     /**
      * This method updates the local model with the market structure received from a model update or a market update message
@@ -108,8 +105,8 @@ public class LocalModel {
 
     public void printLeaderCards() {
         ArrayList <Integer> leaderCard = localPlayer.getLeaderCards();
-        for(Integer x : leaderCard)
-        this.printCard(x);
+        for(Integer card : leaderCard)
+        this.printCard(card);
     }
 
     public void setLocalPlayer(String localPlayer) {
@@ -120,9 +117,14 @@ public class LocalModel {
     public void printView(){
         printMarket();
         printCardGrid();
-        printLeaderCards();
-        for(Player player : players)
+        //printLeaderCards();
+        for(Player player : players) {
             player.printPersonalBoards();
+            System.out.println("LEADER CARDS:");
+            for (int leader : player.getLeaderCards()) {
+                printCard(leader);
+            }
+        }
     }
 
     public void discardInitialLeaders(String nickname, int indexLeaderCard1, int indexLeaderCard2) {

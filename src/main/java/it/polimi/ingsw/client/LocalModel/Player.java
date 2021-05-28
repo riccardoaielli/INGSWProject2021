@@ -59,6 +59,7 @@ public class Player {
         faithTrack.printFaithTrack();
         wareHouseDepots.printWhareHouseDepots();
         strongbox.printStrongbox();
+
     }
 
 

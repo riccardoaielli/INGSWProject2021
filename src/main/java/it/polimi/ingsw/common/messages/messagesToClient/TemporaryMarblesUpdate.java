@@ -17,7 +17,7 @@ public class TemporaryMarblesUpdate extends MessageToClient {
     @Override
     public void handleMessage(ClientView clientView) {
         clientView.showUpdateTemporaryMarbles(getNickname(),temporaryMarbles);
-        if(clientView.getLocalModel().getLocalPlayer().getNickname().equals(getNickname())) {
+        if(clientView.getNickname().equals(getNickname())) {
             clientView.setPhase(LocalPhase.TEMPORARY_MARBLES);
             clientView.getPhase().handlePhase(clientView);
         }

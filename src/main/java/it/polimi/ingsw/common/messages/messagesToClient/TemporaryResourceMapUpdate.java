@@ -20,7 +20,7 @@ public class TemporaryResourceMapUpdate extends MessageToClient {
     public void handleMessage(ClientView clientView) {
         clientView.getLocalModel().getLocalPlayer().setTemporaryMarbles(new HashMap<>());
         clientView.showUpdatedTemporaryMapResource(this.getNickname(), temporaryMapResource);
-        if(clientView.getLocalModel().getLocalPlayer().getNickname().equals(getNickname())){
+        if(clientView.getNickname().equals(getNickname())){
             clientView.setPhase(LocalPhase.ADD_TO_WAREHOUSE);
             if (!temporaryMapResource.isEmpty()){
                 clientView.getPhase().handlePhase(clientView);
