@@ -70,13 +70,15 @@ public class ClientSocket implements MessageSender {
     /**
      * Disconnect the socket from the server.
      */
-    /*public void disconnect() {
+    public void disconnect() {
         try {
+            System.out.println("Aborted StdinReader thread, you will be disconnected");
             if (!socket.isClosed()) {
+                System.out.println("Socket closed");
                 socket.close();
             }
         } catch (IOException e) {
             System.out.println("Could not disconnect.");
         }
-    }*/
+    }
 }

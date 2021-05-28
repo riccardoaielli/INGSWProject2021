@@ -22,6 +22,8 @@ public class JavaFXGUI extends Application {
         SceneManager.getInstance().setStage(stage);
         SceneManager.getInstance().setRootFXML("start");
         //stage.setFullScreen(true);
+        //stage.setMaximized(true);
+        stage.setResizable(true);
         stage.show();
     }
 

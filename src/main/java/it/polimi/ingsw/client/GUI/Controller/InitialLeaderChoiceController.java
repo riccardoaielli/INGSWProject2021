@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class InitialLeaderChoiceController extends AbstractController{
     private ArrayList<ImageView> cardImagesArray;
     private ArrayList<Boolean> choosenCards;
-    private final String cardsPath = "src/main/resources/cards/";
+    private final String cardsPath = "cardsImage/";
 
     @FXML
     private GridPane cardsContainer;

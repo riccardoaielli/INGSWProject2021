@@ -21,6 +21,7 @@ public class VirtualView implements Runnable,View {
     private InetAddress clientAddress;
     private int clientPort;
     private PrintWriter out;
+    private BufferedReader in;
     private Gson gson;
     private static final MessageDeserializer messageDeserializer = new MessageDeserializer();
     private String nickname;
@@ -45,7 +46,7 @@ public class VirtualView implements Runnable,View {
         System.out.println("Thread created");
 
         try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
             controller.newConnection(this);
             // Leggo e scrivo nella connessione finche' non ricevo "quit"
@@ -77,11 +78,32 @@ public class VirtualView implements Runnable,View {
             out.close();
             socket.close();
         } catch (IOException e) {
+            if(nickname == null){
+                System.err.println(e.getMessage());
+                System.out.println("Stream di rete terminato");
+                try {
+                    in.close();
+                    out.close();
+                    socket.close();
+                } catch (IOException | NullPointerException ioException) {
+                    ioException.printStackTrace();
+                }
+            } else {
+                System.err.println(e.getMessage());
+                System.out.println("Stream di rete terminato");
+                controller.removeObserver(this);
+                try {
+                    in.close();
+                    out.close();
+                    socket.close();
+                } catch (IOException | NullPointerException ioException) {
+                    ioException.printStackTrace();
+                }
+                //controller.notifyObservers(new ); // creare messaggio di disconnessione client
+            }
+        } catch (IllegalStateException e) {
             System.err.println(e.getMessage());
-            System.out.println("IO exception prova");
-        } catch (IllegalStateException e) { //todo capire come funziona
             System.out.println("stream di rete terminato");
-            System.err.println(e.getMessage());
         }
     }
 
@@ -99,5 +121,18 @@ public class VirtualView implements Runnable,View {
         out.println(gson.toJson(message));
         System.out.println("Sent:" + gson.toJson(message));
     }
+
+    /**
+     * Enable pinger between server and client's sockets.
+     * @param enable set this argument to true to enable the pinger, set it to false to disable
+     *
+     */
+    /*public void enablePinger(boolean enable) {
+        if (enabled) {
+            pinger.scheduleAtFixedRate(() -> sendMessage(new PingMessage()), 0, 1000, TimeUnit.MILLISECONDS);
+        } else {
+            pinger.shutdownNow();
+        }
+    }*/
 
 }

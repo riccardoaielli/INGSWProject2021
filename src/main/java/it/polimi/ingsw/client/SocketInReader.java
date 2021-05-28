@@ -39,9 +39,7 @@ public class SocketInReader implements Runnable {
                 clientSocket.readMessage(line);
             }
         } catch (IOException ex) {
-            //ex.printStackTrace();
-            System.out.println("Could not reach server");
+            clientSocket.disconnect();
         }
-
     }
 }
