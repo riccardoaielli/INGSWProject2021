@@ -1,16 +1,43 @@
+@font-face {
+    font-family: "Dominican Italic";
+    src: url("../../../src/main/resources/css/Dominican-Italic.ttf");
+}
+
 .label {
     -fx-font-size: 50px;
+    -fx-font-family: "Dominican Italic";
 }
 
 .outline.label .text {
     -fx-fill: #4b89bd;
     -fx-stroke: #f2dc67;
-    -fx-stroke-width: 2px;
+    -fx-stroke-width: 1px;
     -fx-font-weight: bold;
 }
 
 .startBackground {
     -fx-background-image: url("../../../src/main/resources/StartBackground.png");
-    -fx-background-size: stretch;
-    -fx-position: relative;
+    -fx-background-size: cover;
+    -fx-position: center;
 }
+
+#localBtn, #onlineBtn{
+    -fx-font-family: "Dominican Italic";
+    -fx-font-size: 24px;
+    -fx-background-color: #517981;
+    -fx-background-radius: 2px;
+    -fx-text-fill: #f9dc52;
+    -fx-border-color: #f9dc52;
+    -fx-border-width: 3px;
+    -fx-border-radius: 2px;
+    -fx-effect: dropshadow(three-pass-box, rgb(64, 57, 4), 10, 0, 0, 0);
+}
+
+#onlineBtn:hover, #localBtn:hover{
+    -fx-background-color: #5d8b95;
+}
+
+#onlineBtn:pressed, #localBtn:pressed{
+    -fx-background-color: #325d63
+}
+

@@ -59,12 +59,12 @@ public class GUI implements ClientView {
 
     @Override
     public void askCreateMatch() {
-        SceneManager.getInstance().setRootFXML("login");
+        SceneManager.getInstance().setRootFXML("firstConnection");
     }
 
     @Override
     public void askNickname() {
-        //SceneManager.getInstance().setRootFXML("nickname");
+        SceneManager.getInstance().setRootFXML("nickname");
     }
 
     @Override

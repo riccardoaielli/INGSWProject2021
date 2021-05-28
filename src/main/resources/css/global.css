@@ -1,7 +1,55 @@
 .menuBackground {
     -fx-background-image: url("../../../src/main/resources/BlurredBackground.png");
-    -fx-background-size: stretch;
+    -fx-background-size: cover;
     -fx-position: relative;
 }
+
+@font-face {
+    font-family: "Dominican Italic";
+    src: url("../../../src/main/resources/css/Dominican-Italic.ttf");
+}
+
+.button{
+    -fx-font-family: "Dominican Italic";
+    -fx-font-size: 24px;
+    -fx-background-color: #517981;
+    -fx-background-radius: 2px;
+    -fx-text-fill: #f9dc52;
+    -fx-border-color: #f9dc52;
+    -fx-border-width: 3px;
+    -fx-border-radius: 2px;
+    -fx-effect: dropshadow(three-pass-box, rgb(64, 57, 4), 10, 0, 0, 0);
+}
+
+.button:hover{
+    -fx-background-color: #5d8b95;
+}
+
+.button:pressed{
+    -fx-background-color: #325d63
+}
+
+.choice-box {
+    -fx-background-color: #517981;
+    -fx-mark-color: #f9dc52;
+}
+
+.choice-box:hover{
+    -fx-background-color: #5d8b95;
+}
+
+.choice-box:pressed{
+    -fx-background-color: #325d63
+}
+
+.choice-box > .label { -fx-text-fill: #f9dc52; }
+
+.label {
+    -fx-font-size: 24px;
+    -fx-font-family: "Dominican Italic";
+    -fx-text-fill: #14456a;
+}
+
+
 
 
