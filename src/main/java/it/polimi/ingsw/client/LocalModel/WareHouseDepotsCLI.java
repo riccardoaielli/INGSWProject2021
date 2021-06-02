@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WareHouseDepots {
+public class WareHouseDepotsCLI {
     private List<Map<Resource, Integer>> depots;
     private GetColorString color;
 
-    public WareHouseDepots() {
+    public WareHouseDepotsCLI() {
         color = new GetColorString();
         depots = new ArrayList<>(3);
         //for(Map depot: depots)

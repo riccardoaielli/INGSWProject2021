@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.LocalModel;
 
 import it.polimi.ingsw.server.model.enumerations.Marble;
 
-public class Market {
+public class MarketCLI {
     private  Marble[][] marketMatrix;
     private  Marble marbleOut;
     private GetColorString getColorString = new GetColorString();

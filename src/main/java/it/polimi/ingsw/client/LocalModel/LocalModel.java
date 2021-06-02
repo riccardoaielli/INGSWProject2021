@@ -14,36 +14,36 @@ import java.util.List;
  * This class contains a local model with the necessary information to update the CLI or the GUI
  */
 public class LocalModel {
-    private ArrayList <Player> players;
-    private Player localPlayer;
+    private final int CARD_BACK = 65;
+    private ArrayList <PlayerCLI> players;
+    private PlayerCLI localPlayer;
     private String currentPlayer;
-    private Market market;
+    private MarketCLI market;
     private CardGrid cardGrid;
-    private FaithTrack faithTrack;
-    private DevelopmentCardSpace developmentCardSpace;
-    private WareHouseDepots wareHouseDepots;
-    private Strongbox strongbox;
+    private FaithTrackCLI faithTrack;
+    private DevelopmentCardSpaceCLI developmentCardSpace;
+    private WareHouseDepotsCLI wareHouseDepots;
+    private StrongboxCLI strongbox;
     private Map<Integer,ArrayList <String>> cliCardString = new HashMap<>();
     private GetColorString getColorString = new GetColorString();
     private final int maxRow = 3, maxColumn = 4;
 
-    int[][] cardGridMatrix;
-    ArrayList<String> stringArray = new ArrayList<>();
-    int k;
+    private int[][] cardGridMatrix;
+    private ArrayList<String> stringArray = new ArrayList<>();
+    private int k;
 
 
     public LocalModel() {
         players = new ArrayList<>();
-        market = new Market();
-        cardGrid = new CardGrid();
-        faithTrack = new FaithTrack();
-        developmentCardSpace = new DevelopmentCardSpace();
-        wareHouseDepots = new WareHouseDepots();
-        strongbox = new Strongbox();
+        market = new MarketCLI();
+        faithTrack = new FaithTrackCLI();
+        developmentCardSpace = new DevelopmentCardSpaceCLI();
+        wareHouseDepots = new WareHouseDepotsCLI();
+        strongbox = new StrongboxCLI();
         cliCardStringCreator();
     }
 
-    public Player getLocalPlayer() {
+    public PlayerCLI getLocalPlayer() {
         return localPlayer;
     }
 
@@ -75,8 +75,8 @@ public class LocalModel {
     }
 
 
-    public Player getPlayer(String nickname){
-       for(Player player: players){
+    public PlayerCLI getPlayer(String nickname){
+       for(PlayerCLI player: players){
            if (player.getNickname().equals(nickname))
                return player;
        }
@@ -84,9 +84,13 @@ public class LocalModel {
     }
 
     public void printCard(int x) {
-        ArrayList<String> arrayList = cliCardString.get(x);
-        for(int k=0; k<arrayList.size(); k++)
-            System.out.print(arrayList.get(k) + "\n");
+        if(x==CARD_BACK)
+            System.out.println("CARTA COPERTA");
+        else {
+            ArrayList<String> arrayList = cliCardString.get(x);
+            for (int k = 0; k < arrayList.size(); k++)
+                System.out.print(arrayList.get(k) + "\n");
+        }
     }
 
     public void printMarket(){
@@ -110,7 +114,7 @@ public class LocalModel {
     }
 
     public void setLocalPlayer(String localPlayer) {
-        this.localPlayer = new Player(localPlayer);
+        this.localPlayer = new PlayerCLI(localPlayer);
         players.add(this.localPlayer);
     }
 
@@ -118,11 +122,13 @@ public class LocalModel {
         printMarket();
         printCardGrid();
         //printLeaderCards();
-        for(Player player : players) {
+        for(PlayerCLI player : players) {
             player.printPersonalBoards();
             System.out.println("LEADER CARDS:");
             for (int leader : player.getLeaderCards()) {
                 printCard(leader);
+                if(player.isLeaderActive(leader))
+                    System.out.println(cliColor.COLOR_YELLOW + "_____" + cliColor.RESET);
             }
         }
     }
@@ -147,12 +153,12 @@ public class LocalModel {
     }
 
     public void setPlayersOrder(List<String> playersOrder) {
-        ArrayList <Player> players = new ArrayList<>();
+        ArrayList <PlayerCLI> players = new ArrayList<>();
         for(String x : playersOrder){
             if (x.equals(localPlayer.getNickname()))
                 players.add(this.players.get(0));
             else
-                players.add(new Player(x));
+                players.add(new PlayerCLI(x));
         }
         this.players = new ArrayList<>(players);
     }
@@ -395,7 +401,11 @@ public class LocalModel {
         return string;
     }
 
-    public void removeLeaderCard(int leaderPosition) {
-        localPlayer.removeCard(leaderPosition);
+    public void removeLeaderCard(String nickname,int leaderPosition) {
+        players.stream().filter(player -> player.getNickname().equals(nickname)).forEach(player -> player.removeCard(leaderPosition));
+    }
+
+    public void activeLeaderCard(String nickname, int numLeadercard, int leaderCardID) {
+        players.stream().filter(player -> player.getNickname().equals(nickname)).forEach(player -> player.activateCard(numLeadercard, leaderCardID));
     }
 }

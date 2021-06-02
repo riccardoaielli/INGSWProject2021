@@ -6,7 +6,7 @@ import it.polimi.ingsw.server.model.enumerations.Resource;
 
 import java.util.Map;
 
-public class DevelopmentCard {
+public class DevelopmentCardCLI {
     private int id;
     private DevelopmentCardColor color;
     private int level;

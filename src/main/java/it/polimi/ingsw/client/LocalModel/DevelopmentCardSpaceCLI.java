@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.LocalModel;
 
 import java.util.ArrayList;
 
-public class DevelopmentCardSpace {
+public class DevelopmentCardSpaceCLI {
     private ArrayList<ArrayList<Integer>> developmentCardSpace;
 
     public void setDevelopmentCardSpace(ArrayList<ArrayList<Integer>> developmentCardSpace) {

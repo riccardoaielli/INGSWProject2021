@@ -4,12 +4,12 @@ import it.polimi.ingsw.server.model.enumerations.Resource;
 
 import java.util.ArrayList;
 
-public class FaithTrack {
+public class FaithTrackCLI {
     private int redcrossPosition;
     private ArrayList<Integer> popeFavourTiles;
     private GetColorString getColorString = new GetColorString();
 
-    public FaithTrack() {
+    public FaithTrackCLI() {
         redcrossPosition = 0;
         popeFavourTiles = new ArrayList<>();
         popeFavourTiles.add(0);

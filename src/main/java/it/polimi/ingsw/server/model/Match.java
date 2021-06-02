@@ -7,6 +7,7 @@ import it.polimi.ingsw.common.messages.messagesToClient.RankUpdate;
 import it.polimi.ingsw.common.utils.LeaderCardParser;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.MatchPhase;
+import it.polimi.ingsw.server.model.enumerations.PersonalBoardPhase;
 import it.polimi.ingsw.server.model.exceptions.InvalidNickName;
 import it.polimi.ingsw.server.model.exceptions.InvalidParameterException;
 
@@ -164,8 +165,11 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
      */
     public void nextPlayer(){
         //changes from resource choice phase to standard round phase
-        if(matchPhase == MatchPhase.RESOURCECHOICE && ((players.indexOf(currentPlayer) + 1) == numOfPlayers))
+        if(matchPhase == MatchPhase.RESOURCECHOICE && ((players.indexOf(currentPlayer) + 1) == numOfPlayers)) {
             matchPhase = MatchPhase.STANDARDROUND;
+            for(Player player: players)
+                player.getPersonalBoard().setPersonalBoardPhase(PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE);
+        }
         //at the end of the last round ends the game
         if(matchPhase == MatchPhase.LASTROUND && ((players.indexOf(currentPlayer) + 1) == numOfPlayers)){
             endGame();

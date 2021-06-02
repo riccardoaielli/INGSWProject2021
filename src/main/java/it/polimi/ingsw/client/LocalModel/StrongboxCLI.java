@@ -6,11 +6,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Strongbox {
+public class StrongboxCLI {
     private Map<Resource, Integer> strongbox;
     private GetColorString color;
 
-    public Strongbox() {
+    public StrongboxCLI() {
         color = new GetColorString();
         strongbox = new HashMap<>();
         strongbox.put(Resource.COIN,0);

@@ -635,4 +635,8 @@ public class PersonalBoard extends MessageObservable {
     public void endTurn(){
         personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE;
     }
+
+    public void setPersonalBoardPhase(PersonalBoardPhase personalBoardPhase) {
+        this.personalBoardPhase = personalBoardPhase;
+    }
 }

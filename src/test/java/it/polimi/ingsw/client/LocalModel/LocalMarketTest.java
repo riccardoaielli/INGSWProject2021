@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Collections;
 import java.util.Stack;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class LocalMarketTest {
 
     private final int maxRow = 3;
@@ -44,10 +42,10 @@ class LocalMarketTest {
             }
 
         marbleOut = marbleStack.pop();
-        Market market = new Market();
-        market.setMarketMatrix(marketMatrix);
-        market.setMarbleOut(marbleOut);
+        MarketCLI marketCLI = new MarketCLI();
+        marketCLI.setMarketMatrix(marketMatrix);
+        marketCLI.setMarbleOut(marbleOut);
 
-        market.printMarket();
+        marketCLI.printMarket();
     }
 }

@@ -17,7 +17,9 @@ public class LeaderCardActivatedUpdate extends MessageToClient {
     @Override
     public void handleMessage(ClientView clientView) {
         clientView.showUpdateLeaderCardActivatedUpdate(getNickname(),numLeadercard,leaderCardID);
-        clientView.setPhase(LocalPhase.MENU);
-        clientView.getPhase().handlePhase(clientView);
+        if(getNickname().equals(clientView.getNickname())) {
+            clientView.setPhase(LocalPhase.MENU);
+            clientView.getPhase().handlePhase(clientView);
+        }
     }
 }

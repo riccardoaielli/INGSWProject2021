@@ -212,9 +212,9 @@ public class CLI implements ClientView {
      */
     @Override
     public void askCreateMatch(){
-        String numPlayerInput = readInput("How many players?");
+        int numPlayerInput = readInt("How many players?");
         String nicknameInput = readInput("Insert nickname");
-        messageSender.sendMessage(new CreateMatchReplyMessage(nicknameInput, Integer.parseInt(numPlayerInput)));
+        messageSender.sendMessage(new CreateMatchReplyMessage(nicknameInput, numPlayerInput));
         localModel.setLocalPlayer(nicknameInput);
     }
 
@@ -591,10 +591,15 @@ public class CLI implements ClientView {
     @Override
     public void askActivateLeader() {
         int numLeaderCard = readInt("Choose the number of the card to activate: ");
-        while (numLeaderCard <= 0){
-            numLeaderCard = readInt("Choose the number of the card to activate: ");
+        while (numLeaderCard < 0 || numLeaderCard > 2){
+            numLeaderCard = readInt("-Type 0 to go back to menu.\nChoose the number of the card to activate: ");
         }
-        messageSender.sendMessage(new ActivateLeaderMessage(localModel.getLocalPlayer().getNickname(),numLeaderCard));
+        if(numLeaderCard == 0){
+            phase = LocalPhase.MENU;
+            phase.handlePhase(this);
+        }
+        else
+            messageSender.sendMessage(new ActivateLeaderMessage(localModel.getLocalPlayer().getNickname(),numLeaderCard));
     }
 
     @Override
@@ -606,8 +611,12 @@ public class CLI implements ClientView {
     @Override
     public void askDiscardLeader(){
         int numLeaderCard = readInt("Choose the number of the card to discard: ");
-        while (numLeaderCard <= 0){
-            numLeaderCard = readInt("Choose the number of the card to discard: ");
+        while (numLeaderCard < 0 || numLeaderCard > 2){
+            numLeaderCard = readInt("-Type 0 to go back to menu.\nChoose the number of the card to discard: ");
+        }
+        if(numLeaderCard == 0){
+            phase = LocalPhase.MENU;
+            phase.handlePhase(this);
         }
         messageSender.sendMessage(new DiscardLeaderMessage(localModel.getLocalPlayer().getNickname(),numLeaderCard));
     }
@@ -729,14 +738,14 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdateDiscardedLeaderUpdate(String nickname, int leaderPosition) {
-        localModel.removeLeaderCard(leaderPosition);
-        System.out.println("The card has been discarded");
+        localModel.removeLeaderCard(nickname, leaderPosition);
+        System.out.println(nickname + " has discarded a leader card");
     }
 
     @Override
     public void showUpdateLeaderCardActivatedUpdate(String nickname, int numLeadercard, int leaderCardID) {
-        //todo: attivare la carta nel localModel
-        System.out.println("The card has been activated");
+        localModel.activeLeaderCard(nickname,numLeadercard,leaderCardID);
+        System.out.println(nickname+ " has activated a leader card");
     }
 
     @Override

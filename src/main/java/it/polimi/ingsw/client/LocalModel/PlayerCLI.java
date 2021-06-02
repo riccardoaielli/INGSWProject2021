@@ -5,13 +5,15 @@ import it.polimi.ingsw.server.model.enumerations.Resource;
 
 import java.util.*;
 
-public class Player {
+public class PlayerCLI {
+    private final int CARD_BACK = 65;
     private String nickname;
     private ArrayList <Integer> leaderCards;
-    private FaithTrack faithTrack;
-    private DevelopmentCardSpace developmentCardSpace;
-    private WareHouseDepots wareHouseDepots;
-    private Strongbox strongbox;
+    private ArrayList <Boolean> leaderCardsActive;
+    private FaithTrackCLI faithTrackCLI;
+    private DevelopmentCardSpaceCLI developmentCardSpaceCLI;
+    private WareHouseDepotsCLI wareHouseDepots;
+    private StrongboxCLI strongbox;
     private Map<Marble, Integer> temporaryMarbles;
     private Map<Resource, Integer> temporaryMapResource;
 
@@ -19,14 +21,19 @@ public class Player {
         return leaderCards;
     }
 
-    public Player(String nickname) {
+    public PlayerCLI(String nickname) {
         this.nickname = nickname;
         leaderCards = new ArrayList<>();
+        while (leaderCards.size() < 2)
+            leaderCards.add(CARD_BACK);
+        leaderCardsActive = new ArrayList<>();
+        while (leaderCardsActive.size() < 2)
+            leaderCardsActive.add(false);
         temporaryMarbles = new HashMap<>();
         temporaryMapResource = new HashMap<>();
-        faithTrack = new FaithTrack();
-        wareHouseDepots = new WareHouseDepots();
-        strongbox = new Strongbox();
+        faithTrackCLI = new FaithTrackCLI();
+        wareHouseDepots = new WareHouseDepotsCLI();
+        strongbox = new StrongboxCLI();
     }
 
     public String getNickname() {
@@ -34,10 +41,10 @@ public class Player {
     }
 
     public void setRedCrossPosition(int redcrossPosition){
-        faithTrack.setRedcrossPosition(redcrossPosition);
+        faithTrackCLI.setRedcrossPosition(redcrossPosition);
     }
     public void setPopeFavourTiles(ArrayList<Integer> popeFavourTiles){
-        faithTrack.setPopeFavourTiles(popeFavourTiles);
+        faithTrackCLI.setPopeFavourTiles(popeFavourTiles);
     }
     public void setDevelopmentCardSpace(ArrayList<ArrayList<Integer>> developmentCardSpace){
 
@@ -56,7 +63,7 @@ public class Player {
     public void printPersonalBoards(){
         System.out.println("Personal board di " + nickname + ":");
         printTermporaryMarbles();
-        faithTrack.printFaithTrack();
+        faithTrackCLI.printFaithTrack();
         wareHouseDepots.printWhareHouseDepots();
         strongbox.printStrongbox();
 
@@ -97,5 +104,14 @@ public class Player {
 
     public void removeCard(int leaderPosition) {
         leaderCards.remove(leaderCards.get(leaderPosition-1));
+    }
+
+    public void activateCard(int numLeadercard, int leaderCardID) {
+        leaderCards.set(numLeadercard - 1,leaderCardID);
+        leaderCardsActive.set(numLeadercard - 1,true);
+    }
+
+    public boolean isLeaderActive(int leader) {
+        return leaderCardsActive.get(leaderCards.indexOf(leader));
     }
 }

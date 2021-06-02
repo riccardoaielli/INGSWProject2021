@@ -82,6 +82,8 @@ public class Controller extends MessageObservable{
                     || match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_DONE){
                 match.getCurrentPlayer().getPersonalBoard().activateLeader(numLeaderCard);
             }
+            else
+                notifyObservers(new ErrorMessage(getNickname(),"wrong phase"));
         } catch (InvalidParameterException exception) {
             view.update(new ErrorMessage(nickname, "Invalid Leader Card"));
         } catch (RequirementNotMetException e) {
