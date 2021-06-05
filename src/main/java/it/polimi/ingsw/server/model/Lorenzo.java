@@ -1,17 +1,21 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.common.messages.messagesToClient.LorenzoBlackCrossUpdate;
+import it.polimi.ingsw.common.utils.observe.MessageObservable;
+
 import java.util.*;
 
 /**
  * This class represents all the logic under the single player game
  */
-public class Lorenzo {
+public class Lorenzo extends MessageObservable implements Observable<EndGameConditionsObserver> {
 
     private int faithTrackPositionBlack = 0;
     private Stack<SoloActionToken> soloActionTokenStack;
     private Stack<SoloActionToken> soloActionTokenUsedStack;
     private SoloActionToken currentActionToken;
     private CardGrid cardGrid;
+    private EndGameConditionsObserver matchToNotify;
 
 
     /**
@@ -43,8 +47,11 @@ public class Lorenzo {
     public void moveFaithMarker(int numOfSteps){
         assert  numOfSteps >= 0;
         faithTrackPositionBlack = faithTrackPositionBlack + numOfSteps;
-        if (faithTrackPositionBlack > 20)        // the maximum amount of space in the track is 20
+        if (faithTrackPositionBlack > 20) {    // the maximum amount of space in the track is 20
             faithTrackPositionBlack = 20;
+            matchToNotify.update();
+        }
+        notifyObservers(new LorenzoBlackCrossUpdate("Lorenzo",faithTrackPositionBlack));
     }
 
     /**
@@ -76,4 +83,8 @@ public class Lorenzo {
         currentActionToken.soloAction();
     }
 
+    @Override
+    public void addObserver(EndGameConditionsObserver observer) {
+        this.matchToNotify = observer;
+    }
 }

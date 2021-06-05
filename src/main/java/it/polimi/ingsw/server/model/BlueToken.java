@@ -22,6 +22,7 @@ public class BlueToken extends SoloActionToken{
 
         cardGrid.remove(DevelopmentCardColor.BLUE);
         cardGrid.remove(DevelopmentCardColor.BLUE);
+        cardGrid.doNotify();
 
     }
 

@@ -22,6 +22,7 @@ public class PurpleToken extends SoloActionToken{
 
         cardGrid.remove(DevelopmentCardColor.PURPLE);
         cardGrid.remove(DevelopmentCardColor.PURPLE);
+        cardGrid.doNotify();
 
     }
 

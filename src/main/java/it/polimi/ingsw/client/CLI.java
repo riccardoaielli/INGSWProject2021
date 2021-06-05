@@ -760,6 +760,16 @@ public class CLI implements ClientView {
     }
 
     @Override
+    public void showUpdateBlackcrossPosition(int blackCrossPosition) {
+        localModel.setBlackCrossPosition(blackCrossPosition);
+    }
+
+    @Override
+    public void showUpdateLorenzoDraw(String nickname, int row, int column) {
+        System.out.println(nickname + " discarded a card from the card grid: [Row " + row + ",Column " + column + "]");
+    }
+
+    @Override
     public void showUpdateFirstConnection(boolean firstPlayer) {
 
     }

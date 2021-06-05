@@ -22,6 +22,7 @@ public class GreenToken extends SoloActionToken{
 
         cardGrid.remove(DevelopmentCardColor.GREEN);
         cardGrid.remove(DevelopmentCardColor.GREEN);
+        cardGrid.doNotify();
 
     }
 

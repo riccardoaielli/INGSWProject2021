@@ -6,6 +6,7 @@ import it.polimi.ingsw.common.View;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.Match;
 import it.polimi.ingsw.server.model.PersonalBoard;
+import it.polimi.ingsw.server.model.SoloMatch;
 import it.polimi.ingsw.server.model.enumerations.MatchPhase;
 import it.polimi.ingsw.server.model.enumerations.PersonalBoardPhase;
 import it.polimi.ingsw.server.model.enumerations.Resource;
@@ -61,7 +62,10 @@ public class Controller extends MessageObservable{
     public synchronized void handleCreateMatchReplyMessage(int numOfPlayers,String nickname, View view){
         try {
             if(match == null){
-                match = new Match(1,numOfPlayers);
+                if(numOfPlayers == 1)
+                    match = new SoloMatch(1);
+                else
+                    match = new Match(1,numOfPlayers);
                 //creates a player
                 handleNicknameReplyMessage(nickname,view);
                 firstConnected = true;

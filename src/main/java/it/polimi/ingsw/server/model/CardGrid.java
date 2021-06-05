@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.model;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.common.messages.messagesToClient.CardGridUpdate;
+import it.polimi.ingsw.common.messages.messagesToClient.LorenzoDrawUpdate;
 import it.polimi.ingsw.common.utils.CardGridParser;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.enumerations.DevelopmentCardColor;
@@ -105,6 +106,7 @@ public class CardGrid extends MessageObservable {
             for (i = maxRow - 1; i >= 0; i--) {
                 if (!cardGridMatrix[i][column].empty()) {//if the bottom stack is empty, don't do anything and go to the upper stack
                     cardGridMatrix[i][column].pop(); //removing only one card of the lowest level available of the color passed by parameter
+                    notifyObservers(new LorenzoDrawUpdate("Lorenzo",i,column));
                     if (cardGridMatrix[0][column].empty() && cardGridMatrix[1][column].empty() && cardGridMatrix[2][column].empty()) {
                         alreadyLost = true;//one column is completely empty (column are of the same color)
                         //TODO avviso match fine partita, hai perso. Metti void e rimuovi stringhe

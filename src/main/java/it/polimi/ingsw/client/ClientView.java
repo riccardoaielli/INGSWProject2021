@@ -46,6 +46,8 @@ public interface ClientView extends View {
     void showUpdateRank(String nickname,ArrayList<RankPosition> rank);
     void showUpdateFirstConnection(boolean firstPlayer);
     void showUpdateInitialLeaderCard(ArrayList<Integer> initialLeaderCardsID);
+    void showUpdateBlackcrossPosition(int blackCrossPosition);
+    void showUpdateLorenzoDraw(String nickname,int row,int column);
     void askForLeaderCards();
     String getNickname();
 

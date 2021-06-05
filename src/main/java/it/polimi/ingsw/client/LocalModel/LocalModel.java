@@ -21,6 +21,7 @@ public class LocalModel {
     private MarketCLI market;
     private CardGrid cardGrid;
     private FaithTrackCLI faithTrack;
+    private int blackCrossPosition;
     private DevelopmentCardSpaceCLI developmentCardSpace;
     private WareHouseDepotsCLI wareHouseDepots;
     private StrongboxCLI strongbox;
@@ -121,7 +122,8 @@ public class LocalModel {
     public void printView(){
         printMarket();
         printCardGrid();
-        //printLeaderCards();
+        if (players.size() == 1)
+            printLorenzosFaithTrack();
         for(PlayerCLI player : players) {
             player.printPersonalBoards();
             System.out.println("LEADER CARDS:");
@@ -153,6 +155,8 @@ public class LocalModel {
     }
 
     public void setPlayersOrder(List<String> playersOrder) {
+        if(playersOrder.size() == 1)
+            blackCrossPosition = 0;
         ArrayList <PlayerCLI> players = new ArrayList<>();
         for(String x : playersOrder){
             if (x.equals(localPlayer.getNickname()))
@@ -407,5 +411,23 @@ public class LocalModel {
 
     public void activeLeaderCard(String nickname, int numLeadercard, int leaderCardID) {
         players.stream().filter(player -> player.getNickname().equals(nickname)).forEach(player -> player.activateCard(numLeadercard, leaderCardID));
+    }
+
+    public void setBlackCrossPosition(int blackCrossPosition) {
+        this.blackCrossPosition = blackCrossPosition;
+    }
+
+    private void printLorenzosFaithTrack(){
+        String cell = "|";
+        String blackCross = cliColor.COLOR_GREY+"┼"+cliColor.RESET;
+        String faithTrack = "";
+        for (int pos = 0; pos<=24; pos++){
+            if(blackCrossPosition == pos)
+                faithTrack = faithTrack.concat(blackCross).concat(cell);
+            else
+                faithTrack = faithTrack.concat(String.valueOf(pos)).concat(cell);
+        }
+
+        System.out.println("Lorenzo's Faithtrack: \n"+ faithTrack);
     }
 }

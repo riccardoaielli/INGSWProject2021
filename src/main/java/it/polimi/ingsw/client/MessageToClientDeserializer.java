@@ -76,6 +76,10 @@ public class MessageToClientDeserializer implements JsonDeserializer <MessageToC
                 return gson.fromJson(jsonObject, DiscardedLeaderUpdate.class);
             case "DISCONNECTED_UPDATE":
                 return gson.fromJson(jsonObject, DisconnectedUpdate.class);
+            case "LORENZO_DRAW_UPDATE":
+                return gson.fromJson(jsonObject, LorenzoDrawUpdate.class);
+            case "LORENZO_BLACK_CROSS_UPDATE":
+                return gson.fromJson(jsonObject, LorenzoBlackCrossUpdate.class);
         }
         return null;
     }

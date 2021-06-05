@@ -205,6 +205,16 @@ public class GUI implements ClientView {
     }
 
     @Override
+    public void showUpdateBlackcrossPosition(int blackCrossPosition) {
+
+    }
+
+    @Override
+    public void showUpdateLorenzoDraw(String nickname, int row, int column) {
+
+    }
+
+    @Override
     public void askForLeaderCards() {
         InitialLeaderChoiceController controller = (InitialLeaderChoiceController) SceneManager.getInstance().getController("InitialLeaderChoice");
         controller.resetChoices();
