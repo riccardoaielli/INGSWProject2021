@@ -1,8 +1,7 @@
 package it.polimi.ingsw.client.LocalModel;
 
+import it.polimi.ingsw.client.CLI.LocalModel.LocalModel;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class LocalModelTest {
 

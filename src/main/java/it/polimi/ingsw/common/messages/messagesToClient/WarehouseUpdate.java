@@ -1,7 +1,7 @@
 package it.polimi.ingsw.common.messages.messagesToClient;
 
 import it.polimi.ingsw.client.ClientView;
-import it.polimi.ingsw.client.LocalModel.LocalPhase;
+import it.polimi.ingsw.client.CLI.LocalModel.LocalPhase;
 import it.polimi.ingsw.common.messages.MessageType;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 

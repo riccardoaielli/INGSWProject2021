@@ -1,9 +1,9 @@
-package it.polimi.ingsw.client;
+package it.polimi.ingsw.client.CLI;
 
-import it.polimi.ingsw.client.LocalModel.GetColorString;
-import it.polimi.ingsw.client.LocalModel.LocalModel;
-import it.polimi.ingsw.client.LocalModel.LocalPhase;
-import it.polimi.ingsw.client.LocalModel.cliColor;
+import it.polimi.ingsw.client.*;
+import it.polimi.ingsw.client.CLI.LocalModel.LocalModel;
+import it.polimi.ingsw.client.CLI.LocalModel.LocalPhase;
+import it.polimi.ingsw.client.CLI.LocalModel.cliColor;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.common.messages.messagesToServer.*;
 import it.polimi.ingsw.server.model.Observable;
@@ -11,15 +11,10 @@ import it.polimi.ingsw.server.model.RankPosition;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
 
 /**
  * This class is the ClientView
@@ -34,6 +29,8 @@ public class CLI implements ClientView {
     private LocalPhase phase;
     private boolean mainTurnActionDone;
 
+    private StdInReader readLineThread;
+
 
     /**
      * This constructor creates the CLI and calls setMessageSender
@@ -46,6 +43,9 @@ public class CLI implements ClientView {
         localModel = new LocalModel();
         phase = LocalPhase.DEFAULT;
         mainTurnActionDone = false;
+
+        readLineThread = new StdInReader();
+        readLineThread.start();
     }
 
     public void start(){
@@ -177,6 +177,7 @@ public class CLI implements ClientView {
      */
     public String readInput(String stringPrint) {
         System.out.println(stringPrint);
+        /*
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
         String line = "";
 
@@ -185,7 +186,9 @@ public class CLI implements ClientView {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return line;
+
+         */
+        return readLineThread.readUserInput();
     }
 
     /**
@@ -327,7 +330,7 @@ public class CLI implements ClientView {
         if (action == 0) {
             messageSender.sendMessage(new EndTurnMessage(localModel.getLocalPlayer().getNickname()));
         } else if(action == numOfActions+1) {
-                closeGame("BUENO");
+                    closeGame("Quitting...");
             }
             else{
                 phase = actionPhases.get(action - 1);

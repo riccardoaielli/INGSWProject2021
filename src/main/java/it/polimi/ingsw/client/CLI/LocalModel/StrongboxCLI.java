@@ -1,8 +1,7 @@
-package it.polimi.ingsw.client.LocalModel;
+package it.polimi.ingsw.client.CLI.LocalModel;
 
 import it.polimi.ingsw.server.model.enumerations.Resource;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 

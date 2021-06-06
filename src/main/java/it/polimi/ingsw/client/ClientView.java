@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.LocalModel.LocalModel;
-import it.polimi.ingsw.client.LocalModel.LocalPhase;
+import it.polimi.ingsw.client.CLI.LocalModel.LocalModel;
+import it.polimi.ingsw.client.CLI.LocalModel.LocalPhase;
 import it.polimi.ingsw.common.View;
 import it.polimi.ingsw.server.model.RankPosition;
 import it.polimi.ingsw.server.model.enumerations.Marble;

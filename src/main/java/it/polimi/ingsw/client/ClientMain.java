@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.GUI.GUI;
+import it.polimi.ingsw.client.CLI.CLI;
 import it.polimi.ingsw.client.GUI.JavaFXGUI;
 import javafx.application.Application;
 

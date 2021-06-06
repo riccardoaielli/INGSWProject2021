@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.LocalModel;
+package it.polimi.ingsw.client.CLI.LocalModel;
 
 import java.util.ArrayList;
 

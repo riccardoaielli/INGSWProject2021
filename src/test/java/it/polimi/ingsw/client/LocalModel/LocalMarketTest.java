@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.LocalModel;
 
+import it.polimi.ingsw.client.CLI.LocalModel.MarketCLI;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import org.junit.jupiter.api.Test;
 
