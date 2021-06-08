@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class LocalModel {
     private final int CARD_BACK = 65;
+    private final int CARD_WIDTH = 13;
     private ArrayList <PlayerCLI> players;
     private PlayerCLI localPlayer;
     private String currentPlayer;
@@ -99,19 +100,60 @@ public class LocalModel {
     }
 
     public void printCardGrid(){
-        int k = 0;
+
+        String cardRowString = "";
+
+        for(int row = 0; row < maxRow ; row++){
+            for(int cardRow = 0; cardRow < 6; cardRow++){
+                for(int column = 0; column < maxColumn; column++){
+                    cardRowString = cardRowString.concat(cliCardString.get(cardGridMatrix[row][column]).get(cardRow));
+                }
+                System.out.println(cardRowString);
+                cardRowString = "";
+            }
+        }
+
+        /*
         for(int i=0; i<maxRow; i++) {
+                for(int width = 0; width < 4; width++)
                 for (int j = 0; j < maxColumn; j++) {
                         int x = cardGridMatrix[i][j];
                         printCard(x);
                 }
         }
+
+         */
     }
 
-    public void printLeaderCards() {
+    public void printLeaderCards(){
+        String rowString = "";
         ArrayList <Integer> leaderCard = localPlayer.getLeaderCards();
+        for(int cardRow = 0; cardRow < 5; cardRow++){
+            for(Integer card : leaderCard) {
+                rowString = rowString.concat(cliCardString.get(card).get(cardRow));
+            }
+            System.out.println(rowString);
+            rowString = "";
+        }
+    }
+    public void printLeaderCards(PlayerCLI player) {
+        String rowString = "";
+        ArrayList <Integer> leaderCard = localPlayer.getLeaderCards();
+        for(int cardRow = 0; cardRow < 5; cardRow++){
+            for(Integer card : leaderCard) {
+                if(cardRow == 4 && player.isLeaderActive(card)){
+                    rowString = rowString + cliColor.COLOR_YELLOW + cliCardString.get(card).get(cardRow) + cliColor.RESET;
+                }
+                else
+                    rowString = rowString.concat(cliCardString.get(card).get(cardRow));
+            }
+            System.out.println(rowString);
+            rowString = "";
+        }
+        /*
         for(Integer card : leaderCard)
         this.printCard(card);
+         */
     }
 
     public void setLocalPlayer(String localPlayer) {
@@ -127,11 +169,15 @@ public class LocalModel {
         for(PlayerCLI player : players) {
             player.printPersonalBoards();
             System.out.println("LEADER CARDS:");
+            printLeaderCards(player);
+            /*
             for (int leader : player.getLeaderCards()) {
                 printCard(leader);
                 if(player.isLeaderActive(leader))
                     System.out.println(cliColor.COLOR_YELLOW + "_____" + cliColor.RESET);
             }
+
+             */
         }
     }
 
@@ -172,6 +218,8 @@ public class LocalModel {
         String stringTemp = "";
         String string = "";
 
+        int stringLength;
+
         LeaderCardParser leaderCardParser = new LeaderCardParser();
         Stack<LeaderDepot> leaderCardDepot = leaderCardParser.leaderCardDepotDeserializer();
         Stack<LeaderMarble> leaderCardMarble = leaderCardParser.leaderCardMarbleDeserializer();
@@ -189,16 +237,22 @@ public class LocalModel {
 
                 while (cardGridMatrixStack.size() != 0) {
 
-                    string = "";
+                    string = "║";
+                    stringLength = 1;
                     ArrayList <String> stringArray = new ArrayList<>();
+                    stringArray.add("╔═══════════╗");//characters width: 15 ║
                     //codice di parsing della stringa che stampa la carta
                     DevelopmentCard developmentCard = cardGridMatrixStack.pop();
                     int id = developmentCard.getId();
                     int level = developmentCard.getLevel();
                     for (int k = 0; k < level; k++) {
-                        stringTemp = getColorString.getColorDevelopmentCard(developmentCard.getColor()) + "♦" + cliColor.RESET;
+                        stringTemp = getColorString.getColorDevelopmentCard(developmentCard.getColor()) + "*" + cliColor.RESET;
                         string = string.concat(stringTemp);
+                        stringLength ++;
                     }
+                    for(int addedCharacters = 0; addedCharacters < CARD_WIDTH - (stringLength + 1); addedCharacters++)
+                        string = string.concat(" ");
+                    string = string.concat("║");
                     //addSpaces(string);
                     stringArray.add(string);
 
@@ -211,23 +265,34 @@ public class LocalModel {
                     string = "";
                     Map<Resource, Integer> cost = developmentCard.getPowerOfProduction().getCost();
                     Map<Resource, Integer> production = developmentCard.getPowerOfProduction().getProduction();
+
+                    stringTemp = getCostProductionIntegerParser(cost,production);
+                    /*
                     stringTemp = getMapResourceIntegerParser(cost);
                     stringTemp = stringTemp.concat("=");
                     string = string.concat(stringTemp);
                     stringTemp = getMapResourceIntegerParser(production);
+                     */
                     string = string.concat(stringTemp);
                     //addSpaces(string);
                     stringArray.add(string);
 
-                    string = "";
-                    int victoryPoints = developmentCard.getVictoryPoints();
+                    string = "║";
+                    stringLength = 1;
+                    Integer victoryPoints = developmentCard.getVictoryPoints();
+                    stringLength = stringLength + victoryPoints.toString().length();
                     stringTemp = String.valueOf(victoryPoints);
                     string = string.concat(stringTemp);
+                    for(int addedCharacters = 0; addedCharacters < CARD_WIDTH - (stringLength + 1); addedCharacters++)
+                        string = string.concat(" ");
+                    string = string.concat("║");
                     //addSpaces(string);
                     stringArray.add(string);
 
                     /*for(String x : stringArray)
                         System.out.print(x + "\n");*/
+
+                    stringArray.add("╚═══════════╝"); //characters width: 15 ║
 
                     cliCardString.put(id, stringArray);
                 }
@@ -236,18 +301,26 @@ public class LocalModel {
 
         while (leaderCardDepot.size() != 0) {
 
-            string = "";
             ArrayList <String> stringArray = new ArrayList<>();
+            stringArray.add("╔═══════════╗");//characters width: 15 ║
+
             //codice di parsing della stringa che stampa la carta
             LeaderDepot leaderDepot = leaderCardDepot.pop();
             int id = leaderDepot.getId();
             cardRequirementStringParser(leaderDepot, stringArray);
 
             Resource resource = leaderDepot.getSpecialDepotResource();
-            string = "";
-            string = getColorString.getColorResource(resource) + "DEPOT" + cliColor.RESET;
+            string = "║";
+            stringLength = 1;
+            string = string + getColorString.getColorResource(resource) + "DEPOT" + cliColor.RESET;
+            stringLength = stringLength + 5;
+            for(int addedCharacters = 0; addedCharacters < CARD_WIDTH - (stringLength + 1); addedCharacters++)
+                string = string.concat(" ");
+            string = string.concat("║");
             //addSpaces(string);
             stringArray.add(string);
+            stringArray.add("╚═══════════╝"); //characters width: 15 ║
+
 
             /*for(String x : stringArray)
                 System.out.print(x + "\n");*/
@@ -258,16 +331,25 @@ public class LocalModel {
 
             string = "";
             ArrayList <String> stringArray = new ArrayList<>();
+            stringArray.add("╔═══════════╗");//characters width: 15 ║
+
             //codice di parsing della stringa che stampa la carta
             LeaderDiscount leaderDiscount = leaderCardDiscount.pop();
             int id = leaderDiscount.getId();
             cardRequirementStringParser(leaderDiscount, stringArray);
 
             Resource resource = leaderDiscount.getResourceDiscounted();
-            string = "";
-            string = getColorString.getColorResource(resource) + "DISCOUNT" + cliColor.RESET;
+            string = "║";
+            stringLength = 1;
+            string = string + getColorString.getColorResource(resource) + "DISCOUNT" + cliColor.RESET;
+            stringLength = stringLength + 8;
             //addSpaces(string);
+            for(int addedCharacters = 0; addedCharacters < CARD_WIDTH - (stringLength + 1); addedCharacters++)
+                string = string.concat(" ");
+            string = string.concat("║");
             stringArray.add(string);
+
+            stringArray.add("╚═══════════╝"); //characters width: 15 ║
 
             /*for(String x : stringArray)
                 System.out.print(x + "\n");*/
@@ -278,17 +360,25 @@ public class LocalModel {
 
             string = "";
             ArrayList <String> stringArray = new ArrayList<>();
+            stringArray.add("╔═══════════╗");//characters width: 15 ║
+
             //codice di parsing della stringa che stampa la carta
             LeaderMarble leaderMarble = leaderCardMarble.pop();
             int id = leaderMarble.getId();
             cardRequirementStringParser(leaderMarble, stringArray);
 
             Marble marble = leaderMarble.getMarble();
-            string = "";
-            string = getColorString.getColorMarble(marble) + "MARBLE" + cliColor.RESET;
+            string = "║";
+            stringLength = 1;
+            string = string + getColorString.getColorMarble(marble) + "MARBLE" + cliColor.RESET;
+            stringLength = stringLength + 6;
             //addSpaces(string);
+            for(int addedCharacters = 0; addedCharacters < CARD_WIDTH - (stringLength + 1); addedCharacters++)
+                string = string.concat(" ");
+            string = string.concat("║");
             stringArray.add(string);
 
+            stringArray.add("╚═══════════╝"); //characters width: 15 ║
             /*for(String x : stringArray)
                 System.out.print(x + "\n");*/
             cliCardString.put(id, stringArray);
@@ -298,6 +388,8 @@ public class LocalModel {
 
             string = "";
             ArrayList <String> stringArray = new ArrayList<>();
+            stringArray.add("╔═══════════╗");//characters width: 15 ║
+
             //codice di parsing della stringa che stampa la carta
             LeaderProduction leaderProduction = leaderCardProduction.pop();
             int id = leaderProduction.getId();
@@ -308,11 +400,14 @@ public class LocalModel {
 
             cardPowerOfProductionStringParser(powerOfProduction, stringArray);
 
+            stringArray.add("╚═══════════╝"); //characters width: 15 ║
             /*for(String x : stringArray)
                 System.out.print(x + "\n");*/
             cliCardString.put(id, stringArray);
         }
     }
+
+
 
     /*private String addSpaces(String string){
         String str = string;
@@ -327,12 +422,13 @@ public class LocalModel {
     private ArrayList <String> cardRequirementStringParser(LeaderCard leaderCard, ArrayList <String> stringArray){
 
         String string = "";
+        int stringLength = 0;
         String stringTemp;
         Requirement requirement = leaderCard.getRequirement();
         ArrayList<CardRequirement> cardRequirement = leaderCard.getRequirement().getCardsRequirement();
         if(cardRequirement != null) {
-            stringTemp = getCardRequirementStringParser(cardRequirement);
-            string = string.concat(stringTemp);
+            string = getCardRequirementStringParser(cardRequirement);
+
             //addSpaces(string);
             stringArray.add(string);
         }
@@ -345,29 +441,53 @@ public class LocalModel {
             stringArray.add(string);
         }
 
-        string = "";
+        string = "║";
         int victoryPoints = leaderCard.getVictoryPoints();
-        string = String.valueOf(victoryPoints);
+        string = string + String.valueOf(victoryPoints);
+        stringLength = string.length();
         //addSpaces(string);
+        for(int addedCharacters = 0; addedCharacters < CARD_WIDTH - (stringLength + 1); addedCharacters++)
+            string = string.concat(" ");
+        string = string.concat("║");
         stringArray.add(string);
         return stringArray;
     }
 
     private ArrayList <String> cardPowerOfProductionStringParser(PowerOfProduction powerOfProduction, ArrayList <String> stringArray){
 
-        String string = "";
+        String string = "║";
+        int stringLength = 1;
         String stringTemp;
         Map<Resource, Integer> cost = powerOfProduction.getCost();
         Map<Resource,Integer> production = powerOfProduction.getProduction();
 
-        stringTemp = getMapResourceIntegerParser(cost);
-        stringTemp = stringTemp.concat("=");
-        string = string.concat(stringTemp);
+        //stringTemp = getMapResourceIntegerParser(cost);
+        for(Resource x : Resource.values()){
+            if(cost.get(x)!= null){
+                stringTemp = cost.get(x) + "" + getColorString.getColorResource(x) + "■" + cliColor.RESET;
+                string = string.concat(stringTemp);
+                stringLength = stringLength + cost.get(x).toString().length() + 1;
+            }
+        }
 
-        stringTemp = getMapResourceIntegerParser(production);
-        stringTemp = stringTemp.concat("+?");
-        string = string.concat(stringTemp);
+        string = string.concat("=");
+        stringLength++;
+
+        //stringTemp = getMapResourceIntegerParser(production);
+        for(Resource x : Resource.values()){
+            if(cost.get(x)!= null){
+                stringTemp = cost.get(x) + "" + getColorString.getColorResource(x) + "■" + cliColor.RESET;
+                string = string.concat(stringTemp);
+                stringLength = stringLength + cost.get(x).toString().length() + 1;
+            }
+        }
+
+        string = string.concat("+?");
+        stringLength = stringLength + 2;
         //addSpaces(string);
+        for(int addedCharacters = 0; addedCharacters < CARD_WIDTH - (stringLength + 1); addedCharacters++)
+            string = string.concat(" ");
+        string = string.concat("║");
         stringArray.add(string);
 
         return stringArray;
@@ -375,33 +495,74 @@ public class LocalModel {
 
     private String getCardRequirementStringParser(ArrayList<CardRequirement> cardRequirement){
 
-        String string = "";
+        String string = "║";
+        int stringLength = 1;
         String level;
         while (!cardRequirement.isEmpty()) {
             CardRequirement x = cardRequirement.get(0);
-            int freq = Collections.frequency(cardRequirement, x);
+            Integer freq = Collections.frequency(cardRequirement, x);
 
             if(x.getLevel()==0)
                 level = "-";
             else level = Integer.toString(x.getLevel());
+            stringLength = stringLength + level.length();
 
             String stringTemp = freq + "" + getColorString.getColorDevelopmentCard(x.getColor()) + "(" + level + ")" + "" + cliColor.RESET;
+            stringLength = stringLength + freq.toString().length() + 2;
             string = string.concat(stringTemp);
             for (int i = 0; i < freq; i++)
                 cardRequirement.remove(x);
         }
+        for(int addedCharacters = 0; addedCharacters < CARD_WIDTH - (stringLength + 1); addedCharacters++)
+            string = string.concat(" ");
+        string = string.concat("║");
         return string;
     }
 
     private String getMapResourceIntegerParser(Map<Resource, Integer> map){
 
-        String string = "";
+        String string = "║";
+        int stringLength = 1;
+
         for(Resource x : Resource.values()){
             if(map.get(x)!= null){
                 String stringTemp = map.get(x) + "" + getColorString.getColorResource(x) + "■" + cliColor.RESET;
                 string = string.concat(stringTemp);
+                stringLength = stringLength + map.get(x).toString().length() + 1;
             }
         }
+        for(int addedCharacters = 0; addedCharacters < CARD_WIDTH - (stringLength + 1); addedCharacters++)
+            string = string.concat(" ");
+        string = string.concat("║");
+        return string;
+    }
+
+    private String getCostProductionIntegerParser(Map<Resource, Integer> cost, Map<Resource, Integer> production) {
+        String string = "║";
+        int stringLength = 1;
+
+        for(Resource x : Resource.values()){
+            if(cost.get(x)!= null){
+                String stringTemp = cost.get(x) + "" + getColorString.getColorResource(x) + "■" + cliColor.RESET;
+                string = string.concat(stringTemp);
+                stringLength = stringLength + cost.get(x).toString().length() + 1;
+            }
+        }
+
+        string = string.concat("=");
+        stringLength++;
+
+        for(Resource x : Resource.values()){
+            if(production.get(x)!= null){
+                String stringTemp = production.get(x) + "" + getColorString.getColorResource(x) + "■" + cliColor.RESET;
+                string = string.concat(stringTemp);
+                stringLength = stringLength + production.get(x).toString().length() + 1;
+            }
+        }
+
+        for(int addedCharacters = 0; addedCharacters < CARD_WIDTH - (stringLength + 1); addedCharacters++)
+            string = string.concat(" ");
+        string = string.concat("║");
         return string;
     }
 
