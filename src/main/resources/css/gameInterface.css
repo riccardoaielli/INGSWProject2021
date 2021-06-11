@@ -1,0 +1,30 @@
+.menuBackground {
+    -fx-background-image: url("../../../src/main/resources/BlurredBackground.png");
+    -fx-background-size: cover;
+    -fx-position: relative;
+}
+
+@font-face {
+    font-family: "Dominican Italic";
+    src: url("../../../src/main/resources/css/Dominican-Italic.ttf");
+}
+
+.button{
+    -fx-font-family: "Dominican Italic";
+    -fx-font-size: 18px;
+    -fx-background-color: #517981;
+    -fx-background-radius: 2px;
+    -fx-text-fill: #f9dc52;
+    -fx-border-color: #f9dc52;
+    -fx-border-width: 3px;
+    -fx-border-radius: 2px;
+    -fx-effect: dropshadow(three-pass-box, rgb(64, 57, 4), 10, 0, 0, 0);
+}
+
+.button:hover{
+    -fx-background-color: #5d8b95;
+}
+
+.button:pressed{
+    -fx-background-color: #325d63
+}

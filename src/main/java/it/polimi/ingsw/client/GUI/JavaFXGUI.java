@@ -21,8 +21,20 @@ public class JavaFXGUI extends Application {
         SceneManager.getInstance().setGui(gui);
         SceneManager.getInstance().setStage(stage);
         SceneManager.getInstance().setRootFXML("start");
+
+
+       /* SceneManager.getInstance().setRootFXML("gameInterface");
+        GameInterfaceController gameInterface = (GameInterfaceController)SceneManager.getInstance().getActiveController();
+        List<String> playersTest  = new ArrayList<>();
+        playersTest.add("Prova1");
+        playersTest.add("Prova2");
+        gameInterface.setPlayers(playersTest);
+*/
+
         //stage.setFullScreen(true);
-        //stage.setMaximized(true);
+        stage.setMaximized(true);
+        stage.setMinHeight(720);
+        stage.setMinWidth(1280);
         stage.setResizable(true);
         stage.show();
     }

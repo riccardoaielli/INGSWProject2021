@@ -1,29 +1,68 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.client.GUI.SceneManager;
+import it.polimi.ingsw.server.model.enumerations.Marble;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
-public class CardGridController extends AbstractController {
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+public class GameInterfaceController extends AbstractController {
+
+    //CARD GRID ATTRIBUTES
+    @FXML
+    private GridPane cardGridPane;
     private Node[][] gridPaneArray = null;
     private int[][] cardGridMatrixCurrent = new int[maxRow][maxColumn];
     private static final int maxColumn = 4, maxRow = 3;
     private static final double h = 175, w = 116;
 
     @FXML
-    private GridPane gridPane;
+    private TabPane personalTab;
+
+    private Map<String, PersonalBoardController> personalBoardControllerMap;
+
+    //MARKET
+    @FXML
+    private MarketController marketGridController;
+
+
 
     @FXML
     public void initialize() {
-
+        personalBoardControllerMap = new HashMap<>();
         initializeCardGridPaneArray();
     }
 
+    /**
+     * Method to set the tabs of all the players in the GUI
+     * @param playersOrder
+     */
+    public void setPlayers(List<String> playersOrder){
+        for (int order = 0; order < playersOrder.size(); order++){
+            FXMLLoader tabContent = SceneManager.getInstance().loadFXML("personalBoard");
+            try {
+                Tab playerTab = new Tab(playersOrder.get(order), tabContent.load());
+                personalBoardControllerMap.put(playersOrder.get(order), tabContent.getController());
+                personalTab.getTabs().add(playerTab);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //CARD GRID METHODS
     /**
      *Calls method drawCards to print cards in gridPane
      * @param cardGridMatrixUpdate is the cardGrid matrix from model
@@ -60,7 +99,7 @@ public class CardGridController extends AbstractController {
     private void initializeCardGridPaneArray()
     {
         gridPaneArray = new Node[maxRow][maxColumn];
-        for(Node node : gridPane.getChildren())
+        for(Node node : cardGridPane.getChildren())
         {
             Integer x = GridPane.getRowIndex(node);
             Integer y = GridPane.getColumnIndex(node);
@@ -73,7 +112,7 @@ public class CardGridController extends AbstractController {
             for (int j = 0; j < maxColumn; j++) {
                 Node node = gridPaneArray[i][j];
                 ImageView imgView = (ImageView) node;
-                imgView.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onImgClick);
+                imgView.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onCardGridCardClick);
             }
         }
 
@@ -84,9 +123,18 @@ public class CardGridController extends AbstractController {
         }
     }
 
-    private void onImgClick(Event event){
+    private void onCardGridCardClick(Event event){
         ImageView imageView = (ImageView) event.getTarget();
         System.out.println(GridPane.getRowIndex(imageView) + "," +GridPane.getColumnIndex(imageView));
         //todo passo la posizione a chi serve per creare il messaggio
     }
+
+    public void setMarbles(Marble[][] marketMatrix, Marble marbleOut){
+        marketGridController.setMarbles(marketMatrix, marbleOut);
+    }
+
+    public Map<String, PersonalBoardController> getPersonalBoardControllerMap() {
+        return personalBoardControllerMap;
+    }
+
 }

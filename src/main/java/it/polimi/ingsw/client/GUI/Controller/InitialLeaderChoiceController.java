@@ -75,4 +75,8 @@ public class InitialLeaderChoiceController extends AbstractController{
             discard = false;
     }
 
+    public ArrayList<ImageView> getCardImagesArray() {
+        return cardImagesArray;
+    }
+
 }

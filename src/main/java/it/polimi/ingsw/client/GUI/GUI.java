@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.GUI;
 
 import it.polimi.ingsw.client.ClientSocket;
 import it.polimi.ingsw.client.ClientView;
-import it.polimi.ingsw.client.GUI.Controller.InitialLeaderChoiceController;
+import it.polimi.ingsw.client.GUI.Controller.*;
 import it.polimi.ingsw.client.CLI.LocalModel.LocalModel;
 import it.polimi.ingsw.client.CLI.LocalModel.LocalPhase;
 import it.polimi.ingsw.client.LocalSender;
@@ -11,8 +11,10 @@ import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.server.model.RankPosition;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -69,7 +71,7 @@ public class GUI implements ClientView {
 
     @Override
     public void askResourceChoice() {
-
+        SceneManager.getInstance().showPopup("initialResourceChoice");
     }
 
     @Override
@@ -109,17 +111,40 @@ public class GUI implements ClientView {
 
     @Override
     public void showError(String errorString) {
-
+        SceneManager.getInstance().showError(errorString);
     }
 
     @Override
     public void showInitialLeaderCardDiscard(String nickname, int indexLeaderCard1, int indexLeaderCard2) {
+        GameInterfaceController gameInterfaceController = (GameInterfaceController)SceneManager.getInstance().getController("gameInterfaceController");
+        PersonalBoardController myPersonalBoard =  gameInterfaceController.getPersonalBoardControllerMap().get(nickname);
 
+        if (nickname.equals(myNickname)){
+            InitialLeaderChoiceController initialLeaderChoiceController = (InitialLeaderChoiceController) SceneManager.getInstance().getController("InitialLeaderChoice");
+
+            List<Integer> indexesLeaderCard = new ArrayList<>();
+            indexesLeaderCard.add(indexLeaderCard1);
+            indexesLeaderCard.add(indexLeaderCard2);
+            indexesLeaderCard.sort(Collections.reverseOrder());
+            for (int indexLeaderCard: indexesLeaderCard){
+                initialLeaderChoiceController.getCardImagesArray().remove(indexLeaderCard-1);
+            }
+
+            //TODO modificare dopo che la personal board viene creata
+            //myPersonalBoard.setLeaderCard1(initialLeaderChoiceController.getCardImagesArray().get(0).getImage());
+            //myPersonalBoard.setLeaderCard2(initialLeaderChoiceController.getCardImagesArray().get(1).getImage());
+        }
+        else{
+            //myPersonalBoard.setLeaderCard1(new Image());
+            //TODO settare il back NON QUI, va settato dopo che viene creata la personal board
+        }
     }
 
     @Override
     public void showUpdatePlayersOrder(List<String> playersOrder) {
-
+        SceneManager.getInstance().setRootFXML("gameInterfaceController");
+        GameInterfaceController gameInterfaceController = (GameInterfaceController)SceneManager.getInstance().getController("gameInterfaceController");
+        Platform.runLater(()-> gameInterfaceController.setPlayers(playersOrder));
     }
 
     @Override
@@ -164,7 +189,8 @@ public class GUI implements ClientView {
 
     @Override
     public void showUpdateMarket(Marble[][] marketMatrix, Marble marbleOut) {
-
+        GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterfaceController");
+        Platform.runLater(()-> gameInterfaceController.setMarbles(marketMatrix, marbleOut));
     }
 
     @Override
@@ -194,7 +220,7 @@ public class GUI implements ClientView {
 
     @Override
     public void showUpdateFirstConnection(boolean firstPlayer) {
-
+        //TODO evaluate if necessary
     }
 
     @Override
