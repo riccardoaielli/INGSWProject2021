@@ -116,7 +116,7 @@ public class GUI implements ClientView {
 
     @Override
     public void showInitialLeaderCardDiscard(String nickname, int indexLeaderCard1, int indexLeaderCard2) {
-        GameInterfaceController gameInterfaceController = (GameInterfaceController)SceneManager.getInstance().getController("gameInterfaceController");
+        GameInterfaceController gameInterfaceController = (GameInterfaceController)SceneManager.getInstance().getController("gameInterface");
         PersonalBoardController myPersonalBoard =  gameInterfaceController.getPersonalBoardControllerMap().get(nickname);
 
         if (nickname.equals(myNickname)){
@@ -129,22 +129,23 @@ public class GUI implements ClientView {
             for (int indexLeaderCard: indexesLeaderCard){
                 initialLeaderChoiceController.getCardImagesArray().remove(indexLeaderCard-1);
             }
-
-            //TODO modificare dopo che la personal board viene creata
-            //myPersonalBoard.setLeaderCard1(initialLeaderChoiceController.getCardImagesArray().get(0).getImage());
-            //myPersonalBoard.setLeaderCard2(initialLeaderChoiceController.getCardImagesArray().get(1).getImage());
-        }
-        else{
-            //myPersonalBoard.setLeaderCard1(new Image());
-            //TODO settare il back NON QUI, va settato dopo che viene creata la personal board
         }
     }
 
     @Override
     public void showUpdatePlayersOrder(List<String> playersOrder) {
-        SceneManager.getInstance().setRootFXML("gameInterfaceController");
-        GameInterfaceController gameInterfaceController = (GameInterfaceController)SceneManager.getInstance().getController("gameInterfaceController");
-        Platform.runLater(()-> gameInterfaceController.setPlayers(playersOrder));
+        SceneManager.getInstance().setRootFXML("gameInterface");
+        GameInterfaceController gameInterfaceController = (GameInterfaceController)SceneManager.getInstance().getController("gameInterface");
+        Platform.runLater(()-> {
+            //Creating personal boards of the players
+            gameInterfaceController.setPlayers(playersOrder);
+            //Setting the chosen leader cards of the player of this client
+            InitialLeaderChoiceController initialLeaderChoiceController = (InitialLeaderChoiceController) SceneManager.getInstance().getController("InitialLeaderChoice");
+            PersonalBoardController myPersonalBoard =  gameInterfaceController.getPersonalBoardControllerMap().get(myNickname);
+            myPersonalBoard.setLeaderCard1(initialLeaderChoiceController.getCardImagesArray().get(0).getImage());
+            myPersonalBoard.setLeaderCard2(initialLeaderChoiceController.getCardImagesArray().get(1).getImage());
+        });
+
     }
 
     @Override
@@ -189,7 +190,7 @@ public class GUI implements ClientView {
 
     @Override
     public void showUpdateMarket(Marble[][] marketMatrix, Marble marbleOut) {
-        GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterfaceController");
+        GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterface");
         Platform.runLater(()-> gameInterfaceController.setMarbles(marketMatrix, marbleOut));
     }
 

@@ -22,12 +22,11 @@ public class PersonalBoardController extends  AbstractController{
 
     @FXML
     public void initialize(){
-        //TODO modificarlo in un metodo che viene eseguito solo per la personal board di myNickname, eventualmente anche un metodo pubblico chiamato da fuori.
-        // Serve avere accesso al nickname della personal board, devo settarlo su personal board controller quando creo le tab
-        //Setting the not discarded leader cards
-        InitialLeaderChoiceController initialLeaderChoiceController = (InitialLeaderChoiceController) SceneManager.getInstance().getController("InitialLeaderChoice");
-        setLeaderCard1(initialLeaderChoiceController.getCardImagesArray().get(0).getImage());
-        setLeaderCard2(initialLeaderChoiceController.getCardImagesArray().get(1).getImage());
+        //TODO also possible to set myNickname in personal board and put chosen leaderCards if personalBoard.getMyNickname.equals(gui.getmyNickname) else set bakc cover of leader cards
+        //Setting the back of leader cards
+        String backLeaderCardPath = "cardsImage/65.png";
+        setLeaderCard1(new Image(backLeaderCardPath));
+        setLeaderCard2(new Image(backLeaderCardPath));
     }
 
 
