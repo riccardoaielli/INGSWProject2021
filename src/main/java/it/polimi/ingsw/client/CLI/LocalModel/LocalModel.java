@@ -20,28 +20,17 @@ public class LocalModel {
     private PlayerCLI localPlayer;
     private String currentPlayer;
     private MarketCLI market;
-    private CardGrid cardGrid;
-    private FaithTrackCLI faithTrack;
     private int blackCrossPosition;
-    private DevelopmentCardSpaceCLI developmentCardSpace;
-    private WareHouseDepotsCLI wareHouseDepots;
-    private StrongboxCLI strongbox;
     private Map<Integer,ArrayList <String>> cliCardString = new HashMap<>();
     private GetColorString getColorString = new GetColorString();
     private final int maxRow = 3, maxColumn = 4;
 
     private int[][] cardGridMatrix;
-    private ArrayList<String> stringArray = new ArrayList<>();
-    private int k;
 
 
     public LocalModel() {
         players = new ArrayList<>();
         market = new MarketCLI();
-        faithTrack = new FaithTrackCLI();
-        developmentCardSpace = new DevelopmentCardSpaceCLI();
-        wareHouseDepots = new WareHouseDepotsCLI();
-        strongbox = new StrongboxCLI();
         cliCardStringCreator();
     }
 
@@ -76,7 +65,11 @@ public class LocalModel {
         localPlayer.setLeaderCards(initialLeaderCards);
     }
 
-
+    /**
+     * This method returns player from a given nickname
+     * @param nickname is the nickname of a player
+     * @return the player with the given nickname
+     */
     public PlayerCLI getPlayer(String nickname){
        for(PlayerCLI player: players){
            if (player.getNickname().equals(nickname))
@@ -112,17 +105,6 @@ public class LocalModel {
                 cardRowString = "";
             }
         }
-
-        /*
-        for(int i=0; i<maxRow; i++) {
-                for(int width = 0; width < 4; width++)
-                for (int j = 0; j < maxColumn; j++) {
-                        int x = cardGridMatrix[i][j];
-                        printCard(x);
-                }
-        }
-
-         */
     }
 
     public void printLeaderCards(){
@@ -138,7 +120,7 @@ public class LocalModel {
     }
     public void printLeaderCards(PlayerCLI player) {
         String rowString = "";
-        ArrayList <Integer> leaderCard = localPlayer.getLeaderCards();
+        ArrayList <Integer> leaderCard = player.getLeaderCards();
         for(int cardRow = 0; cardRow < 5; cardRow++){
             for(Integer card : leaderCard) {
                 if(cardRow == 4 && player.isLeaderActive(card)){
@@ -150,10 +132,22 @@ public class LocalModel {
             System.out.println(rowString);
             rowString = "";
         }
-        /*
-        for(Integer card : leaderCard)
-        this.printCard(card);
-         */
+    }
+
+    private void printDevelopmentCards(PlayerCLI player) {
+        String rowString = "";
+        ArrayList <ArrayList<Integer>> developmentCardSpace = player.getDevelopmentCardSpace();
+        for(int cardRow = 0; cardRow < 7; cardRow++) {
+            for (ArrayList<Integer> row : developmentCardSpace) {
+                for (int card : row) {
+                    if(card == row.get(row.size()))
+                        rowString = rowString.concat(cliCardString.get(card).get(cardRow));
+                }
+            }
+
+            System.out.println(rowString);
+            rowString = "";
+        }
     }
 
     public void setLocalPlayer(String localPlayer) {
@@ -170,19 +164,19 @@ public class LocalModel {
             player.printPersonalBoards();
             System.out.println("LEADER CARDS:");
             printLeaderCards(player);
-            /*
-            for (int leader : player.getLeaderCards()) {
-                printCard(leader);
-                if(player.isLeaderActive(leader))
-                    System.out.println(cliColor.COLOR_YELLOW + "_____" + cliColor.RESET);
+            if(!player.getDevelopmentCardSpace().isEmpty()) {
+                System.out.println("DEVELOPMENT CARDS:");
+                printDevelopmentCards(player);
             }
-
-             */
         }
     }
 
+
+
     public void discardInitialLeaders(String nickname, int indexLeaderCard1, int indexLeaderCard2) {
         players.stream().filter(x->x.getNickname().equals(nickname)).forEach(x->x.discardInitialLeaders(indexLeaderCard1,indexLeaderCard2));
+        if(!players.contains(nickname))
+            players.add(new PlayerCLI(nickname));
     }
 
     public int getNumOfResourceToChoose(){
@@ -405,6 +399,16 @@ public class LocalModel {
                 System.out.print(x + "\n");*/
             cliCardString.put(id, stringArray);
         }
+
+        ArrayList <String> stringArray = new ArrayList<>();
+        stringArray.add("╔═══════════╗");
+        stringArray.add("║ CARD BACK ║");
+        stringArray.add("║           ║");
+        stringArray.add("║           ║");
+        stringArray.add("╚═══════════╝");
+
+        cliCardString.put(65, stringArray);
+
     }
 
 

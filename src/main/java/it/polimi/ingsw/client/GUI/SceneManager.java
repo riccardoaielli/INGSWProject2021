@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.GUI;
 
 import it.polimi.ingsw.client.GUI.Controller.AbstractController;
-import it.polimi.ingsw.client.GUI.Controller.ErrorController;
 import it.polimi.ingsw.client.GUI.Controller.StartController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;

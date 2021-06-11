@@ -10,8 +10,8 @@ public class PlayerCLI {
     private String nickname;
     private ArrayList <Integer> leaderCards;
     private ArrayList <Boolean> leaderCardsActive;
+    private ArrayList <ArrayList <Integer> > developmentCardSpace;
     private FaithTrackCLI faithTrackCLI;
-    private DevelopmentCardSpaceCLI developmentCardSpaceCLI;
     private WareHouseDepotsCLI wareHouseDepots;
     private StrongboxCLI strongbox;
     private Map<Marble, Integer> temporaryMarbles;
@@ -34,6 +34,7 @@ public class PlayerCLI {
         faithTrackCLI = new FaithTrackCLI();
         wareHouseDepots = new WareHouseDepotsCLI();
         strongbox = new StrongboxCLI();
+        developmentCardSpace = new ArrayList<>();
     }
 
     public String getNickname() {
@@ -43,19 +44,13 @@ public class PlayerCLI {
     public void setRedCrossPosition(int redcrossPosition){
         faithTrackCLI.setRedcrossPosition(redcrossPosition);
     }
-    public void setPopeFavourTiles(ArrayList<Integer> popeFavourTiles){
-        faithTrackCLI.setPopeFavourTiles(popeFavourTiles);
-    }
-    public void setDevelopmentCardSpace(ArrayList<ArrayList<Integer>> developmentCardSpace){
-
-    }
+    public void setPopeFavourTiles(ArrayList<Integer> popeFavourTiles){ faithTrackCLI.setPopeFavourTiles(popeFavourTiles); }
     public void setWareHouseDepots(List<Map<Resource, Integer>> depots){
         wareHouseDepots.setDepots(depots);
     }
     public void setStrongbox(Map<Resource, Integer> strongbox){
         this.strongbox.setStrongbox(strongbox);
     }
-
     public void setLeaderCards(ArrayList<Integer> leaderCards) {
         this.leaderCards = new ArrayList<>(leaderCards);
     }
@@ -68,8 +63,6 @@ public class PlayerCLI {
         strongbox.printStrongbox();
 
     }
-
-
 
 
     public void discardInitialLeaders(int indexLeaderCard1, int indexLeaderCard2) {
@@ -113,5 +106,13 @@ public class PlayerCLI {
 
     public boolean isLeaderActive(int leader) {
         return leaderCardsActive.get(leaderCards.indexOf(leader));
+    }
+
+    public ArrayList<ArrayList<Integer>> getDevelopmentCardSpace() {
+        return developmentCardSpace;
+    }
+
+    public void setDevelopmentCardSpace(ArrayList<ArrayList<Integer>> developmentCardSpace) {
+        this.developmentCardSpace = developmentCardSpace;
     }
 }

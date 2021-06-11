@@ -50,6 +50,11 @@ public class StdInReader extends Thread{
                 e.printStackTrace();
             }
         }
+
+        if(line.equals("quit")){
+            System.out.println("Quitting...");
+            System.exit(0);
+        }
         return line;
     }
 
