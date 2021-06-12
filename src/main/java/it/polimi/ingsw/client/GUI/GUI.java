@@ -120,7 +120,7 @@ public class GUI implements ClientView {
         PersonalBoardController myPersonalBoard =  gameInterfaceController.getPersonalBoardControllerMap().get(nickname);
 
         if (nickname.equals(myNickname)){
-            InitialLeaderChoiceController initialLeaderChoiceController = (InitialLeaderChoiceController) SceneManager.getInstance().getController("InitialLeaderChoice");
+            InitialLeaderChoiceController initialLeaderChoiceController = (InitialLeaderChoiceController) SceneManager.getInstance().getController("initialLeaderChoice");
 
             List<Integer> indexesLeaderCard = new ArrayList<>();
             indexesLeaderCard.add(indexLeaderCard1);
@@ -140,7 +140,7 @@ public class GUI implements ClientView {
             //Creating personal boards of the players
             gameInterfaceController.setPlayers(playersOrder);
             //Setting the chosen leader cards of the player of this client
-            InitialLeaderChoiceController initialLeaderChoiceController = (InitialLeaderChoiceController) SceneManager.getInstance().getController("InitialLeaderChoice");
+            InitialLeaderChoiceController initialLeaderChoiceController = (InitialLeaderChoiceController) SceneManager.getInstance().getController("initialLeaderChoice");
             PersonalBoardController myPersonalBoard =  gameInterfaceController.getPersonalBoardControllerMap().get(myNickname);
             myPersonalBoard.setLeaderCard1(initialLeaderChoiceController.getCardImagesArray().get(0).getImage());
             myPersonalBoard.setLeaderCard2(initialLeaderChoiceController.getCardImagesArray().get(1).getImage());
@@ -150,7 +150,11 @@ public class GUI implements ClientView {
 
     @Override
     public void showUpdatedTemporaryMapResource(String nickname, Map<Resource, Integer> temporaryMapResource) {
-
+        GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterface");
+        Platform.runLater(()-> {
+            PersonalBoardController personalBoardController = gameInterfaceController.getPersonalBoardControllerMap().get(nickname);
+            personalBoardController.updateTemporaryResourceMap(temporaryMapResource);
+        });
     }
 
     @Override
@@ -226,8 +230,8 @@ public class GUI implements ClientView {
 
     @Override
     public void showUpdateInitialLeaderCard(ArrayList<Integer> initialLeaderCardsID) {
-        SceneManager.getInstance().setRootFXML("InitialLeaderChoice");
-        InitialLeaderChoiceController controller = (InitialLeaderChoiceController) SceneManager.getInstance().getController("InitialLeaderChoice");
+        SceneManager.getInstance().setRootFXML("initialLeaderChoice");
+        InitialLeaderChoiceController controller = (InitialLeaderChoiceController) SceneManager.getInstance().getController("initialLeaderChoice");
         controller.setLeaderCards(initialLeaderCardsID);
     }
 
@@ -243,7 +247,7 @@ public class GUI implements ClientView {
 
     @Override
     public void askForLeaderCards() {
-        InitialLeaderChoiceController controller = (InitialLeaderChoiceController) SceneManager.getInstance().getController("InitialLeaderChoice");
+        InitialLeaderChoiceController controller = (InitialLeaderChoiceController) SceneManager.getInstance().getController("initialLeaderChoice");
         controller.resetChoices();
     }
 

@@ -6,6 +6,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -22,6 +23,14 @@ import java.util.Map;
 
 public class PersonalBoardController extends  AbstractController{
 
+    @FXML
+    private Label tempShieldLabel;
+    @FXML
+    private Label tempStoneLabel;
+    @FXML
+    private Label tempCoinLabel;
+    @FXML
+    private Label tempServantLabel;
     @FXML
     private ImageView leaderCard1;
     @FXML
@@ -310,5 +319,38 @@ public class PersonalBoardController extends  AbstractController{
             }
         }
     }
+
+    public void updateTemporaryResourceMap(Map<Resource, Integer> temporaryMapResource){
+        for(Resource resource : Resource.values()){
+            switch (resource){
+                case SHIELD:
+                    if (temporaryMapResource.containsKey(resource))
+                        tempShieldLabel.setText(temporaryMapResource.get(resource).toString());
+                    else
+                        tempShieldLabel.setText("0");
+                    break;
+                case STONE:
+                    if (temporaryMapResource.containsKey(resource))
+                        tempStoneLabel.setText(temporaryMapResource.get(resource).toString());
+                    else
+                        tempStoneLabel.setText("0");
+                    break;
+                case COIN:
+                    if (temporaryMapResource.containsKey(resource))
+                        tempCoinLabel.setText(temporaryMapResource.get(resource).toString());
+                    else
+                        tempCoinLabel.setText("0");
+                    break;
+                case SERVANT:
+                    if (temporaryMapResource.containsKey(resource))
+                        tempServantLabel.setText(temporaryMapResource.get(resource).toString());
+                    else
+                        tempServantLabel.setText("0");
+                    break;
+            }
+        }
+    }
+
+
 
 }

@@ -4,6 +4,10 @@
     -fx-position: relative;
 }
 
+.transparentBackground{
+    -fx-background-color: transparent;
+}
+
 @font-face {
     font-family: "Dominican Italic";
     src: url("../../../src/main/resources/css/Dominican-Italic.ttf");
@@ -27,4 +31,10 @@
 
 .button:pressed{
     -fx-background-color: #325d63
+}
+
+.label {
+    -fx-font-size: 14px;
+    -fx-font-family: "Dominican Italic";
+    -fx-text-fill: #14456a;
 }

@@ -10,7 +10,7 @@
 
 <SplitPane dividerPositions="0.6838810641627543" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="menuBackground" stylesheets="@../css/gameInterface.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.GameInterfaceController">
   <items>
-      <SplitPane dividerPositions="0.39415041782729804" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+      <SplitPane dividerPositions="0.39415041782729804" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" styleClass="transparentBackground" stylesheets="@../css/gameInterface.css">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
             <TabPane fx:id="personalTab" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="871.0" tabClosingPolicy="UNAVAILABLE">
@@ -19,7 +19,7 @@
             </TabPane>
         </items>
       </SplitPane>
-      <SplitPane dividerPositions="0.2576601671309192" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+      <SplitPane dividerPositions="0.2576601671309192" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" styleClass="transparentBackground" stylesheets="@../css/gameInterface.css">
         <items>
             <GridPane fx:id="cardGridPane" alignment="CENTER" gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="398.0">
               <columnConstraints>
@@ -49,7 +49,7 @@
                </children>
             </GridPane>
             <!-- content from counter.fxml included here -->
-            <fx:include fx:id="marketGrid" source="../fxmls/market.fxml"/>
+            <fx:include fx:id="marketGrid" source="../fxmls/market.fxml" />
         </items>
       </SplitPane>
   </items>
