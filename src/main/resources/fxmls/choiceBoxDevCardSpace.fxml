@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.Integer?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="130.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.ChoiceBoxDevCardSpaceController">
+        <ChoiceBox fx:id="choiceBox" layoutX="225.0" layoutY="142.0" maxHeight="25.0" prefHeight="0.0" prefWidth="150.0" styleClass="check-box" stylesheets="@../css/global.css" AnchorPane.leftAnchor="175.0" AnchorPane.topAnchor="60.0">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <Integer fx:value="1" />
+                    <Integer fx:value="2" />
+                    <Integer fx:value="3" />
+                </FXCollections>
+            </items>
+        </ChoiceBox>
+   <Label layoutX="60.0" layoutY="75.0" stylesheets="@../css/global.css" text="Selezione lo spazio carte sviluppo desiderato:" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+</AnchorPane>

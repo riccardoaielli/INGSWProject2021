@@ -50,6 +50,12 @@
     -fx-text-fill: #14456a;
 }
 
+.labelResourcesNumber {
+    -fx-font-size: 24px;
+    -fx-font-family: "Dominican Italic";
+    -fx-text-fill: #ffffff;
+}
+
 
 
 

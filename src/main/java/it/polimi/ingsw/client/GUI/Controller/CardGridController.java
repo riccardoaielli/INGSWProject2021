@@ -13,7 +13,7 @@ public class CardGridController extends AbstractController {
     private Node[][] gridPaneArray = null;
     private int[][] cardGridMatrixCurrent = new int[maxRow][maxColumn];
     private static final int maxColumn = 4, maxRow = 3;
-    private static final double h = 175, w = 116;
+    private static final double h = 150, w = 100;
 
     @FXML
     private GridPane gridPane;

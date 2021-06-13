@@ -133,6 +133,10 @@ public class GameInterfaceController extends AbstractController {
         marketGridController.setMarbles(marketMatrix, marbleOut);
     }
 
+    public GridPane getCardGridPane(){
+        return cardGridPane;
+    }
+
     public Map<String, PersonalBoardController> getPersonalBoardControllerMap() {
         return personalBoardControllerMap;
     }

@@ -20,6 +20,7 @@ public class FirstConnectionController extends AbstractController {
     @FXML
     public void initialize(){
         joinButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onJoinClick);
+        choiceBox.setValue(1);
     }
 
     private void onJoinClick(Event event){

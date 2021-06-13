@@ -9,15 +9,11 @@ import java.util.Map;
  * This class represents the abstract resource
  */
 public enum Resource {
-    COIN{
-    },
-    SHIELD{
-    },
-    SERVANT{
-    },
-    STONE{
-    },
-    FAITH{
+    COIN("COIN"),
+    SHIELD("SHIELD"),
+    SERVANT("SERVANT"),
+    STONE("STONE"),
+    FAITH("FAITH"){
         @Override
         public void dispatch(Map<Resource, Integer> resourceMap, FaithTrack faithTrack) {
             try {
@@ -27,6 +23,18 @@ public enum Resource {
             resourceMap.remove(FAITH);
         }
     };
+
+    private String string;
+
+    Resource(String string) {
+        this.string = string;
+    }
+
+    @Override
+    public String toString() {
+        return string;
+    }
+
     public void dispatch(Map<Resource, Integer> resourceMap, FaithTrack faithTrack){
     }
 }
