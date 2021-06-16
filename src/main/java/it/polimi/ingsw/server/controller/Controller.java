@@ -19,8 +19,10 @@ import java.util.Map;
 public class Controller extends MessageObservable{
     private Match match;
     private Boolean firstConnected;
+    private Boolean demo;
 
     public Controller() {
+        demo = false;
         firstConnected = false;
     }
 
@@ -33,6 +35,10 @@ public class Controller extends MessageObservable{
         else if (match != null)
             view.update(new FirstConnectedUpdate(false));
         else view.update(new ErrorMessage(null, "The first connected player is choosing the number of players. Wait..."));
+    }
+
+    public synchronized void setDemo(){
+        demo = true;
     }
 
     /**
@@ -66,6 +72,8 @@ public class Controller extends MessageObservable{
                     match = new SoloMatch(1);
                 else
                     match = new Match(1,numOfPlayers);
+                if(demo)
+                    match.setDemo();
                 //creates a player
                 handleNicknameReplyMessage(nickname,view);
                 firstConnected = true;

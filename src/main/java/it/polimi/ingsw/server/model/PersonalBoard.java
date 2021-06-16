@@ -62,6 +62,17 @@ public class PersonalBoard extends MessageObservable {
         personalBoardPhase = PersonalBoardPhase.LEADER_CHOICE;
     }
 
+    public void setDemo() {
+        // settare faithtrack, risorse e carte sviluppo aggiunte in partenza per velocizzare la partita
+        HashMap<Resource,Integer> demoResourceMap = new HashMap<>();
+        demoResourceMap.put(Resource.COIN, 10);
+        demoResourceMap.put(Resource.SHIELD, 10);
+        demoResourceMap.put(Resource.SERVANT, 10);
+        demoResourceMap.put(Resource.STONE, 10);
+        strongbox.add(demoResourceMap);
+        System.out.println("Demo player created");
+    }
+
     //Method used to check if the merged maps of cost strongbox and cost warehouseDepot are equal to costToPay
     private void mergeCostsAndVerify(Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, Map<Resource,Integer> costToPay) throws InvalidCostException {
         //Merging maps in a temporary cost map and checking it is equal to cost of power of production
@@ -265,6 +276,7 @@ public class PersonalBoard extends MessageObservable {
             }
         }
         temporaryMarbles.clear();
+        notifyObservers(new TemporaryMarblesUpdate(this.getNickname(), new HashMap<>(temporaryMarbles)));
         notifyObservers(new TemporaryResourceMapUpdate(this.getNickname(), new HashMap<>(temporaryMapResource)));
     }
 

@@ -21,13 +21,14 @@ import java.util.Map;
  */
 public class CLI implements ClientView {
 
-    private static String stdInLine;
     private MessageSender messageSender;
     private String hostAddress;
     private int portNumber;
     private LocalModel localModel;
     private LocalPhase phase;
     private boolean mainTurnActionDone;
+    private boolean firstTurn;
+    private boolean demo;
 
     private StdInReader readLineThread;
 
@@ -43,6 +44,8 @@ public class CLI implements ClientView {
         localModel = new LocalModel();
         phase = LocalPhase.DEFAULT;
         mainTurnActionDone = false;
+        firstTurn = true;
+        demo = false;
 
         readLineThread = new StdInReader();
         readLineThread.start();
@@ -88,7 +91,7 @@ public class CLI implements ClientView {
     }
 
     private int readResourceQuantity(){
-        String numOfResourceType = readInput("Choose how many resources of this type (insert a number >= 1");
+        String numOfResourceType = readInput("Choose how many resources of this type (insert a number >= 1)");
         int numOfResource =  0;
         try {
             numOfResource =  Integer.parseInt(numOfResourceType);
@@ -146,7 +149,7 @@ public class CLI implements ClientView {
     private void setMessageSender(){
         String input = readInput("Press L for local game or O for online game");
 
-        while(!(input.equalsIgnoreCase("L") || input.equalsIgnoreCase("O"))) {
+        while(!(input.equalsIgnoreCase("L") || input.equalsIgnoreCase("O") || input.equalsIgnoreCase("DEMO"))) {
             System.out.println("Input not valid");
             input = readInput("Press L for local game or O for online game");
         }
@@ -159,35 +162,18 @@ public class CLI implements ClientView {
             //input = readInput("Press L");
             messageSender = new ClientSocket(hostAddress, portNumber, this);
             System.out.println("ClientSocket created");
+        } else if (input.equalsIgnoreCase("DEMO")){
+            messageSender = new ClientSocket(hostAddress, portNumber, this);
+            System.out.println("ClientSocket created");
+            messageSender.sendMessage(new DemoGameMessage());
         }
     }
 
-/*
-    /**
-     * Receive a message from the SocketInReader and update the clientView.
-     */
-    /*public void messageReadStdIn(String line) {
-        this.SocketInReaderLine = line;
-        message = messageToClientDeserializer.deserializeMessage(line);
-        clientView.update(message);
-    }
-*/
     /**
      * This method prints a string and reads from stdIn
      */
     public String readInput(String stringPrint) {
         System.out.println(stringPrint);
-        /*
-        BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-        String line = "";
-
-        try {
-            line = stdIn.readLine();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-         */
         return readLineThread.readUserInput();
     }
 
@@ -246,31 +232,34 @@ public class CLI implements ClientView {
 
     @Override
     public void askAddToWareHouse() {
-        int addWarehouseChoice = readInt("Choose one of the following actions:\n" +
-                "1. Add your obtained resource to your warehouse\n" +
-                "2. Rearrange your warehouse\n" +
-                "3. Discard the obtained resources\n");
-        while (!(addWarehouseChoice>= 1 && addWarehouseChoice <=3)){
-            addWarehouseChoice = readInt("Invalid number, choose a number between 1 and 3");
+        if(firstTurn)
+            addResourceToDepot();
+        else if(localModel.getLocalPlayer().getTemporaryMapResource().isEmpty()){
+            phase = LocalPhase.MENU;
+            phase.handlePhase(this);
         }
-        switch (addWarehouseChoice){
-            case 1:
-                addResourceToDepot();
-                break;
-            case 2:
-                //TODO after rearrange we have to find a way to go back to add to warehouse menu
-                //TODO menu should not appear in the first turn
-                askRearrange();
-                break;
-            case 3:
-                messageSender.sendMessage(new DiscardResourcesFromMarketMessage(localModel.getLocalPlayer().getNickname()));
-                break;
+        else {
+            int addWarehouseChoice = readInt("Choose one of the following actions:\n" +
+                    "1. Add your obtained resource to your warehouse\n" +
+                    "2. Rearrange your warehouse\n" +
+                    "3. Discard the obtained resources");
+            while (!(addWarehouseChoice >= 1 && addWarehouseChoice <= 3)) {
+                addWarehouseChoice = readInt("Invalid number, choose a number between 1 and 3");
+            }
+            switch (addWarehouseChoice) {
+                case 1:
+                    addResourceToDepot();
+                    break;
+                case 2:
+                    phase = LocalPhase.REARRANGE_WAREHOUSE;
+                    phase.handlePhase(this);
+                    break;
+                case 3:
+                    messageSender.sendMessage(new DiscardResourcesFromMarketMessage(localModel.getLocalPlayer().getNickname()));
+                    localModel.getLocalPlayer().setTemporaryMapResource(new HashMap<>());
+                    break;
+            }
         }
-
-
-
-
-
     }
 
     private void addResourceToDepot(){
@@ -290,6 +279,8 @@ public class CLI implements ClientView {
 
     @Override
     public void askTurnAction() {
+        if(firstTurn)
+            firstTurn = false;
         localModel.printView();
 
         int firstAction = 0;
@@ -669,7 +660,6 @@ public class CLI implements ClientView {
     @Override
     public void showUpdatedTemporaryMapResource(String nickname, Map<Resource, Integer> temporaryMapResource) {
         localModel.getPlayer(nickname).setTemporaryMapResource(temporaryMapResource);
-
         System.out.println(nickname + temporaryMapResource);
     }
 
@@ -693,8 +683,10 @@ public class CLI implements ClientView {
     @Override
     public void showUpdateTemporaryMarbles(String nickname, Map<Marble, Integer> temporaryMarbles) {
         localModel.getPlayer(nickname).setTemporaryMarbles(temporaryMarbles);
-        System.out.println(nickname + " obtained these marbles from the market:");
-        localModel.getPlayer(nickname).printTermporaryMarbles();
+        if(!temporaryMarbles.isEmpty()) {
+            System.out.println(nickname + " obtained these marbles from the market:");
+            localModel.getPlayer(nickname).printTermporaryMarbles();
+        }
     }
 
     @Override
@@ -724,7 +716,7 @@ public class CLI implements ClientView {
     @Override
     public void showUpdateMarket(Marble[][] marketMatrix, Marble marbleOut) {
         localModel.setMarket(marketMatrix,marbleOut);
-        localModel.printMarket();
+        //localModel.printMarket();
     }
 
     @Override
@@ -735,8 +727,8 @@ public class CLI implements ClientView {
     @Override
     public void showUpdateCardGridUpdate(int[][] cardGridMatrixUpdate) {
         localModel.setCardGrid(cardGridMatrixUpdate);
-        if(phase == LocalPhase.LEADER_CHOICE)
-            localModel.printCardGrid();
+        //if(phase == LocalPhase.LEADER_CHOICE)
+        //    localModel.printCardGrid();
     }
 
     @Override

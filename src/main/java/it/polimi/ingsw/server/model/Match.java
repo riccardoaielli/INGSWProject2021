@@ -32,6 +32,7 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
     private Market market;
     private CardGrid cardGrid;
     private ArrayList<Player> rank;
+    private Boolean demo;
 
     /**
      * This constructor creates a match deserializing all the leader cards and creating the market and the cardgrind
@@ -57,6 +58,7 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         cardGrid.AddMatchToNotify(this);
         cardGrid.addObserverList(this.getMessageObservers());
         players = new ArrayList<>();
+        demo = false;
     }
 
     public Match(int matchID, int numOfPlayers, Stack<LeaderCard> leaderCards, Market market, CardGrid cardGrid) throws InvalidParameterException{
@@ -113,6 +115,8 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
                     }
                     notifyObservers(new PlayersOrderUpdate(null, playerNicknames));
                     currentPlayer = players.get(0);
+                    if(demo)
+                        players.forEach(player -> player.getPersonalBoard().setDemo());
 
                     //Assigning resources and faith points according to order
                     for(int playerNumber = 1; playerNumber<=players.size(); playerNumber++){
@@ -264,5 +268,10 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         market.doNotify();
         cardGrid.doNotify();
         players.forEach(x-> x.getPersonalBoard().doNotifyLeaders());
+    }
+
+    public void setDemo() {
+        demo = true;
+        System.out.println("Demo game: true");
     }
 }

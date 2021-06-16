@@ -18,8 +18,6 @@ public class TemporaryResourceMapUpdate extends MessageToClient {
 
     @Override
     public void handleMessage(ClientView clientView) {
-       //TODO remove localModel reference from here
-        //clientView.getLocalModel().getLocalPlayer().setTemporaryMarbles(new HashMap<>());
        clientView.showUpdatedTemporaryMapResource(this.getNickname(), temporaryMapResource);
        if(clientView.getNickname().equals(getNickname())){
            clientView.setPhase(LocalPhase.ADD_TO_WAREHOUSE);

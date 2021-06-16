@@ -115,4 +115,8 @@ public class PlayerCLI {
     public void setDevelopmentCardSpace(ArrayList<ArrayList<Integer>> developmentCardSpace) {
         this.developmentCardSpace = developmentCardSpace;
     }
+
+    public Map<Resource, Integer> getTemporaryMapResource() {
+        return temporaryMapResource;
+    }
 }

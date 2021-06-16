@@ -2,6 +2,8 @@ package it.polimi.ingsw.client.CLI.LocalModel;
 
 import it.polimi.ingsw.client.ClientView;
 
+import java.util.concurrent.Phaser;
+
 public enum LocalPhase {
     DEFAULT{
         @Override
@@ -85,9 +87,18 @@ public enum LocalPhase {
         }
     },
     REARRANGE_WAREHOUSE {
+        private LocalPhase previousPhase;
         @Override
         public void handlePhase(ClientView clientView) {
             clientView.askRearrange();
+        }
+
+        public void setPreviousPhase(LocalPhase previousPhase) {
+            this.previousPhase = previousPhase;
+        }
+
+        public LocalPhase getPreviousPhase() {
+            return previousPhase;
         }
     };
 

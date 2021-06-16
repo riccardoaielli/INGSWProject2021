@@ -22,7 +22,7 @@ public class WarehouseUpdate extends MessageToClient {
         if(clientView.getNickname().equals(getNickname())){
             //Return to main menu after rearranging
             if(clientView.getPhase() == LocalPhase.REARRANGE_WAREHOUSE){
-                clientView.setPhase(LocalPhase.MENU);
+                clientView.setPhase(LocalPhase.ADD_TO_WAREHOUSE);
                 clientView.getPhase().handlePhase(clientView);
             }
         }
