@@ -19,18 +19,13 @@ import java.util.List;
 import java.util.Map;
 
 public class GameInterfaceController extends AbstractController {
-
-    //CARD GRID ATTRIBUTES
+    //CARD GRID
     @FXML
-    private GridPane cardGridPane;
-    private Node[][] gridPaneArray = null;
-    private int[][] cardGridMatrixCurrent = new int[maxRow][maxColumn];
-    private static final int maxColumn = 4, maxRow = 3;
-    private static final double h = 175, w = 116;
+    private CardGridController cardGridController;
 
+    //PERSONAL BOARDS
     @FXML
     private TabPane personalTab;
-
     private Map<String, PersonalBoardController> personalBoardControllerMap;
 
     //MARKET
@@ -42,7 +37,6 @@ public class GameInterfaceController extends AbstractController {
     @FXML
     public void initialize() {
         personalBoardControllerMap = new HashMap<>();
-        initializeCardGridPaneArray();
     }
 
     /**
@@ -62,71 +56,12 @@ public class GameInterfaceController extends AbstractController {
         }
     }
 
-    //CARD GRID METHODS
     /**
      *Calls method drawCards to print cards in gridPane
      * @param cardGridMatrixUpdate is the cardGrid matrix from model
      */
     public void setCardGrid(int[][] cardGridMatrixUpdate){
-
-        for(int i=0; i<maxRow; i++) {
-            for (int j = 0; j < maxColumn; j++) {
-                if(cardGridMatrixUpdate[i][j] != cardGridMatrixCurrent[i][j]) {
-                    drawCards(cardGridMatrixUpdate[i][j], i, j);
-                    cardGridMatrixCurrent[i][j] = cardGridMatrixUpdate[i][j];
-                }
-            }
-        }
-    }
-
-    /**
-     *This method sets the correct image in the correct ImageView in the right position of gridPane
-     * @param id is the id of the image card
-     * @param i is the row
-     * @param j is the column
-     */
-    private void drawCards(int id, int i, int j) {
-        Image img = new Image("cardsImage/" + id + ".png");
-        Node node = gridPaneArray[i][j];
-        ImageView imgView = (ImageView) node;
-        imgView.setFitWidth(w);
-        imgView.setFitHeight(h);
-        imgView.setPreserveRatio(true);
-        imgView.setId(Integer.toString(id));
-        imgView.setImage(img);
-    }
-
-    private void initializeCardGridPaneArray()
-    {
-        gridPaneArray = new Node[maxRow][maxColumn];
-        for(Node node : cardGridPane.getChildren())
-        {
-            Integer x = GridPane.getRowIndex(node);
-            Integer y = GridPane.getColumnIndex(node);
-            if((x != null) && (y != null)) {
-                gridPaneArray[GridPane.getRowIndex(node)][GridPane.getColumnIndex(node)] = node;
-            }
-        }
-
-        for(int i=0; i<maxRow; i++) {
-            for (int j = 0; j < maxColumn; j++) {
-                Node node = gridPaneArray[i][j];
-                ImageView imgView = (ImageView) node;
-                imgView.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onCardGridCardClick);
-            }
-        }
-
-        for(int i=0; i<maxRow; i++) {
-            for (int j = 0; j < maxColumn; j++) {
-                cardGridMatrixCurrent[i][j] = 0;
-            }
-        }
-    }
-
-    private void onCardGridCardClick(Event event){
-        ImageView imageView = (ImageView) event.getTarget();
-        System.out.println(GridPane.getRowIndex(imageView) + "," +GridPane.getColumnIndex(imageView));
-        //todo passo la posizione a chi serve per creare il messaggio
+        cardGridController.setCardGrid(cardGridMatrixUpdate);
     }
 
     public void setMarbles(Marble[][] marketMatrix, Marble marbleOut){
@@ -134,7 +69,7 @@ public class GameInterfaceController extends AbstractController {
     }
 
     public GridPane getCardGridPane(){
-        return cardGridPane;
+        return cardGridController.getCardGridPane();
     }
 
     public Map<String, PersonalBoardController> getPersonalBoardControllerMap() {

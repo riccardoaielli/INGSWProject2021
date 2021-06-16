@@ -16,7 +16,7 @@ public class CardGridController extends AbstractController {
     private static final double h = 150, w = 100;
 
     @FXML
-    private GridPane gridPane;
+    private GridPane cardGridPane;
 
     @FXML
     public void initialize() {
@@ -60,7 +60,7 @@ public class CardGridController extends AbstractController {
     private void initializeCardGridPaneArray()
     {
         gridPaneArray = new Node[maxRow][maxColumn];
-        for(Node node : gridPane.getChildren())
+        for(Node node : cardGridPane.getChildren())
         {
             Integer x = GridPane.getRowIndex(node);
             Integer y = GridPane.getColumnIndex(node);
@@ -88,5 +88,9 @@ public class CardGridController extends AbstractController {
         ImageView imageView = (ImageView) event.getTarget();
         System.out.println(GridPane.getRowIndex(imageView) + "," +GridPane.getColumnIndex(imageView));
         //todo passo la posizione a chi serve per creare il messaggio
+    }
+
+    public GridPane getCardGridPane() {
+        return cardGridPane;
     }
 }

@@ -23,8 +23,8 @@ public class JavaFXGUI extends Application {
         SceneManager.getInstance().setRootFXML("start");
 
 
-       /* SceneManager.getInstance().setRootFXML("gameInterface");
-        GameInterfaceController gameInterface = (GameInterfaceController)SceneManager.getInstance().getActiveController();
+       //SceneManager.getInstance().setRootFXML("addToWarehouse");
+       /*GameInterfaceController gameInterface = (GameInterfaceController)SceneManager.getInstance().getActiveController();
         List<String> playersTest  = new ArrayList<>();
         playersTest.add("Prova1");
         playersTest.add("Prova2");

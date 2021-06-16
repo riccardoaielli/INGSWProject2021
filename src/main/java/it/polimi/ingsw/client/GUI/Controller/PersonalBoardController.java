@@ -351,6 +351,10 @@ public class PersonalBoardController extends  AbstractController{
         }
     }
 
+    public void updateWarehouse(){
+
+    }
+
 
 
 }

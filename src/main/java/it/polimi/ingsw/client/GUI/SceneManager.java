@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -133,6 +134,7 @@ public class SceneManager {
                 abstractController.setGui(gui);
                 popupStage.setScene(new Scene(root));
                 popupStage.setAlwaysOnTop(true);
+                popupStage.initStyle(StageStyle.UNDECORATED);
                 popupStage.show();
             } catch (IOException e) {
                 e.printStackTrace();

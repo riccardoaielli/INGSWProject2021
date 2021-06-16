@@ -76,7 +76,7 @@ public class GUI implements ClientView {
 
     @Override
     public void askAddToWareHouse() {
-
+        SceneManager.getInstance().showPopup("addToWarehouse");
     }
 
     @Override
@@ -205,7 +205,8 @@ public class GUI implements ClientView {
 
     @Override
     public void showUpdateCardGridUpdate(int[][] cardGridMatrixUpdate) {
-
+        GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterface");
+        Platform.runLater(()-> gameInterfaceController.setCardGrid(cardGridMatrixUpdate));
     }
 
     @Override
