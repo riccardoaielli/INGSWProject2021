@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import org.w3c.dom.events.Event;
 
 public class BuyCardInterfaceController extends AbstractController {
@@ -23,7 +24,7 @@ public class BuyCardInterfaceController extends AbstractController {
         GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterface");
         cardGrid = gameInterfaceController.getCardGridPane();
 
-        //buyCardButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBuyCardButtonClick);
+        buyCardButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBuyCardButtonClick);
     }
 
     private void onBuyCardButtonClick(Event event){
@@ -31,6 +32,14 @@ public class BuyCardInterfaceController extends AbstractController {
         resourceChoiceController.createMaps();
         resourceChoiceController.getStrongboxMap();
         resourceChoiceController.getWarehouseDepotMap();
+    }
+
+    private void onBuyCardButtonClick(javafx.event.Event event){
+        //controlla di avere tutti i paramtrei necessari per il messaggio
+        //-?salvare la fasese in corso in caso di errore nel model?-
+        //invia messaggio
+        Stage stage = (Stage) buyCardButton.getScene().getWindow();
+        stage.close();
     }
 
 }
