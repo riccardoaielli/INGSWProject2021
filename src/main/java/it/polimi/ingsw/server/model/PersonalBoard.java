@@ -62,6 +62,9 @@ public class PersonalBoard extends MessageObservable {
         personalBoardPhase = PersonalBoardPhase.LEADER_CHOICE;
     }
 
+    /**
+     * Method used to set starting resources and cards for the player in a demo game
+     */
     public void setDemo() {
         // settare faithtrack, risorse e carte sviluppo aggiunte in partenza per velocizzare la partita
         HashMap<Resource,Integer> demoResourceMap = new HashMap<>();
@@ -72,6 +75,7 @@ public class PersonalBoard extends MessageObservable {
         strongbox.add(demoResourceMap);
         System.out.println("Demo player created");
     }
+
 
     //Method used to check if the merged maps of cost strongbox and cost warehouseDepot are equal to costToPay
     private void mergeCostsAndVerify(Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, Map<Resource,Integer> costToPay) throws InvalidCostException {
@@ -102,8 +106,7 @@ public class PersonalBoard extends MessageObservable {
         pay(costStrongbox, costWarehouseDepot);
         //Adding production to strongbox and/or faithTrack
         dispatch(production);
-        production.forEach((resource, quantity) -> temporaryMapResource.merge(resource, quantity, Integer::sum));
-        notifyObservers(new TemporaryResourceMapUpdate(getNickname(), new HashMap<>(temporaryMapResource)));
+        strongbox.add(production);
     }
 
     //Method that is used to remove faith from temporaryMapResource and to add it to faithTrack
@@ -142,6 +145,7 @@ public class PersonalBoard extends MessageObservable {
         //Marking that the production has been done in this turn
         powerOfProductionUsed[indexDevelopmentCardSpace] = true;
         personalBoardPhase = PersonalBoardPhase.PRODUCTION;
+        myPlayer.getView().update(new ProductionDoneUpdate(getNickname()));
     }
 
     /**
@@ -181,6 +185,7 @@ public class PersonalBoard extends MessageObservable {
         //Marking that the production has been done in this turn
         powerOfProductionUsed[0] = true;
         personalBoardPhase = PersonalBoardPhase.PRODUCTION;
+        myPlayer.getView().update(new ProductionDoneUpdate(getNickname()));
     }
 
     /**
@@ -227,6 +232,7 @@ public class PersonalBoard extends MessageObservable {
         //Changing boolean of power of production for this turn
         powerOfProductionUsed[3+numLeaderCard] = true;
         personalBoardPhase = PersonalBoardPhase.PRODUCTION;
+        myPlayer.getView().update(new ProductionDoneUpdate(getNickname()));
     }
 
     /**
@@ -382,7 +388,7 @@ public class PersonalBoard extends MessageObservable {
      * @throws InvalidParameterException If the specified development card space slot does not exist
      */
     public void buyDevelopmentCard(int row, int column,Map<Resource, Integer> costStrongbox, Map<Resource, Integer> costWarehouseDepots, int numLeaderCard, int cardPosition) throws NoCardException, InvalidCostException, InvalidLeaderAction, InvalidRemovalException, InvalidDevelopmentCardException, InvalidParameterException {
-        DevelopmentCard cardToBuy = cardGrid.getCard(row, column);
+        DevelopmentCard cardToBuy = cardGrid.getCard(row - 1, column - 1);
         Map<Resource, Integer> price = new HashMap<>(cardToBuy.getPrice());
         //if numLeaderCard is 1 or 2 method tries to discount price
         if (numLeaderCard != 0){
@@ -402,8 +408,9 @@ public class PersonalBoard extends MessageObservable {
         //Removing price paid from strongbox and/or warehouse
         strongbox.uncheckedRemove(costStrongbox);
         warehouseDepots.uncheckedRemove(costWarehouseDepots);
-        cardGrid.buyCard(row, column);
+        cardGrid.buyCard(row - 1, column - 1);
         personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_DONE;
+        notifyObservers(new MainTurnActionDoneUpdate(getNickname()));
     }
 
     /**
@@ -435,6 +442,14 @@ public class PersonalBoard extends MessageObservable {
         }
         //Activate leader card
         leaderCard.activate();
+
+        try {
+            leaderCard.abilityDepot(warehouseDepots);
+        } catch (InvalidLeaderAction invalidLeaderAction) {
+            invalidLeaderAction.printStackTrace();
+        }
+
+        warehouseDepots.doNotify();
         notifyObservers(new LeaderCardActivatedUpdate(this.getNickname(), numLeaderCard, leaderCard.getId()));
     }
 

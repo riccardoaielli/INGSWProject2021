@@ -92,7 +92,5 @@ public class ClientMain {
             //avvia gui
             Application.launch(JavaFXGUI.class);
         }
-
-        System.out.println("fine main");
     }
 }

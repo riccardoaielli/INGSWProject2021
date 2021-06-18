@@ -120,12 +120,18 @@ public class CardGrid extends MessageObservable {
         return "Hai gia perso"; //caso che non dovrebbe mai verificarsi
     }
 
+    /**
+     * this method sends a massage with an update of the card grid, for every cell of the grid sets the id of a card (0 if there isn't a card)
+     */
     public void doNotify(){
         int[][] cardGridMatrixUpdate = new int[maxRow][maxColumn];
 
         for (i = 0; i < maxRow; i++)
             for (j = 0; j < maxColumn; j++) {
-                cardGridMatrixUpdate[i][j] = cardGridMatrix[i][j].peek().getId();
+                if(cardGridMatrix[i][j].size() != 0)
+                    cardGridMatrixUpdate[i][j] = cardGridMatrix[i][j].peek().getId();
+                else
+                    cardGridMatrixUpdate[i][j] = 0;
             }
 
         notifyObservers(new CardGridUpdate(cardGridMatrixUpdate));

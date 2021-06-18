@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.controller;
 import it.polimi.ingsw.common.messages.messagesToClient.ErrorMessage;
 import it.polimi.ingsw.common.messages.messagesToClient.FirstConnectedUpdate;
 import it.polimi.ingsw.common.View;
+import it.polimi.ingsw.common.messages.messagesToClient.MainTurnActionDoneUpdate;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.Match;
 import it.polimi.ingsw.server.model.PersonalBoard;
@@ -337,6 +338,7 @@ public class Controller extends MessageObservable{
                 && match.getCurrentPlayer().getNickname().equals(nickname)
                 && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.PRODUCTION) {
             match.getCurrentPlayer().getPersonalBoard().endProduction();
+            view.update(new MainTurnActionDoneUpdate(nickname));
         }
         else{
             view.update(new ErrorMessage(nickname, "Invalid command in this phase of the match"));

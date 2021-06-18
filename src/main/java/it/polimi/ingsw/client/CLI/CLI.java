@@ -126,11 +126,11 @@ public class CLI implements ClientView {
                 costWarehouse.merge(resource, resourceQuantity, Integer::sum);
             }
 
-            paymentMethod = readInput("Choose how you want to pay: type S (Strongbox), W (Warehouse) or Q to quit if you have finished choosing how to pay").toUpperCase();
-            while(!(paymentMethod.equals("S")||paymentMethod.equals("W")||paymentMethod.equals("Q"))){
-                paymentMethod = readInput("Invalid choice, type S, W or Q").toUpperCase();
+            paymentMethod = readInput("Choose how you want to pay: type S (Strongbox), W (Warehouse) or D (Done) if you have finished choosing the resources to pay").toUpperCase();
+            while(!(paymentMethod.equals("S")||paymentMethod.equals("W")||paymentMethod.equals("D"))){
+                paymentMethod = readInput("Invalid choice, type S, W or D").toUpperCase();
             }
-        }while (!paymentMethod.equals("Q"));
+        }while (!paymentMethod.equals("D"));
         List<Map<Resource, Integer>> costStrongboxWarehouse = new ArrayList<>();
         costStrongboxWarehouse.add(costStrongbox);
         costStrongboxWarehouse.add(costWarehouse);
@@ -205,6 +205,8 @@ public class CLI implements ClientView {
         String nicknameInput = readInput("Insert nickname");
         messageSender.sendMessage(new CreateMatchReplyMessage(nicknameInput, numPlayerInput));
         localModel.setLocalPlayer(nicknameInput);
+        if(numPlayerInput != 1)
+            System.out.println("Wait for other players to join the game...");
     }
 
     @Override
@@ -212,6 +214,7 @@ public class CLI implements ClientView {
         String nicknameInput = readInput("Insert nickname");
         messageSender.sendMessage(new NicknameReplyMessage(nicknameInput));
         localModel.setLocalPlayer(nicknameInput);
+        System.out.println("Wait for other players to join the game...");
     }
 
     @Override
@@ -364,7 +367,7 @@ public class CLI implements ClientView {
 
     @Override
     public void askRearrange() {
-        int rearrangeChoice = readInt("0. Go back\n" +
+        int rearrangeChoice = readInt("0. Go back to menu\n" +
                 "1. Move to/from special depot\n" +
                 "2. Swap resources in standard depot shelves\n");
         while (!(rearrangeChoice>= 0 && rearrangeChoice <=2)){
@@ -450,15 +453,15 @@ public class CLI implements ClientView {
 
     @Override
     public void askBuyDevCard() {
-        System.out.println("Insert the coordinates of the development card you want to buy");
-        String rowString = readInput("Insert the row of the card (number between 1 and 3)");
+        System.out.println("Insert the coordinates of the development card you want to buy[type 0 to go back to menu]");
+        String rowString = readInput("Choose the column of the card (1,2 or 3):");
         int row =  0;
         try {
             row =  Integer.parseInt(rowString);
         } catch (NumberFormatException e) {
             System.out.println("Not a number");
         }
-        while(!(row>=1&&row <=3)){
+        while(!(row>=0&&row <=3)){
             rowString = readInput("Please insert a number between 1 and 3)");
             try {
                 row =  Integer.parseInt(rowString);
@@ -466,15 +469,19 @@ public class CLI implements ClientView {
                 System.out.println("Not a number");
             }
         }
+        if(row == 0) {
+            setPhase(LocalPhase.MENU);
+            getPhase().handlePhase(this);
+        }
 
-        String columnString = readInput("Insert the row of the card (number between 1 and 4)");
+        String columnString = readInput("Choose the row of the card (1,2,3 or 4):");
         int column =  0;
         try {
             column =  Integer.parseInt(columnString);
         } catch (NumberFormatException e) {
             System.out.println("Not a number");
         }
-        while(!(column>=1&&column <=4)){
+        while(!(column>=0&&column <=4)){
             columnString = readInput("Please insert a number between 1 and 4");
             try {
                 column =  Integer.parseInt(columnString);
@@ -482,13 +489,18 @@ public class CLI implements ClientView {
                 System.out.println("Not a number");
             }
         }
+        if(column == 0) {
+            setPhase(LocalPhase.MENU);
+            getPhase().handlePhase(this);
+        }
+
         List<Map<Resource, Integer>> costStrongboxWarehouse = readCostStrongboxWarehouse();
-        int numLeaderCard = readInt("Choose 0 if you do not want to use a leader card, otherwise insert the position of an active leader card with a discount power if you have it:");
+        int numLeaderCard = readInt("Choose the number of a leader card to use it's discount power (type 0 if you don't want to use a leader card): ");
         while (!(numLeaderCard>= 0)){
             numLeaderCard = readInt("Invalid number, choose a number >= 0");
         }
 
-        int cardPosition = readInt("Choose the slot where you want to place the card, insert 1, 2 or 3 indicating the slots from left to right:");
+        int cardPosition = readInt("Choose the slot where you want to place the card (1,2 or 3):");
         while (!(cardPosition>= 1 && cardPosition<=3)){
            cardPosition = readInt("Invalid number, choose a number between 1 and 3");
         }
@@ -497,11 +509,11 @@ public class CLI implements ClientView {
 
     @Override
     public void askProduction() {
-        int productionChoice = readInt("Choose which kind of production you want to activate:\n" +
-                "1. Basic Production\n" +
-                "2. Leader Production\n" +
-                "3. Card Production\n" +
-                "4. Go back\n");
+        int productionChoice = readInt("Choose which kind of production you want to activate:" +
+                "\n1. Basic Production" +
+                "\n2. Leader Production" +
+                "\n3. Card Production" +
+                "\n4. End production");
         while (!(productionChoice>= 1 && productionChoice <=4)){
             productionChoice = readInt("Invalid number, choose a number between 1 and 4");
         }
@@ -516,8 +528,8 @@ public class CLI implements ClientView {
                 askCardProduction();
                 break;
             case 4:
-                phase = LocalPhase.MENU;
-                phase.handlePhase(this);
+                messageSender.sendMessage(new EndProduction(getNickname()));
+                break;
         }
 
     }
@@ -660,7 +672,7 @@ public class CLI implements ClientView {
     @Override
     public void showUpdatedTemporaryMapResource(String nickname, Map<Resource, Integer> temporaryMapResource) {
         localModel.getPlayer(nickname).setTemporaryMapResource(temporaryMapResource);
-        System.out.println(nickname + temporaryMapResource);
+        localModel.getPlayer(nickname).printTermporaryResource();
     }
 
     @Override
@@ -677,7 +689,8 @@ public class CLI implements ClientView {
 
     @Override
     public void showUpdatedDevCardSpace(String nickname, ArrayList<ArrayList<Integer>> cardsState) {
-
+        localModel.getPlayer(nickname).setDevelopmentCardSpace(cardsState);
+        System.out.println("Development card space updated");
     }
 
     @Override

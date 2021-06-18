@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class LocalModel {
     private final int CARD_BACK = 65;
+    private final int EMPTY_CARD = 66;
     private final int CARD_WIDTH = 13;
     private ArrayList <PlayerCLI> players;
     private PlayerCLI localPlayer;
@@ -99,7 +100,10 @@ public class LocalModel {
         for(int row = 0; row < maxRow ; row++){
             for(int cardRow = 0; cardRow < 6; cardRow++){
                 for(int column = 0; column < maxColumn; column++){
-                    cardRowString = cardRowString.concat(cliCardString.get(cardGridMatrix[row][column]).get(cardRow));
+                    if(cardGridMatrix[row][column] != 0)
+                        cardRowString = cardRowString.concat(cliCardString.get(cardGridMatrix[row][column]).get(cardRow));
+                    else
+                        cardRowString = cardRowString.concat(cliCardString.get(EMPTY_CARD).get(cardRow));
                 }
                 System.out.println(cardRowString);
                 cardRowString = "";
@@ -137,12 +141,15 @@ public class LocalModel {
     private void printDevelopmentCards(PlayerCLI player) {
         String rowString = "";
         ArrayList <ArrayList<Integer>> developmentCardSpace = player.getDevelopmentCardSpace();
-        for(int cardRow = 0; cardRow < 7; cardRow++) {
+        for(int cardRow = 0; cardRow < 6; cardRow++) {
             for (ArrayList<Integer> row : developmentCardSpace) {
-                for (int card : row) {
-                    if(card == row.get(row.size()))
-                        rowString = rowString.concat(cliCardString.get(card).get(cardRow));
-                }
+                if(row.size() != 0) {
+                    for (int card : row) {
+                        if (row.indexOf(card) == (row.size() - 1))
+                            rowString = rowString.concat(cliCardString.get(card).get(cardRow));
+                    }
+                }else
+                    rowString = rowString.concat(cliCardString.get(EMPTY_CARD).get(cardRow));
             }
 
             System.out.println(rowString);
@@ -400,14 +407,24 @@ public class LocalModel {
             cliCardString.put(id, stringArray);
         }
 
-        ArrayList <String> stringArray = new ArrayList<>();
-        stringArray.add("╔═══════════╗");
-        stringArray.add("║ CARD BACK ║");
-        stringArray.add("║           ║");
-        stringArray.add("║           ║");
-        stringArray.add("╚═══════════╝");
+        ArrayList <String> cardBackArray = new ArrayList<>();
+        cardBackArray.add("╔═══════════╗");
+        cardBackArray.add("║ CARD BACK ║");
+        cardBackArray.add("║           ║");
+        cardBackArray.add("║           ║");
+        cardBackArray.add("╚═══════════╝");
 
-        cliCardString.put(65, stringArray);
+        cliCardString.put(CARD_BACK, cardBackArray);
+
+        ArrayList <String> emptyCardArray = new ArrayList<>();
+        emptyCardArray.add("╔═══════════╗");
+        emptyCardArray.add("║   EMPTY   ║");
+        emptyCardArray.add("║   SPACE   ║");
+        emptyCardArray.add("║           ║");
+        emptyCardArray.add("║           ║");
+        emptyCardArray.add("╚═══════════╝");
+
+        cliCardString.put(EMPTY_CARD, emptyCardArray);
 
     }
 

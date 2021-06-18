@@ -5,7 +5,7 @@ import it.polimi.ingsw.common.View;
 import it.polimi.ingsw.server.controller.Controller;
 
 public class EndProduction extends MessageToServer {
-    public EndProduction(String nickname, MessageType messageType) {
+    public EndProduction(String nickname) {
         super(nickname, MessageType.END_PRODUCTION);
     }
 

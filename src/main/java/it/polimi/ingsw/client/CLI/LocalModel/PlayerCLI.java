@@ -8,6 +8,7 @@ import java.util.*;
 public class PlayerCLI {
     private final int CARD_BACK = 65;
     private String nickname;
+    private GetColorString color;
     private ArrayList <Integer> leaderCards;
     private ArrayList <Boolean> leaderCardsActive;
     private ArrayList <ArrayList <Integer> > developmentCardSpace;
@@ -23,6 +24,7 @@ public class PlayerCLI {
 
     public PlayerCLI(String nickname) {
         this.nickname = nickname;
+        color = new GetColorString();
         leaderCards = new ArrayList<>();
         while (leaderCards.size() < 2)
             leaderCards.add(CARD_BACK);
@@ -79,7 +81,7 @@ public class PlayerCLI {
         if(temporaryMarbles.isEmpty())
             return;
         GetColorString getColorString = new GetColorString();
-        String out = "MARBLES OBTAINED FROM THE MARKET:[ ";
+        String out = "[ ";
         for(Marble marble: temporaryMarbles.keySet()){
             out = out + getColorString.getColorMarble(marble) + "●: " + temporaryMarbles.get(marble) + " " + cliColor.RESET;
         }
@@ -118,5 +120,13 @@ public class PlayerCLI {
 
     public Map<Resource, Integer> getTemporaryMapResource() {
         return temporaryMapResource;
+    }
+
+    public void printTermporaryResource() {
+        if(!temporaryMapResource.isEmpty()) {
+            System.out.print(nickname + " obtained the following resources:[ ");
+            temporaryMapResource.keySet().forEach(x -> System.out.print(color.getColorResource(x) + "●" + cliColor.RESET + ": " + temporaryMapResource.get(x) + " "));
+            System.out.println("]");
+        }
     }
 }
