@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Circle?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="262.0" prefWidth="401.0" stylesheets="@../css/gameInterface.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.MarketController">
+<AnchorPane fx:id="marketPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="262.0" prefWidth="401.0" stylesheets="@../css/gameInterface.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.MarketController">
    <children>
       <GridPane fx:id="marketGrid" layoutX="27.0" layoutY="23.0" prefHeight="170.0" prefWidth="254.0">
         <columnConstraints>
@@ -36,13 +36,13 @@
             <Circle radius="29.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="3" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <Button id="1" fx:id="firstRow" layoutX="300.0" layoutY="37.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="58.0" text="◄" />
-      <Button id="2" fx:id="secondRow" layoutX="300.0" layoutY="96.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="58.0" text="◄" />
-      <Button id="3" fx:id="thirdRow" layoutX="300.0" layoutY="154.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="58.0" text="◄" />
-      <Button id="1" fx:id="firstColumn" layoutX="34.0" layoutY="201.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="47.0" text="▲" />
-      <Button id="2" fx:id="secondColumn" layoutX="94.0" layoutY="200.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="47.0" text="▲" />
-      <Button id="3" fx:id="thirdColumn" layoutX="162.0" layoutY="200.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="47.0" text="▲" />
-      <Button id="4" fx:id="fourthColumn" layoutX="226.0" layoutY="200.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="47.0" text="▲" />
-      <Circle fx:id="marbleOut" fill="DODGERBLUE" layoutX="329.0" layoutY="224.0" radius="23.0" stroke="BLACK" strokeType="INSIDE" />
+      <Button id="0" fx:id="firstRow" layoutX="300.0" layoutY="37.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="58.0" text="◄" />
+      <Button id="1" fx:id="secondRow" layoutX="300.0" layoutY="96.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="58.0" text="◄" />
+      <Button id="2" fx:id="thirdRow" layoutX="300.0" layoutY="154.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="58.0" text="◄" />
+      <Button id="0" fx:id="firstColumn" layoutX="34.0" layoutY="201.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="47.0" text="▲" />
+      <Button id="1" fx:id="secondColumn" layoutX="94.0" layoutY="200.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="47.0" text="▲" />
+      <Button id="2" fx:id="thirdColumn" layoutX="162.0" layoutY="200.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="47.0" text="▲" />
+      <Button id="3" fx:id="fourthColumn" layoutX="226.0" layoutY="200.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="47.0" text="▲" />
+      <Circle fx:id="marbleOutCircle" fill="DODGERBLUE" layoutX="329.0" layoutY="224.0" radius="23.0" stroke="BLACK" strokeType="INSIDE" />
    </children>
 </AnchorPane>

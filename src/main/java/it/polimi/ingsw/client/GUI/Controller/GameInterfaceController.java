@@ -71,7 +71,7 @@ public class GameInterfaceController extends AbstractController {
     }
 
     private void onMarketButtonClick(Event event){
-        SceneManager.getInstance().showPopup("");
+        SceneManager.getInstance().showPopup("takeFromMarket");
     }
 
     private void onBuyCardButtonClick(Event event){
@@ -101,14 +101,14 @@ public class GameInterfaceController extends AbstractController {
 
     /**
      * Method to set the tabs of all the players in the GUI
-     * @param playersOrder
+     * @param playersOrder list containing the nickname of players ordered by the order in game
      */
     public void setPlayers(List<String> playersOrder){
-        for (int order = 0; order < playersOrder.size(); order++){
+        for (String nickname : playersOrder) {
             FXMLLoader tabContent = SceneManager.getInstance().loadFXML("personalBoard");
             try {
-                Tab playerTab = new Tab(playersOrder.get(order), tabContent.load());
-                personalBoardControllerMap.put(playersOrder.get(order), tabContent.getController());
+                Tab playerTab = new Tab(nickname, tabContent.load());
+                personalBoardControllerMap.put(nickname, tabContent.getController());
                 personalTab.getTabs().add(playerTab);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -134,6 +134,10 @@ public class GameInterfaceController extends AbstractController {
 
     public Map<String, PersonalBoardController> getPersonalBoardControllerMap() {
         return personalBoardControllerMap;
+    }
+
+    public MarketController getMarketGridController() {
+        return marketGridController;
     }
 
 }

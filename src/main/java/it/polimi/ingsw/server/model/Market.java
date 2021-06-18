@@ -77,6 +77,9 @@ public class Market extends MessageObservable {
 
     /**
      * this method returns a map of marbles according to the input parameters
+     * @param rowOrColumn if == 0 then row is selected, if == 1 column is selected
+     * @param value Ranges from 0 to 2 if row is selected, from 0 to 3 if column is selected
+     * @return Map of marbles bought from market
      */
     public Map<Marble,Integer> takeBoughtMarbles(int rowOrColumn, int value){
 
