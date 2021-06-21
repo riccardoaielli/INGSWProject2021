@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.GUI;
 
 import it.polimi.ingsw.client.GUI.Controller.AbstractController;
+import it.polimi.ingsw.client.GUI.Controller.ErrorController;
 import it.polimi.ingsw.client.GUI.Controller.StartController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -31,8 +32,7 @@ public class SceneManager {
     }
 
     private SceneManager(){
-        //Game Interface is loaded and can be updated before being shown
-        loadSceneAndController("gameInterface");
+
     }
 
     private GUI gui;
@@ -87,6 +87,8 @@ public class SceneManager {
 
     public void setGui(GUI gui) {
         this.gui = gui;
+        //Game Interface is loaded and can be updated before being shown
+        loadSceneAndController("gameInterface");
     }
 
     public AbstractController getActiveController() {
@@ -99,24 +101,22 @@ public class SceneManager {
      * @param errorMessage The error message that will be displayed
      */
     public void showError(String errorMessage){
-        /*FXMLLoader loader = loadFXML("error");
-        Parent parent;
-        try {
-            parent = loader.load();
-        } catch (IOException e) {
-            System.out.println("Error Loading");
-            e.printStackTrace();
-        }
-        ErrorController errorController = loader.getController();
-        errorController.setStringError(errorMessage);
-        errorController.showError();*/
         Platform.runLater(() -> {
-        Alert alert = new Alert(Alert.AlertType.ERROR, errorMessage, ButtonType.OK);
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                alert.close();
+            Stage errorStage = new Stage();
+            FXMLLoader errorPopupLoader = loadFXML("error");
+            try {
+                Parent root = errorPopupLoader.load();
+                ErrorController errorController = errorPopupLoader.getController();
+                errorController.setGui(gui);
+
+                errorStage.setScene(new Scene(root));
+                errorStage.setAlwaysOnTop(true);
+                errorStage.initStyle(StageStyle.UNDECORATED);
+                errorController.setStringError(errorMessage);
+                errorStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        });
         });
     }
 
@@ -133,7 +133,7 @@ public class SceneManager {
                 AbstractController abstractController = popupLoader.getController();
                 abstractController.setGui(gui);
                 popupStage.setScene(new Scene(root));
-                popupStage.setAlwaysOnTop(true);
+                //popupStage.setAlwaysOnTop(true);
                 popupStage.initStyle(StageStyle.UNDECORATED);
                 popupStage.show();
             } catch (IOException e) {

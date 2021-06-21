@@ -71,7 +71,6 @@ public enum LocalPhase {
         @Override
         public void handlePhase(ClientView clientView) {
             clientView.askProduction();
-
         }
     },
     ACTIVATE_LEADER {

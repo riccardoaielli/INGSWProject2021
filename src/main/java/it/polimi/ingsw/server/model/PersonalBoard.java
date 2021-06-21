@@ -94,7 +94,7 @@ public class PersonalBoard extends MessageObservable {
     private void pay(Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot) throws InvalidRemovalException {
         //Checking resource availability
         if(!strongbox.isAvailable(costStrongbox) || !warehouseDepots.isAvailable(costWarehouseDepot)){
-            throw new InvalidRemovalException("The are not enough resources to purchase the card");
+            throw new InvalidRemovalException("The are not enough resources");
         }
         //Removing price paid from strongbox and/or warehouse
         strongbox.uncheckedRemove(costStrongbox);

@@ -29,16 +29,16 @@ public class ResourceChoiceController extends AbstractController{
     @FXML
     private HBox strongboxSpinnerHBox;
 
-    public Map getWarehouseDepotMap() {
+    public Map<Resource, Integer> getWarehouseDepotMap() {
         return warehouseDepotMap;
     }
 
-    public Map getStrongboxMap() {
+    public Map<Resource, Integer> getStrongboxMap() {
         return strongboxMap;
     }
 
-    private Map warehouseDepotMap = new HashMap<Resource, Integer>();
-    private Map strongboxMap = new HashMap<Resource, Integer>();
+    private Map<Resource, Integer> warehouseDepotMap = new HashMap();
+    private Map<Resource, Integer> strongboxMap = new HashMap();
 
     @FXML
     public void initialize() {

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.client.CLI.LocalModel.LocalPhase;
 import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.common.messages.messagesToServer.TakeFromMarketMessage;
 import it.polimi.ingsw.server.model.enumerations.Marble;
@@ -71,7 +72,8 @@ public class GameInterfaceController extends AbstractController {
     }
 
     private void onMarketButtonClick(Event event){
-        SceneManager.getInstance().showPopup("takeFromMarket");
+        getGui().setPhase(LocalPhase.TAKE_FROM_MARKET);
+        getGui().getPhase().handlePhase(getGui());
     }
 
     private void onBuyCardButtonClick(Event event){
@@ -79,7 +81,8 @@ public class GameInterfaceController extends AbstractController {
     }
 
     private void onProductionButtonClick(Event event){
-        SceneManager.getInstance().showPopup("");
+        getGui().setPhase(LocalPhase.ACTIVATE_PRODUCTION);
+        getGui().getPhase().handlePhase(getGui());
     }
 
     private void onActivateLeaderButtonClick(Event event){

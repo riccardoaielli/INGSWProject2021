@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+
+
+<StackPane prefHeight="400.0" prefWidth="600.0" styleClass="menuBackground" stylesheets="@../css/global.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.ProductionController">
+   <children>
+      <Button fx:id="basicProductionButton" mnemonicParsing="false" text="BASIC">
+         <StackPane.margin>
+            <Insets right="300.0" />
+         </StackPane.margin>
+      </Button>
+      <Button fx:id="devCardProductionButton" mnemonicParsing="false" text="DEV CARD">
+         <StackPane.margin>
+            <Insets left="350.0" />
+         </StackPane.margin>
+      </Button>
+      <Button fx:id="leaderCardProductionButton" mnemonicParsing="false" text="LEADER" />
+      <Label text="Choose the type of production:">
+         <StackPane.margin>
+            <Insets bottom="200.0" />
+         </StackPane.margin>
+      </Label>
+      <Button fx:id="endProductionButton" mnemonicParsing="false" stylesheets="@../css/gameInterface.css" text="END PRODUCTION">
+         <StackPane.margin>
+            <Insets top="300.0" />
+         </StackPane.margin>
+      </Button>
+   </children>
+</StackPane>

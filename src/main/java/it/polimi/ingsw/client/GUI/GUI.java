@@ -91,7 +91,7 @@ public class GUI implements ClientView {
 
     @Override
     public void askProduction() {
-
+        SceneManager.getInstance().showPopup("production");
     }
 
     @Override
@@ -101,7 +101,7 @@ public class GUI implements ClientView {
 
     @Override
     public void askTakeFromMarketAction() {
-
+        SceneManager.getInstance().showPopup("takeFromMarket");
     }
 
     @Override

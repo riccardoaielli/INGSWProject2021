@@ -1,0 +1,11 @@
+.label {
+    -fx-font-size: 21px;
+    -fx-font-family: "Dominican Italic";
+    -fx-text-fill: #14456a;
+}
+
+.error-label{
+    -fx-font-size: 24px;
+    -fx-font-family: "Dominican Italic";
+    -fx-text-fill: #760606;
+}

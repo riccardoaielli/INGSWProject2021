@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="200.0" prefWidth="450.0" styleClass="menuBackground" stylesheets="@../css/global.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.ErrorController">
+   <children>
+      <Button fx:id="okButton" layoutX="163.0" layoutY="136.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="75.0" stylesheets="@../css/global.css" text="OK" AnchorPane.leftAnchor="163.0" AnchorPane.rightAnchor="162.0" />
+      <Label fx:id="stringError" alignment="CENTER" layoutX="30.0" layoutY="73.0" prefHeight="27.0" prefWidth="348.0" stylesheets="@../css/error.css" text="Label" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" />
+      <Label alignment="CENTER" layoutX="176.0" layoutY="21.0" styleClass="error-label" stylesheets="@../css/error.css" text="ERROR" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" />
+   </children>
+</AnchorPane>
