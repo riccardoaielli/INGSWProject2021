@@ -2,6 +2,9 @@ package it.polimi.ingsw.server.model;
 
 import java.util.Comparator;
 
+/**
+ * Comparator used to compare two player by their victory points
+ */
 public class CustomPlayerComparator implements Comparator<Player> {
 
     @Override

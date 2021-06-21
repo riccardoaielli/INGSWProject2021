@@ -21,6 +21,6 @@ public class ActivateCardProductionMessage extends MessageToServer {
 
     @Override
     public void handleMessage(Controller controller, View view) {
-        controller.activateCardProductionMessage(view, getNickname(), costStrongbox, costWarehouseDepot, indexDevelopmentCardSpace);
+        controller.handleActivateCardProductionMessage(view, getNickname(), costStrongbox, costWarehouseDepot, indexDevelopmentCardSpace);
     }
 }

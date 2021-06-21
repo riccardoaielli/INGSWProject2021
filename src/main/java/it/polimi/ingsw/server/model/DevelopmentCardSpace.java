@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * This class represents the slots of development cards that each player has on its personal board
  */
-public class DevelopmentCardSpace extends MessageObservable implements Observable<EndGameConditionsObserver>{
+public class DevelopmentCardSpace extends MessageObservable implements ObservableGameEnder<EndGameConditionsObserver> {
     //Each of the three stack of cards is stored in an ArrayList and they are collected in another ArrayList
     private ArrayList<ArrayList<DevelopmentCard>> cards;
     private final int numOfStacks = 3;

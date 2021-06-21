@@ -21,6 +21,6 @@ public class ActivateBasicProductionMessage extends MessageToServer {
 
     @Override
     public void handleMessage(Controller controller, View view) {
-        controller.activateBasicProductionMessage(view, getNickname(), costStrongbox,  costWarehouseDepot, resource);
+        controller.handleActivateBasicProductionMessage(view, getNickname(), costStrongbox,  costWarehouseDepot, resource);
     }
 }

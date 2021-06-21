@@ -19,7 +19,6 @@ public class LocalModel {
     private final int CARD_WIDTH = 13;
     private ArrayList <PlayerCLI> players;
     private PlayerCLI localPlayer;
-    private String currentPlayer;
     private MarketCLI market;
     private int blackCrossPosition;
     private Map<Integer,ArrayList <String>> cliCardString = new HashMap<>();
@@ -168,9 +167,11 @@ public class LocalModel {
         if (players.size() == 1)
             printLorenzosFaithTrack();
         for(PlayerCLI player : players) {
-            player.printPersonalBoards();
-            System.out.println("LEADER CARDS:");
-            printLeaderCards(player);
+            player.printPersonalBoards(localPlayer.getNickname());
+            if(!player.getLeaderCards().isEmpty()){
+                System.out.println("LEADER CARDS:");
+                printLeaderCards(player);
+            }
             if(!player.getDevelopmentCardSpace().isEmpty()) {
                 System.out.println("DEVELOPMENT CARDS:");
                 printDevelopmentCards(player);

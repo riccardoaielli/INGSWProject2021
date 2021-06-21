@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * This class represents all the logic under the single player game
  */
-public class Lorenzo extends MessageObservable implements Observable<EndGameConditionsObserver> {
+public class Lorenzo extends MessageObservable implements ObservableGameEnder<EndGameConditionsObserver> {
 
     private int faithTrackPositionBlack = 0;
     private Stack<SoloActionToken> soloActionTokenStack;

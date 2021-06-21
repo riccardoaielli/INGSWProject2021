@@ -1,5 +1,8 @@
 package it.polimi.ingsw.server.model;
 
+/**
+ * Leader card with the production ability
+ */
 public class LeaderProduction extends LeaderCard{
     private PowerOfProduction powerOfProduction;
 

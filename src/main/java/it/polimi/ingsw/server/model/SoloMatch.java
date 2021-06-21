@@ -3,6 +3,9 @@ package it.polimi.ingsw.server.model;
 import it.polimi.ingsw.server.model.enumerations.MatchPhase;
 import it.polimi.ingsw.server.model.exceptions.InvalidParameterException;
 
+/**
+ * The match to handle a game with only one player that plays against Lorenzo
+ */
 public class SoloMatch extends Match{
     Lorenzo lorenzo;
     /**
@@ -16,6 +19,9 @@ public class SoloMatch extends Match{
         lorenzo.addObserverList(this.getMessageObservers());
     }
 
+    /**
+     * Activates the action of Lorenzo
+     */
     @Override
     public void nextPlayer() {
         if(getMatchPhase() == MatchPhase.STANDARDROUND)
@@ -23,11 +29,18 @@ public class SoloMatch extends Match{
         super.nextPlayer();
     }
 
+    /**
+     * Move the faithMarker of Lorenzo
+     * @param positions is the number of steps to make on the faith track for each player
+     */
     @Override
     public void moveFaithMarkerAll(int positions) {
         lorenzo.moveFaithMarker(positions);
     }
 
+    /**
+     * Method called when the conditions to end the match are verified
+     */
     @Override
     public void update() {
         super.update();

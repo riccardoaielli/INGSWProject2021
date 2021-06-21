@@ -16,7 +16,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-
+/**
+ * This class represents the a match of the game, it coordinates the players and their turns.
+ * The controller interacts with the model by the methods of this class
+ */
 public class Match extends MessageObservable implements EndGameConditionsObserver {
     private final int matchID;
     private final int numOfPlayers;
@@ -61,6 +64,7 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         demo = false;
     }
 
+    //todo: costruttore non utilizzato da eliminare dopo aver completato i tests
     public Match(int matchID, int numOfPlayers, Stack<LeaderCard> leaderCards, Market market, CardGrid cardGrid) throws InvalidParameterException{
         this(matchID, numOfPlayers);
         this.leaderCards = leaderCards;
@@ -192,6 +196,12 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         return currentPlayer;
     }
 
+    /**
+     * getter for a player by nickname
+     * @param nickname the nickname of the player
+     * @return the player with the given nickname
+     * @throws InvalidNickName when a player with the given nickname does not exist
+     */
     public Player getPlayer(String nickname) throws InvalidNickName{
         for(Player player : players){
             if(player.getNickname().equals(nickname))
@@ -240,14 +250,15 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         players.stream().filter(x -> x != currentPlayer).forEach(x -> x.getPersonalBoard().checkVaticanReport());
     }
 
+    /**
+     * getter for the current phase of the match
+     * @return the phase of the match
+     */
     public MatchPhase getMatchPhase() {
         return matchPhase;
     }
 
-    public ArrayList<Player> getRank() {
-        return rank;
-    }
-
+    //todo: metodo da sostituire con getnickname(getnickname gestisce l'eccezione di nickname non validi)
     public Player getPlayerByNickname(String nickname){
         return players.stream().filter(player -> player.getNickname().equals(nickname)).findFirst().orElse(null);
     }
@@ -270,6 +281,9 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         players.forEach(x-> x.getPersonalBoard().doNotifyLeaders());
     }
 
+    /**
+     * Setter for the demo mode
+     */
     public void setDemo() {
         demo = true;
         System.out.println("Demo game: true");

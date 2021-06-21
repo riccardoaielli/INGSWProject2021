@@ -25,7 +25,6 @@ public class PowerOfProduction {
             throw new InvalidParameterException();
     }
 
-
     /**
      * @return a copy of an Map of resources that represents the cost of the production
      */

@@ -6,7 +6,7 @@ import it.polimi.ingsw.client.CLI.LocalModel.LocalPhase;
 import it.polimi.ingsw.client.CLI.LocalModel.cliColor;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.common.messages.messagesToServer.*;
-import it.polimi.ingsw.server.model.Observable;
+import it.polimi.ingsw.server.model.ObservableGameEnder;
 import it.polimi.ingsw.server.model.RankPosition;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
@@ -154,17 +154,17 @@ public class CLI implements ClientView {
             input = readInput("Press L for local game or O for online game");
         }
         if (input.equalsIgnoreCase("L")) {
-            System.out.println("LocalSender created");
+            //System.out.println("LocalSender created");
             messageSender = new LocalSender(this);
         } else if (input.equalsIgnoreCase("O")) {
             //nel caso volessimo leggere l'input dell'hostname e della porta direttamente nella cli (ovviamente va fatto duale nella gui) e va sistemato clientMain
             //input = readInput("Press game");
             //input = readInput("Press L");
             messageSender = new ClientSocket(hostAddress, portNumber, this);
-            System.out.println("ClientSocket created");
+            //System.out.println("ClientSocket created");
         } else if (input.equalsIgnoreCase("DEMO")){
             messageSender = new ClientSocket(hostAddress, portNumber, this);
-            System.out.println("ClientSocket created");
+            //System.out.println("ClientSocket created");
             messageSender.sendMessage(new DemoGameMessage());
         }
     }
@@ -284,7 +284,7 @@ public class CLI implements ClientView {
     public void askTurnAction() {
         if(firstTurn)
             firstTurn = false;
-        localModel.printView();
+        clearConsoleAndReprint();
 
         int firstAction = 0;
         int numOfActions = 3;
@@ -678,19 +678,19 @@ public class CLI implements ClientView {
     @Override
     public void showUpdatedWarehouse(String nickname, List<Map<Resource, Integer>> depots) {
         localModel.getPlayer(nickname).setWareHouseDepots(depots);
-        System.out.println("Warehouse depots updated");//this print id temporary
+        //System.out.println("Warehouse depots updated");//this print id temporary
     }
 
     @Override
     public void showUpdatedStrongbox(String nickname, Map<Resource, Integer> strongbox) {
         localModel.getPlayer(nickname).setStrongbox(strongbox);
-        System.out.println("Strongbox updated");//this print id temporary
+        //System.out.println("Strongbox updated");//this print id temporary
     }
 
     @Override
     public void showUpdatedDevCardSpace(String nickname, ArrayList<ArrayList<Integer>> cardsState) {
         localModel.getPlayer(nickname).setDevelopmentCardSpace(cardsState);
-        System.out.println("Development card space updated");
+        //System.out.println("Development card space updated");
     }
 
     @Override
@@ -705,13 +705,13 @@ public class CLI implements ClientView {
     @Override
     public void showUpdateRedcrossPosition(String nickname, int redcrossPosition) {
         localModel.getPlayer(nickname).setRedCrossPosition(redcrossPosition);
-        System.out.println("redCross Updated");//this print id temporary
+        //System.out.println("redCross Updated");//this print id temporary
     }
 
     @Override
     public void showUpdatePopeFavourTiles(String nickname, ArrayList<Integer> popeFavourTiles) {
         localModel.getPlayer(nickname).setPopeFavourTiles(popeFavourTiles);
-        System.out.println("pope favour tiles updated");//this print id temporary
+        //System.out.println("pope favour tiles updated");//this print id temporary
     }
 
     @Override
@@ -785,7 +785,7 @@ public class CLI implements ClientView {
 
     /**
      * Sends message to client
-     * @param message Message notified by {@link Observable}
+     * @param message Message notified by {@link ObservableGameEnder}
      */
     @Override
     public void update(MessageToClient message) {

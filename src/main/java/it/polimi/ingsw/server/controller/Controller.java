@@ -27,7 +27,10 @@ public class Controller extends MessageObservable{
         firstConnected = false;
     }
 
-
+    /**
+     * Handles the connections from the clients
+     * @param view the view associated with the new client
+     */
     public synchronized void newConnection(View view){
         if(!firstConnected){
             firstConnected = true;
@@ -38,6 +41,9 @@ public class Controller extends MessageObservable{
         else view.update(new ErrorMessage(null, "The first connected player is choosing the number of players. Wait..."));
     }
 
+    /**
+     * Setter for the demo mode of the game
+     */
     public synchronized void setDemo(){
         demo = true;
     }
@@ -88,6 +94,12 @@ public class Controller extends MessageObservable{
         }
     }
 
+    /**
+     * Handles an ActivateLeaderMessage
+     * @param numLeaderCard the number of the leader card to activate
+     * @param nickname the nickname of the player that wants to activate the card
+     * @param view is the view of the client that sends the message
+     */
     public synchronized void handleActivateLeader(int numLeaderCard, String nickname, View view){
         try {
             if(match.getCurrentPlayer().getNickname().equals(nickname)
@@ -219,6 +231,13 @@ public class Controller extends MessageObservable{
         }
     }
 
+    /**
+     * Handles an AddToWarehouseMessage
+     * @param view is the view of the client that sends the message
+     * @param nickname the nickname of the player
+     * @param depotLevel the depot to add the resources
+     * @param singleResourceMap the map with the resource and the quantity to add to the depot
+     */
     public synchronized void handleAddToWarehouseMessage(View view, String nickname, int depotLevel, Map<Resource,Integer> singleResourceMap){
         PersonalBoard personalBoard;
         try {
@@ -242,6 +261,13 @@ public class Controller extends MessageObservable{
         }
     }
 
+    /**
+     * Handles a SwapMessage
+     * @param view is the view of the client that sends the message
+     * @param nickname nickname of the player
+     * @param depot1 the first depot to swap
+     * @param depot2 the second depot to swap
+     */
     public synchronized void handleSwapMessage(View view, String nickname, int depot1, int depot2){
         if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND){
             try {
@@ -256,6 +282,14 @@ public class Controller extends MessageObservable{
 
     }
 
+    /**
+     * Handles the MoveMessage
+     * @param view is the view of the client that sends the message
+     * @param nickname the nickname of the player
+     * @param sourceDepotNumber the depot to use to take resources
+     * @param destinationDepotNumber the depot used to deposit the resources
+     * @param quantity the quantity of resources to move
+     */
     public synchronized void handleMoveMessage(View view, String nickname, int sourceDepotNumber, int destinationDepotNumber, int quantity ){
         if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND){
             try {
@@ -269,7 +303,13 @@ public class Controller extends MessageObservable{
         }
     }
 
-    public synchronized void discardLeaderMessage(View view, String nickname, int numLeaderCard){
+    /**
+     * Handle a discardLeaderMessage
+     * @param view is the view of the client that sends the message
+     * @param nickname the nickname of the player
+     * @param numLeaderCard the number of the leader card to discard
+     */
+    public synchronized void handleDiscardLeaderMessage(View view, String nickname, int numLeaderCard){
         if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND
             && match.getCurrentPlayer().getNickname().equals(nickname)
             && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE
@@ -285,7 +325,15 @@ public class Controller extends MessageObservable{
         }
     }
 
-    public synchronized void activateCardProductionMessage(View view,String nickname, Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, int indexDevelopmentCardSpace){
+    /**
+     * Handles an ActivateCardProductionMessage
+     * @param view is the view of the client that sends the message
+     * @param nickname the nickname of the player
+     * @param costStrongbox a map of resources to get from the strongbox
+     * @param costWarehouseDepot a map of resources to get from the warehouse depots
+     * @param indexDevelopmentCardSpace the space of the development card space to take the power of production from
+     */
+    public synchronized void handleActivateCardProductionMessage(View view, String nickname, Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, int indexDevelopmentCardSpace){
         if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND
                 && match.getCurrentPlayer().getNickname().equals(nickname)
                 && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE
@@ -301,7 +349,15 @@ public class Controller extends MessageObservable{
         }
     }
 
-    public synchronized void activateBasicProductionMessage(View view,String nickname, Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, Resource resource){
+    /**
+     * Handles a ActivateBasicProductionMessage
+     * @param view is the view of the client that sends the message
+     * @param nickname the nickname of the player
+     * @param costStrongbox a map of resources to get from the strongbox
+     * @param costWarehouseDepot a map of resources to get from the warehouse depots
+     * @param resource the type of the resources to produce
+     */
+    public synchronized void handleActivateBasicProductionMessage(View view, String nickname, Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, Resource resource){
         if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND
                 && match.getCurrentPlayer().getNickname().equals(nickname)
                 && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE
@@ -317,7 +373,16 @@ public class Controller extends MessageObservable{
         }
     }
 
-    public synchronized void activateLeaderProductionMessage(View view,String nickname, Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, int numLeaderCard, Resource resource){
+    /**
+     * Handles an ActivateLeaderProductionMessage
+     * @param view is the view of the client that sends the message
+     * @param nickname the nickname of the player
+     * @param costStrongbox a map of resources to get from the strongbox
+     * @param costWarehouseDepot a map of resources to get from the warehouse depots
+     * @param numLeaderCard the number of the leader card to use
+     * @param resource the type of resource to produce
+     */
+    public synchronized void handleActivateLeaderProductionMessage(View view, String nickname, Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, int numLeaderCard, Resource resource){
         if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND
                 && match.getCurrentPlayer().getNickname().equals(nickname)
                 && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE
@@ -333,7 +398,12 @@ public class Controller extends MessageObservable{
         }
     }
 
-    public synchronized void endProductionMessage(View view,String nickname){
+    /**
+     * Handles an EndProductionMessage
+     * @param view is the view of the client that sends the message
+     * @param nickname the nickname of the player
+     */
+    public synchronized void handleEndProductionMessage(View view, String nickname){
         if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND
                 && match.getCurrentPlayer().getNickname().equals(nickname)
                 && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.PRODUCTION) {
@@ -345,6 +415,17 @@ public class Controller extends MessageObservable{
         }
     }
 
+    /**
+     * Handle a BuyDevelopmentCardMessage
+     * @param view is the view of the client that sends the message
+     * @param nickname the nickname of the player
+     * @param row the row of the card in the card grid
+     * @param column the column of the card in the card grid
+     * @param costStrongbox a map of resources to take from the strongbox
+     * @param costWarehouse a map of resources to take from the warehouse depot
+     * @param numLeaderCard the number of the leader card used to discount the cost of the development card
+     * @param cardPosition the position of the development card space to put the bought card
+     */
     public synchronized void handleBuyDevelopmentCardMessage(View view, String nickname, int row, int column, Map<Resource, Integer> costStrongbox, Map<Resource, Integer> costWarehouse, int numLeaderCard, int cardPosition){
         PersonalBoard personalBoard = match.getPlayerByNickname(nickname).getPersonalBoard();
         try {
@@ -364,6 +445,11 @@ public class Controller extends MessageObservable{
         }
     }
 
+    /**
+     * Handles an EndTurnMessage
+     * @param view is the view of the client that sends the message
+     * @param nickname the nickname of the player
+     */
     public synchronized void handleEndTurnMessage(View view, String nickname){
         if (!match.getCurrentPlayer().getNickname().equals(nickname)){
             view.update(new ErrorMessage(nickname, "Not your turn"));
@@ -378,7 +464,12 @@ public class Controller extends MessageObservable{
         match.nextPlayer();
     }
 
-    public synchronized void discardResourcesFromMarket(View view, String nickname) {
+    /**
+     * Handles a DiscardResourcesFromMarketMessage
+     * @param view is the view of the client that sends the message
+     * @param nickname the nickname of the player
+     */
+    public synchronized void handleDiscardResourcesFromMarket(View view, String nickname) {
         if(match.getCurrentPlayer().getNickname().equals(nickname)){
             match.getPlayerByNickname(nickname).getPersonalBoard().discardResourcesFromMarket();
         }

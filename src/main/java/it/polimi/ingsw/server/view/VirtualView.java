@@ -6,7 +6,7 @@ import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.common.messages.messagesToClient.ErrorMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.MessageToServer;
 import it.polimi.ingsw.server.controller.Controller;
-import it.polimi.ingsw.server.model.Observable;
+import it.polimi.ingsw.server.model.ObservableGameEnder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +14,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class VirtualView implements Runnable,View {
     private Socket socket;
@@ -117,7 +116,7 @@ public class VirtualView implements Runnable,View {
     /**
      * Sends message to client
      *
-     * @param message Message notified by {@link Observable}
+     * @param message Message notified by {@link ObservableGameEnder}
      */
     @Override
     public void update(MessageToClient message) {

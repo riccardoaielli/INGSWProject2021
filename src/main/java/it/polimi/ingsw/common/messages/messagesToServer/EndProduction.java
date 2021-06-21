@@ -11,6 +11,6 @@ public class EndProduction extends MessageToServer {
 
     @Override
     public void handleMessage(Controller controller, View view) {
-        controller.endProductionMessage(view,getNickname());
+        controller.handleEndProductionMessage(view,getNickname());
     }
 }

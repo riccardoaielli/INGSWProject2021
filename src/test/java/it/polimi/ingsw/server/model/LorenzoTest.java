@@ -2,8 +2,6 @@ package it.polimi.ingsw.server.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import it.polimi.ingsw.server.model.CardGrid;
-import it.polimi.ingsw.server.model.Lorenzo;
 import it.polimi.ingsw.server.model.exceptions.InvalidParameterException;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +22,6 @@ class LorenzoTest {
         //testing maximum value of faith marker
         lorenzo.moveFaithMarker(21);
         assertEquals(20, lorenzo.getFaithTrackPositionBlack());
-
     }
 
 

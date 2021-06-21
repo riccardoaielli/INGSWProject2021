@@ -4,6 +4,9 @@ import it.polimi.ingsw.server.model.enumerations.Resource;
 
 import java.util.Map;
 
+/**
+ * Leader card with the discount ability
+ */
 public class LeaderDiscount extends LeaderCard{
     private int discount;
     private Resource resourceDiscounted;

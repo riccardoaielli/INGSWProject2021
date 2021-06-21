@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  *this class represents the faith track of a player with the positions of the red cross and the tiles status
 */
-public class FaithTrack extends MessageObservable implements Observable<EndGameConditionsObserver>{
+public class FaithTrack extends MessageObservable implements ObservableGameEnder<EndGameConditionsObserver> {
     /**
      * tiles values:
      * 0 - value before vatican report
@@ -148,6 +148,7 @@ public class FaithTrack extends MessageObservable implements Observable<EndGameC
         return vp;
     }
 
+    //private method to calculate victory points from the pope favour tiles values
     private int calculateVPfromTiles(){
         int vp=0;
         //iterating all the tiles

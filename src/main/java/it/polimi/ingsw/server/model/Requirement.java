@@ -17,10 +17,18 @@ public class Requirement {
         this.resourceRequirement = resourceRequirement;
     }
 
+    /**
+     * Getter for the cards required to activate the leader card
+     * @return an arraylist of cardrequirements
+     */
     public ArrayList<CardRequirement> getCardsRequirement() {
         return cardRequirement;
     }
 
+    /**
+     * Getter for the resources required to activate the leader card
+     * @return a map with the resources quantities required
+     */
     public Map<Resource, Integer> getResourceRequirement() {
         return resourceRequirement;
     }

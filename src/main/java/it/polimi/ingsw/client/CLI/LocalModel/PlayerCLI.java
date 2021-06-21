@@ -57,8 +57,11 @@ public class PlayerCLI {
         this.leaderCards = new ArrayList<>(leaderCards);
     }
 
-    public void printPersonalBoards(){
-        System.out.println("Personal board di " + nickname + ":");
+    public void printPersonalBoards(String localPlayer){
+        if(localPlayer.equals(nickname))
+            System.out.println("Your Personal Board: ");
+        else
+            System.out.println("Personal board di " + nickname + ":");
         printTermporaryMarbles();
         faithTrackCLI.printFaithTrack();
         wareHouseDepots.printWhareHouseDepots();

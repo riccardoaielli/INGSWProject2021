@@ -11,6 +11,6 @@ public class DiscardResourcesFromMarketMessage extends MessageToServer{
 
     @Override
     public void handleMessage(Controller controller, View view) {
-        controller.discardResourcesFromMarket(view, getNickname());
+        controller.handleDiscardResourcesFromMarket(view, getNickname());
     }
 }

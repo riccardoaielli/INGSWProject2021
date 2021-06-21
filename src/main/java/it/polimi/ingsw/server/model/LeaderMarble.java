@@ -5,6 +5,9 @@ import it.polimi.ingsw.server.model.exceptions.NotEnoughWhiteMarblesException;
 
 import java.util.Map;
 
+/**
+ * Leader card with the marble ability
+ */
 public class LeaderMarble extends LeaderCard{
     private Marble marble;
     private Marble whiteMarble;

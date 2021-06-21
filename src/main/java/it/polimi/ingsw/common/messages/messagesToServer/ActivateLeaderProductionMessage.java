@@ -23,6 +23,6 @@ public class ActivateLeaderProductionMessage extends MessageToServer {
 
     @Override
     public void handleMessage(Controller controller, View view) {
-        controller.activateLeaderProductionMessage(view,getNickname(),costStrongbox,costWarehouseDepot,numLeaderCard,resource);
+        controller.handleActivateLeaderProductionMessage(view,getNickname(),costStrongbox,costWarehouseDepot,numLeaderCard,resource);
     }
 }
