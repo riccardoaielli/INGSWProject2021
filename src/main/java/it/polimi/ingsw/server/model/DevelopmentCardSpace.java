@@ -57,15 +57,19 @@ public class DevelopmentCardSpace extends MessageObservable implements Observabl
         if((card != null) || (cardPosition >= 0 && cardPosition < numOfStacks)) {
             ArrayList<DevelopmentCard> stackList = cards.get(cardPosition);
 
-            if ((card.getLevel() == 1 && stackList.size() == 0) || (card.getLevel() != 1 && (card.getLevel() - 1) == stackList.get(stackList.size() - 1).getLevel())) {
+            if (card.getLevel() != 1 && stackList.size() == 0) {
+                throw new InvalidDevelopmentCardException((("A card level " + card.getLevel() + " must be put on a level " + (card.getLevel() - 1)).replace("a level 0", "an empty space")));
+            }else if ((card.getLevel() == 1 && stackList.size() == 0) || (card.getLevel() != 1 && (card.getLevel() - 1) == stackList.get(stackList.size() - 1).getLevel())) {
                 stackList.add(card);
                 numOfcards++;
             } else {
-                throw new InvalidDevelopmentCardException();
+                throw new InvalidDevelopmentCardException((("A card level " + card.getLevel() + " must be put on a level " + (card.getLevel()-1)).replace("a level 0","an empty space")));
             }
+
+
         }
         else{
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("The position is not valid or the card doesn't exist");
         }
         doNotify();
         //notifies match when reaches 7 cards in the development card space
@@ -119,7 +123,7 @@ public class DevelopmentCardSpace extends MessageObservable implements Observabl
             return cardStack.get(cardStack.size() - 1).getPowerOfProduction();
         }
         else
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("The position is not valid or the card doesn't exist");
     }
 
     /**

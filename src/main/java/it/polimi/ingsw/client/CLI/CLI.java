@@ -212,8 +212,8 @@ public class CLI implements ClientView {
     @Override
     public void askNickname(){
         String nicknameInput = readInput("Insert nickname");
-        messageSender.sendMessage(new NicknameReplyMessage(nicknameInput));
         localModel.setLocalPlayer(nicknameInput);
+        messageSender.sendMessage(new NicknameReplyMessage(nicknameInput));
         System.out.println("Wait for other players to join the game...");
     }
 
@@ -684,7 +684,7 @@ public class CLI implements ClientView {
     @Override
     public void showUpdatedStrongbox(String nickname, Map<Resource, Integer> strongbox) {
         localModel.getPlayer(nickname).setStrongbox(strongbox);
-        //System.out.println("Strongbox updated");//this print id temporary
+        System.out.println("Strongbox updated");//this print id temporary
     }
 
     @Override

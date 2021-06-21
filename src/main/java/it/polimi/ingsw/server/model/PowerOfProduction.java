@@ -22,7 +22,7 @@ public class PowerOfProduction {
             this.cost = cost;
             this.production = production;
         }else
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("Cost or production aren't defined");
     }
 
     /**
@@ -46,7 +46,7 @@ public class PowerOfProduction {
         if (cost != null)
             this.cost = cost;
         else
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("The cost isn't defined");
     }
     /**
      * @param production is the new HashMap of resources produced by the production process
@@ -55,6 +55,6 @@ public class PowerOfProduction {
         if (production != null)
             this.production = production;
         else
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("The production isn't defined");
     }
 }

@@ -44,7 +44,7 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
      */
     public Match(int matchID, int numOfPlayer) throws InvalidParameterException {
         if (numOfPlayer < 0 || numOfPlayer > 4)
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("The match can be played by one to four players");
         this.matchID = matchID;
         this.numOfPlayers = numOfPlayer;
         numOfPlayersReady = 0;
@@ -92,7 +92,7 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
             addPlayerReady();
         }
         else
-            throw new InvalidNickName();
+            throw new InvalidNickName("The nickname " + nickName + " is taken");
     }
 
     /**
@@ -207,7 +207,7 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
             if(player.getNickname().equals(nickname))
                 return player;
         }
-        throw new InvalidNickName();
+        throw new InvalidNickName("A player called " + nickname + " does not exist");
     }
 
     /**

@@ -60,7 +60,7 @@ public class CardGrid extends MessageObservable {
         try{
             cardToBeReturned = cardGridMatrix[x][y].peek();
         }catch(EmptyStackException e){
-            throw new NoCardException();
+            throw new NoCardException("\"There is no card in the specified position of card grid\"");
         }
 
         return cardToBeReturned;
@@ -75,7 +75,7 @@ public class CardGrid extends MessageObservable {
         try{
             cardToBeReturned = cardGridMatrix[x][y].pop();
         }catch(EmptyStackException e){
-            throw new NoCardException();
+            throw new NoCardException("There is no card in the specified position of card grid");
         }
         doNotify();
         return cardToBeReturned;

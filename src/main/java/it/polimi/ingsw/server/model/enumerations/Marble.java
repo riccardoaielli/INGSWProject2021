@@ -88,11 +88,8 @@ public enum Marble {
          */
         @Override
         public void transform (Map<Resource,Integer> resourceMap, FaithTrack faithTrack) throws InvalidParameterException {
-            try {
-                faithTrack.moveFaithMarker(value);
-            }catch (Exception exception){
-                throw new InvalidParameterException();
-            }
+            faithTrack.moveFaithMarker(value);
+
         }
     };
 

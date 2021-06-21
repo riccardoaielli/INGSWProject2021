@@ -67,7 +67,7 @@ public class FaithTrack extends MessageObservable implements ObservableGameEnder
                 if(matchToNotify != null) matchToNotify.update();
             }
         }
-        else throw new InvalidParameterException();
+        else throw new InvalidParameterException("Only positive values are admitted");
     }
 
 

@@ -86,7 +86,7 @@ public class PersonalBoard extends MessageObservable {
         );
 
         if(!totalCostResourceMap.equals(costToPay)){
-            throw new InvalidCostException();
+            throw new InvalidCostException("The specified cost is not valid");
         }
     }
 
@@ -94,7 +94,7 @@ public class PersonalBoard extends MessageObservable {
     private void pay(Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot) throws InvalidRemovalException {
         //Checking resource availability
         if(!strongbox.isAvailable(costStrongbox) || !warehouseDepots.isAvailable(costWarehouseDepot)){
-            throw new InvalidRemovalException();
+            throw new InvalidRemovalException("The are not enough resources to purchase the card");
         }
         //Removing price paid from strongbox and/or warehouse
         strongbox.uncheckedRemove(costStrongbox);
@@ -135,7 +135,7 @@ public class PersonalBoard extends MessageObservable {
     public void activateCardProduction(Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, int indexDevelopmentCardSpace) throws InvalidProductionException, InvalidRemovalException, InvalidCostException, InvalidParameterException {
         //Checking that this production has not already been used in this turn
         if (powerOfProductionUsed[indexDevelopmentCardSpace]) {
-            throw new InvalidProductionException();
+            throw new InvalidProductionException("You already used this production");
         }
         PowerOfProduction powerOfProduction = developmentCardSpace.getPowerOfProduction(indexDevelopmentCardSpace);
         //Checking the correctness of costs
@@ -160,11 +160,11 @@ public class PersonalBoard extends MessageObservable {
     public void activateBasicProduction(Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, Resource resource) throws InvalidProductionException, InvalidRemovalException, InvalidCostException {
         //Checking that this production has not already been used in this turn
         if (powerOfProductionUsed[0]) {
-            throw new InvalidProductionException();
+            throw new InvalidProductionException("You already used this production");
         }
         //Checking that resource is not faith
         if (resource == Resource.FAITH){
-            throw new InvalidProductionException();
+            throw new InvalidProductionException("Resource produced can't be faith");
         }
         //Checking that there is a total of two resources in both costs
         int totalResources = 0;
@@ -175,7 +175,7 @@ public class PersonalBoard extends MessageObservable {
             totalResources += singleQuantity;
         }
         if (totalResources != 2){
-            throw new InvalidCostException();
+            throw new InvalidCostException("The specified cost is not valid");
         }
         //Creating a resource map with the single resource
         Map<Resource, Integer> resourceToAdd = new HashMap<>();
@@ -202,25 +202,25 @@ public class PersonalBoard extends MessageObservable {
     public void activateLeaderProduction(Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, int numLeaderCard, Resource resource) throws InvalidProductionException, InvalidRemovalException, InvalidLeaderAction, InvalidCostException {
         //Checking that the specified leader card exists
         if (numLeaderCard <= 0 || numLeaderCard > leaderCards.size()){
-            throw new InvalidProductionException();
+            throw new InvalidProductionException("The leader card selected does not exist");
         }
         //Checking that the power of production has not been already used in this turn
         if (powerOfProductionUsed[3+numLeaderCard]){
-            throw new InvalidProductionException();
+            throw new InvalidProductionException("You already used this production");
         }
         LeaderCard leaderCard = leaderCards.get(numLeaderCard-1);
         //Checking that leader card is active
         if(!leaderCard.isActive()){
-            throw new InvalidProductionException();
+            throw new InvalidProductionException("The leader card selected is not active");
         }
         //Checking that resource is not faith
         if (resource == Resource.FAITH) {
-            throw new InvalidProductionException();
+            throw new InvalidProductionException("The resource to produce can't be faith");
         }
         //Retrieving powerOfProduction of leaderCard, if not a production leader card an exception is thrown
         PowerOfProduction powerOfProduction = leaderCard.abilityProduction();
         if(powerOfProduction == null){
-            throw new InvalidProductionException();
+            throw new InvalidProductionException("The power of production does not exist");
         }
         //Add resource chosen by player
         Map<Resource, Integer> production = powerOfProduction.getProduction();
@@ -246,7 +246,7 @@ public class PersonalBoard extends MessageObservable {
             notifyObservers(new TemporaryMarblesUpdate(this.getNickname(), new HashMap<>(temporaryMarbles)));
         }
         else{
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("Row or column are not valid");
         }
         personalBoardPhase = PersonalBoardPhase.TAKE_FROM_MARKET;
     }
@@ -265,7 +265,7 @@ public class PersonalBoard extends MessageObservable {
             notifyObservers(new TemporaryMarblesUpdate(this.getNickname(), new HashMap<>(temporaryMarbles)));
         }
         else
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("Invalid move: you don't ave this leader card or the asked marbles where negative ");
     }
 
     /**
@@ -393,7 +393,7 @@ public class PersonalBoard extends MessageObservable {
         //if numLeaderCard is 1 or 2 method tries to discount price
         if (numLeaderCard != 0){
             if (numLeaderCard < 0 || numLeaderCard > leaderCards.size())
-                throw new InvalidLeaderAction();
+                throw new InvalidLeaderAction("Invalid card");
             //if not the correct leader throws InvalidLeaderAction()
             leaderCards.get(numLeaderCard-1).abilityDiscount(price);
             //TODO make sure ability discount manages if resource to discount is not in price
@@ -402,7 +402,7 @@ public class PersonalBoard extends MessageObservable {
         mergeCostsAndVerify(costStrongbox, costWarehouseDepots, price);
         //Checking resource availability
         if(!strongbox.isAvailable(costStrongbox) || !warehouseDepots.isAvailable(costWarehouseDepots)){
-            throw new InvalidRemovalException();
+            throw new InvalidRemovalException("The are not enough resources to purchase the card");
         }
         developmentCardSpace.addCard(cardToBuy, cardPosition);
         //Removing price paid from strongbox and/or warehouse
@@ -421,23 +421,23 @@ public class PersonalBoard extends MessageObservable {
      */
     public void activateLeader(int numLeaderCard) throws RequirementNotMetException, InvalidParameterException {
         if (numLeaderCard <= 0 || numLeaderCard > leaderCards.size())
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("Card not found");
         LeaderCard leaderCard = leaderCards.get(numLeaderCard-1);
         if (leaderCard.isActive()){
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("The leader card is already active");
         }
 
         Requirement requirement = leaderCard.getRequirement();
         //Checking resource requirements if the field not set to null
         if (requirement.getResourceRequirement() != null){
             if(!checkResourceRequirement(requirement.getResourceRequirement())){
-                throw new RequirementNotMetException();
+                throw new RequirementNotMetException("You don't have enough resources to activate this card");
             }
         }
         //Checking card requirements if the field is not set to null
         if (requirement.getCardsRequirement() != null){
             if(!developmentCardSpace.checkRequirement(requirement.getCardsRequirement())){
-                throw new RequirementNotMetException();
+                throw new RequirementNotMetException("You don't have the necessary development cards to activate this card");
             }
         }
         //Activate leader card
@@ -460,11 +460,11 @@ public class PersonalBoard extends MessageObservable {
      */
     public void removeLeader(int numLeaderCard) throws InvalidParameterException {
         if (numLeaderCard <= 0 || numLeaderCard > leaderCards.size())
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("The card can't be removed because you don't have this card");
         LeaderCard leaderCard = leaderCards.get(numLeaderCard-1);
         //Checking if leader card is active
         if (leaderCard.isActive()){
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("The card can't be removed because the card is active");
         }
         //Moving faith
         moveFaithMarkerInternally(1);
@@ -483,7 +483,7 @@ public class PersonalBoard extends MessageObservable {
         if (indexLeaderCard1 <= 0 || indexLeaderCard1 > leaderCards.size()
                 || indexLeaderCard2 <= 0 || indexLeaderCard2 > leaderCards.size()
                 || indexLeaderCard1 == indexLeaderCard2 )
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("You don't have one of the two cards selected");
         List<Integer> indexesLeaderCard = new ArrayList<>();
         indexesLeaderCard.add(indexLeaderCard1);
         indexesLeaderCard.add(indexLeaderCard2);
@@ -507,7 +507,7 @@ public class PersonalBoard extends MessageObservable {
             totalResources+= singleResourceQuantity;
         }
         if (totalResources != numOfResourcesToChoose){
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("You have to add " + numOfResourcesToChoose + " resources to your depot");
         }
         temporaryMapResource = new HashMap<>(initialResources);
         //Notifying observers that temporary map resource has changed

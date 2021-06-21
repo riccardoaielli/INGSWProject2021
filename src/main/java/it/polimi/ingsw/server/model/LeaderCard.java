@@ -66,7 +66,7 @@ public abstract class LeaderCard {
      * @throws InvalidLeaderAction when the card does not have this ability
      */
     public void abilityDiscount(Map<Resource,Integer> resources) throws InvalidLeaderAction {
-        throw new InvalidLeaderAction();
+        throw new InvalidLeaderAction("The selected card don't have the discount ability");
     }
 
     /**
@@ -75,7 +75,7 @@ public abstract class LeaderCard {
      * @throws InvalidLeaderAction when the card does not have this ability
      */
     public  void abilityDepot(WarehouseDepots warehouseDepots) throws InvalidLeaderAction{
-        throw new InvalidLeaderAction();
+        throw new InvalidLeaderAction("The selected card don't have the special depot ability");
     }
 
     /**
@@ -86,7 +86,7 @@ public abstract class LeaderCard {
      * @throws InvalidLeaderAction when the card does not have this ability
      */
     public  void abilityMarble(Map<Marble,Integer> temporaryMapMarble, int numOfTransformation) throws NotEnoughWhiteMarblesException, InvalidLeaderAction{
-        throw new InvalidLeaderAction();
+        throw new InvalidLeaderAction("The selected card don't have the white marble ability");
     }
 
     /**
@@ -95,7 +95,7 @@ public abstract class LeaderCard {
      * @throws InvalidLeaderAction when the card does not have this ability
      */
     public  PowerOfProduction abilityProduction() throws InvalidLeaderAction{
-        throw new InvalidLeaderAction();
+        throw new InvalidLeaderAction("The selected card don't have the production ability");
     }
 
 }

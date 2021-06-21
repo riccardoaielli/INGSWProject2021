@@ -35,7 +35,7 @@ public class DevelopmentCard {
             this.powerOfProduction = powerOfProduction;
         }
         else
-            throw new InvalidParameterException();
+            throw new InvalidParameterException("This development card can't be created because one parameter or more are not valid");
     }
 
     /**

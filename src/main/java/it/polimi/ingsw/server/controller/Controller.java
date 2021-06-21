@@ -62,7 +62,7 @@ public class Controller extends MessageObservable{
                 view.update(new ErrorMessage(nickname, "Match has already started"));
             }
         } catch (InvalidNickName invalidNickName) {
-            view.update(new ErrorMessage(nickname, "Invalid nickname"));
+            view.update(new ErrorMessage(nickname, invalidNickName.getMessage()));
         }
     }
 
@@ -90,7 +90,7 @@ public class Controller extends MessageObservable{
                 view.update(new ErrorMessage(nickname, "Invalid command"));
             }
         }catch (InvalidParameterException exception) {
-            view.update(new ErrorMessage(nickname, "Invalid number of players"));
+            view.update(new ErrorMessage(nickname, exception.getMessage()));
         }
     }
 
@@ -109,10 +109,8 @@ public class Controller extends MessageObservable{
             }
             else
                 notifyObservers(new ErrorMessage(getNickname(),"wrong phase"));
-        } catch (InvalidParameterException exception) {
-            view.update(new ErrorMessage(nickname, "Invalid Leader Card"));
-        } catch (RequirementNotMetException e) {
-            view.update(new ErrorMessage(nickname, "Invalid Request"));
+        } catch (InvalidParameterException | RequirementNotMetException exception) {
+            view.update(new ErrorMessage(nickname, exception.getMessage()));
         }
     }
 
@@ -133,7 +131,7 @@ public class Controller extends MessageObservable{
                 view.update(new ErrorMessage(nickname, "Invalid command"));
             }
         } catch (InvalidParameterException exception) {
-            view.update(new ErrorMessage(nickname, "Invalid command"));
+            view.update(new ErrorMessage(nickname, exception.getMessage()));
         }
     }
 
@@ -154,12 +152,8 @@ public class Controller extends MessageObservable{
             else{
                 view.update(new ErrorMessage(nickname, "Invalid command"));
             }
-        } catch (InvalidLeaderAction invalidLeaderAction) {
-            view.update(new ErrorMessage(nickname, "Invalid leader card selected"));
-        } catch (InvalidParameterException exception) {
-            view.update(new ErrorMessage(nickname, "Invalid command"));
-        } catch (NotEnoughWhiteMarblesException e) {
-            view.update(new ErrorMessage(nickname, "Not enough white marbles to transform"));
+        } catch (InvalidLeaderAction | InvalidParameterException | NotEnoughWhiteMarblesException invalidLeaderAction) {
+            view.update(new ErrorMessage(nickname, invalidLeaderAction.getMessage()));
         }
     }
 
@@ -227,7 +221,7 @@ public class Controller extends MessageObservable{
         try {
             personalBoard.addInitialResources(resourceIntegerMap);
         } catch (InvalidParameterException e) {
-            view.update(new ErrorMessage(nickname, "The number of resources chosen does not match how many resources you can choose"));
+            view.update(new ErrorMessage(nickname, e.getMessage()));
         }
     }
 
@@ -243,7 +237,7 @@ public class Controller extends MessageObservable{
         try {
             personalBoard = match.getPlayer(nickname).getPersonalBoard();
         } catch (InvalidNickName invalidNickName) {
-            view.update(new ErrorMessage(nickname, "Invalid action, nickname not found"));
+            view.update(new ErrorMessage(nickname, invalidNickName.getMessage()));
             return;
         }
 
@@ -430,18 +424,8 @@ public class Controller extends MessageObservable{
         PersonalBoard personalBoard = match.getPlayerByNickname(nickname).getPersonalBoard();
         try {
             personalBoard.buyDevelopmentCard(row, column, costStrongbox, costWarehouse, numLeaderCard, cardPosition);
-        } catch (NoCardException e) {
-            view.update(new ErrorMessage(nickname, "There is no card in the specified position of card grid"));
-        } catch (InvalidCostException e) {
-            view.update(new ErrorMessage(nickname, "The specified cost is not valid"));
-        } catch (InvalidLeaderAction invalidLeaderAction) {
-            view.update(new ErrorMessage(nickname, "The specified leader cannot discount the price"));
-        } catch (InvalidRemovalException e) {
-            view.update(new ErrorMessage(nickname, "The are not enough resources to purchase the card"));
-        } catch (InvalidDevelopmentCardException e) {
-            view.update(new ErrorMessage(nickname, "The card cannot be placed in the chosen development card space slot"));
-        } catch (InvalidParameterException e) {
-            view.update(new ErrorMessage(nickname, "Invalid parameter"));
+        } catch (NoCardException | InvalidParameterException | InvalidCostException | InvalidLeaderAction | InvalidRemovalException | InvalidDevelopmentCardException e) {
+            view.update(new ErrorMessage(nickname, e.getMessage()));
         }
     }
 

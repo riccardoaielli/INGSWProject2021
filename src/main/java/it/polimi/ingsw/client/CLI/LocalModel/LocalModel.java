@@ -208,7 +208,7 @@ public class LocalModel {
         ArrayList <PlayerCLI> players = new ArrayList<>();
         for(String x : playersOrder){
             if (x.equals(localPlayer.getNickname()))
-                players.add(this.players.get(0));
+                players.add(localPlayer);
             else
                 players.add(new PlayerCLI(x));
         }

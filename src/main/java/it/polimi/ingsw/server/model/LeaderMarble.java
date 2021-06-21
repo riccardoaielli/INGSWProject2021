@@ -27,7 +27,7 @@ public class LeaderMarble extends LeaderCard{
     @Override
     public void abilityMarble(Map<Marble, Integer> temporaryMapMarble, int numOfTransformation) throws NotEnoughWhiteMarblesException {
         if(!temporaryMapMarble.containsKey(whiteMarble) || temporaryMapMarble.get(whiteMarble) < numOfTransformation){
-            throw new NotEnoughWhiteMarblesException();
+            throw new NotEnoughWhiteMarblesException("You don't have enough white marbles");
         }
         else{
             temporaryMapMarble.replace(whiteMarble,temporaryMapMarble.get(whiteMarble) - numOfTransformation);

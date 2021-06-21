@@ -91,7 +91,7 @@ public class WarehouseDepots extends MessageObservable {
     public void swap(int depotNumber1, int depotNumber2) throws InvalidSwapException {
         //Making sure that both shelves are standard depots
         if (depotNumber1 > STANDARDDEPOTS || depotNumber2 > STANDARDDEPOTS) {
-            throw new InvalidSwapException();
+            throw new InvalidSwapException("Can't swap between special depots");
         }
 
         Depot depot1 = depots.get(depotNumber1-1);
@@ -99,7 +99,7 @@ public class WarehouseDepots extends MessageObservable {
 
         //Checking if the number of resources of each depot fit the other depot
         if (depot1.getNumberResources() > depot2.getSIZE()||depot2.getNumberResources() > depot1.getSIZE()) {
-            throw new InvalidSwapException();
+            throw new InvalidSwapException("Not enough space in the depots");
         }
 
         //Swapping the resources
@@ -122,11 +122,11 @@ public class WarehouseDepots extends MessageObservable {
     public void moveToFromSpecialDepot(int sourceDepotNumber, int destinationDepotNumber, int quantity) throws InvalidRemovalException, InvalidAdditionException, InvalidMoveException {
         //Throw exception if the condition that exactly one of the two depots can be a special depot is not respected
         if(sourceDepotNumber <= STANDARDDEPOTS == destinationDepotNumber <= STANDARDDEPOTS) {
-            throw new InvalidMoveException();
+            throw new InvalidMoveException("At least one of the two depots can't be a special depot");
         }
         //Throw exception if the depot does not exist
         if (sourceDepotNumber > depots.size() || destinationDepotNumber > depots.size()) {
-            throw new InvalidMoveException();
+            throw new InvalidMoveException("The depot does not exist");
         }
 
         Depot sourceDepot = depots.get(sourceDepotNumber-1);
@@ -136,7 +136,7 @@ public class WarehouseDepots extends MessageObservable {
         Map<Resource, Integer> resourceMap = new HashMap<>();
         //Throws exception if the source depot is empty
         if (!sourceDepot.getMapResource().keySet().iterator().hasNext()){
-            throw new InvalidRemovalException();
+            throw new InvalidRemovalException("Not enough resources in the first depot");
         }
         Resource resourceToMove = sourceDepot.getMapResource().keySet().iterator().next();
         resourceMap.put(resourceToMove, quantity);
@@ -144,7 +144,7 @@ public class WarehouseDepots extends MessageObservable {
         Map<Resource, Integer> resourceToCheckMap = new HashMap<>(resourceMap);
         sourceDepot.checkAvailability(resourceToCheckMap);
         if (!resourceToCheckMap.isEmpty()) {
-            throw new InvalidRemovalException();
+            throw new InvalidRemovalException("Move can't be performed");
         }
         checkAdd(destinationDepotNumber, resourceMap);
         destinationDepot.checkAdd(resourceMap);
