@@ -5,6 +5,9 @@ import it.polimi.ingsw.server.model.exceptions.InvalidAdditionException;
 
 import java.util.Map;
 
+/**
+ * Class that represents one of the two optional depots of the warehouse depots
+ */
 public class SpecialDepot extends Depot{
 
     private final Resource specialResource;

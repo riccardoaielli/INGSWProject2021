@@ -110,6 +110,9 @@ public class Market extends MessageObservable {
         return marbleOut;
     }
 
+    /**
+     * Notifies the view with a clone of the model data in the market
+     */
     public void doNotify(){
         notifyObservers(new MarketUpdate(marketMatrix.clone(), marbleOut));
     }

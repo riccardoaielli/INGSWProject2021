@@ -10,7 +10,6 @@ import it.polimi.ingsw.server.model.ObservableGameEnder;
 import it.polimi.ingsw.server.model.RankPosition;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -666,7 +665,7 @@ public class CLI implements ClientView {
     @Override
     public void showUpdatedStrongbox(String nickname, Map<Resource, Integer> strongbox) {
         localModel.getPlayer(nickname).setStrongbox(strongbox);
-        System.out.println("Strongbox updated");//this print id temporary
+        //System.out.println("Strongbox updated");//this print id temporary
     }
 
     @Override

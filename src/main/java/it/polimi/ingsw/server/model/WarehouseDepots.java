@@ -215,6 +215,9 @@ public class WarehouseDepots extends MessageObservable {
         return depots.get(numberDepot-1);
     }
 
+    /**
+     * Notifies the view with a clone of the model data of the warehouse depots
+     */
     public void doNotify(){
         List<Map<Resource, Integer>> warehouseState = new ArrayList<>();
         for (Depot depot : depots){

@@ -652,6 +652,9 @@ public class PersonalBoard extends MessageObservable {
         warehouseDepots.setNickname(this.getNickname());
     }
 
+    /**
+     * Notifies the view with a clone of the leader card in the model
+     */
     public void doNotifyLeaders() {
         ArrayList<Integer> initialLeaderCardsID = new ArrayList<>();
         leaderCards.forEach(x->initialLeaderCardsID.add(x.getId()));

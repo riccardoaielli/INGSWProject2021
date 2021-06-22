@@ -7,6 +7,9 @@ import it.polimi.ingsw.server.model.enumerations.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class that represents the strongbox of a personal board
+ */
 public class Strongbox extends MessageObservable {
     private Map<Resource, Integer> strongbox;
 

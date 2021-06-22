@@ -6,6 +6,9 @@ import it.polimi.ingsw.server.model.exceptions.InvalidAdditionException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class that represents one of the three depots of the warehouse depots
+ */
 public class Depot {
     private final int SIZE;
 
