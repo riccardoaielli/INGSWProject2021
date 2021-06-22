@@ -17,16 +17,15 @@ public class LocalModel {
     private final int CARD_BACK = 65;
     private final int EMPTY_CARD = 66;
     private final int CARD_WIDTH = 13;
+    private final GetColorString getColorString = new GetColorString();
+    private final Map<Integer,ArrayList <String>> cliCardString = new HashMap<>();
+
     private ArrayList <PlayerCLI> players;
     private PlayerCLI localPlayer;
     private MarketCLI market;
     private int blackCrossPosition;
-    private Map<Integer,ArrayList <String>> cliCardString = new HashMap<>();
-    private GetColorString getColorString = new GetColorString();
     private final int maxRow = 3, maxColumn = 4;
-
     private int[][] cardGridMatrix;
-
 
     public LocalModel() {
         players = new ArrayList<>();
@@ -34,10 +33,13 @@ public class LocalModel {
         cliCardStringCreator();
     }
 
+    /**
+     * Getter for Local Player data
+     * @return
+     */
     public PlayerCLI getLocalPlayer() {
         return localPlayer;
     }
-
 
     /**
      * This method updates the local model with the market structure received from a model update or a market update message
@@ -78,24 +80,32 @@ public class LocalModel {
        return null;
     }
 
-    public void printCard(int x) {
-        if(x==CARD_BACK)
+    /**
+     * Method to print a development card or a leader card
+     * @param cardID the ID of the card to print
+     */
+    public void printCard(int cardID) {
+        if(cardID==CARD_BACK)
             System.out.println("CARTA COPERTA");
         else {
-            ArrayList<String> arrayList = cliCardString.get(x);
+            ArrayList<String> arrayList = cliCardString.get(cardID);
             for (int k = 0; k < arrayList.size(); k++)
                 System.out.print(arrayList.get(k) + "\n");
         }
     }
 
+    /**
+     * Method to print the market
+     */
     public void printMarket(){
         market.printMarket();
     }
 
+    /**
+     * Method to print the card grid
+     */
     public void printCardGrid(){
-
         String cardRowString = "";
-
         for(int row = 0; row < maxRow ; row++){
             for(int cardRow = 0; cardRow < 6; cardRow++){
                 for(int column = 0; column < maxColumn; column++){
@@ -110,7 +120,10 @@ public class LocalModel {
         }
     }
 
-    public void printLeaderCards(){
+    /**
+     * Method to print the initial leader cards
+     */
+    public void printInitialLeaderCards(){
         String rowString = "";
         ArrayList <Integer> leaderCard = localPlayer.getLeaderCards();
         for(int cardRow = 0; cardRow < 5; cardRow++){
@@ -121,13 +134,18 @@ public class LocalModel {
             rowString = "";
         }
     }
+
+    /**
+     * Method to print the leader cards of a player
+     * @param player the nickname of the player
+     */
     public void printLeaderCards(PlayerCLI player) {
         String rowString = "";
         ArrayList <Integer> leaderCard = player.getLeaderCards();
         for(int cardRow = 0; cardRow < 5; cardRow++){
             for(Integer card : leaderCard) {
                 if(cardRow == 4 && player.isLeaderActive(card)){
-                    rowString = rowString + cliColor.COLOR_YELLOW + cliCardString.get(card).get(cardRow) + cliColor.RESET;
+                    rowString = rowString + CliColor.COLOR_YELLOW + cliCardString.get(card).get(cardRow) + CliColor.RESET;
                 }
                 else
                     rowString = rowString.concat(cliCardString.get(card).get(cardRow));
@@ -137,6 +155,10 @@ public class LocalModel {
         }
     }
 
+    /**
+     * Method to print the development cards of a player
+     * @param player the nickname of a player
+     */
     private void printDevelopmentCards(PlayerCLI player) {
         String rowString = "";
         ArrayList <ArrayList<Integer>> developmentCardSpace = player.getDevelopmentCardSpace();
@@ -156,11 +178,18 @@ public class LocalModel {
         }
     }
 
+    /**
+     * Setter for the local player's nickname
+     * @param localPlayer the nickname typed by the user
+     */
     public void setLocalPlayer(String localPlayer) {
         this.localPlayer = new PlayerCLI(localPlayer);
         players.add(this.localPlayer);
     }
 
+    /**
+     * Method to print the complete view
+     */
     public void printView(){
         printMarket();
         printCardGrid();
@@ -179,14 +208,21 @@ public class LocalModel {
         }
     }
 
-
-
+    /**
+     * Method to discard leaders from a specific player
+     * @param indexLeaderCard1 the index of the first leader card to discard
+     * @param indexLeaderCard2 the index of the second leader card to discard
+     */
     public void discardInitialLeaders(String nickname, int indexLeaderCard1, int indexLeaderCard2) {
         players.stream().filter(x->x.getNickname().equals(nickname)).forEach(x->x.discardInitialLeaders(indexLeaderCard1,indexLeaderCard2));
         if(!players.contains(nickname))
             players.add(new PlayerCLI(nickname));
     }
 
+    /**
+     * Method to know the amount of resources that a player has to choose at the beginning of a match
+     * @return an int based on the local player's turn
+     */
     public int getNumOfResourceToChoose(){
         int turnOfPlayer = players.indexOf(localPlayer) ;
         switch(turnOfPlayer){
@@ -202,6 +238,10 @@ public class LocalModel {
         }
     }
 
+    /**
+     * This method updates the local model with the list of player in the right order received from the model
+     * @param playersOrder a list of players nicknames
+     */
     public void setPlayersOrder(List<String> playersOrder) {
         if(playersOrder.size() == 1)
             blackCrossPosition = 0;
@@ -215,6 +255,52 @@ public class LocalModel {
         this.players = new ArrayList<>(players);
     }
 
+    /**
+     * Method to remove one card from a player's leader cards
+     * @param leaderPosition the index of the card to discard
+     * @param nickname the nickname of the player
+     */
+    public void removeLeaderCard(String nickname,int leaderPosition) {
+        players.stream().filter(player -> player.getNickname().equals(nickname)).forEach(player -> player.removeCard(leaderPosition));
+    }
+
+    /**
+     * Method to activate a player's leader card
+     * @param numLeadercard the index of the leader card to activate
+     * @param leaderCardID the ID of the card to activate
+     * @param nickname the nickname of the player
+     */
+    public void activeLeaderCard(String nickname, int numLeadercard, int leaderCardID) {
+        players.stream().filter(player -> player.getNickname().equals(nickname)).forEach(player -> player.activateCard(numLeadercard, leaderCardID));
+    }
+
+    /**
+     * Setter to update the position of Lorenzo's Black cross
+     * @param blackCrossPosition the updated position in Lorenzo's faith track
+     */
+    public void setBlackCrossPosition(int blackCrossPosition) {
+        this.blackCrossPosition = blackCrossPosition;
+    }
+
+    /**
+     * Method to print Lorenzo's faith track
+     */
+    private void printLorenzosFaithTrack(){
+        String cell = "|";
+        String blackCross = CliColor.COLOR_GREY+"┼"+ CliColor.RESET;
+        String faithTrack = "";
+        for (int pos = 0; pos<=24; pos++){
+            if(blackCrossPosition == pos)
+                faithTrack = faithTrack.concat(blackCross).concat(cell);
+            else
+                faithTrack = faithTrack.concat(String.valueOf(pos)).concat(cell);
+        }
+        System.out.println("Lorenzo's Faithtrack: \n"+ faithTrack);
+    }
+
+    /**
+     * Method to generate all the cards of the game from the relative xml files that contains the cards
+     */
     public void cliCardStringCreator(){
         String stringTemp = "";
         String string = "";
@@ -246,7 +332,7 @@ public class LocalModel {
                     int id = developmentCard.getId();
                     int level = developmentCard.getLevel();
                     for (int k = 0; k < level; k++) {
-                        stringTemp = getColorString.getColorDevelopmentCard(developmentCard.getColor()) + "*" + cliColor.RESET;
+                        stringTemp = getColorString.getColorDevelopmentCard(developmentCard.getColor()) + "*" + CliColor.RESET;
                         string = string.concat(stringTemp);
                         stringLength ++;
                     }
@@ -300,7 +386,7 @@ public class LocalModel {
             Resource resource = leaderDepot.getSpecialDepotResource();
             string = "║";
             stringLength = 1;
-            string = string + getColorString.getColorResource(resource) + "DEPOT" + cliColor.RESET;
+            string = string + getColorString.getColorResource(resource) + "DEPOT" + CliColor.RESET;
             stringLength = stringLength + 5;
             for(int addedCharacters = 0; addedCharacters < CARD_WIDTH - (stringLength + 1); addedCharacters++)
                 string = string.concat(" ");
@@ -310,7 +396,6 @@ public class LocalModel {
             stringArray.add("╚═══════════╝"); //characters width: 15 ║
             cliCardString.put(id, stringArray);
         }
-
         while (leaderCardDiscount.size() != 0) {
             string = "";
             ArrayList <String> stringArray = new ArrayList<>();
@@ -324,7 +409,7 @@ public class LocalModel {
             Resource resource = leaderDiscount.getResourceDiscounted();
             string = "║";
             stringLength = 1;
-            string = string + getColorString.getColorResource(resource) + "DISCOUNT" + cliColor.RESET;
+            string = string + getColorString.getColorResource(resource) + "DISCOUNT" + CliColor.RESET;
             stringLength = stringLength + 8;
             //addSpaces(string);
             for(int addedCharacters = 0; addedCharacters < CARD_WIDTH - (stringLength + 1); addedCharacters++)
@@ -348,7 +433,7 @@ public class LocalModel {
             Marble marble = leaderMarble.getMarble();
             string = "║";
             stringLength = 1;
-            string = string + getColorString.getColorMarble(marble) + "MARBLE" + cliColor.RESET;
+            string = string + getColorString.getColorMarble(marble) + "MARBLE" + CliColor.RESET;
             stringLength = stringLength + 6;
             //addSpaces(string);
             for(int addedCharacters = 0; addedCharacters < CARD_WIDTH - (stringLength + 1); addedCharacters++)
@@ -358,7 +443,6 @@ public class LocalModel {
             stringArray.add("╚═══════════╝"); //characters width: 15 ║
             cliCardString.put(id, stringArray);
         }
-
         while (leaderCardProduction.size() != 0) {
             string = "";
             ArrayList <String> stringArray = new ArrayList<>();
@@ -434,7 +518,7 @@ public class LocalModel {
         //stringTemp = getMapResourceIntegerParser(cost);
         for(Resource x : Resource.values()){
             if(cost.get(x)!= null){
-                stringTemp = cost.get(x) + "" + getColorString.getColorResource(x) + "■" + cliColor.RESET;
+                stringTemp = cost.get(x) + "" + getColorString.getColorResource(x) + "■" + CliColor.RESET;
                 string = string.concat(stringTemp);
                 stringLength = stringLength + cost.get(x).toString().length() + 1;
             }
@@ -445,7 +529,7 @@ public class LocalModel {
         //stringTemp = getMapResourceIntegerParser(production);
         for(Resource x : Resource.values()){
             if(cost.get(x)!= null){
-                stringTemp = cost.get(x) + "" + getColorString.getColorResource(x) + "■" + cliColor.RESET;
+                stringTemp = cost.get(x) + "" + getColorString.getColorResource(x) + "■" + CliColor.RESET;
                 string = string.concat(stringTemp);
                 stringLength = stringLength + cost.get(x).toString().length() + 1;
             }
@@ -474,7 +558,7 @@ public class LocalModel {
             else level = Integer.toString(x.getLevel());
             stringLength = stringLength + level.length();
 
-            String stringTemp = freq + "" + getColorString.getColorDevelopmentCard(x.getColor()) + "(" + level + ")" + "" + cliColor.RESET;
+            String stringTemp = freq + "" + getColorString.getColorDevelopmentCard(x.getColor()) + "(" + level + ")" + "" + CliColor.RESET;
             stringLength = stringLength + freq.toString().length() + 2;
             string = string.concat(stringTemp);
             for (int i = 0; i < freq; i++)
@@ -492,7 +576,7 @@ public class LocalModel {
 
         for(Resource x : Resource.values()){
             if(map.get(x)!= null){
-                String stringTemp = map.get(x) + "" + getColorString.getColorResource(x) + "■" + cliColor.RESET;
+                String stringTemp = map.get(x) + "" + getColorString.getColorResource(x) + "■" + CliColor.RESET;
                 string = string.concat(stringTemp);
                 stringLength = stringLength + map.get(x).toString().length() + 1;
             }
@@ -509,7 +593,7 @@ public class LocalModel {
 
         for(Resource x : Resource.values()){
             if(cost.get(x)!= null){
-                String stringTemp = cost.get(x) + "" + getColorString.getColorResource(x) + "■" + cliColor.RESET;
+                String stringTemp = cost.get(x) + "" + getColorString.getColorResource(x) + "■" + CliColor.RESET;
                 string = string.concat(stringTemp);
                 stringLength = stringLength + cost.get(x).toString().length() + 1;
             }
@@ -520,7 +604,7 @@ public class LocalModel {
 
         for(Resource x : Resource.values()){
             if(production.get(x)!= null){
-                String stringTemp = production.get(x) + "" + getColorString.getColorResource(x) + "■" + cliColor.RESET;
+                String stringTemp = production.get(x) + "" + getColorString.getColorResource(x) + "■" + CliColor.RESET;
                 string = string.concat(stringTemp);
                 stringLength = stringLength + production.get(x).toString().length() + 1;
             }
@@ -530,30 +614,5 @@ public class LocalModel {
             string = string.concat(" ");
         string = string.concat("║");
         return string;
-    }
-
-    public void removeLeaderCard(String nickname,int leaderPosition) {
-        players.stream().filter(player -> player.getNickname().equals(nickname)).forEach(player -> player.removeCard(leaderPosition));
-    }
-
-    public void activeLeaderCard(String nickname, int numLeadercard, int leaderCardID) {
-        players.stream().filter(player -> player.getNickname().equals(nickname)).forEach(player -> player.activateCard(numLeadercard, leaderCardID));
-    }
-
-    public void setBlackCrossPosition(int blackCrossPosition) {
-        this.blackCrossPosition = blackCrossPosition;
-    }
-
-    private void printLorenzosFaithTrack(){
-        String cell = "|";
-        String blackCross = cliColor.COLOR_GREY+"┼"+cliColor.RESET;
-        String faithTrack = "";
-        for (int pos = 0; pos<=24; pos++){
-            if(blackCrossPosition == pos)
-                faithTrack = faithTrack.concat(blackCross).concat(cell);
-            else
-                faithTrack = faithTrack.concat(String.valueOf(pos)).concat(cell);
-        }
-        System.out.println("Lorenzo's Faithtrack: \n"+ faithTrack);
     }
 }

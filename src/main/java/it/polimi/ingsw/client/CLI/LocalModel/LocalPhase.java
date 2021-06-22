@@ -4,6 +4,9 @@ import it.polimi.ingsw.client.ClientView;
 
 import java.util.concurrent.Phaser;
 
+/**
+ * Enum to represent the possible phases of the client
+ */
 public enum LocalPhase {
     DEFAULT{
         @Override
@@ -40,12 +43,6 @@ public enum LocalPhase {
         }
     },
     MENU {
-        @Override
-        public void handlePhase(ClientView clientView) {
-            clientView.askTurnAction();
-        }
-    },
-    MAIN_TURN_ACTION_DONE{
         @Override
         public void handlePhase(ClientView clientView) {
             clientView.askTurnAction();
@@ -91,16 +88,11 @@ public enum LocalPhase {
         public void handlePhase(ClientView clientView) {
             clientView.askRearrange();
         }
-
-        public void setPreviousPhase(LocalPhase previousPhase) {
-            this.previousPhase = previousPhase;
-        }
-
-        public LocalPhase getPreviousPhase() {
-            return previousPhase;
-        }
     };
 
-
+    /**
+     * Method implemented by each phase to call a method on the ClientView that interacts with a user
+     * @param clientView the view that is interacting with the user
+     */
     public abstract void handlePhase(ClientView clientView);
 }

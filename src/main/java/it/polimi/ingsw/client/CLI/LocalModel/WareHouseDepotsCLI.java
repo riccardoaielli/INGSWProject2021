@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class that contains local information of the warehouse depot and the relatives methods to print information on a CLI
+ */
 public class WareHouseDepotsCLI {
     private final int NUM_OF_DEPOTS = 3;
     private List<Map<Resource, Integer>> depots;
@@ -19,10 +22,17 @@ public class WareHouseDepotsCLI {
             depots.add(new HashMap<>());
     }
 
+    /**
+     * Setter used to update the local warehouse
+     * @param depots is the updated version of the warehouse
+     */
     public void setDepots(List<Map<Resource, Integer>> depots) {
         this.depots = depots;
     }
 
+    /**
+     * Method to print the warehouse depot
+     */
     public void printWhareHouseDepots(){
         String line = "";
         int spaces = 0;
@@ -54,7 +64,7 @@ public class WareHouseDepotsCLI {
                 for (Resource resource : depot.keySet()) {
                     for (int j = 0, printed = 0; j < spaces; j++) {
                         if (printed < depot.get(resource)) {
-                            line = line.concat(color.getColorResource(resource) + "● " + cliColor.RESET);
+                            line = line.concat(color.getColorResource(resource) + "● " + CliColor.RESET);
                             printed++;
                         } else
                             line = line.concat("◌ ");

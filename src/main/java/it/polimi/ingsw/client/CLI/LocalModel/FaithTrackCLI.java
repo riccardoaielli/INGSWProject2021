@@ -4,6 +4,9 @@ import it.polimi.ingsw.server.model.enumerations.Resource;
 
 import java.util.ArrayList;
 
+/**
+ * Class that contains local information of the faith track and the relatives methods to print information on a CLI
+ */
 public class FaithTrackCLI {
     private int redcrossPosition;
     private ArrayList<Integer> popeFavourTiles;
@@ -17,18 +20,28 @@ public class FaithTrackCLI {
         popeFavourTiles.add(0);
     }
 
+    /**
+     * Setter used to update the position of the red cross in the faith track
+     * @param redcrossPosition is the updated position
+     */
     public void setRedcrossPosition(int redcrossPosition) {
         this.redcrossPosition = redcrossPosition;
     }
 
+    /**
+     * Setter used to update the favour tiles of the faith track
+     * @param popeFavourTiles are the favour tiles updated
+     */
     public void setPopeFavourTiles(ArrayList<Integer> popeFavourTiles) {
         this.popeFavourTiles = popeFavourTiles;
     }
 
+    /**
+     * Method used to print the faith track
+     */
     public void printFaithTrack(){
-
         String cell = "|";
-        String redCross = getColorString.getColorResource(Resource.FAITH)+"┼"+cliColor.RESET;
+        String redCross = getColorString.getColorResource(Resource.FAITH)+"┼"+ CliColor.RESET;
         String faithTrack = "";
         String popeFavourTilesString = "         └---x---┘       └-------y------┘     └----------z------┘";
         for (int pos = 0; pos<=24; pos++){
@@ -53,10 +66,10 @@ public class FaithTrackCLI {
             }
             switch (popeFavourTiles.get(i)){
                 case 1:
-                    popeFavourTilesString = popeFavourTilesString.replace(tile,cliColor.COLOR_RED+tile+cliColor.RESET);
+                    popeFavourTilesString = popeFavourTilesString.replace(tile, CliColor.COLOR_RED+tile+ CliColor.RESET);
                     break;
                 case 2:
-                    popeFavourTilesString = popeFavourTilesString.replace(tile,cliColor.COLOR_YELLOW+tile+cliColor.RESET);
+                    popeFavourTilesString = popeFavourTilesString.replace(tile, CliColor.COLOR_YELLOW+tile+ CliColor.RESET);
                     break;
             }
         }

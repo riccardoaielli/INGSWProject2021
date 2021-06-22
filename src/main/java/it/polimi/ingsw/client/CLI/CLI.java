@@ -3,7 +3,7 @@ package it.polimi.ingsw.client.CLI;
 import it.polimi.ingsw.client.*;
 import it.polimi.ingsw.client.CLI.LocalModel.LocalModel;
 import it.polimi.ingsw.client.CLI.LocalModel.LocalPhase;
-import it.polimi.ingsw.client.CLI.LocalModel.cliColor;
+import it.polimi.ingsw.client.CLI.LocalModel.CliColor;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.common.messages.messagesToServer.*;
 import it.polimi.ingsw.server.model.ObservableGameEnder;
@@ -563,7 +563,7 @@ public class CLI implements ClientView {
 
     @Override
     public void askForLeaderCards() {
-        localModel.printLeaderCards();
+        localModel.printInitialLeaderCards();
         int firstCard = readInt("Choose a card to discard: ");
         while (firstCard <= 0){
             firstCard = readInt("Choose a card to discard: ");
@@ -742,7 +742,7 @@ public class CLI implements ClientView {
         int pos = 0;
         while (pos < rank.size()){
             if (rank.get(pos).getNickname().equals(nickname))
-                System.out.println(pos + ") " + cliColor.COLOR_YELLOW + rank.get(pos).toString() + cliColor.RESET);
+                System.out.println(pos + ") " + CliColor.COLOR_YELLOW + rank.get(pos).toString() + CliColor.RESET);
             else
                 System.out.println(pos + ") " + rank.get(pos).toString());
         }

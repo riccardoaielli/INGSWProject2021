@@ -141,7 +141,7 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
                             case 4:
                                 players.get(3).getPersonalBoard().setNumOfResourcesToChoose(2);
                                 try {
-                                    players.get(2).getPersonalBoard().moveFaithMarker(1);
+                                    players.get(3).getPersonalBoard().moveFaithMarker(1);
                                 } catch (InvalidParameterException ignored) {
                                 }
                                 break;

@@ -1,6 +1,9 @@
 package it.polimi.ingsw.client.CLI.LocalModel;
 
-public enum cliColor {
+/**
+ * Enum used to access easily to the color used in CLI printings
+ */
+public enum CliColor {
 
     COLOR_BLUE("\033[38;5;12m"),
     COLOR_YELLOW("\033[38;5;11m"),
@@ -11,10 +14,9 @@ public enum cliColor {
     COLOR_RED("\033[38;5;9m"),
     RESET("\033[0m");
 
-
     private final String string;
 
-    cliColor(String string) {
+    CliColor(String string) {
         this.string = string;
     }
 
