@@ -1,12 +1,11 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
-import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -14,10 +13,8 @@ import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -74,14 +71,30 @@ public class PersonalBoardController extends  AbstractController{
     @FXML
     private ImageView popeTwoImgV;
 
+    private Image leaderCard1Image;
+
+    private Image leaderCard2Image;
+
+    private final DropShadow highlightEffectRed = new DropShadow(6, Color.web("#f03030")); //green #65f952, red #f03030, arancione #f9dc52
+    private final DropShadow highlightEffectGreen = new DropShadow(6, Color.web("#65f952")); //green #65f952, red #f03030, arancione #f9dc52
+
     public void setLeaderCard1(Image leaderCard1) {
+        leaderCard1Image = leaderCard1;
         this.leaderCard1.setImage(leaderCard1);
     }
 
     public void setLeaderCard2(Image leaderCard2) {
+        leaderCard2Image = leaderCard2;
         this.leaderCard2.setImage(leaderCard2);
     }
 
+    public Image getLeaderCard1Image() {
+        return leaderCard1Image;
+    }
+
+    public Image getLeaderCard2Image() {
+        return leaderCard2Image;
+    }
 
     private Node[][] imgViewResourceArray = null;
     private Node[][] labelResourceArray = null;
@@ -162,6 +175,9 @@ public class PersonalBoardController extends  AbstractController{
             developmentCardSpaceArray.add(new ArrayList<>());
         }*/
 
+        highlightEffectRed.setSpread(1);
+        highlightEffectGreen.setSpread(1);
+
     }
 
     //serve a inizializzare l'array di devCard space dal gridPane
@@ -188,7 +204,7 @@ public class PersonalBoardController extends  AbstractController{
         //todo passo la posizione a chi serve per creare il messaggio
     }
 
-    public void setWarehouseDepot(List<Map<Resource, Integer>> depots){
+    public void updateWarehouse(List<Map<Resource, Integer>> depots){
         int k=0;
         for(Map<Resource, Integer> map : depots){
             for(Resource x : map.keySet()){
@@ -351,8 +367,24 @@ public class PersonalBoardController extends  AbstractController{
         }
     }
 
-    public void updateWarehouse(){
+    public void updateDiscardedLeader(int numLeaderCard){
+        if(numLeaderCard==1){
+            leaderCard1.setEffect(highlightEffectRed);
+            //leaderCard1.setImage(null);
+        }if(numLeaderCard==2){
+            leaderCard2.setEffect(highlightEffectRed);
+            //leaderCard1.setImage(null);
+        }
+    }
 
+    public void updateActivatedLeader(int numLeaderCard, int leaderCardID){
+        if(numLeaderCard==1){
+            leaderCard1.setImage(new Image("cardsImage/" + leaderCardID + ".png"));
+            leaderCard1.setEffect(highlightEffectGreen);
+        }if(numLeaderCard==2){
+            leaderCard2.setImage(new Image("cardsImage/" + leaderCardID + ".png"));
+            leaderCard2.setEffect(highlightEffectGreen);
+        }
     }
 
 

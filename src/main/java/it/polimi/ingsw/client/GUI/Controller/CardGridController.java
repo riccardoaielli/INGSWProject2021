@@ -3,26 +3,33 @@ package it.polimi.ingsw.client.GUI.Controller;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
 public class CardGridController extends AbstractController {
+
+    private final DropShadow highlightEffect = new DropShadow(3, Color.web("#f9dc52"));
 
     private Node[][] gridPaneArray = null;
     private int[][] cardGridMatrixCurrent = new int[maxRow][maxColumn];
     private static final int maxColumn = 4, maxRow = 3;
     private static final double h = 150, w = 100;
+    private int selx, sely;
+    private ImageView selectedImageView;
 
     @FXML
     private GridPane cardGridPane;
 
     @FXML
     public void initialize() {
-
+        highlightEffect.setSpread(1);
         initializeCardGridPaneArray();
     }
+
 
     /**
      *Calls method drawCards to print cards in gridPane
@@ -86,8 +93,28 @@ public class CardGridController extends AbstractController {
 
     private void onImgClick(Event event){
         ImageView imageView = (ImageView) event.getTarget();
-        System.out.println(GridPane.getRowIndex(imageView) + "," +GridPane.getColumnIndex(imageView));
+        if (selectedImageView != imageView){
+            if (selectedImageView != null){
+                selectedImageView.setEffect(null);
+            }
+            selectedImageView = imageView;
+            selectedImageView.setEffect(highlightEffect);
+        }
+        selx = GridPane.getRowIndex(selectedImageView);
+        sely = GridPane.getColumnIndex(selectedImageView);
         //todo passo la posizione a chi serve per creare il messaggio
+    }
+
+    public int getSelx() {
+        return selx;
+    }
+
+    public int getSely() {
+        return sely;
+    }
+
+    public int[][] getCardGridMatrixCurrent() {
+        return cardGridMatrixCurrent;
     }
 
     public GridPane getCardGridPane() {

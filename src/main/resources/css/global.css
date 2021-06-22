@@ -9,6 +9,10 @@
     src: url("../../../src/main/resources/css/Dominican-Italic.ttf");
 }
 
+.transparentBackground{
+    -fx-background-color: transparent;
+}
+
 .button{
     -fx-font-family: "Dominican Italic";
     -fx-font-size: 24px;

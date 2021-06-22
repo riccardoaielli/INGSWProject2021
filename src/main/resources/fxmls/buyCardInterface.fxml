@@ -7,29 +7,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<SplitPane dividerPositions="0.3843351548269581" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.BuyCardInterfaceController">
+<SplitPane dividerPositions="0.3843351548269581" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" styleClass="menuBackground" stylesheets="@../css/global.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.BuyCardInterfaceController">
    <items>
       <!-- content from counter.fxml included here -->
       <fx:include fx:id="cardGrid" source="../fxmls/cardGrid.fxml" />
-      <SplitPane dividerPositions="0.31270903010033446, 0.6220735785953178" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+      <SplitPane dividerPositions="0.31270903010033446, 0.6220735785953178" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" styleClass="transparentBackground" stylesheets="@../css/global.css">
         <items>
             <!-- content from counter.fxml included here -->
             <fx:include fx:id="resourceChoice" source="../fxmls/resourceChoice.fxml" />
-            <StackPane prefHeight="139.0" prefWidth="694.0">
+            <StackPane prefHeight="139.0" prefWidth="694.0" styleClass="transparentBackground" stylesheets="@../css/gameInterface.css">
                <children>
-                  <ImageView fx:id="leaderTwoImgView" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+                  <ImageView id="2" fx:id="leaderTwoImgView" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
                      <StackPane.margin>
                         <Insets left="200.0" />
                      </StackPane.margin>
                   </ImageView>
-                  <ImageView fx:id="leaderOneImgView" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+                  <ImageView id="1" fx:id="leaderOneImgView" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
                      <StackPane.margin>
                         <Insets right="200.0" />
                      </StackPane.margin>
                   </ImageView>
                </children>
             </StackPane>
-            <AnchorPane prefHeight="338.0" prefWidth="694.0">
+            <AnchorPane prefHeight="338.0" prefWidth="694.0" styleClass="transparentBackground" stylesheets="@../css/global.css">
                <children>
                   <!-- content from counter.fxml included here -->
                   <fx:include fx:id="choiceBoxDevCardSpace" source="choiceBoxDevCardSpace.fxml" AnchorPane.leftAnchor="90.0" />

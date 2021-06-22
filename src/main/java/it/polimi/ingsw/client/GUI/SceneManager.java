@@ -35,6 +35,10 @@ public class SceneManager {
 
     }
 
+    public GUI getGui() {
+        return gui;
+    }
+
     private GUI gui;
     private Stage stage;
     private Scene activeScene;

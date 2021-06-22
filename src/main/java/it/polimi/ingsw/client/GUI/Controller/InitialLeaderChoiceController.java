@@ -5,10 +5,12 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -16,6 +18,8 @@ public class InitialLeaderChoiceController extends AbstractController{
     private ArrayList<ImageView> cardImagesArray;
     private ArrayList<Boolean> choosenCards;
     private final String cardsPath = "cardsImage/";
+
+    private final DropShadow highlightEffect = new DropShadow(6, Color.web("#f9dc52")); //green #65f952, red #f03030, arancione #f9dc52
 
     @FXML
     private GridPane cardsContainer;
@@ -39,13 +43,20 @@ public class InitialLeaderChoiceController extends AbstractController{
         }
         discardButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onDiscardClick);
 
+        highlightEffect.setSpread(1);
 
     }
 
     private void onLeaderCardClick(Event event){
-        for(ImageView card: cardImagesArray)
-            if(event.getTarget().equals(card))
+        for(ImageView card: cardImagesArray) {
+            if (event.getTarget().equals(card))
                 choosenCards.set(cardImagesArray.indexOf(card), !choosenCards.get(cardImagesArray.indexOf(card)));
+            if (choosenCards.get(cardImagesArray.indexOf(card)) == true) {
+                card.setEffect(highlightEffect);
+            }else{
+                card.setEffect(null);
+            }
+        }
     }
 
     private void onDiscardClick(Event event) {

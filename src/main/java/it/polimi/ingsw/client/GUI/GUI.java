@@ -86,7 +86,7 @@ public class GUI implements ClientView {
 
     @Override
     public void askBuyDevCard() {
-
+        SceneManager.getInstance().showPopup("buyCardInterface");
     }
 
     @Override
@@ -106,7 +106,7 @@ public class GUI implements ClientView {
 
     @Override
     public void askRearrange() {
-
+        SceneManager.getInstance().showPopup("rearrangeWHouseInterface");
     }
 
     @Override
@@ -159,7 +159,8 @@ public class GUI implements ClientView {
 
     @Override
     public void showUpdatedWarehouse(String nickname, List<Map<Resource, Integer>> depots) {
-
+        GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterface");
+        Platform.runLater(()-> gameInterfaceController.setWarehouse(nickname, depots));
     }
 
     @Override
@@ -169,7 +170,8 @@ public class GUI implements ClientView {
 
     @Override
     public void showUpdatedDevCardSpace(String nickname, ArrayList<ArrayList<Integer>> cardsState) {
-
+        GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterface");
+        Platform.runLater(()-> gameInterfaceController.setDevelopmentCardSpace(nickname, cardsState));
     }
 
     @Override
@@ -179,12 +181,14 @@ public class GUI implements ClientView {
 
     @Override
     public void showUpdateRedcrossPosition(String nickname, int redcrossPosition) {
-
+        GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterface");
+        Platform.runLater(()-> gameInterfaceController.setRedCrossPosition(nickname, redcrossPosition));
     }
 
     @Override
     public void showUpdatePopeFavourTiles(String nickname, ArrayList<Integer> popeFavourTiles) {
-
+        GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterface");
+        Platform.runLater(()-> gameInterfaceController.setPopeFavourTiles(nickname, popeFavourTiles));
     }
 
     @Override
@@ -211,12 +215,14 @@ public class GUI implements ClientView {
 
     @Override
     public void showUpdateDiscardedLeaderUpdate(String nickname, int leaderPosition) {
-
+        GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterface");
+        Platform.runLater(()-> gameInterfaceController.setDiscardLeader(nickname, leaderPosition));
     }
 
     @Override
-    public void showUpdateLeaderCardActivatedUpdate(String nickname, int numLeadercard, int leaderCardID) {
-
+    public void showUpdateLeaderCardActivatedUpdate(String nickname, int leaderPosition, int leaderCardID) {
+        GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterface");
+        Platform.runLater(()-> gameInterfaceController.setActivateLeader(nickname, leaderPosition, leaderCardID));
     }
 
     @Override
@@ -254,7 +260,7 @@ public class GUI implements ClientView {
 
     @Override
     public void askDiscardLeader() {
-
+        SceneManager.getInstance().showPopup("discardLeaderInterface");
     }
 
     @Override
@@ -279,7 +285,7 @@ public class GUI implements ClientView {
 
     @Override
     public void askActivateLeader() {
-
+        SceneManager.getInstance().showPopup("activateLeaderInterface");
     }
 
     @Override

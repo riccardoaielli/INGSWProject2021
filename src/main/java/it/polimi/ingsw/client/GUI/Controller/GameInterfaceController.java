@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.CLI.LocalModel.LocalPhase;
 import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.common.messages.messagesToServer.TakeFromMarketMessage;
 import it.polimi.ingsw.server.model.enumerations.Marble;
+import it.polimi.ingsw.server.model.enumerations.Resource;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -29,7 +30,6 @@ public class GameInterfaceController extends AbstractController {
 
     @FXML
     private ToolBar buttonToolBar;
-
     @FXML
     private Button marketButton;
     @FXML
@@ -61,7 +61,6 @@ public class GameInterfaceController extends AbstractController {
     @FXML
     public void initialize() {
         personalBoardControllerMap = new HashMap<>();
-        //ObservableList<Node> toolbarElement = buttonToolBar.getItems();
         marketButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onMarketButtonClick);
         buyCardButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBuyCardButtonClick);
         productionButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onProductionButtonClick);
@@ -77,7 +76,8 @@ public class GameInterfaceController extends AbstractController {
     }
 
     private void onBuyCardButtonClick(Event event){
-        SceneManager.getInstance().showPopup("buyCardInterface");
+        getGui().setPhase(LocalPhase.BUY_DEV_CARD);
+        getGui().getPhase().handlePhase(getGui());
     }
 
     private void onProductionButtonClick(Event event){
@@ -86,15 +86,18 @@ public class GameInterfaceController extends AbstractController {
     }
 
     private void onActivateLeaderButtonClick(Event event){
-        SceneManager.getInstance().showPopup("");
+        getGui().setPhase(LocalPhase.ACTIVATE_LEADER);
+        getGui().getPhase().handlePhase(getGui());
     }
 
     private void onDiscardLeaderButtonClick(Event event){
-        SceneManager.getInstance().showPopup("");
+        getGui().setPhase(LocalPhase.DISCARD_LEADER);
+        getGui().getPhase().handlePhase(getGui());
     }
 
     private void onRearrangeWHouseButtonClick(Event event){
-        SceneManager.getInstance().showPopup("");
+        getGui().setPhase(LocalPhase.REARRANGE_WAREHOUSE);
+        getGui().getPhase().handlePhase(getGui());
     }
 
     private void onQuitButtonClick(Event event){
@@ -119,6 +122,37 @@ public class GameInterfaceController extends AbstractController {
         }
     }
 
+    public void setWarehouse(String nickname, List<Map<Resource, Integer>> depots){
+        PersonalBoardController personalBoardController = personalBoardControllerMap.get(nickname);
+        personalBoardController.updateWarehouse(depots);
+    }
+
+    public void setDiscardLeader(String nickname, int numLeaderCard){
+        PersonalBoardController personalBoardController = personalBoardControllerMap.get(nickname);
+        personalBoardController.updateDiscardedLeader(numLeaderCard);
+    }
+
+    public void setActivateLeader(String nickname, int numLeaderCard, int leaderCardID){
+        //nickname = SceneManager.getInstance().getGui().getNickname();  serve solo se voglio lavorare sulla mia personal board, non è questo il caso
+        PersonalBoardController personalBoardController = personalBoardControllerMap.get(nickname);
+        personalBoardController.updateActivatedLeader(numLeaderCard, leaderCardID);
+    }
+
+    public void setRedCrossPosition(String nickname, int redcrossPosition){
+        PersonalBoardController personalBoardController = personalBoardControllerMap.get(nickname);
+        personalBoardController.setRedCrossPosition(redcrossPosition);
+    }
+
+    public void setPopeFavourTiles(String nickname, ArrayList<Integer> popeFavourTiles){
+        PersonalBoardController personalBoardController = personalBoardControllerMap.get(nickname);
+        personalBoardController.setPopeFavourTiles(popeFavourTiles);
+    }
+
+    public void setDevelopmentCardSpace(String nickname, ArrayList<ArrayList<Integer>> cardsState){
+        PersonalBoardController personalBoardController = personalBoardControllerMap.get(nickname);
+        personalBoardController.setDevelopmentCardSpace(cardsState);
+    }
+
     /**
      *Calls method drawCards to print cards in gridPane
      * @param cardGridMatrixUpdate is the cardGrid matrix from model
@@ -131,8 +165,8 @@ public class GameInterfaceController extends AbstractController {
         marketGridController.setMarbles(marketMatrix, marbleOut);
     }
 
-    public GridPane getCardGridPane(){
-        return cardGridController.getCardGridPane();
+    public CardGridController getCardGridController(){
+        return cardGridController;
     }
 
     public Map<String, PersonalBoardController> getPersonalBoardControllerMap() {
