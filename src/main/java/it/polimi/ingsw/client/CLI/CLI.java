@@ -203,8 +203,8 @@ public class CLI implements ClientView {
     public void askCreateMatch(){
         int numPlayerInput = readInt("How many players?");
         String nicknameInput = readInput("Insert nickname");
-        messageSender.sendMessage(new CreateMatchReplyMessage(nicknameInput, numPlayerInput));
         localModel.setLocalPlayer(nicknameInput);
+        messageSender.sendMessage(new CreateMatchReplyMessage(nicknameInput, numPlayerInput));
         if(numPlayerInput != 1)
             System.out.println("Wait for other players to join the game...");
     }
@@ -454,44 +454,26 @@ public class CLI implements ClientView {
     @Override
     public void askBuyDevCard() {
         System.out.println("Insert the coordinates of the development card you want to buy[type 0 to go back to menu]");
-        String rowString = readInput("Choose the column of the card (1,2 or 3):");
-        int row =  0;
-        try {
-            row =  Integer.parseInt(rowString);
-        } catch (NumberFormatException e) {
-            System.out.println("Not a number");
-        }
+        int row = readInt("Choose the row of the card (1,2 or 3):");
+
         while(!(row>=0&&row <=3)){
-            rowString = readInput("Please insert a number between 1 and 3)");
-            try {
-                row =  Integer.parseInt(rowString);
-            } catch (NumberFormatException e) {
-                System.out.println("Not a number");
-            }
+            row = readInt("Please insert a number between 1 and 3)");
         }
         if(row == 0) {
             setPhase(LocalPhase.MENU);
             getPhase().handlePhase(this);
+            return;
         }
 
-        String columnString = readInput("Choose the row of the card (1,2,3 or 4):");
-        int column =  0;
-        try {
-            column =  Integer.parseInt(columnString);
-        } catch (NumberFormatException e) {
-            System.out.println("Not a number");
-        }
+        int column = readInt("Choose the column of the card (1,2,3 or 4):");
+
         while(!(column>=0&&column <=4)){
-            columnString = readInput("Please insert a number between 1 and 4");
-            try {
-                column =  Integer.parseInt(columnString);
-            } catch (NumberFormatException e) {
-                System.out.println("Not a number");
-            }
+            column = readInt("Please insert a number between 1 and 4");
         }
         if(column == 0) {
             setPhase(LocalPhase.MENU);
             getPhase().handlePhase(this);
+            return;
         }
 
         List<Map<Resource, Integer>> costStrongboxWarehouse = readCostStrongboxWarehouse();
@@ -788,7 +770,7 @@ public class CLI implements ClientView {
      * @param message Message notified by {@link ObservableGameEnder}
      */
     @Override
-    public void update(MessageToClient message) {
+    public synchronized void update(MessageToClient message) {
         message.handleMessage(this);
     }
 

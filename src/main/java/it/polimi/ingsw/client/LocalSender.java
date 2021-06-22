@@ -1,20 +1,36 @@
 package it.polimi.ingsw.client;
 
+
 import it.polimi.ingsw.common.messages.messagesToServer.MessageToServer;
+import it.polimi.ingsw.server.controller.Controller;
 
-public class LocalSender implements MessageSender{
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
-    private ClientView clientView;
+/**
+ * Class used to locally implement a message based communication between view and controller
+ */
+public class LocalSender implements MessageSender {
+    private Controller controller;
+    private final ClientView clientView;
+    private final Executor executor;
     public LocalSender(ClientView view) {
         this.clientView = view;
+        executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            controller = new Controller();
+            controller.newConnection(clientView);
+        });
     }
 
     /**
-     * Sends message to ClientSocket
+     * Handles message locally to call a method directly on the controller
      * @param message, is the message to be sent
      */
     @Override
     public void sendMessage(MessageToServer message) {
-        //message.handleMessage(,clientView);// param controller e view
+        executor.execute(() -> {
+            message.handleMessage(controller, clientView);
+        });
     }
 }
