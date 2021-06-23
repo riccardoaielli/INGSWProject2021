@@ -50,29 +50,17 @@ public class CLI implements ClientView {
         readLineThread.start();
     }
 
+    /**
+     * Prints the title and sets the message sender
+     */
     public void start(){
-        System.out.println("\n" +
-                " _______  _______  _______ _________ _______  _______  _______      _______  _______               \n" +
-                "(       )(  ___  )(  ____ \\\\__   __/(  ____ \\(  ____ )(  ____ \\    (  ___  )(  ____ \\              \n" +
-                "| () () || (   ) || (    \\/   ) (   | (    \\/| (    )|| (    \\/    | (   ) || (    \\/              \n" +
-                "| || || || (___) || (_____    | |   | (__    | (____)|| (_____     | |   | || (__                  \n" +
-                "| |(_)| ||  ___  |(_____  )   | |   |  __)   |     __)(_____  )    | |   | ||  __)                 \n" +
-                "| |   | || (   ) |      ) |   | |   | (      | (\\ (         ) |    | |   | || (                    \n" +
-                "| )   ( || )   ( |/\\____) |   | |   | (____/\\| ) \\ \\__/\\____) |    | (___) || )                    \n" +
-                "|/     \\||/     \\|\\_______)   )_(   (_______/|/   \\__/\\_______)    (_______)|/                     \n" +
-                "                                                                                                   \n" +
-                " _______  _______ _________ _        _______  _______  _______  _______  _        _______  _______ \n" +
-                "(  ____ )(  ____ \\\\__   __/( (    /|(  ____ \\(  ____ \\(  ____ \\(  ___  )( (    /|(  ____ \\(  ____ \\\n" +
-                "| (    )|| (    \\/   ) (   |  \\  ( || (    \\/| (    \\/| (    \\/| (   ) ||  \\  ( || (    \\/| (    \\/\n" +
-                "| (____)|| (__       | |   |   \\ | || (__    | (_____ | (_____ | (___) ||   \\ | || |      | (__    \n" +
-                "|     __)|  __)      | |   | (\\ \\) ||  __)   (_____  )(_____  )|  ___  || (\\ \\) || |      |  __)   \n" +
-                "| (\\ (   | (         | |   | | \\   || (            ) |      ) || (   ) || | \\   || |      | (      \n" +
-                "| ) \\ \\__| (____/\\___) (___| )  \\  || (____/\\/\\____) |/\\____) || )   ( || )  \\  || (____/\\| (____/\\\n" +
-                "|/   \\__/(_______/\\_______/|/    )_)(_______/\\_______)\\_______)|/     \\||/    )_)(_______/(_______/\n" +
-                "                                                                                                   \n");
+        localModel.printTitle();
         setMessageSender();
     }
 
+    /**
+     * Clears the console and prints the view with all the players
+     */
     public void clearConsoleAndReprint() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -80,6 +68,10 @@ public class CLI implements ClientView {
         //Add reprint view
     }
 
+    /**
+     * Method to read a resource
+     * @return the resource typed by the user
+     */
     private Resource readResource(){
         String resourceType;
         resourceType = readInput("Choose a resource type(COIN,SHIELD,SERVANT,STONE):").toUpperCase();
@@ -89,6 +81,10 @@ public class CLI implements ClientView {
         return Resource.valueOf(resourceType);
     }
 
+    /**
+     * Method to read a quantity
+     * @return an int typed by the user
+     */
     private int readResourceQuantity(){
         String numOfResourceType = readInput("Choose how many resources of this type (insert a number >= 1)");
         int numOfResource =  0;
@@ -136,6 +132,10 @@ public class CLI implements ClientView {
         return costStrongboxWarehouse;
     }
 
+    /**
+     * Getter for the local model of the view
+     * @return a local model
+     */
     @Override
     public LocalModel getLocalModel() {
         return localModel;
@@ -153,17 +153,14 @@ public class CLI implements ClientView {
             input = readInput("Press L for local game or O for online game");
         }
         if (input.equalsIgnoreCase("L")) {
-            //System.out.println("LocalSender created");
             messageSender = new LocalSender(this);
         } else if (input.equalsIgnoreCase("O")) {
             //nel caso volessimo leggere l'input dell'hostname e della porta direttamente nella cli (ovviamente va fatto duale nella gui) e va sistemato clientMain
             //input = readInput("Press game");
             //input = readInput("Press L");
             messageSender = new ClientSocket(hostAddress, portNumber, this);
-            //System.out.println("ClientSocket created");
         } else if (input.equalsIgnoreCase("DEMO")){
             messageSender = new ClientSocket(hostAddress, portNumber, this);
-            //System.out.println("ClientSocket created");
             messageSender.sendMessage(new DemoGameMessage());
         }
     }
@@ -208,6 +205,9 @@ public class CLI implements ClientView {
             System.out.println("Wait for other players to join the game...");
     }
 
+    /**
+     * Method to ask a player the nickname to join the match
+     */
     @Override
     public void askNickname(){
         String nicknameInput = readInput("Insert nickname");
@@ -216,6 +216,9 @@ public class CLI implements ClientView {
         System.out.println("Wait for other players to join the game...");
     }
 
+    /**
+     * Method to ask the player to choose it's starting resources
+     */
     @Override
     public void askResourceChoice() {
         int totalResources = 0;
@@ -232,6 +235,9 @@ public class CLI implements ClientView {
         messageSender.sendMessage(new ChooseInitialResourcesMessage(localModel.getLocalPlayer().getNickname(),resources));
     }
 
+    /**
+     * Method to ask the player the resources to add to its warehouse
+     */
     @Override
     public void askAddToWareHouse() {
         if(firstTurn)
@@ -279,6 +285,9 @@ public class CLI implements ClientView {
         messageSender.sendMessage(new AddToWarehouseMessage(localModel.getLocalPlayer().getNickname(), depotLevel, singleResourceMap));
     }
 
+    /**
+     * Method to ask the player an action to do
+     */
     @Override
     public void askTurnAction() {
         if(firstTurn)
@@ -333,7 +342,9 @@ public class CLI implements ClientView {
 
     }
 
-
+    /**
+     * Method to ask the player the coordinates to buy from the market
+     */
     @Override
     public void askTakeFromMarketAction() {
         String rowOrColumn;
@@ -364,6 +375,9 @@ public class CLI implements ClientView {
         messageSender.sendMessage(new TakeFromMarketMessage(localModel.getLocalPlayer().getNickname(),rowOrColumnInt,(numOfRowOrColumnInt -1)));
     }
 
+    /**
+     * Method to ask the player to rearrange it's depots
+     */
     @Override
     public void askRearrange() {
         int rearrangeChoice = readInt("0. Go back to menu\n" +
@@ -416,6 +430,9 @@ public class CLI implements ClientView {
         messageSender.sendMessage(new SwapMessage(localModel.getLocalPlayer().getNickname(), depot[0], depot[1]));
     }
 
+    /**
+     * Method to ask the player a leader power to use
+     */
     @Override
     public void askForLeaderPower() {
         String firstAnswer;
@@ -450,6 +467,9 @@ public class CLI implements ClientView {
         }
     }
 
+    /**
+     * Method to ask the player a card to buy
+     */
     @Override
     public void askBuyDevCard() {
         System.out.println("Insert the coordinates of the development card you want to buy[type 0 to go back to menu]");
@@ -488,6 +508,9 @@ public class CLI implements ClientView {
         messageSender.sendMessage(new BuyDevelopmentCardMessage(localModel.getLocalPlayer().getNickname(), row, column,costStrongboxWarehouse.get(0), costStrongboxWarehouse.get(1), numLeaderCard, cardPosition));
     }
 
+    /**
+     * Method to ask the player a production to activate
+     */
     @Override
     public void askProduction() {
         int productionChoice = readInt("Choose which kind of production you want to activate:" +
@@ -554,13 +577,19 @@ public class CLI implements ClientView {
         messageSender.sendMessage(new ActivateCardProductionMessage(getLocalModel().getLocalPlayer().getNickname(), costStrongboxWarehouse.get(0), costStrongboxWarehouse.get(1), cardPosition));
     }
 
-
+    /**
+     * Method to update the initial leader cards received from the Model
+     * @param initialLeaderCardsID a list of four leader cards
+     */
     @Override
     public void showUpdateInitialLeaderCard(ArrayList<Integer> initialLeaderCardsID) {
         localModel.setInitialLeaderCards(initialLeaderCardsID);
         askForLeaderCards();
     }
 
+    /**
+     * Method to ask the player two leader cards to discard
+     */
     @Override
     public void askForLeaderCards() {
         localModel.printInitialLeaderCards();
@@ -575,6 +604,9 @@ public class CLI implements ClientView {
         messageSender.sendMessage(new DiscardInitialLeaderMessage(localModel.getLocalPlayer().getNickname(),firstCard,secondCard));
     }
 
+    /**
+     * Method to ask a player a leader card to activate
+     */
     @Override
     public void askActivateLeader() {
         int numLeaderCard = readInt("Choose the number of the card to activate: ");
@@ -589,12 +621,19 @@ public class CLI implements ClientView {
             messageSender.sendMessage(new ActivateLeaderMessage(localModel.getLocalPlayer().getNickname(),numLeaderCard));
     }
 
+    /**
+     * Method to close the game
+     * @param string the reason why the game is closed
+     */
     @Override
     public void closeGame(String string) {
         System.out.println(string);
         System.exit(0);
     }
 
+    /**
+     * Method to ask a player a leader card to discard
+     */
     @Override
     public void askDiscardLeader(){
         int numLeaderCard = readInt("Choose the number of the card to discard: ");
@@ -608,33 +647,48 @@ public class CLI implements ClientView {
         messageSender.sendMessage(new DiscardLeaderMessage(localModel.getLocalPlayer().getNickname(),numLeaderCard));
     }
 
+    /**
+     * Method to update the turn phase of the view
+     * @param phase the update of the phase
+     */
     @Override
     public void setPhase(LocalPhase phase) {
         this.phase = phase;
     }
 
+    /**
+     * Method to set if the player did or not the main turn action
+     * @param mainTurnActionDone true if the player already did the action
+     */
     @Override
     public void setMainTurnActionDone(boolean mainTurnActionDone) {
         this.mainTurnActionDone = mainTurnActionDone;
     }
 
+    /**
+     * Getter for the phase of the view
+     * @return the current phase of the view
+     */
     @Override
     public LocalPhase getPhase() {
         return phase;
     }
 
-    @Override
-    public void showCurrentPlayer(String nickname) {
-        System.out.println("wait, " + nickname +" is playing");
-    }
-
-
-
+    /**
+     * Method to print an error received from the Model
+     * @param errorString
+     */
     @Override
     public void showError(String errorString) {
         System.out.println(errorString);
     }
 
+    /**
+     * Method to update the leader cards received from the Model
+     * @param nickname the nickname of the player that received the update
+     * @param indexLeaderCard1 the index of the first leader card
+     * @param indexLeaderCard2 the index of the second leader card
+     */
     @Override
     public void showInitialLeaderCardDiscard(String nickname, int indexLeaderCard1, int indexLeaderCard2) {
         localModel.discardInitialLeaders(nickname,indexLeaderCard1,indexLeaderCard2);
@@ -642,6 +696,10 @@ public class CLI implements ClientView {
             System.out.println("Wait for other players to choose their cards...");
     }
 
+    /**
+     * Method to update the players order received from the Model
+     * @param playersOrder a list of players
+     */
     @Override
     public void showUpdatePlayersOrder(List<String> playersOrder) {
         localModel.setPlayersOrder(playersOrder);
@@ -650,30 +708,52 @@ public class CLI implements ClientView {
 
     }
 
+    /**
+     * Method to update the temporary resources received from the Model
+     * @param nickname the nickname of the player that received the update
+     * @param temporaryMapResource the updated temporary resources
+     */
     @Override
     public void showUpdatedTemporaryMapResource(String nickname, Map<Resource, Integer> temporaryMapResource) {
         localModel.getPlayer(nickname).setTemporaryMapResource(temporaryMapResource);
         localModel.getPlayer(nickname).printTermporaryResource();
     }
 
+    /**
+     * Method to update the warehouse received from the Model
+     * @param nickname the nickname of the player that received the update
+     * @param depots the updated warehouse
+     */
     @Override
     public void showUpdatedWarehouse(String nickname, List<Map<Resource, Integer>> depots) {
         localModel.getPlayer(nickname).setWareHouseDepots(depots);
-        //System.out.println("Warehouse depots updated");//this print id temporary
     }
 
+    /**
+     * Method to update the strongbox received from the Model
+     * @param nickname the nickname of the player that received the update
+     * @param strongbox the updated strongbox
+     */
     @Override
     public void showUpdatedStrongbox(String nickname, Map<Resource, Integer> strongbox) {
         localModel.getPlayer(nickname).setStrongbox(strongbox);
-        //System.out.println("Strongbox updated");//this print id temporary
     }
 
+    /**
+     * Method to update the development card space received from the Model
+     * @param nickname the nickname of the player that received the update
+     * @param cardsState the updated development card space
+     */
     @Override
     public void showUpdatedDevCardSpace(String nickname, ArrayList<ArrayList<Integer>> cardsState) {
         localModel.getPlayer(nickname).setDevelopmentCardSpace(cardsState);
-        //System.out.println("Development card space updated");
     }
 
+    /**
+     * Method to update the temporary marbles received from the Model
+     * @param nickname the nickname of the player that received the update
+     * @param temporaryMarbles the updated temporary marbles
+     */
     @Override
     public void showUpdateTemporaryMarbles(String nickname, Map<Marble, Integer> temporaryMarbles) {
         localModel.getPlayer(nickname).setTemporaryMarbles(temporaryMarbles);
@@ -683,18 +763,31 @@ public class CLI implements ClientView {
         }
     }
 
+    /**
+     * Method to update the position of the red cross received from the Model
+     * @param nickname the nickname of the player that received the update
+     * @param redcrossPosition the updated position of the red cross
+     */
     @Override
     public void showUpdateRedcrossPosition(String nickname, int redcrossPosition) {
         localModel.getPlayer(nickname).setRedCrossPosition(redcrossPosition);
         //System.out.println("redCross Updated");//this print id temporary
     }
 
+    /**
+     * Method to update the pope favour tiles values received from the Model
+     * @param nickname the nickname of the player that received the update
+     * @param popeFavourTiles the updated pope favour tiles values
+     */
     @Override
     public void showUpdatePopeFavourTiles(String nickname, ArrayList<Integer> popeFavourTiles) {
         localModel.getPlayer(nickname).setPopeFavourTiles(popeFavourTiles);
-        //System.out.println("pope favour tiles updated");//this print id temporary
     }
 
+    /**
+     * Method to update the player's turn received from the Model
+     * @param nickname the nickname of the player that has to play the turn
+     */
     @Override
     public void showUpdatePlayerTurn(String nickname) {
         if (nickname.equals(localModel.getLocalPlayer().getNickname())){
@@ -707,36 +800,63 @@ public class CLI implements ClientView {
 
     }
 
+    /**
+     * Method to update the market received from the Model
+     * @param marketMatrix the updated market
+     * @param marbleOut the updated marble out
+     */
     @Override
     public void showUpdateMarket(Marble[][] marketMatrix, Marble marbleOut) {
         localModel.setMarket(marketMatrix,marbleOut);
-        //localModel.printMarket();
     }
 
+    /**
+     * Method to update the adding of a special depot received from the Model
+     * @param nickname the nickname of the player that received the update
+     * @param depotResourceType the resource type of the new depot
+     */
     @Override
     public void showUpdateAddSpecialDepotUpdate(String nickname, Resource depotResourceType) {
 
     }
 
+    /**
+     * Method to update the card grid received from the Model
+     * @param cardGridMatrixUpdate the updated card grid
+     */
     @Override
     public void showUpdateCardGridUpdate(int[][] cardGridMatrixUpdate) {
         localModel.setCardGrid(cardGridMatrixUpdate);
-        //if(phase == LocalPhase.LEADER_CHOICE)
-        //    localModel.printCardGrid();
     }
 
+    /**
+     * Method to update the discarded leader card from a player received from the model
+     * @param nickname the nickname of the player that received the update
+     * @param leaderPosition the index of the discarded leader card
+     */
     @Override
     public void showUpdateDiscardedLeaderUpdate(String nickname, int leaderPosition) {
         localModel.removeLeaderCard(nickname, leaderPosition);
         System.out.println(nickname + " has discarded a leader card");
     }
 
+    /**
+     * Method to update the activation of a leader card received from the Model
+     * @param nickname the nickname of the player that received the update
+     * @param numLeadercard the index of the activated leader card
+     * @param leaderCardID the ID of the activated leader card
+     */
     @Override
     public void showUpdateLeaderCardActivatedUpdate(String nickname, int numLeadercard, int leaderCardID) {
         localModel.activeLeaderCard(nickname,numLeadercard,leaderCardID);
         System.out.println(nickname+ " has activated a leader card");
     }
 
+    /**
+     * Method to show the rank received from the Model at the end of the game
+     * @param nickname the player that received the update
+     * @param rank the rank generated at the end of the game
+     */
     @Override
     public void showUpdateRank(String nickname, ArrayList<RankPosition> rank) {
         int pos = 0;
@@ -748,21 +868,25 @@ public class CLI implements ClientView {
         }
     }
 
+    /**
+     * Method to update the position of Lorenzo's black cross received from the Model
+     * @param blackCrossPosition the updated position of the black cross
+     */
     @Override
     public void showUpdateBlackcrossPosition(int blackCrossPosition) {
         localModel.setBlackCrossPosition(blackCrossPosition);
     }
 
+    /**
+     * Method to show the card that lorenzo discarded from the card grid
+     * @param nickname the nickname of the player that received the update
+     * @param row the row in the card grid
+     * @param column the column in the card grid
+     */
     @Override
     public void showUpdateLorenzoDraw(String nickname, int row, int column) {
-        System.out.println(nickname + " discarded a card from the card grid: [Row " + row + ",Column " + column + "]");
+        System.out.println(nickname + " discarded a card from the card grid: [Row " + (row + 1) + ",Column " + (column + 1) + "]");
     }
-
-    @Override
-    public void showUpdateFirstConnection(boolean firstPlayer) {
-
-    }
-
 
     /**
      * Sends message to client
@@ -773,6 +897,10 @@ public class CLI implements ClientView {
         message.handleMessage(this);
     }
 
+    /**
+     * Getter for the nickname associated with the view
+     * @return a nickname
+     */
     @Override
     public String getNickname() {
         return localModel.getLocalPlayer().getNickname();

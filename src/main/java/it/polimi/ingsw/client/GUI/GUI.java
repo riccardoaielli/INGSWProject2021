@@ -231,11 +231,6 @@ public class GUI implements ClientView {
     }
 
     @Override
-    public void showUpdateFirstConnection(boolean firstPlayer) {
-        //TODO evaluate if necessary
-    }
-
-    @Override
     public void showUpdateInitialLeaderCard(ArrayList<Integer> initialLeaderCardsID) {
         SceneManager.getInstance().setRootFXML("initialLeaderChoice");
         InitialLeaderChoiceController controller = (InitialLeaderChoiceController) SceneManager.getInstance().getController("initialLeaderChoice");
@@ -276,11 +271,6 @@ public class GUI implements ClientView {
     @Override
     public LocalPhase getPhase() {
         return localPhase;
-    }
-
-    @Override
-    public void showCurrentPlayer(String nickname) {
-
     }
 
     @Override
