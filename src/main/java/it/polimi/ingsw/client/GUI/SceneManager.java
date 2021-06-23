@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.GUI;
 
 import it.polimi.ingsw.client.GUI.Controller.AbstractController;
+import it.polimi.ingsw.client.GUI.Controller.ClientDisconnectedInterfaceController;
 import it.polimi.ingsw.client.GUI.Controller.ErrorController;
 import it.polimi.ingsw.client.GUI.Controller.StartController;
 import javafx.application.Platform;
@@ -101,7 +102,7 @@ public class SceneManager {
 
 
     /**
-     * Method used to display an alert window wih an error message
+     * Method used to display an alert window with an error message
      * @param errorMessage The error message that will be displayed
      */
     public void showError(String errorMessage){
@@ -118,6 +119,30 @@ public class SceneManager {
                 errorStage.initStyle(StageStyle.UNDECORATED);
                 errorController.setStringError(errorMessage);
                 errorStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    /**
+     * Method used to display an alert window witt the client disconnected
+     * @param stringMessage The error message that will be displayed
+     */
+    public void showClientDisconnectedInterface(String stringMessage){
+        Platform.runLater(() -> {
+            Stage showClientDisconnectedInterfaceStage = new Stage();
+            FXMLLoader showClientDisconnectedInterfacePopupLoader = loadFXML("clientDisconnectedInterface");
+            try {
+                Parent root = showClientDisconnectedInterfacePopupLoader.load();
+                ClientDisconnectedInterfaceController showClientDisconnectedInterfaceController = showClientDisconnectedInterfacePopupLoader.getController();
+                showClientDisconnectedInterfaceController.setGui(gui);
+
+                showClientDisconnectedInterfaceStage.setScene(new Scene(root));
+                showClientDisconnectedInterfaceStage.setAlwaysOnTop(true);
+                showClientDisconnectedInterfaceStage.initStyle(StageStyle.UNDECORATED);
+                showClientDisconnectedInterfaceController.setStringMessage(stringMessage);
+                showClientDisconnectedInterfaceStage.show();
             } catch (IOException e) {
                 e.printStackTrace();
             }

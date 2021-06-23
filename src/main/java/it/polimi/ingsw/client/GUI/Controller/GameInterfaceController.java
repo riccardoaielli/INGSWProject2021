@@ -101,7 +101,7 @@ public class GameInterfaceController extends AbstractController {
     }
 
     private void onQuitButtonClick(Event event){
-        SceneManager.getInstance().showPopup("");
+        SceneManager.getInstance().showPopup("quitInterface");
     }
 
 

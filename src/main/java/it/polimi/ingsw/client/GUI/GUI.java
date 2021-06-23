@@ -290,8 +290,14 @@ public class GUI implements ClientView {
 
     @Override
     public void closeGame(String string) {
-
+        SceneManager.getInstance().showClientDisconnectedInterface(string);
+        System.out.println(string);
     }
+
+    public void exitGame() {
+        System.exit(0);
+    }
+
 
     @Override
     public void update(MessageToClient message) {
