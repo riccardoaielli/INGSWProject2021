@@ -1,0 +1,31 @@
+package it.polimi.ingsw.client.GUI.Controller;
+
+import it.polimi.ingsw.client.GUI.SceneManager;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+
+public class RearrangeWHouseInterfaceController extends AbstractController{
+    @FXML
+    private Button swapButton;
+    @FXML
+    private Button moveButton;
+
+    public void initialize(){
+        swapButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::swapButtonClick);
+        moveButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::moveButtonClick);
+    }
+
+    private void swapButtonClick(MouseEvent e){
+        SceneManager.getInstance().showPopup("swapInterface");
+        Stage stage = (Stage) swapButton.getScene().getWindow();
+        stage.close();
+    }
+
+    private void moveButtonClick(MouseEvent e){
+        SceneManager.getInstance().showPopup("moveInterface");
+        Stage stage = (Stage) moveButton.getScene().getWindow();
+        stage.close();
+    }
+}

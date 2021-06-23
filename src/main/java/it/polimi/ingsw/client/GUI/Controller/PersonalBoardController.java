@@ -206,6 +206,12 @@ public class PersonalBoardController extends  AbstractController{
 
     public void updateWarehouse(List<Map<Resource, Integer>> depots){
         int k=0;
+
+        //cancello le immagini già presenti
+        for (ArrayList<ImageView> array : warehouseDepot)
+            for(ImageView img : array)
+                img.setImage(null);
+
         for(Map<Resource, Integer> map : depots){
             for(Resource x : map.keySet()){
                 if(map.containsKey(x)){
