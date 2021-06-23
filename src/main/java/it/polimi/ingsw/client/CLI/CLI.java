@@ -459,7 +459,7 @@ public class CLI implements ClientView {
                 } catch (NumberFormatException e) {
                     System.out.println("Not a number");
                 }
-            }while (numOfTransformationsInt < 0);
+            }while (numOfTransformationsInt <= 0);
             messageSender.sendMessage(new TransformWhiteMarblesMessage(localModel.getLocalPlayer().getNickname(),leaderCardInt,numOfTransformationsInt));
         }
         else{

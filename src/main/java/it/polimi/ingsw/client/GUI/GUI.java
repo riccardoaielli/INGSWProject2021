@@ -96,7 +96,7 @@ public class GUI implements ClientView {
 
     @Override
     public void askForLeaderPower() {
-
+        SceneManager.getInstance().showPopup("whiteMarbleLeaderPower");
     }
 
     @Override
@@ -260,6 +260,7 @@ public class GUI implements ClientView {
 
     @Override
     public void setPhase(LocalPhase phase) {
+        System.out.println("Local phase set to: " + phase);
         this.localPhase = phase;
     }
 

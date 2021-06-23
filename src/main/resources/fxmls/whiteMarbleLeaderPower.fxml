@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
+
+<StackPane prefHeight="400.0" prefWidth="600.0" styleClass="menuBackground" stylesheets="@../css/gameInterface.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.WhiteMarbleLeaderPowerController">
+   <children>
+      <Label text="Transform the white marbles if you have the leader with the according power&#10;Otherwise click &quot;No&quot;&#10;" textAlignment="CENTER">
+         <StackPane.margin>
+            <Insets bottom="320.0" />
+         </StackPane.margin>
+      </Label>
+      <Button fx:id="noButton" mnemonicParsing="false" text="NO">
+         <StackPane.margin>
+            <Insets left="100.0" top="250.0" />
+         </StackPane.margin>
+      </Button>
+       <ImageView id="2" fx:id="leaderTwoImgView" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+           <StackPane.margin>
+               <Insets right="150.0" />
+           </StackPane.margin>
+       </ImageView>
+       <ImageView id="1" fx:id="leaderOneImgView" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+           <StackPane.margin>
+               <Insets right="400.0" />
+           </StackPane.margin>
+       </ImageView>
+      <Spinner fx:id="whiteMarbleSpinner" prefHeight="25.0" prefWidth="63.0">
+         <StackPane.margin>
+            <Insets left="200.0" />
+         </StackPane.margin>
+      </Spinner>
+      <Circle fill="WHITE" radius="20.0" stroke="BLACK" strokeType="INSIDE">
+         <StackPane.margin>
+            <Insets bottom="100.0" left="200.0" />
+         </StackPane.margin>
+      </Circle>
+      <Button fx:id="okButton" mnemonicParsing="false" text="OK">
+         <StackPane.margin>
+            <Insets right="100.0" top="250.0" />
+         </StackPane.margin>
+      </Button>
+      <Label text="Select leader">
+         <StackPane.margin>
+            <Insets bottom="200.0" right="250.0" />
+         </StackPane.margin>
+      </Label>
+      <Label text="Choose how many white marbles&#10;you want to transform" textAlignment="CENTER">
+         <StackPane.margin>
+            <Insets bottom="200.0" left="200.0" />
+         </StackPane.margin>
+      </Label>
+   </children>
+</StackPane>
