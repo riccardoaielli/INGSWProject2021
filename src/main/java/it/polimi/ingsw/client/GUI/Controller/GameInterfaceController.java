@@ -170,6 +170,24 @@ public class GameInterfaceController extends AbstractController {
     }
 
     public void updatePlayerTurn(String nickname){
+
+        if(nickname.equals(getGui().getNickname()))
+        {
+            marketButton.setDisable(false);
+            buyCardButton.setDisable(false);
+            productionButton.setDisable(false);
+            activateLeaderButton.setDisable(false);
+            discardLeaderButton.setDisable(false);
+            endTurnButton.setDisable(false);
+        }else{
+            marketButton.setDisable(true);
+            buyCardButton.setDisable(true);
+            productionButton.setDisable(true);
+            activateLeaderButton.setDisable(true);
+            discardLeaderButton.setDisable(true);
+            endTurnButton.setDisable(true);
+        }
+
         ObservableList<Tab> list = personalTab.getTabs();
         for(Tab tab : list){
             tab.setStyle("-fx-background-color: white");
