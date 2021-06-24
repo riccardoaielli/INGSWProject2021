@@ -12,7 +12,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <ToolBar fx:id="buttonToolBar" layoutX="14.0" layoutY="229.0" prefHeight="51.0" prefWidth="808.0" styleClass="transparentBackground" stylesheets="@../css/gameInterface.css" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                  <ToolBar fx:id="buttonToolBar" layoutX="10.0" layoutY="14.0" prefHeight="51.0" prefWidth="808.0" styleClass="transparentBackground" stylesheets="@../css/gameInterface.css" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                     <items>
                       <Button fx:id="marketButton" mnemonicParsing="false" text="Market" />
                         <Button fx:id="buyCardButton" mnemonicParsing="false" text="Buy Card" />
@@ -20,9 +20,10 @@
                         <Button fx:id="activateLeaderButton" mnemonicParsing="false" text="Activate Leader" />
                         <Button fx:id="discardLeaderButton" mnemonicParsing="false" text="Discard Leader" />
                         <Button fx:id="rearrangeWHouseButton" mnemonicParsing="false" text="Rearrange WHouse" />
-                        <Button fx:id="quitButton" mnemonicParsing="false" text="Quit" />
+                        <Button fx:id="endTurnButton" mnemonicParsing="false" text="End Turn" />
                     </items>
                   </ToolBar>
+                  <Button fx:id="quitButton" layoutX="731.0" layoutY="225.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="119.0" text="Quit Game" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0" />
                </children></AnchorPane>
             <TabPane fx:id="personalTab" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="871.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>

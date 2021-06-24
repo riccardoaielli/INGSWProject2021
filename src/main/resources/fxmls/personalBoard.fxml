@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Circle?>
 
-<SplitPane dividerPositions="0.20639147802929428" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="871.0" styleClass="transparentBackground" stylesheets="@../css/gameInterface.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.PersonalBoardController">
+<SplitPane dividerPositions="0.20639147802929428" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="871.0" styleClass="transparentBackground" stylesheets="@../css/gameInterface.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.PersonalBoardController">
     <items>
       <StackPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="398.0" prefWidth="294.0">
          <children>
@@ -82,16 +82,18 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label styleClass="labelResourcesNumber" stylesheets="@../css/global.css" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Label styleClass="labelResourcesNumber" stylesheets="@../css/global.css" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <Label styleClass="labelResourcesNumber" stylesheets="@../css/global.css" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                  <Label styleClass="labelResourcesNumber" stylesheets="@../css/global.css" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                  <Label styleClass="labelResourcesNumber" stylesheets="@../css/global.css" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                  <Circle fill="DODGERBLUE" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Circle fill="DODGERBLUE" radius="12.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="2" />
-                  <Circle fill="DODGERBLUE" radius="12.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Circle fill="DODGERBLUE" radius="12.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" />
-                  <Circle fill="DODGERBLUE" radius="12.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="1" />
+                  <Label fx:id="whiteTempMarbleLabel" styleClass="labelResourcesNumber" stylesheets="@../css/global.css" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Label fx:id="blueTempMarbleLabel" styleClass="labelResourcesNumber" stylesheets="@../css/global.css" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Label fx:id="yellowTempMarbleLabel" styleClass="labelResourcesNumber" stylesheets="@../css/global.css" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Label fx:id="grayTempMarbleLabel" styleClass="labelResourcesNumber" stylesheets="@../css/global.css" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Label fx:id="redTempMarbleLabel" styleClass="labelResourcesNumber" stylesheets="@../css/global.css" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Circle fill="WHITE" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="#eb1616" radius="12.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Circle fill="#898d90" radius="12.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Circle fill="#fff600" radius="12.0" stroke="BLACK" strokeType="INSIDE" GridPane.columnIndex="2" />
+                  <Circle fill="#1f39ff" radius="12.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="1" />
+                  <Circle fill="#b01ceb" radius="12.0" stroke="BLACK" strokeType="INSIDE" GridPane.rowIndex="2" />
+                  <Label fx:id="purpleTempMarbleLabel" styleClass="labelResourcesNumber" stylesheets="@../css/global.css" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                </children>
                <StackPane.margin>
                   <Insets bottom="200.0" right="150.0" />
@@ -125,10 +127,10 @@
                         <ImageView fx:id="coinImgV" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                         <ImageView fx:id="shieldImgV" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
                         <ImageView fx:id="servantImgV" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <Label styleClass="labelResourcesNumber" stylesheets="@../css/global.css" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <Label styleClass="labelResourcesNumber" stylesheets="@../css/global.css" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <Label styleClass="labelResourcesNumber" stylesheets="@../css/global.css" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <Label styleClass="labelResourcesNumber" stylesheets="@../css/global.css" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Label fx:id="shieldStrongboxLabel" styleClass="labelResourcesNumber" stylesheets="@../css/global.css" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <Label fx:id="stoneStrongboxLabel" styleClass="labelResourcesNumber" stylesheets="@../css/global.css" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Label fx:id="coinStrongboxLabel" styleClass="labelResourcesNumber" stylesheets="@../css/global.css" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <Label fx:id="servantStrongboxLabel" styleClass="labelResourcesNumber" stylesheets="@../css/global.css" text="0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                         <ImageView fx:id="stoneImgV" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                     </children>
                 </GridPane>

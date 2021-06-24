@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.GUI.Controller;
 
 import it.polimi.ingsw.client.CLI.LocalModel.LocalPhase;
 import it.polimi.ingsw.client.GUI.SceneManager;
+import it.polimi.ingsw.common.messages.messagesToServer.EndTurnMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.TakeFromMarketMessage;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
@@ -29,8 +30,6 @@ import java.util.Map;
 public class GameInterfaceController extends AbstractController {
 
     @FXML
-    private ToolBar buttonToolBar;
-    @FXML
     private Button marketButton;
     @FXML
     private Button buyCardButton;
@@ -42,6 +41,8 @@ public class GameInterfaceController extends AbstractController {
     private Button discardLeaderButton;
     @FXML
     private Button rearrangeWHouseButton;
+    @FXML
+    private Button endTurnButton;
     @FXML
     private Button quitButton;
 
@@ -67,6 +68,7 @@ public class GameInterfaceController extends AbstractController {
         activateLeaderButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onActivateLeaderButtonClick);
         discardLeaderButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onDiscardLeaderButtonClick);
         rearrangeWHouseButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onRearrangeWHouseButtonClick);
+        endTurnButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onEndTurnButtonClick);
         quitButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onQuitButtonClick);
     }
 
@@ -100,6 +102,10 @@ public class GameInterfaceController extends AbstractController {
         getGui().getPhase().handlePhase(getGui());
     }
 
+    private void onEndTurnButtonClick(Event event){
+        getGui().getMessageSender().sendMessage(new EndTurnMessage(getGui().getNickname()));
+    }
+
     private void onQuitButtonClick(Event event){
         SceneManager.getInstance().showPopup("quitInterface");
     }
@@ -127,6 +133,16 @@ public class GameInterfaceController extends AbstractController {
         personalBoardController.updateWarehouse(depots);
     }
 
+    public void setStrongbox(String nickname, Map<Resource, Integer> strongbox){
+        PersonalBoardController personalBoardController = personalBoardControllerMap.get(nickname);
+        personalBoardController.updateStrongbox(strongbox);
+    }
+
+    public void setTemporaryMarblesMap(String nickname, Map<Marble,Integer> temporaryMarbles){
+        PersonalBoardController personalBoardController = personalBoardControllerMap.get(nickname);
+        personalBoardController.updateTemporaryMarbleMap(temporaryMarbles);
+    }
+
     public void setDiscardLeader(String nickname, int numLeaderCard){
         PersonalBoardController personalBoardController = personalBoardControllerMap.get(nickname);
         personalBoardController.updateDiscardedLeader(numLeaderCard);
@@ -151,6 +167,16 @@ public class GameInterfaceController extends AbstractController {
     public void setDevelopmentCardSpace(String nickname, ArrayList<ArrayList<Integer>> cardsState){
         PersonalBoardController personalBoardController = personalBoardControllerMap.get(nickname);
         personalBoardController.setDevelopmentCardSpace(cardsState);
+    }
+
+    public void updatePlayerTurn(String nickname){
+        ObservableList<Tab> list = personalTab.getTabs();
+        for(Tab tab : list){
+            tab.setStyle("-fx-background-color: white");
+            if(tab.getText().equals(nickname)){
+                tab.setStyle("-fx-background-color: #34eb61"); //#34eb61 colore verde chiaro
+            }
+        }
     }
 
     /**

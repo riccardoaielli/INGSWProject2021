@@ -165,7 +165,8 @@ public class GUI implements ClientView {
 
     @Override
     public void showUpdatedStrongbox(String nickname, Map<Resource, Integer> strongbox) {
-
+        GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterface");
+        Platform.runLater(()-> gameInterfaceController.setStrongbox(nickname, strongbox));
     }
 
     @Override
@@ -176,7 +177,8 @@ public class GUI implements ClientView {
 
     @Override
     public void showUpdateTemporaryMarbles(String nickname, Map<Marble, Integer> temporaryMarbles) {
-
+        GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterface");
+        Platform.runLater(()-> gameInterfaceController.setTemporaryMarblesMap(nickname, temporaryMarbles));
     }
 
     @Override
@@ -193,7 +195,8 @@ public class GUI implements ClientView {
 
     @Override
     public void showUpdatePlayerTurn(String nickname) {
-
+        GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterface");
+        Platform.runLater(()-> gameInterfaceController.updatePlayerTurn(nickname));
     }
 
     @Override

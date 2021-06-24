@@ -15,21 +15,25 @@
                 <Integer fx:value="1" />
                 <Integer fx:value="2" />
                 <Integer fx:value="3" />
+                <Integer fx:value="4" />
+                <Integer fx:value="5" />
             </FXCollections>
         </items>
     </ChoiceBox>
 
-    <ChoiceBox fx:id="choiceBox2" layoutX="336.0" layoutY="100.0" maxHeight="25.0" prefHeight="0.0" prefWidth="150.0" styleClass="check-box" stylesheets="@../css/global.css" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0">
+    <ChoiceBox fx:id="choiceBox2" layoutX="175.0" layoutY="99.0" maxHeight="25.0" prefHeight="0.0" prefWidth="150.0" styleClass="check-box" stylesheets="@../css/global.css" AnchorPane.rightAnchor="175.0" AnchorPane.topAnchor="99.0">
         <items>
             <FXCollections fx:factory="observableArrayList">
                 <Integer fx:value="1" />
                 <Integer fx:value="2" />
                 <Integer fx:value="3" />
+                <Integer fx:value="4" />
+                <Integer fx:value="5" />
             </FXCollections>
         </items>
     </ChoiceBox>
 
-    <ChoiceBox fx:id="choiceBox3" layoutX="175.0" layoutY="100.0" maxHeight="25.0" prefHeight="0.0" prefWidth="150.0" styleClass="check-box" stylesheets="@../css/global.css" AnchorPane.rightAnchor="175.0" AnchorPane.topAnchor="100.0">
+    <ChoiceBox fx:id="choiceBox3" layoutX="330.0" layoutY="100.0" maxHeight="25.0" prefHeight="0.0" prefWidth="150.0" styleClass="check-box" stylesheets="@../css/global.css" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0">
         <items>
             <FXCollections fx:factory="observableArrayList">
                 <Integer fx:value="1" />

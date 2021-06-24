@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 public class PersonalBoardController extends  AbstractController{
 
+    //temp resource label
     @FXML
     private Label tempShieldLabel;
     @FXML
@@ -28,6 +30,21 @@ public class PersonalBoardController extends  AbstractController{
     private Label tempCoinLabel;
     @FXML
     private Label tempServantLabel;
+
+    //temp marble label
+    @FXML
+    private Label whiteTempMarbleLabel;
+    @FXML
+    private Label yellowTempMarbleLabel;
+    @FXML
+    private Label blueTempMarbleLabel;
+    @FXML
+    private Label grayTempMarbleLabel;
+    @FXML
+    private Label redTempMarbleLabel;
+    @FXML
+    private Label purpleTempMarbleLabel;
+
     @FXML
     private ImageView leaderCard1;
     @FXML
@@ -70,6 +87,16 @@ public class PersonalBoardController extends  AbstractController{
     private ImageView popeOneImgV;
     @FXML
     private ImageView popeTwoImgV;
+
+    //strongbox label
+    @FXML
+    private Label shieldStrongboxLabel;
+    @FXML
+    private Label stoneStrongboxLabel;
+    @FXML
+    private Label coinStrongboxLabel;
+    @FXML
+    private Label servantStrongboxLabel;
 
     private Image leaderCard1Image;
 
@@ -196,8 +223,6 @@ public class PersonalBoardController extends  AbstractController{
 
     }
 
-
-
     private void onResourceImgClick(Event event){
         ImageView imageView = (ImageView) event.getTarget();
         System.out.println(GridPane.getRowIndex(imageView) + "," +GridPane.getColumnIndex(imageView));
@@ -224,6 +249,30 @@ public class PersonalBoardController extends  AbstractController{
                 }
             }
             k++;
+        }
+    }
+
+    public void updateStrongbox(Map<Resource, Integer> strongbox){
+
+        for(Resource x : strongbox.keySet()) {
+            if (strongbox.containsKey(x)) {
+                int j=0;
+                j = (int) strongbox.get(x);
+                switch (x) {
+                    case SHIELD:
+                        shieldStrongboxLabel.setText(Integer.toString(j));
+                        break;
+                    case COIN:
+                        coinStrongboxLabel.setText(Integer.toString(j));
+                        break;
+                    case SERVANT:
+                        servantStrongboxLabel.setText(Integer.toString(j));
+                        break;
+                    case STONE:
+                        stoneStrongboxLabel.setText(Integer.toString(j));
+                        break;
+                }
+            }
         }
     }
 
@@ -368,6 +417,49 @@ public class PersonalBoardController extends  AbstractController{
                         tempServantLabel.setText(temporaryMapResource.get(resource).toString());
                     else
                         tempServantLabel.setText("0");
+                    break;
+            }
+        }
+    }
+
+    public void updateTemporaryMarbleMap(Map<Marble,Integer> temporaryMarbles){
+        for(Marble marble : Marble.values()){
+            switch (marble){
+                case WHITEMARBLE:
+                    if (temporaryMarbles.containsKey(marble))
+                        whiteTempMarbleLabel.setText(temporaryMarbles.get(marble).toString());
+                    else
+                        whiteTempMarbleLabel.setText("0");
+                    break;
+                case YELLOWMARBLE:
+                    if (temporaryMarbles.containsKey(marble))
+                        yellowTempMarbleLabel.setText(temporaryMarbles.get(marble).toString());
+                    else
+                        yellowTempMarbleLabel.setText("0");
+                    break;
+                case BLUEMARBLE:
+                    if (temporaryMarbles.containsKey(marble))
+                        blueTempMarbleLabel.setText(temporaryMarbles.get(marble).toString());
+                    else
+                        blueTempMarbleLabel.setText("0");
+                    break;
+                case GREYMARBLE:
+                    if (temporaryMarbles.containsKey(marble))
+                        grayTempMarbleLabel.setText(temporaryMarbles.get(marble).toString());
+                    else
+                        grayTempMarbleLabel.setText("0");
+                    break;
+                case REDMARBLE:
+                    if (temporaryMarbles.containsKey(marble))
+                        redTempMarbleLabel.setText(temporaryMarbles.get(marble).toString());
+                    else
+                        redTempMarbleLabel.setText("0");
+                    break;
+                case PURPLEMARBLE:
+                    if (temporaryMarbles.containsKey(marble))
+                        purpleTempMarbleLabel.setText(temporaryMarbles.get(marble).toString());
+                    else
+                        purpleTempMarbleLabel.setText("0");
                     break;
             }
         }
