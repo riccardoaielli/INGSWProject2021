@@ -98,8 +98,8 @@ public class GameInterfaceController extends AbstractController {
     }
 
     private void onRearrangeWHouseButtonClick(Event event){
-        getGui().setPhase(LocalPhase.REARRANGE_WAREHOUSE);
-        getGui().getPhase().handlePhase(getGui());
+        //It can be done while doing other actions, phase is not changed
+        getGui().askRearrange();
     }
 
     private void onEndTurnButtonClick(Event event){
