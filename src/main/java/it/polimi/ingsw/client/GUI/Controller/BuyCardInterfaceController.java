@@ -58,8 +58,9 @@ public class BuyCardInterfaceController extends AbstractController {
     private void onBuyCardButtonClick(Event event){
 
         resourceChoiceController.createMaps();
-        Integer selx = cardGridController.getSelx();
-        Integer sely = cardGridController.getSely();
+        //Row goes from 1 to 3, column from 1 to 4
+        Integer selx = cardGridController.getSelx()+1;
+        Integer sely = cardGridController.getSely()+1;
 
         //da spostare
         getGui().getMessageSender().sendMessage(new BuyDevelopmentCardMessage(getGui().getNickname(), selx, sely, resourceChoiceController.getStrongboxMap(), resourceChoiceController.getWarehouseDepotMap(), numLeaderCard, choiceBoxDevCardSpaceController.getValue()));

@@ -374,8 +374,8 @@ public class PersonalBoard extends MessageObservable {
 
     /**
      * Method to buy a development card from card grid
-     * @param row Row of the card grid of the chosen card, ranges from 0 to 2
-     * @param column Column of the card grid of the chosen card, ranges from 0 to 3
+     * @param row Row of the card grid of the chosen card, ranges from 1 to 3
+     * @param column Column of the card grid of the chosen card, ranges from 1 to 4
      * @param costStrongbox The cost of power of production paid with the resources located in the strongbox
      * @param costWarehouseDepots The cost of power of production paid with the resources located in the warehouse
      * @param numLeaderCard The number of the leader card to use to discount the price, if 0 then no leader card will be used, otherwise must be > 0 and < leader cards not discarded in PlayerBoard
