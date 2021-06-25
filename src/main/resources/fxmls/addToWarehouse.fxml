@@ -53,7 +53,7 @@
       <Label text="Select a depot shelf (1,2,3 Standard Depots 4,5 Special Depots)  " />
       <Button fx:id="doneButton" mnemonicParsing="false" text="Done">
          <StackPane.margin>
-            <Insets top="250.0" />
+            <Insets top="200.0" />
          </StackPane.margin>
       </Button>
       <ChoiceBox fx:id="depotShelf" prefHeight="25.0" prefWidth="70.0">
@@ -70,5 +70,10 @@
             <Insets top="100.0" />
          </StackPane.margin>
       </ChoiceBox>
+      <Button fx:id="discardButton" mnemonicParsing="false" prefHeight="42.0" prefWidth="243.0" text="Discard remaining resources">
+         <StackPane.margin>
+            <Insets top="320.0" />
+         </StackPane.margin>
+      </Button>
    </children>
 </StackPane>

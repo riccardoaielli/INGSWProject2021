@@ -140,7 +140,6 @@ public class PersonalBoardController extends  AbstractController{
 
     @FXML
     public void initialize() {
-        //TODO also possible to set myNickname in personal board and put chosen leaderCards if personalBoard.getMyNickname.equals(gui.getmyNickname) else set bakc cover of leader cards
         //Setting the back of leader cards
         String backLeaderCardPath = "cardsImage/65.png";
         setLeaderCard1(new Image(backLeaderCardPath));

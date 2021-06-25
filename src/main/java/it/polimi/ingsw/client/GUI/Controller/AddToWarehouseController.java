@@ -1,6 +1,8 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.common.messages.messagesToServer.AddToWarehouseMessage;
+import it.polimi.ingsw.common.messages.messagesToServer.DiscardResourcesFromMarketMessage;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -30,6 +32,8 @@ public class AddToWarehouseController extends AbstractController{
     @FXML
     private Button doneButton;
     @FXML
+    private Button discardButton;
+    @FXML
     private ChoiceBox<Integer> depotShelf;
     @FXML
     public void initialize(){
@@ -53,6 +57,14 @@ public class AddToWarehouseController extends AbstractController{
             selectedResource = Resource.SERVANT;
         } );
         doneButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onDoneButtonClick);
+
+        //If first turn, resources cannot be discarded
+        if(SceneManager.getInstance().getGui().isFirstTurn()){
+            discardButton.setVisible(false);
+        }
+        else{
+            discardButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onDiscardButtonClick);
+        }
     }
 
     private void highlightResource(ImageView resource){
@@ -77,5 +89,11 @@ public class AddToWarehouseController extends AbstractController{
             Stage stage = (Stage) doneButton.getScene().getWindow();
             stage.close();
         }
+    }
+
+    private void onDiscardButtonClick(MouseEvent e){
+        getGui().getMessageSender().sendMessage(new DiscardResourcesFromMarketMessage(getGui().getNickname()));
+        Stage stage = (Stage) discardButton.getScene().getWindow();
+        stage.close();
     }
 }

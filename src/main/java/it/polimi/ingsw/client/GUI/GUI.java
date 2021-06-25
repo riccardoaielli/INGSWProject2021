@@ -26,12 +26,14 @@ public class GUI implements ClientView {
     private String hostAddress;
     private int portNumber;
     private boolean mainTurnActionDone;
+    private boolean firstTurn;
 
     public GUI(String hostAddress, int portNumber) {
         this.hostAddress = hostAddress;
         this.portNumber = portNumber;
         localPhase = LocalPhase.DEFAULT;
         mainTurnActionDone = false;
+        firstTurn = true;
     }
 
     public MessageSender getMessageSender() {
@@ -81,7 +83,8 @@ public class GUI implements ClientView {
 
     @Override
     public void askTurnAction() {
-
+        if(firstTurn)
+            firstTurn = false;
     }
 
     @Override
@@ -287,12 +290,6 @@ public class GUI implements ClientView {
         SceneManager.getInstance().showClientDisconnectedInterface(string);
         System.out.println(string);
     }
-
-    public void exitGame() {
-        System.exit(0);
-    }
-
-
     @Override
     public void update(MessageToClient message) {
         message.handleMessage(this);
@@ -310,5 +307,13 @@ public class GUI implements ClientView {
     @Override
     public void setNickname(String nickname) {
         //TODO move nickname here and implement method
+    }
+
+    public void exitGame() {
+        System.exit(0);
+    }
+
+    public boolean isFirstTurn() {
+        return firstTurn;
     }
 }
