@@ -173,6 +173,7 @@ public class GameInterfaceController extends AbstractController {
 
         if(nickname.equals(getGui().getNickname()))
         {
+            rearrangeWHouseButton.setDisable(false);
             marketButton.setDisable(false);
             buyCardButton.setDisable(false);
             productionButton.setDisable(false);
@@ -180,6 +181,7 @@ public class GameInterfaceController extends AbstractController {
             discardLeaderButton.setDisable(false);
             endTurnButton.setDisable(false);
         }else{
+            rearrangeWHouseButton.setDisable(true);
             marketButton.setDisable(true);
             buyCardButton.setDisable(true);
             productionButton.setDisable(true);
