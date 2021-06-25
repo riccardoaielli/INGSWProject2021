@@ -284,6 +284,12 @@ public class PersonalBoard extends MessageObservable {
         temporaryMarbles.clear();
         notifyObservers(new TemporaryMarblesUpdate(this.getNickname(), new HashMap<>(temporaryMarbles)));
         notifyObservers(new TemporaryResourceMapUpdate(this.getNickname(), new HashMap<>(temporaryMapResource)));
+
+        //If every marble was white the temporaryMapResource is empty and the action is already done since there is nothing to add to warehouse
+        if(temporaryMapResource.isEmpty()){
+            personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_DONE;
+            myPlayer.getView().update(new MainTurnActionDoneUpdate(myPlayer.getNickname()));
+        }
     }
 
     /**
@@ -410,7 +416,7 @@ public class PersonalBoard extends MessageObservable {
         warehouseDepots.uncheckedRemove(costWarehouseDepots);
         cardGrid.buyCard(row - 1, column - 1);
         personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_DONE;
-        notifyObservers(new MainTurnActionDoneUpdate(getNickname()));
+        myPlayer.getView().update(new MainTurnActionDoneUpdate(myPlayer.getNickname()));
     }
 
     /**

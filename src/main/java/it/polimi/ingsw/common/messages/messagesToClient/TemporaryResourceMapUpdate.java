@@ -32,8 +32,8 @@ public class TemporaryResourceMapUpdate extends MessageToClient {
     public void handleMessage(ClientView clientView) {
        clientView.showUpdatedTemporaryMapResource(this.getNickname(), temporaryMapResource);
        if(clientView.getNickname().equals(getNickname())){
-           clientView.setPhase(LocalPhase.ADD_TO_WAREHOUSE);
            if (!temporaryMapResource.isEmpty()){
+               clientView.setPhase(LocalPhase.ADD_TO_WAREHOUSE);
                clientView.getPhase().handlePhase(clientView);
            }
         }

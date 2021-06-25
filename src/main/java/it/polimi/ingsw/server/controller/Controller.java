@@ -103,8 +103,8 @@ public class Controller extends MessageObservable{
     public synchronized void handleActivateLeader(int numLeaderCard, String nickname, View view){
         try {
             if(match.getCurrentPlayer().getNickname().equals(nickname)
-                && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE
-                    || match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_DONE){
+                && (match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE
+                    || match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_DONE)){
                 match.getCurrentPlayer().getPersonalBoard().activateLeader(numLeaderCard);
             }
             else
@@ -124,7 +124,8 @@ public class Controller extends MessageObservable{
     public synchronized void handleTakeFromMarketMessage(int rowOrColumn, int value,String nickname, View view){
         try{
             if((match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND)
-                    && match.getCurrentPlayer().getNickname().equals(nickname)){
+                    && match.getCurrentPlayer().getNickname().equals(nickname)
+                    && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE){
                 match.getCurrentPlayer().getPersonalBoard().takeFromMarket(rowOrColumn,value);
             }
             else{
@@ -304,10 +305,10 @@ public class Controller extends MessageObservable{
      * @param numLeaderCard the number of the leader card to discard
      */
     public synchronized void handleDiscardLeaderMessage(View view, String nickname, int numLeaderCard){
-        if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND
+        if((match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND)
             && match.getCurrentPlayer().getNickname().equals(nickname)
-            && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE
-                || match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_DONE){
+            && (match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE
+                || match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_DONE)){
             try {
                 match.getCurrentPlayer().getPersonalBoard().removeLeader(numLeaderCard);
             } catch (InvalidParameterException e) {
@@ -328,7 +329,7 @@ public class Controller extends MessageObservable{
      * @param indexDevelopmentCardSpace the space of the development card space to take the power of production from
      */
     public synchronized void handleActivateCardProductionMessage(View view, String nickname, Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, int indexDevelopmentCardSpace){
-        if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND
+        if((match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND)
                 && match.getCurrentPlayer().getNickname().equals(nickname)
                 && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE
                 || match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.PRODUCTION){
@@ -352,10 +353,10 @@ public class Controller extends MessageObservable{
      * @param resource the type of the resources to produce
      */
     public synchronized void handleActivateBasicProductionMessage(View view, String nickname, Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, Resource resource){
-        if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND
+        if((match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND)
                 && match.getCurrentPlayer().getNickname().equals(nickname)
-                && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE
-                || match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.PRODUCTION){
+                && (match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE
+                || match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.PRODUCTION)){
             try {
                 match.getCurrentPlayer().getPersonalBoard().activateBasicProduction(costStrongbox,costWarehouseDepot,resource);
             } catch (InvalidProductionException | InvalidCostException | InvalidRemovalException e) {
@@ -377,10 +378,10 @@ public class Controller extends MessageObservable{
      * @param resource the type of resource to produce
      */
     public synchronized void handleActivateLeaderProductionMessage(View view, String nickname, Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, int numLeaderCard, Resource resource){
-        if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND
+        if((match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND)
                 && match.getCurrentPlayer().getNickname().equals(nickname)
-                && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE
-                || match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.PRODUCTION){
+                && (match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE
+                || match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.PRODUCTION)){
             try {
                 match.getCurrentPlayer().getPersonalBoard().activateLeaderProduction(costStrongbox,costWarehouseDepot,numLeaderCard,resource);
             } catch (InvalidProductionException | InvalidCostException | InvalidLeaderAction | InvalidRemovalException e) {
@@ -398,7 +399,7 @@ public class Controller extends MessageObservable{
      * @param nickname the nickname of the player
      */
     public synchronized void handleEndProductionMessage(View view, String nickname){
-        if(match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND
+        if((match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND)
                 && match.getCurrentPlayer().getNickname().equals(nickname)
                 && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.PRODUCTION) {
             match.getCurrentPlayer().getPersonalBoard().endProduction();
@@ -423,7 +424,14 @@ public class Controller extends MessageObservable{
     public synchronized void handleBuyDevelopmentCardMessage(View view, String nickname, int row, int column, Map<Resource, Integer> costStrongbox, Map<Resource, Integer> costWarehouse, int numLeaderCard, int cardPosition){
         PersonalBoard personalBoard = match.getPlayerByNickname(nickname).getPersonalBoard();
         try {
-            personalBoard.buyDevelopmentCard(row, column, costStrongbox, costWarehouse, numLeaderCard, cardPosition);
+            if((match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND)
+                    && match.getCurrentPlayer().getNickname().equals(nickname)
+                    && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE){
+                personalBoard.buyDevelopmentCard(row, column, costStrongbox, costWarehouse, numLeaderCard, cardPosition);
+            }
+            else{
+                view.update(new ErrorMessage(nickname, "Invalid command"));
+            }
         } catch (NoCardException | InvalidParameterException | InvalidCostException | InvalidLeaderAction | InvalidRemovalException | InvalidDevelopmentCardException e) {
             view.update(new ErrorMessage(nickname, e.getMessage()));
         }
