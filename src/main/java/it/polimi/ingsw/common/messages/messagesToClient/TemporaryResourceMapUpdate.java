@@ -8,14 +8,26 @@ import it.polimi.ingsw.server.model.enumerations.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Message to update the temporary resources of the client
+ */
 public class TemporaryResourceMapUpdate extends MessageToClient {
-    private Map<Resource, Integer> temporaryMapResource;
+    private final Map<Resource, Integer> temporaryMapResource;
 
+    /**
+     * Constructor of the message
+     * @param nickname the player that gets updated
+     * @param temporaryMapResource the updated map of resources
+     */
     public TemporaryResourceMapUpdate(String nickname, Map<Resource, Integer> temporaryMapResource) {
         super(nickname, MessageType.TEMPORARY_RESOURCE_MAP_UPDATE);
         this.temporaryMapResource = temporaryMapResource;
     }
 
+    /**
+     * Shows the update and changes the localPhase
+     * @param clientView the view to update
+     */
     @Override
     public void handleMessage(ClientView clientView) {
        clientView.showUpdatedTemporaryMapResource(this.getNickname(), temporaryMapResource);

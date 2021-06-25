@@ -9,10 +9,19 @@ import it.polimi.ingsw.server.controller.Controller;
  */
 public class NicknameReplyMessage extends MessageToServer {
 
+    /**
+     * The constructor of the message
+     * @param nickname the nickname of the new player
+     */
     public NicknameReplyMessage(String nickname) {
         super(nickname, MessageType.NICKNAME_REPLY);
     }
 
+    /**
+     * Interacts with the corresponding method of the controller
+     * @param controller the controller that has to handle the message
+     * @param view the view that sent the message
+     */
     @Override
     public void handleMessage(Controller controller, View view) {
         controller.handleNicknameReplyMessage(this.getNickname(), view);

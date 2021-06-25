@@ -9,10 +9,19 @@ import it.polimi.ingsw.server.controller.Controller;
  */
 public class TransformMarblesMessage extends MessageToServer {
 
+    /**
+     * Constructor of the message
+     * @param nickname the player that sent the message
+     */
     public TransformMarblesMessage(String nickname) {
         super(nickname, MessageType.TRANSFORM_MARBLES);
     }
 
+    /**
+     * Interacts with the corresponding method of the controller
+     * @param controller the controller that has to handle the message
+     * @param view the view that sent the message
+     */
     @Override
     public void handleMessage(Controller controller, View view) { controller.handleTransformMarblesMessage(view, this.getNickname()); }
 }

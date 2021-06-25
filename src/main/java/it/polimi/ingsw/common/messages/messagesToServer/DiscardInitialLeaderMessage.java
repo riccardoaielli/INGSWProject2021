@@ -22,6 +22,11 @@ public class DiscardInitialLeaderMessage extends MessageToServer {
         this.indexLeaderCard2 = indexLeaderCard2;
     }
 
+    /**
+     * Interacts with the corresponding method of the controller
+     * @param controller the controller that has to handle the message
+     * @param view the view that sent the message
+     */
     @Override
     public void handleMessage(Controller controller, View view) {
         controller.handleDiscardInitialLeaderMessage(view, this.getNickname(), indexLeaderCard1, indexLeaderCard2);

@@ -8,13 +8,26 @@ import it.polimi.ingsw.server.model.enumerations.Resource;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Message to update the warehouse of the client
+ */
 public class WarehouseUpdate extends MessageToClient {
-    private List<Map<Resource, Integer>> depots;
+    private final List<Map<Resource, Integer>> depots;
+
+    /**
+     * Constructor of the message
+     * @param nickname the player that gets updated
+     * @param depots the update structure of the warehouse
+     */
     public WarehouseUpdate(String nickname, List<Map<Resource, Integer>> depots) {
         super(nickname, MessageType.WAREHOUSE_UPDATE);
         this.depots = depots;
     }
 
+    /**
+     * Shows the update and changes the local phase
+     * @param clientView the view to update
+     */
     @Override
     public void handleMessage(ClientView clientView) {
 

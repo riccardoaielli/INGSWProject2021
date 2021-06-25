@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.common.messages.messagesToClient.PopeFavourTilesUpdate;
-import it.polimi.ingsw.common.messages.messagesToClient.RedcrossPositionUpdate;
+import it.polimi.ingsw.common.messages.messagesToClient.RedCrossPositionUpdate;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
 import it.polimi.ingsw.server.model.exceptions.InvalidParameterException;
 
@@ -53,7 +53,7 @@ public class FaithTrack extends MessageObservable implements ObservableGameEnder
         if (numOfSteps >= 0) {
             faithTrackPosition = faithTrackPosition + numOfSteps;
 
-            notifyObservers(new RedcrossPositionUpdate(getNickname(),faithTrackPosition));
+            notifyObservers(new RedCrossPositionUpdate(getNickname(),faithTrackPosition));
 
             for(int tileNumber = 0; tileNumber < numOfPopeFavourTiles; tileNumber++){
                 int firstValueInterval = 4 + (7 * tileNumber);

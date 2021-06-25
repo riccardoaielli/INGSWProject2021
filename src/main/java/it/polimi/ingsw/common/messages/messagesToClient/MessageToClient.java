@@ -8,6 +8,11 @@ import it.polimi.ingsw.common.messages.Message;
  * Abstract class representing messages sent to client
  */
 public abstract class MessageToClient extends Message {
+    /**
+     * Constructor of the message
+     * @param nickname the player that gets updated
+     * @param messageType the type of the message
+     */
     public MessageToClient(String nickname, MessageType messageType) {
         super(nickname, messageType);
     }
