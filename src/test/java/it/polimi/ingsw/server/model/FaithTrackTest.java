@@ -18,8 +18,8 @@ class FaithTrackTest {
             testFaithTrack.moveFaithMarker(3);
             assertEquals(3, testFaithTrack.getFaithTrackPosition());
             //testing maximum value of faith marker
-            testFaithTrack.moveFaithMarker(18);
-            assertEquals(20, testFaithTrack.getFaithTrackPosition());
+            testFaithTrack.moveFaithMarker(22);
+            assertEquals(24, testFaithTrack.getFaithTrackPosition());
         }catch (Exception exception) {
             assert false;
         }
@@ -72,12 +72,14 @@ class FaithTrackTest {
     public void testCalculateVictoryPoints(){
         try {
             assertEquals(0, testFaithTrack.calculateVictoryPoints());
-            testFaithTrack.moveFaithMarker(5);
-            assertEquals(3, testFaithTrack.calculateVictoryPoints());
+            testFaithTrack.moveFaithMarker(8);
+            assertEquals(4, testFaithTrack.calculateVictoryPoints());
 
-            testFaithTrack.moveFaithMarker(2);
-            testFaithTrack.setPopeFavourTiles(2);
-            assertEquals(4,testFaithTrack.calculateVictoryPoints());
+            testFaithTrack.moveFaithMarker(9);
+            assertEquals(14,testFaithTrack.calculateVictoryPoints());
+
+            testFaithTrack.moveFaithMarker(7);
+            assertEquals(29,testFaithTrack.calculateVictoryPoints());
         }catch (Exception exception){
             assert false;
         }
