@@ -31,9 +31,9 @@ public class ProductionController extends AbstractController{
     }
 
     private void onLeaderProductionClick(MouseEvent e){
-        //SceneManager.getInstance().showPopup("leaderProduction");
-        //Stage stage = (Stage) basicProductionButton.getScene().getWindow();
-        //stage.close();
+        SceneManager.getInstance().showPopup("leaderProduction");
+        Stage stage = (Stage) basicProductionButton.getScene().getWindow();
+        stage.close();
     }
 
     private void onDevCardProductionClick(MouseEvent e){

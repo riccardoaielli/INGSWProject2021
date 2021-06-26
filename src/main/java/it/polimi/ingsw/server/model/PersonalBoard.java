@@ -341,6 +341,7 @@ public class PersonalBoard extends MessageObservable {
         }
 
         temporaryMapResource.clear();
+        notifyObservers(new TemporaryResourceMapUpdate(this.getNickname(), new HashMap<>(temporaryMapResource)));
         match.moveFaithMarkerAll(total);
         //personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_DONE;
         if(personalBoardPhase == PersonalBoardPhase.TAKE_FROM_MARKET) {

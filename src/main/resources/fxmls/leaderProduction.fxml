@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox styleClass="menuBackground" stylesheets="@../css/global.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.LeaderProductionController">
+    <children>
+        <StackPane prefHeight="70.0" prefWidth="690.0" styleClass="transparentBackground" stylesheets="@../css/global.css">
+            <children>
+                <Label prefHeight="159.0" prefWidth="442.0" text="Choose the resources and&#10;the leader card with the according power " textAlignment="CENTER" />
+            </children>
+        </StackPane>
+        <!-- resource choice -->
+        <fx:include fx:id="resourceChoice" source="../fxmls/resourceChoice.fxml" />
+        <StackPane prefHeight="139.0" prefWidth="694.0" styleClass="transparentBackground" stylesheets="@../css/gameInterface.css">
+            <children>
+                <ImageView id="2" fx:id="leaderTwoImgView" fitHeight="225.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+                    <StackPane.margin>
+                        <Insets left="200.0" />
+                    </StackPane.margin>
+                </ImageView>
+                <ImageView id="1" fx:id="leaderOneImgView" fitHeight="225.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+                    <StackPane.margin>
+                        <Insets right="200.0" />
+                    </StackPane.margin>
+                </ImageView>
+            </children>
+        </StackPane>
+        <StackPane prefHeight="200.0" prefWidth="690.0" styleClass="transparentBackground" stylesheets="@../css/global.css">
+            <children>
+                <ImageView fx:id="shieldImgV" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../resourcesImage/shield.png" />
+                    </image>
+                    <StackPane.margin>
+                        <Insets bottom="100.0" right="300.0" />
+                    </StackPane.margin>
+                </ImageView>
+
+                <ImageView fx:id="coinImgV" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../resourcesImage/coin.png" />
+                    </image>
+                    <StackPane.margin>
+                        <Insets bottom="100.0" right="100.0" />
+                    </StackPane.margin>
+                </ImageView>
+                <ImageView fx:id="servantImgV" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../resourcesImage/servant.png" />
+                    </image>
+                    <StackPane.margin>
+                        <Insets bottom="100.0" left="300.0" />
+                    </StackPane.margin>
+                </ImageView>
+                <ImageView fx:id="stoneImgV" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../resourcesImage/stone.png" />
+                    </image>
+                    <StackPane.margin>
+                        <Insets bottom="100.0" left="100.0" />
+                    </StackPane.margin>
+                </ImageView>
+                <Label text="Select a resource">
+                    <StackPane.margin>
+                        <Insets bottom="200.0" />
+                    </StackPane.margin>
+                </Label>
+                <Button fx:id="doneButton" mnemonicParsing="false" text="Done">
+                    <StackPane.margin>
+                        <Insets top="100.0" />
+                    </StackPane.margin>
+                </Button>
+            </children>
+        </StackPane>
+    </children>
+</VBox>

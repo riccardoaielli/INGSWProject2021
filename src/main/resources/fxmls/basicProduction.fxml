@@ -8,16 +8,16 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox stylesheets="@../css/global.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.BasicProductionController">
+<VBox styleClass="menuBackground" stylesheets="@../css/global.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.BasicProductionController">
    <children>
-      <StackPane prefHeight="14.0" prefWidth="690.0">
+      <StackPane prefHeight="14.0" prefWidth="690.0" styleClass="transparentBackground" stylesheets="@../css/global.css">
          <children>
             <Label text="Choose the two resources that will be used to produce a new resource " />
          </children>
       </StackPane>
       <!-- resource choice -->
        <fx:include fx:id="resourceChoice" source="../fxmls/resourceChoice.fxml" />
-      <StackPane prefHeight="200.0" prefWidth="690.0">
+      <StackPane prefHeight="200.0" prefWidth="690.0" styleClass="transparentBackground" stylesheets="@../css/global.css">
          <children>
             <ImageView fx:id="shieldImgV" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
                <image>
