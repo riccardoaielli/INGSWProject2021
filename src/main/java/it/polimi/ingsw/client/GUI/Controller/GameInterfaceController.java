@@ -169,6 +169,12 @@ public class GameInterfaceController extends AbstractController {
         personalBoardController.setDevelopmentCardSpace(cardsState);
     }
 
+    public void updateMainTurnAction() {
+        marketButton.setDisable(true);
+        buyCardButton.setDisable(true);
+        productionButton.setDisable(true);
+    }
+
     public void updatePlayerTurn(String nickname){
 
         if(nickname.equals(getGui().getNickname()))

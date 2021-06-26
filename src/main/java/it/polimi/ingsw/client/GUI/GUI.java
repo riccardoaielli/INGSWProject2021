@@ -272,6 +272,11 @@ public class GUI implements ClientView {
 
     @Override
     public void setMainTurnActionDone(boolean mainTurnActionDone) {
+        this.mainTurnActionDone = mainTurnActionDone;
+        if(mainTurnActionDone){
+            GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterface");
+            Platform.runLater(()-> gameInterfaceController.updateMainTurnAction());
+        }
 
     }
 

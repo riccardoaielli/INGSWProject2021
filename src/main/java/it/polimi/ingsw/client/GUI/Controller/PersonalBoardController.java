@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.GUI.Controller;
 
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -197,9 +198,6 @@ public class PersonalBoardController extends  AbstractController{
         devCardSpaceSetUp(devCardSpaceZeroGP);
         devCardSpaceSetUp(devCardSpaceOneGP);
         devCardSpaceSetUp(devCardSpaceTwoGP);
-        /*for(int i=0; i<3; i++){
-            developmentCardSpaceArray.add(new ArrayList<>());
-        }*/
 
         highlightEffectRed.setSpread(1);
         highlightEffectGreen.setSpread(1);
@@ -210,12 +208,12 @@ public class PersonalBoardController extends  AbstractController{
     private void devCardSpaceSetUp(GridPane devCardSpaceGP){
 
         ArrayList<ImageView> singleDevCardSpaceArray = new ArrayList<>();
-        for(Node node : devCardSpaceGP.getChildren())
+        ObservableList<Node> arrayList = devCardSpaceGP.getChildren();
+        for(Node node : arrayList)
         {
             Integer x = GridPane.getRowIndex(node);
-            Integer y = GridPane.getColumnIndex(node);
-            if((x != null) && (y != null)) {
-                singleDevCardSpaceArray.add(GridPane.getRowIndex(node), (ImageView) node);
+            if(x != null) {
+                singleDevCardSpaceArray.add((ImageView) node);
             }
         }
         developmentCardSpaceArray.add(singleDevCardSpaceArray);
@@ -375,18 +373,19 @@ public class PersonalBoardController extends  AbstractController{
         }
     }
 
-    public void setDevelopmentCardSpace(ArrayList<ArrayList<Integer>> cardsState) {
-        int k = 0;
+    public void setDevelopmentCardSpace(ArrayList<ArrayList<Integer>> cardsState) { //da sistemare non funziona
+
+        int h = 0;
         for (ArrayList<Integer> array : cardsState) {
-            int h = 0;
-            for (int i=array.size(); i>0; i--) {
-                ImageView imgV = developmentCardSpaceArray.get(k).get(h);
+            for (int i=0; i<array.size(); i++) {
+                ImageView imgV = developmentCardSpaceArray.get(h).get(i);
                 int x = array.get(i);
                 if ((Integer.parseInt(imgV.getId()) != x) && (Integer.parseInt(imgV.getId()) != 0)){
                     imgV.setImage(new Image("cardsImage/" + x + ".png"));
                     imgV.setId(Integer.toString(x));
                 }
             }
+            h++;
         }
     }
 
