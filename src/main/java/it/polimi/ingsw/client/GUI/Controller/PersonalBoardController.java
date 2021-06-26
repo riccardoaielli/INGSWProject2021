@@ -70,6 +70,10 @@ public class PersonalBoardController extends  AbstractController{
     private ImageView servantImgV;
     @FXML
     private ImageView redCrossImgV;
+
+    @FXML
+    private ImageView blackCrossImgV;
+
     @FXML
     private ImageView firstZero;
     @FXML
@@ -169,7 +173,6 @@ public class PersonalBoardController extends  AbstractController{
 
         redCrossImgV.setImage(new Image("personalBoardImage/" + "redCross" + ".png"));
         redCrossImgV.setPreserveRatio(true);
-        redCrossImgV.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onResourceImgClick);
 
         for(int i=0; i<5; i++){
             warehouseDepot.add(new ArrayList<>());
@@ -351,6 +354,71 @@ public class PersonalBoardController extends  AbstractController{
         }
         redCrossImgV.setLayoutX(x);
         redCrossImgV.setLayoutY(y);
+    }
+
+    public void initializeBlackCross(){
+        blackCrossImgV.setImage(new Image("personalBoardImage/" + "blackCross" + ".png"));
+        blackCrossImgV.setPreserveRatio(true);
+    }
+
+    public void setBlackCrossPosition(int position){
+
+        int x=27, y=75;
+
+        switch (position) {
+            case 0 : x=27; y=75;
+                break;
+            case 1 : x=57; y=75;
+                break;
+            case 2 : x=82; y=75;
+                break;
+            case 3 : x=82; y=50;
+                break;
+            case 4 : x=82; y=20;
+                break;
+            case 5 : x=109; y=20;
+                break;
+            case 6 : x=136; y=20;
+                break;
+            case 7 : x=163; y=20;
+                break;
+            case 8 : x=191; y=20;
+                break;
+            case 9 : x=218; y=20;
+                break;
+            case 10 : x=218; y=50;
+                break;
+            case 11 : x=218; y=75;
+                break;
+            case 12 : x=246; y=75;
+                break;
+            case 13 : x=273; y=75;
+                break;
+            case 14 : x=301; y=75;
+                break;
+            case 15 : x=329; y=75;
+                break;
+            case 16 : x=356; y=75;
+                break;
+            case 17 : x=356; y=50;
+                break;
+            case 18 : x=356; y=20;
+                break;
+            case 19 : x=383; y=20;
+                break;
+            case 20 : x=411; y=20;
+                break;
+            case 21 : x=438; y=20;
+                break;
+            case 22 : x=465; y=20;
+                break;
+            case 23 : x=493; y=20;
+                break;
+            case 24 : x=520; y=20;
+                break;
+        }
+        blackCrossImgV.setLayoutX(x);
+        blackCrossImgV.setLayoutY(y);
     }
 
     public void setPopeFavourTiles(ArrayList<Integer> popeFavourTiles){

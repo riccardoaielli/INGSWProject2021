@@ -245,7 +245,8 @@ public class GUI implements ClientView {
 
     @Override
     public void showUpdateBlackcrossPosition(int blackCrossPosition) {
-
+        GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterface");
+        Platform.runLater(()-> gameInterfaceController.setBlackCrossPosition(blackCrossPosition));
     }
 
     @Override

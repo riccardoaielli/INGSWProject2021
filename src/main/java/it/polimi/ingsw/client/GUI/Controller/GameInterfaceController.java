@@ -126,6 +126,10 @@ public class GameInterfaceController extends AbstractController {
                 e.printStackTrace();
             }
         }
+        if(personalBoardControllerMap.size() == (1)){
+            PersonalBoardController personalBoardController = personalBoardControllerMap.get(getGui().getNickname());
+            personalBoardController.initializeBlackCross();
+        }
     }
 
     public void setWarehouse(String nickname, List<Map<Resource, Integer>> depots){
@@ -157,6 +161,11 @@ public class GameInterfaceController extends AbstractController {
     public void setRedCrossPosition(String nickname, int redcrossPosition){
         PersonalBoardController personalBoardController = personalBoardControllerMap.get(nickname);
         personalBoardController.setRedCrossPosition(redcrossPosition);
+    }
+
+    public void setBlackCrossPosition(int blackCrossPosition){
+        PersonalBoardController personalBoardController = personalBoardControllerMap.get(getGui().getNickname());
+        personalBoardController.setBlackCrossPosition(blackCrossPosition);
     }
 
     public void setPopeFavourTiles(String nickname, ArrayList<Integer> popeFavourTiles){
