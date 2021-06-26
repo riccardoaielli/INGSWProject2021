@@ -27,7 +27,9 @@ public class DiscardedLeaderUpdate extends MessageToClient {
     @Override
     public void handleMessage(ClientView clientView) {
         clientView.showUpdateDiscardedLeaderUpdate(getNickname(),leaderPosition);
-        clientView.setPhase(LocalPhase.MENU);
-        clientView.getPhase().handlePhase(clientView);
+        if(getNickname().equals(clientView.getNickname())) {
+            clientView.setPhase(LocalPhase.MENU);
+            clientView.getPhase().handlePhase(clientView);
+        }
     }
 }

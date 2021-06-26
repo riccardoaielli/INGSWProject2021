@@ -33,7 +33,6 @@ public class FaithTrack extends MessageObservable implements ObservableGameEnder
         popeFavourTiles = new ArrayList<>(numOfPopeFavourTiles);
         for(int tile = 0; tile < numOfPopeFavourTiles; tile++)
             popeFavourTiles.add(nonActive);
-
     }
 
 
@@ -51,18 +50,32 @@ public class FaithTrack extends MessageObservable implements ObservableGameEnder
      */
     public void moveFaithMarker(int numOfSteps) throws InvalidParameterException {
         if (numOfSteps >= 0) {
-            faithTrackPosition = faithTrackPosition + numOfSteps;
-
+            int steps = 0;
+            Integer tileNumber = null;
+            while(steps < numOfSteps){
+                faithTrackPosition++;
+                switch (faithTrackPosition){
+                    case 8:
+                        tileNumber = 0;
+                        break;
+                    case 16:
+                        tileNumber = 1;
+                        break;
+                    case 24:
+                        tileNumber = 2;
+                        break;
+                }
+                if(tileNumber != null)
+                    if(popeFavourTiles.get(tileNumber) == nonActive)
+                        popeFavourTiles.set(tileNumber, active);
+                    //todo: si potrebbe spostare qui l'attivazione del rapporto in vaticano con un observer
+                steps++;
+                tileNumber = null;
+            }
             notifyObservers(new RedCrossPositionUpdate(getNickname(),faithTrackPosition));
 
-            for(int tileNumber = 0; tileNumber < numOfPopeFavourTiles; tileNumber++){
-                int firstValueInterval = 4 + (7 * tileNumber);
-                int secondValueInterval = 9 + (8 * tileNumber);
-                if (faithTrackPosition > firstValueInterval && faithTrackPosition < secondValueInterval)
-                    popeFavourTiles.set(tileNumber, active);
-            }
-            if (faithTrackPosition > 20) {      // the maximum amount of space in the track is 20
-                faithTrackPosition = 20;
+            if (faithTrackPosition > 24) {      // the maximum amount of space in the track is 24
+                faithTrackPosition = 24;
                 //notifies match
                 if(matchToNotify != null) matchToNotify.update();
             }
