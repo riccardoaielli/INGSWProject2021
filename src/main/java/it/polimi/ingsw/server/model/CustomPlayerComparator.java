@@ -8,7 +8,7 @@ import java.util.Comparator;
 public class CustomPlayerComparator implements Comparator<Player> {
 
     /**
-     * Override of compare to compare players by victory points
+     * Override of compare to sort players by victory points
      * @param p1 a player
      * @param p2 a player
      * @return 0 if the player p1 has more victory points than the player p2 or if both have the same amount of victory points

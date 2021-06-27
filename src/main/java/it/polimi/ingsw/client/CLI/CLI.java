@@ -148,7 +148,7 @@ public class CLI implements ClientView {
     private void setMessageSender(){
         String input = readInput("Press L for local game or O for online game");
 
-        while(!(input.equalsIgnoreCase("L") || input.equalsIgnoreCase("O") || input.equalsIgnoreCase("DEMO"))) {
+        while(!(input.equalsIgnoreCase("L") || input.equalsIgnoreCase("O"))) {
             System.out.println("Input not valid");
             input = readInput("Press L for local game or O for online game");
         }
@@ -159,9 +159,6 @@ public class CLI implements ClientView {
             //input = readInput("Press game");
             //input = readInput("Press L");
             messageSender = new ClientSocket(hostAddress, portNumber, this);
-        } else if (input.equalsIgnoreCase("DEMO")){
-            messageSender = new ClientSocket(hostAddress, portNumber, this);
-            messageSender.sendMessage(new DemoGameMessage());
         }
     }
 
@@ -859,12 +856,12 @@ public class CLI implements ClientView {
      */
     @Override
     public void showUpdateRank(String nickname, ArrayList<RankPosition> rank) {
-        int pos = 0;
-        while (pos < rank.size()){
+        System.out.println("The game ended.\nFinal Rank:");
+        for (int pos = 0;pos < rank.size();pos++){
             if (rank.get(pos).getNickname().equals(nickname))
-                System.out.println(pos + ") " + CliColor.COLOR_YELLOW + rank.get(pos).toString() + CliColor.RESET);
+                System.out.println((pos+1) + "° " + CliColor.COLOR_YELLOW + rank.get(pos).toString() + CliColor.RESET);
             else
-                System.out.println(pos + ") " + rank.get(pos).toString());
+                System.out.println((pos+1) + "° " + rank.get(pos).toString());
         }
     }
 

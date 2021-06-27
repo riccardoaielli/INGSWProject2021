@@ -7,13 +7,13 @@ import org.junit.jupiter.api.Test;
 
 class LorenzoTest {
 
-    CardGrid cardGrid = new CardGrid();
+    CardGrid cardGrid = new CardGrid(false);
     Lorenzo lorenzo = new Lorenzo(cardGrid);
 
     @Test
     public void moveFaithMarkerTest(){
         try {
-            lorenzo.addObserver(new SoloMatch(1));
+            lorenzo.addObserver(new SoloMatch(1, false));
         } catch (InvalidParameterException e) {
             assert false;
         }

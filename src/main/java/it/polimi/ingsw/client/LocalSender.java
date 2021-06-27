@@ -18,7 +18,7 @@ public class LocalSender implements MessageSender {
         this.clientView = view;
         executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
-            controller = new Controller();
+            controller = new Controller(false);
             controller.newConnection(clientView);
         });
     }

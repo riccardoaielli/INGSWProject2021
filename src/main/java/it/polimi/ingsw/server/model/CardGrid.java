@@ -32,16 +32,18 @@ public class CardGrid extends MessageObservable {
     /**
      * This constructor creates the cardGrid structure, reading the development cards form the json file developmentCards.json and initializes each cards stack randomly
      */
-    public CardGrid(){
+    public CardGrid(boolean demo){
 
         CardGridParser cardGridParser = new CardGridParser();
         cardGridMatrix = cardGridParser.parse();
 
-        for(i=0; i<maxRow; i++)
-            for(j=0; j<maxColumn; j++){
-                Collections.shuffle(cardGridMatrix[i][j]);
-            }
-
+        for (i = 0; i < maxRow; i++)
+            for (j = 0; j < maxColumn; j++) {
+                if(demo)
+                   cardGridMatrix[i][j].sort(new DemoDevelopmentCardsComparator());
+                else
+                    Collections.shuffle(cardGridMatrix[i][j]);
+        }
     }
 
     /**

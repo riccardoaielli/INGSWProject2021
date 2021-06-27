@@ -18,12 +18,13 @@ class MatchTest {
     public void matchPhasesTest(){
         Match match = null;
         try {
-            match = new Match(1,3);
-            match = new Match(1,5);
+            match = new Match(1,3,false);
+            match = new Match(1,5,false);
         } catch (InvalidParameterException exception) {
             assert true;
         }
 
+        assert match != null;
         assertEquals(match.getMatchPhase(), MatchPhase.SETUP);
         try {
             //checks nickname insertions
@@ -84,7 +85,7 @@ class MatchTest {
     public void vaticanReportTest(){
         Match match = null;
         try {
-            match = new Match(1,2);
+            match = new Match(1,2,false);
         } catch (InvalidParameterException invalidParameterException) {
             assert false;
         }
@@ -103,7 +104,7 @@ class MatchTest {
             assert false;
         }
 
-        Map<Resource,Integer> resourceMap =new HashMap<>();
+        Map<Resource,Integer> resourceMap = new HashMap<>();
 
         try {
             resourceMap.put(Resource.SHIELD,1);
@@ -121,10 +122,10 @@ class MatchTest {
             assertEquals(2,match.getCurrentPlayer().getPersonalBoard().getFaithTrack().getFaithTrackPosition());
             assertEquals(0,match.getCurrentPlayer().getPersonalBoard().getFaithTrack().getPopeFavourTileValue(1));
 
-            match.getCurrentPlayer().getPersonalBoard().moveFaithMarker(4);
+            match.getCurrentPlayer().getPersonalBoard().moveFaithMarker(6);
             match.getCurrentPlayer().getPersonalBoard().checkVaticanReport();
 
-            assertEquals(6,match.getCurrentPlayer().getPersonalBoard().getFaithTrack().getFaithTrackPosition());
+            assertEquals(8,match.getCurrentPlayer().getPersonalBoard().getFaithTrack().getFaithTrackPosition());
             assertEquals(2,match.getCurrentPlayer().getPersonalBoard().getFaithTrack().getPopeFavourTileValue(1));
             match.nextPlayer();
             //checks the effect of the vatican report on other players

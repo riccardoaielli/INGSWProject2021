@@ -12,8 +12,8 @@ public class SoloMatch extends Match{
      * This constructor creates a match deserializing all the leader cards and creating the market and the card grid
      * @param matchID an int that identifies the match
      */
-    public SoloMatch(int matchID) throws InvalidParameterException {
-        super(matchID, 1);
+    public SoloMatch(int matchID, boolean demo) throws InvalidParameterException {
+        super(matchID, 1,demo);
         lorenzo = new Lorenzo(this.getCardGrid());
         lorenzo.addObserver(this);
         lorenzo.addObserverList(this.getMessageObservers());

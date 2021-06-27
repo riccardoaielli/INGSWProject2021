@@ -22,8 +22,8 @@ public class Controller extends MessageObservable{
     private Boolean firstConnected;
     private Boolean demo;
 
-    public Controller() {
-        demo = false;
+    public Controller(Boolean demo) {
+        this.demo = demo;
         firstConnected = false;
     }
 
@@ -39,13 +39,6 @@ public class Controller extends MessageObservable{
         else if (match != null)
             view.update(new FirstConnectedUpdate(false));
         else view.update(new ErrorMessage(null, "The first connected player is choosing the number of players. Wait..."));
-    }
-
-    /**
-     * Setter for the demo mode of the game
-     */
-    public synchronized void setDemo(){
-        demo = true;
     }
 
     /**
@@ -76,11 +69,9 @@ public class Controller extends MessageObservable{
         try {
             if(match == null){
                 if(numOfPlayers == 1)
-                    match = new SoloMatch(1);
+                    match = new SoloMatch(1,demo);
                 else
-                    match = new Match(1,numOfPlayers);
-                if(demo)
-                    match.setDemo();
+                    match = new Match(1,numOfPlayers,true);
                 //creates a player
                 handleNicknameReplyMessage(nickname,view);
                 firstConnected = true;
@@ -187,7 +178,12 @@ public class Controller extends MessageObservable{
             return;
         }
 
-        PersonalBoard personalBoard = match.getPlayerByNickname(nickname).getPersonalBoard();
+        PersonalBoard personalBoard = null;
+        try {
+            personalBoard = match.getPlayer(nickname).getPersonalBoard();
+        } catch (InvalidNickName invalidNickName) {
+            view.update(new ErrorMessage(nickname, invalidNickName.getMessage()));
+        }
 
         if(personalBoard.getPersonalBoardPhase() != PersonalBoardPhase.LEADER_CHOICE){
             view.update(new ErrorMessage(nickname, "Invalid command"));
@@ -212,7 +208,12 @@ public class Controller extends MessageObservable{
             view.update(new ErrorMessage(nickname, "Invalid command"));
             return;
         }
-        PersonalBoard personalBoard = match.getPlayerByNickname(nickname).getPersonalBoard();
+        PersonalBoard personalBoard = null;
+        try {
+            personalBoard = match.getPlayer(nickname).getPersonalBoard();
+        } catch (InvalidNickName invalidNickName) {
+            view.update(new ErrorMessage(nickname, invalidNickName.getMessage()));
+        }
 
         if(personalBoard.getPersonalBoardPhase() != PersonalBoardPhase.RESOURCE_CHOICE){
             view.update(new ErrorMessage(nickname, "Invalid command"));
@@ -422,8 +423,8 @@ public class Controller extends MessageObservable{
      * @param cardPosition the position of the development card space to put the bought card
      */
     public synchronized void handleBuyDevelopmentCardMessage(View view, String nickname, int row, int column, Map<Resource, Integer> costStrongbox, Map<Resource, Integer> costWarehouse, int numLeaderCard, int cardPosition){
-        PersonalBoard personalBoard = match.getPlayerByNickname(nickname).getPersonalBoard();
         try {
+            PersonalBoard personalBoard = match.getPlayer(nickname).getPersonalBoard();
             if((match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND)
                     && match.getCurrentPlayer().getNickname().equals(nickname)
                     && match.getCurrentPlayer().getPersonalBoard().getPersonalBoardPhase() == PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE){
@@ -432,7 +433,7 @@ public class Controller extends MessageObservable{
             else{
                 view.update(new ErrorMessage(nickname, "Invalid command"));
             }
-        } catch (NoCardException | InvalidParameterException | InvalidCostException | InvalidLeaderAction | InvalidRemovalException | InvalidDevelopmentCardException e) {
+        } catch (NoCardException | InvalidParameterException | InvalidCostException | InvalidLeaderAction | InvalidRemovalException | InvalidDevelopmentCardException | InvalidNickName e) {
             view.update(new ErrorMessage(nickname, e.getMessage()));
         }
     }
@@ -447,7 +448,12 @@ public class Controller extends MessageObservable{
             view.update(new ErrorMessage(nickname, "Not your turn"));
             return;
         }
-        PersonalBoard personalBoard = match.getPlayerByNickname(nickname).getPersonalBoard();
+        PersonalBoard personalBoard = null;
+        try {
+            personalBoard = match.getPlayer(nickname).getPersonalBoard();
+        } catch (InvalidNickName invalidNickName) {
+            view.update(new ErrorMessage(nickname, invalidNickName.getMessage()));
+        }
         if (!personalBoard.getPersonalBoardPhase().equals(PersonalBoardPhase.MAIN_TURN_ACTION_DONE)){
             view.update(new ErrorMessage(nickname, "You haven't done your main turn action yet"));
             return;
@@ -463,7 +469,11 @@ public class Controller extends MessageObservable{
      */
     public synchronized void handleDiscardResourcesFromMarket(View view, String nickname) {
         if(match.getCurrentPlayer().getNickname().equals(nickname)){
-            match.getPlayerByNickname(nickname).getPersonalBoard().discardResourcesFromMarket();
+            try {
+                match.getPlayer(nickname).getPersonalBoard().discardResourcesFromMarket();
+            } catch (InvalidNickName invalidNickName) {
+                view.update(new ErrorMessage(nickname, invalidNickName.getMessage()));
+            }
         }
         else
             view.update(new ErrorMessage(nickname, "Not your turn"));

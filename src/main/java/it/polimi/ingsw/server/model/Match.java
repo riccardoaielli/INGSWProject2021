@@ -21,16 +21,14 @@ import java.util.Stack;
  * The controller interacts with the model by the methods of this class
  */
 public class Match extends MessageObservable implements EndGameConditionsObserver {
+    private final int DEMO_TURNS = 3;
     private final int matchID;
     private final int numOfPlayers;
     private int numOfPlayersReady;
+    private int numOfTurnsPlayed;
     private Player currentPlayer;
     private ArrayList<Player> players;
     private Stack<LeaderCard> leaderCards;
-    private Stack<LeaderCard> leaderCardDepot;
-    private Stack<LeaderCard> leaderCardMarble;
-    private Stack<LeaderCard> leaderCardDiscount;
-    private Stack<LeaderCard> leaderCardProduction;
     private MatchPhase matchPhase;
     private Market market;
     private CardGrid cardGrid;
@@ -42,31 +40,33 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
      * @param matchID an int that identifies the match
      * @param numOfPlayer the number of players that will join the match
      */
-    public Match(int matchID, int numOfPlayer) throws InvalidParameterException {
+    public Match(int matchID, int numOfPlayer, boolean demo) throws InvalidParameterException {
         if (numOfPlayer < 0 || numOfPlayer > 4)
             throw new InvalidParameterException("The match can be played by one to four players");
         this.matchID = matchID;
         this.numOfPlayers = numOfPlayer;
+        numOfTurnsPlayed = 0;
         numOfPlayersReady = 0;
         matchPhase = MatchPhase.SETUP;
         //deserialize leader cards from json file
         LeaderCardParser leaderCardParser= new LeaderCardParser();
         leaderCards = leaderCardParser.loadLeaderCards();
         //shuffle leader cards
-        Collections.shuffle(leaderCards);
+        if(!demo)
+         Collections.shuffle(leaderCards);
         //crates market and card grid
         market = new Market();
         market.addObserverList(this.getMessageObservers());
-        cardGrid = new CardGrid();
+        cardGrid = new CardGrid(demo);
         cardGrid.AddMatchToNotify(this);
         cardGrid.addObserverList(this.getMessageObservers());
         players = new ArrayList<>();
-        demo = false;
+        this.demo = demo;
     }
 
     //todo: costruttore non utilizzato da eliminare dopo aver completato i tests
     public Match(int matchID, int numOfPlayers, Stack<LeaderCard> leaderCards, Market market, CardGrid cardGrid) throws InvalidParameterException{
-        this(matchID, numOfPlayers);
+        this(matchID, numOfPlayers, false);
         this.leaderCards = leaderCards;
         this.market = market;
         this.cardGrid = cardGrid;
@@ -84,8 +84,12 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
             this.addObserver(view);
             //draw 4 cards from the leader cards stack
             ArrayList<LeaderCard> drawnLeaderCards = new ArrayList<>();
-            for(int draws = 0; draws < 4; draws++)
-                drawnLeaderCards.add(leaderCards.pop());
+            if(demo)
+                drawnLeaderCards = drawLeaderCardsDemo(players.size());
+            else {
+                for (int draws = 0; draws < 4; draws++)
+                    drawnLeaderCards.add(leaderCards.pop());
+            }
             //creates the player and its personal board
             players.add(new Player(nickName, new PersonalBoard(drawnLeaderCards, this),view));
             //updates the number of players ready
@@ -93,6 +97,13 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         }
         else
             throw new InvalidNickName("The nickname " + nickName + " is taken");
+    }
+
+    private ArrayList<LeaderCard> drawLeaderCardsDemo(int playerNumber) {
+        ArrayList<LeaderCard> drawnLeaderCards = new ArrayList<>();
+        for (int numCard = 0; numCard < 16; numCard+=4)
+            drawnLeaderCards.add(leaderCards.get(numCard + playerNumber));
+        return drawnLeaderCards;
     }
 
     /**
@@ -110,7 +121,8 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
                     return;
                 case LEADERCHOICE:
                     numOfPlayersReady = 0;
-                    Collections.shuffle(players);
+                    if(demo)
+                        Collections.shuffle(players);
 
                     //Sending order of players
                     List<String> playerNicknames = new ArrayList<>();
@@ -178,6 +190,8 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
             for(Player player: players)
                 player.getPersonalBoard().setPersonalBoardPhase(PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE);
         }
+        else
+            numOfTurnsPlayed++;
         //at the end of the last round ends the game
         if(matchPhase == MatchPhase.LASTROUND && ((players.indexOf(currentPlayer) + 1) == numOfPlayers)){
             endGame();
@@ -185,7 +199,10 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         }
         //changes the current player to the next player
         currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % numOfPlayers);
-        notifyObservers(new PlayerTurnUpdate(currentPlayer.getNickname()));//updates every player about the new current player
+        if(demo && numOfTurnsPlayed == DEMO_TURNS)
+            endGame();
+        else
+            notifyObservers(new PlayerTurnUpdate(currentPlayer.getNickname()));//updates every player about the new current player
     }
 
     /**
@@ -258,11 +275,6 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         return matchPhase;
     }
 
-    //todo: metodo da sostituire con getnickname(getnickname gestisce l'eccezione di nickname non validi)
-    public Player getPlayerByNickname(String nickname){
-        return players.stream().filter(player -> player.getNickname().equals(nickname)).findFirst().orElse(null);
-    }
-
     /**
     * This method is called by the faithTracks and by the developmentCardSpaces when they reaches the condition to end the game
     */
@@ -279,13 +291,5 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         market.doNotify();
         cardGrid.doNotify();
         players.forEach(x-> x.getPersonalBoard().doNotifyLeaders());
-    }
-
-    /**
-     * Setter for the demo mode
-     */
-    public void setDemo() {
-        demo = true;
-        System.out.println("Demo game: true");
     }
 }

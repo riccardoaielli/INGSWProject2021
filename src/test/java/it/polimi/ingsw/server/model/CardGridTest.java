@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardGridTest {
 
-    CardGrid cardGrid = new CardGrid();
+    CardGrid cardGrid = new CardGrid(false);
 
     @Test
     public void getCardTest(){
