@@ -261,24 +261,24 @@ public class PersonalBoardController extends  AbstractController{
 
     public void updateStrongbox(Map<Resource, Integer> strongbox){
 
-        for(Resource x : strongbox.keySet()) {
+        for(Resource x : Resource.values()) {
+            int j=0;
             if (strongbox.containsKey(x)) {
-                int j=0;
                 j = (int) strongbox.get(x);
-                switch (x) {
-                    case SHIELD:
-                        shieldStrongboxLabel.setText(Integer.toString(j));
-                        break;
-                    case COIN:
-                        coinStrongboxLabel.setText(Integer.toString(j));
-                        break;
-                    case SERVANT:
-                        servantStrongboxLabel.setText(Integer.toString(j));
-                        break;
-                    case STONE:
-                        stoneStrongboxLabel.setText(Integer.toString(j));
-                        break;
-                }
+            }
+            switch (x) {
+                case SHIELD:
+                    shieldStrongboxLabel.setText(Integer.toString(j));
+                    break;
+                case COIN:
+                    coinStrongboxLabel.setText(Integer.toString(j));
+                    break;
+                case SERVANT:
+                    servantStrongboxLabel.setText(Integer.toString(j));
+                    break;
+                case STONE:
+                    stoneStrongboxLabel.setText(Integer.toString(j));
+                    break;
             }
         }
     }

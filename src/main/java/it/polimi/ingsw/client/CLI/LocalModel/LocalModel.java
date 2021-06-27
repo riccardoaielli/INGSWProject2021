@@ -451,7 +451,7 @@ public class LocalModel {
             //codice di parsing della stringa che stampa la carta
             LeaderProduction leaderProduction = leaderCardProduction.pop();
             int id = leaderProduction.getId();
-            PowerOfProduction powerOfProduction = leaderProduction.getPowerOfProduction();
+            PowerOfProduction powerOfProduction = leaderProduction.abilityProduction();
             cardRequirementStringParser(leaderProduction, stringArray);
             cardPowerOfProductionStringParser(powerOfProduction, stringArray);
 

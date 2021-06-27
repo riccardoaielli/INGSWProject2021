@@ -18,8 +18,4 @@ public class LeaderProduction extends LeaderCard{
     public PowerOfProduction abilityProduction() {
         return powerOfProduction;
     }
-
-    public PowerOfProduction getPowerOfProduction() {
-        return powerOfProduction;
-    }
 }

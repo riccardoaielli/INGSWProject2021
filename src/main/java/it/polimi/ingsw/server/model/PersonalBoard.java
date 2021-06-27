@@ -115,7 +115,8 @@ public class PersonalBoard extends MessageObservable {
 
     //Method that is used to remove faith from temporaryMapResource and to add it to faithTrack
     private void dispatch(Map<Resource,Integer> production){
-        for (Resource resource : production.keySet()){
+        Set<Resource> productionSet = new HashSet<Resource>(production.keySet());
+        for (Resource resource : productionSet){
             resource.dispatch(production, faithTrack);
         }
     }
@@ -227,7 +228,7 @@ public class PersonalBoard extends MessageObservable {
             throw new InvalidProductionException("The power of production does not exist");
         }
         //Add resource chosen by player
-        Map<Resource, Integer> production = powerOfProduction.getProduction();
+        Map<Resource, Integer> production = new HashMap<>(powerOfProduction.getProduction());
         production.put(resource, 1);
 
         //checking that the resources the specified cost are right for this production

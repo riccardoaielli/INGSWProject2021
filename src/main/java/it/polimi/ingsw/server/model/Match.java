@@ -21,7 +21,7 @@ import java.util.Stack;
  * The controller interacts with the model by the methods of this class
  */
 public class Match extends MessageObservable implements EndGameConditionsObserver {
-    private final int DEMO_TURNS = 10;
+    private final int DEMO_TURNS = 100;
     private final int matchID;
     private final int numOfPlayers;
     private int numOfPlayersReady;

@@ -53,7 +53,7 @@ public class Strongbox extends MessageObservable {
      */
     public Map<Resource, Integer> resourcesNotAvailable(Map<Resource, Integer> resourceMap){
         Map<Resource, Integer> resourceToCheckMap = new HashMap<>(resourceMap);
-        for (Resource resource : resourceToCheckMap.keySet())  {
+        for (Resource resource : resourceMap.keySet())  {
             if (strongbox.get(resource) != null){
                 if (strongbox.get(resource) >= resourceToCheckMap.get(resource)){
                     resourceToCheckMap.remove(resource);
