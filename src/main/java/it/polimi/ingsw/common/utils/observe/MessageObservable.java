@@ -1,6 +1,5 @@
 package it.polimi.ingsw.common.utils.observe;
 
-import it.polimi.ingsw.common.messages.Message;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 
 import java.util.ArrayList;

@@ -21,7 +21,7 @@ import java.util.Stack;
  * The controller interacts with the model by the methods of this class
  */
 public class Match extends MessageObservable implements EndGameConditionsObserver {
-    private final int DEMO_TURNS = 3;
+    private final int DEMO_TURNS = 10;
     private final int matchID;
     private final int numOfPlayers;
     private int numOfPlayersReady;
@@ -55,7 +55,7 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         if(!demo)
          Collections.shuffle(leaderCards);
         //crates market and card grid
-        market = new Market();
+        market = new Market(demo);
         market.addObserverList(this.getMessageObservers());
         cardGrid = new CardGrid(demo);
         cardGrid.AddMatchToNotify(this);

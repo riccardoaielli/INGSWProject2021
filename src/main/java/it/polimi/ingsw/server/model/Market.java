@@ -21,31 +21,33 @@ public class Market extends MessageObservable {
     /**
      * this constructor creates the market data structure and initializes it with randomly placed marbles
      */
-    public Market(){
-
-        int i, j;
+    public Market(boolean demo){
+        int row, column;
         marbleStack = new Stack<>();
 
         // filling the stack with all needed marbles
-        for (i=0; i<4 ; i++){
-            marbleStack.push(Marble.WHITEMARBLE);
-        }
-
-        for (i=0; i<2 ; i++){
-            marbleStack.push(Marble.BLUEMARBLE);
-            marbleStack.push(Marble.YELLOWMARBLE);
-            marbleStack.push(Marble.GREYMARBLE);
-            marbleStack.push(Marble.PURPLEMARBLE);
-        }
+        marbleStack.push(Marble.WHITEMARBLE);
+        marbleStack.push(Marble.YELLOWMARBLE);
+        marbleStack.push(Marble.WHITEMARBLE);
+        marbleStack.push(Marble.GREYMARBLE);
+        marbleStack.push(Marble.YELLOWMARBLE);
+        marbleStack.push(Marble.WHITEMARBLE);
+        marbleStack.push(Marble.PURPLEMARBLE);
+        marbleStack.push(Marble.GREYMARBLE);
+        marbleStack.push(Marble.BLUEMARBLE);
+        marbleStack.push(Marble.BLUEMARBLE);
+        marbleStack.push(Marble.PURPLEMARBLE);
         marbleStack.push(Marble.REDMARBLE);
+        marbleStack.push(Marble.WHITEMARBLE);
 
         // randomizing marbleStack
-        Collections.shuffle(marbleStack);
+        if(!demo)
+            Collections.shuffle(marbleStack);
 
         // filling the marketMatrix randomly with marbles
-        for(i=0; i<maxRow; i++)
-            for(j=0; j<maxColumn; j++){
-                marketMatrix[i][j] = marbleStack.pop();
+        for(row=0; row<maxRow; row++)
+            for(column=0; column<maxColumn; column++){
+                marketMatrix[row][column] = marbleStack.pop();
             }
 
         marbleOut = marbleStack.pop();
@@ -54,7 +56,6 @@ public class Market extends MessageObservable {
 
     // this method changes the marketMatrix data structure
     private void changeMarket(int rowOrColumn, int value){
-
         int row, column;
 
         if(rowOrColumn==0){

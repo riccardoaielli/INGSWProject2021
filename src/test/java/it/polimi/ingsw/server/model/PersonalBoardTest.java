@@ -21,7 +21,7 @@ class PersonalBoardTest {
     @BeforeEach
     void setup(){
         try {
-            match = new Match(1, 4,false);
+            match = new Match(1, 4,true);
         } catch (InvalidParameterException exception) {
             assert false;
         }

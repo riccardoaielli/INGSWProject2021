@@ -71,7 +71,7 @@ public class Controller extends MessageObservable{
                 if(numOfPlayers == 1)
                     match = new SoloMatch(1,demo);
                 else
-                    match = new Match(1,numOfPlayers,true);
+                    match = new Match(1,numOfPlayers,demo);
                 //creates a player
                 handleNicknameReplyMessage(nickname,view);
                 firstConnected = true;
