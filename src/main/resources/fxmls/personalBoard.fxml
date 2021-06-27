@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Circle?>
 
-<SplitPane dividerPositions="0.20639147802929428" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="871.0" styleClass="transparentBackground" stylesheets="@../css/gameInterface.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.PersonalBoardController">
+<SplitPane dividerPositions="0.20639147802929428" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="871.0" styleClass="transparentBackground" stylesheets="@../css/gameInterface.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.PersonalBoardController">
     <items>
       <StackPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="398.0" prefWidth="294.0">
          <children>
@@ -104,6 +104,26 @@
                   <Insets bottom="310.0" right="150.0" />
                </StackPane.margin>
             </Label>
+            <ImageView fx:id="leaderCard1Depot1" fitHeight="35.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+               <StackPane.margin>
+                  <Insets bottom="90.0" left="115.0" />
+               </StackPane.margin>
+            </ImageView>
+            <ImageView fx:id="leaderCard2Depot2" fitHeight="35.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+               <StackPane.margin>
+                  <Insets left="190.0" top="310.0" />
+               </StackPane.margin>
+            </ImageView>
+            <ImageView fx:id="leaderCard2Depot1" fitHeight="35.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+               <StackPane.margin>
+                  <Insets left="115.0" top="310.0" />
+               </StackPane.margin>
+            </ImageView>
+            <ImageView fx:id="leaderCard1Depot2" fitHeight="35.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+               <StackPane.margin>
+                  <Insets bottom="90.0" left="190.0" />
+               </StackPane.margin>
+            </ImageView>
          </children>
       </StackPane>
         <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="569.0" styleClass="transparentBackground" stylesheets="@../css/gameInterface.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">

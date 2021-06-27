@@ -51,8 +51,16 @@ public class PersonalBoardController extends  AbstractController{
     private ImageView leaderCard1;
     @FXML
     private ImageView leaderCard2;
+    //Resource images for leader cards with depot power
     @FXML
-    private AnchorPane anchorPane;
+    private ImageView leaderCard1Depot1;
+    @FXML
+    private ImageView leaderCard1Depot2;
+    @FXML
+    private ImageView leaderCard2Depot1;
+    @FXML
+    private ImageView leaderCard2Depot2;
+
 
     //Development card space grid panes
     @FXML
@@ -182,7 +190,7 @@ public class PersonalBoardController extends  AbstractController{
         redCrossImgV.setImage(new Image("personalBoardImage/" + "redCross" + ".png"));
         redCrossImgV.setPreserveRatio(true);
 
-        for(int i=0; i<5; i++){
+        for(int i=0; i<3; i++){
             warehouseDepot.add(new ArrayList<>());
         }
         warehouseDepot.get(0).add(firstZero);
@@ -238,24 +246,24 @@ public class PersonalBoardController extends  AbstractController{
     }
 
     public void updateWarehouse(List<Map<Resource, Integer>> depots){
-        int k=0;
+        int shelfIndex=0;
 
         for (ArrayList<ImageView> array : warehouseDepot)
             for(ImageView img : array)
                 img.setImage(null);
 
         for(Map<Resource, Integer> map : depots){
-            for(Resource x : map.keySet()){
-                if(map.containsKey(x)){
-                    int j = (int) map.get(x);
-                    ArrayList<ImageView> array = warehouseDepot.get(k);
-                    for(int i=0; i<j; i++){
+            for(Resource resource : map.keySet()){
+                if(map.containsKey(resource)){
+                    int value = map.get(resource);
+                    ArrayList<ImageView> array = warehouseDepot.get(shelfIndex);
+                    for(int i=0; i<value; i++){
                         ImageView imgV = array.get(i);
-                        setWareHouseDepotImgV(imgV, x);
+                        setWareHouseDepotImgV(imgV, resource);
                     }
                 }
             }
-            k++;
+            shelfIndex++;
         }
     }
 
@@ -567,10 +575,25 @@ public class PersonalBoardController extends  AbstractController{
         if(numLeaderCard==1){
             leaderCard1.setImage(new Image("cardsImage/" + leaderCardID + ".png"));
             leaderCard1.setEffect(highlightEffectGreen);
+            //if leader card with depot power
+            if (isLeaderDepot(leaderCardID)){
+                warehouseDepot.add(new ArrayList<>());
+                warehouseDepot.get(warehouseDepot.size()-1).add(leaderCard1Depot1);
+                warehouseDepot.get(warehouseDepot.size()-1).add(leaderCard1Depot2);
+            }
         }if(numLeaderCard==2){
             leaderCard2.setImage(new Image("cardsImage/" + leaderCardID + ".png"));
             leaderCard2.setEffect(highlightEffectGreen);
+            if (isLeaderDepot(leaderCardID)){
+                warehouseDepot.add(new ArrayList<>());
+                warehouseDepot.get(warehouseDepot.size()-1).add(leaderCard2Depot1);
+                warehouseDepot.get(warehouseDepot.size()-1).add(leaderCard2Depot2);
+            }
         }
     }
 
+    //Returns true if the provided leader card id matches one of a leader card id with a depot power
+    private boolean isLeaderDepot(int leaderCardID){
+        return(leaderCardID == 49 || leaderCardID == 50 || leaderCardID == 51 || leaderCardID == 52);
+    }
 }
