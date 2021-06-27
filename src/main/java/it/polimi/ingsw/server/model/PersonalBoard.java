@@ -24,7 +24,12 @@ public class PersonalBoard extends MessageObservable {
     private Market market;
     private CardGrid cardGrid;
     private DevelopmentCardSpace developmentCardSpace;
-    //Array of booleans used to check if a powerOfProduction has already been used in the same turn
+
+    /*Array of booleans used to check if a powerOfProduction has already been used in the same turn
+    Position 0: Basic Production
+    Position 1,2,3: Development Card Production slot 1,2,3
+    Position 4,5: Leader Card Production, card 1 and 2
+     */
     private Boolean[] powerOfProductionUsed = new Boolean[TOTPOWERPRODUCTIONS];
     private PersonalBoardPhase personalBoardPhase;
     private int numOfResourcesToChoose;
@@ -57,7 +62,6 @@ public class PersonalBoard extends MessageObservable {
         this.temporaryMapResource = new HashMap<>();
         this.temporaryMarbles = new HashMap<>();
         Arrays.fill(this.powerOfProductionUsed, false);
-        //TODO when the turn ends set power of production to null again
         numOfResourcesToChoose = 0;
         personalBoardPhase = PersonalBoardPhase.LEADER_CHOICE;
     }
@@ -670,6 +674,7 @@ public class PersonalBoard extends MessageObservable {
     }
 
     public void endTurn(){
+        Arrays.fill(this.powerOfProductionUsed, false);
         personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE;
     }
 

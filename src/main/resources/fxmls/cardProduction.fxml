@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox styleClass="menuBackground" stylesheets="@../css/global.css" xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.CardProductionController">
+    <children>
+        <StackPane prefHeight="70.0" prefWidth="690.0" styleClass="transparentBackground" stylesheets="@../css/global.css">
+            <children>
+                <Label prefHeight="70.0" text="Choose the resources and&#10;the development card" textAlignment="CENTER" />
+            </children>
+        </StackPane>
+        <!-- resource choice -->
+        <fx:include fx:id="resourceChoice" source="../fxmls/resourceChoice.fxml" />
+        <StackPane prefHeight="139.0" prefWidth="694.0" styleClass="transparentBackground" stylesheets="@../css/gameInterface.css">
+            <children>
+                <ImageView id="1" fx:id="devCardImgView1" fitHeight="225.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+                    <StackPane.margin>
+                        <Insets right="375.0" />
+                    </StackPane.margin>
+                </ImageView>
+                <ImageView id="2" fx:id="devCardImgView2" fitHeight="225.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+                    <StackPane.margin>
+                        <Insets />
+                    </StackPane.margin>
+                </ImageView>
+            <ImageView id="3" fx:id="devCardImgView3" fitHeight="225.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+               <StackPane.margin>
+                  <Insets left="375.0" />
+               </StackPane.margin>
+            </ImageView>
+            </children>
+        </StackPane>
+      <StackPane prefHeight="90.0" prefWidth="694.0" styleClass="transparentBackground" stylesheets="@../css/global.css">
+         <children>
+                <Button fx:id="doneButton" mnemonicParsing="false" text="Done" />
+         </children>
+      </StackPane>
+    </children>
+</VBox>

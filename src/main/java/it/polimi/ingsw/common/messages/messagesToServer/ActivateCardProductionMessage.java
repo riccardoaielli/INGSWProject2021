@@ -20,7 +20,7 @@ public class ActivateCardProductionMessage extends MessageToServer {
      * @param nickname the player that sent the message
      * @param costStrongbox a map of resources to take from the strongbox
      * @param costWarehouseDepot a map of resources to take from the warehouse
-     * @param indexDevelopmentCardSpace the index of the card to use
+     * @param indexDevelopmentCardSpace the index of the card to use. Ranges from 1 to 3
      */
     public ActivateCardProductionMessage(String nickname, Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, int indexDevelopmentCardSpace) {
         super(nickname, MessageType.ACTIVATE_CARD_PRODUCTION);

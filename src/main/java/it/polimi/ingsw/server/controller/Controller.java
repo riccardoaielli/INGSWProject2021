@@ -99,7 +99,7 @@ public class Controller extends MessageObservable{
                 match.getCurrentPlayer().getPersonalBoard().activateLeader(numLeaderCard);
             }
             else
-                notifyObservers(new ErrorMessage(getNickname(),"wrong phase"));
+                view.update(new ErrorMessage(getNickname(),"wrong phase"));
         } catch (InvalidParameterException | RequirementNotMetException exception) {
             view.update(new ErrorMessage(nickname, exception.getMessage()));
         }
@@ -327,7 +327,7 @@ public class Controller extends MessageObservable{
      * @param nickname the nickname of the player
      * @param costStrongbox a map of resources to get from the strongbox
      * @param costWarehouseDepot a map of resources to get from the warehouse depots
-     * @param indexDevelopmentCardSpace the space of the development card space to take the power of production from
+     * @param indexDevelopmentCardSpace the space of the development card space to take the power of production from. Ranges from 1 to 3
      */
     public synchronized void handleActivateCardProductionMessage(View view, String nickname, Map<Resource,Integer> costStrongbox, Map<Resource,Integer> costWarehouseDepot, int indexDevelopmentCardSpace){
         if((match.getMatchPhase() == MatchPhase.STANDARDROUND || match.getMatchPhase() == MatchPhase.LASTROUND)

@@ -37,7 +37,9 @@ public class ProductionController extends AbstractController{
     }
 
     private void onDevCardProductionClick(MouseEvent e){
-
+        SceneManager.getInstance().showPopup("cardProduction");
+        Stage stage = (Stage) basicProductionButton.getScene().getWindow();
+        stage.close();
     }
 
     private void onEndProductionClick(MouseEvent e){

@@ -25,10 +25,10 @@ public class LeaderDiscount extends LeaderCard{
     public void abilityDiscount(Map<Resource, Integer> resources) {
         if (resources.containsKey(resourceDiscounted)) {
             Integer newValue = resources.get(resourceDiscounted) - discount;
-            if (newValue >= 0)
+            if (newValue > 0)
                 resources.replace(resourceDiscounted, newValue);
             else
-                resources.replace(resourceDiscounted, 0);
+                resources.remove(resourceDiscounted);
         }
     }
 

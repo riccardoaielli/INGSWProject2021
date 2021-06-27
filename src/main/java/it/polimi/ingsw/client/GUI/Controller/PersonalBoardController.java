@@ -46,20 +46,25 @@ public class PersonalBoardController extends  AbstractController{
     @FXML
     private Label purpleTempMarbleLabel;
 
+    //Leader cards image
     @FXML
     private ImageView leaderCard1;
     @FXML
     private ImageView leaderCard2;
     @FXML
     private AnchorPane anchorPane;
+
+    //Development card space grid panes
     @FXML
     private GridPane devCardSpaceZeroGP;
     @FXML
     private GridPane devCardSpaceOneGP;
     @FXML
     private GridPane devCardSpaceTwoGP;
+    //Personal board background
     @FXML
     private ImageView imgViewPB;
+    //Resources image views
     @FXML
     private ImageView shieldImgV;
     @FXML
@@ -70,7 +75,6 @@ public class PersonalBoardController extends  AbstractController{
     private ImageView servantImgV;
     @FXML
     private ImageView redCrossImgV;
-
     @FXML
     private ImageView blackCrossImgV;
 
@@ -104,8 +108,10 @@ public class PersonalBoardController extends  AbstractController{
     private Label servantStrongboxLabel;
 
     private Image leaderCard1Image;
-
     private Image leaderCard2Image;
+
+    private ImageView topDevCard1;
+
 
     private final DropShadow highlightEffectRed = new DropShadow(6, Color.web("#f03030")); //green #65f952, red #f03030, arancione #f9dc52
     private final DropShadow highlightEffectGreen = new DropShadow(6, Color.web("#65f952")); //green #65f952, red #f03030, arancione #f9dc52
@@ -139,6 +145,8 @@ public class PersonalBoardController extends  AbstractController{
     private ArrayList<ArrayList<ImageView>> warehouseDepot = new ArrayList<ArrayList<ImageView>>();
 
     private ArrayList<ArrayList<ImageView>> developmentCardSpaceArray = new ArrayList<ArrayList<ImageView>>();
+
+    private final List<Image> topDevCards = new ArrayList<>();
 
     private ArrayList<ImageView> popeFavourTilesImgVArray = new ArrayList<ImageView>();
 
@@ -444,17 +452,32 @@ public class PersonalBoardController extends  AbstractController{
     public void setDevelopmentCardSpace(ArrayList<ArrayList<Integer>> cardsState) { //da sistemare non funziona
 
         int h = 0;
-        for (ArrayList<Integer> array : cardsState) {
-            for (int i=0; i<array.size(); i++) {
+        topDevCards.clear();
+        for (ArrayList<Integer> singleDevCardSpace : cardsState) {
+            for (int i=0; i<singleDevCardSpace.size(); i++) {
                 ImageView imgV = developmentCardSpaceArray.get(h).get(i);
-                int x = array.get(i);
+                int x = singleDevCardSpace.get(i);
                 if ((Integer.parseInt(imgV.getId()) != x) && (Integer.parseInt(imgV.getId()) != 0)){
                     imgV.setImage(new Image("cardsImage/" + x + ".png"));
                     imgV.setId(Integer.toString(x));
                 }
             }
             h++;
+
+            if(!singleDevCardSpace.isEmpty()){
+                int topCardId = singleDevCardSpace.get(singleDevCardSpace.size() - 1);
+                topDevCards.add(new Image("cardsImage/" + topCardId + ".png") );
+            }
+            else topDevCards.add(null);
         }
+    }
+
+    /**
+     * Method to get the image  of the top card of each development card space.
+     * @return A list where each element is the Image of the card on top of each development card space in GUI. If an element is set to null there are no cards in that development card space.
+     */
+    public List<Image> getTopDevCards(){
+        return topDevCards;
     }
 
     public void updateTemporaryResourceMap(Map<Resource, Integer> temporaryMapResource){
@@ -550,7 +573,5 @@ public class PersonalBoardController extends  AbstractController{
             leaderCard2.setEffect(highlightEffectGreen);
         }
     }
-
-
 
 }
