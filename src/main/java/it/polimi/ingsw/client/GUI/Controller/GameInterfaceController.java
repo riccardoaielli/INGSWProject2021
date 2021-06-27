@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.CLI.LocalModel.LocalPhase;
 import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.common.messages.messagesToServer.EndTurnMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.TakeFromMarketMessage;
+import it.polimi.ingsw.server.model.RankPosition;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import javafx.collections.ObservableArray;
@@ -184,6 +185,16 @@ public class GameInterfaceController extends AbstractController {
         productionButton.setDisable(true);
     }
 
+    public void initialResourceChoiceButtonDisabled() {
+        rearrangeWHouseButton.setDisable(true);
+        marketButton.setDisable(true);
+        buyCardButton.setDisable(true);
+        productionButton.setDisable(true);
+        activateLeaderButton.setDisable(true);
+        discardLeaderButton.setDisable(true);
+        endTurnButton.setDisable(true);
+    }
+
     public void updatePlayerTurn(String nickname){
 
         if(nickname.equals(getGui().getNickname()))
@@ -212,6 +223,24 @@ public class GameInterfaceController extends AbstractController {
                 tab.setStyle("-fx-background-color: #34eb61"); //#34eb61 colore verde chiaro
             }
         }
+    }
+
+    public void updateRank(ArrayList<RankPosition> rank){
+        String string = "";
+        for(RankPosition rankPosition : rank){
+            string = string + rankPosition.toString() + "       ";
+        }
+        SceneManager.getInstance().showClientDisconnectedInterface(string);
+        rearrangeWHouseButton.setDisable(true);
+        marketButton.setDisable(true);
+        buyCardButton.setDisable(true);
+        productionButton.setDisable(true);
+        activateLeaderButton.setDisable(true);
+        discardLeaderButton.setDisable(true);
+        endTurnButton.setDisable(true);
+        /*SceneManager.getInstance().setRootFXML("rankInterface");
+        RankInterfaceController controller = (RankInterfaceController) SceneManager.getInstance().getController("rankInterface");
+        controller.setLabel(string);*/
     }
 
     /**

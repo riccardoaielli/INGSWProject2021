@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.GUI.Controller;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -22,6 +23,7 @@ public class ClientDisconnectedInterfaceController extends AbstractController{
 
     public void setStringMessage(String string){
         label.setText(string);
+        label.setAlignment(Pos.CENTER);
     }
 
     private void okButtonClick(Event event){

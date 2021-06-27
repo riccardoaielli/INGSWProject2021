@@ -74,6 +74,8 @@ public class GUI implements ClientView {
     @Override
     public void askResourceChoice() {
         SceneManager.getInstance().showPopup("initialResourceChoice");
+        GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterface");
+        Platform.runLater(()-> gameInterfaceController.initialResourceChoiceButtonDisabled());
     }
 
     @Override
@@ -233,7 +235,8 @@ public class GUI implements ClientView {
 
     @Override
     public void showUpdateRank(String nickname, ArrayList<RankPosition> rank) {
-
+        GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterface");
+        Platform.runLater(()-> gameInterfaceController.updateRank(rank));
     }
 
     @Override

@@ -215,7 +215,7 @@ public class PersonalBoardController extends  AbstractController{
 
     }
 
-    //serve a inizializzare l'array di devCard space dal gridPane
+    //initialize developmentCardSpaceArray
     private void devCardSpaceSetUp(GridPane devCardSpaceGP){
 
         ArrayList<ImageView> singleDevCardSpaceArray = new ArrayList<>();
@@ -240,7 +240,6 @@ public class PersonalBoardController extends  AbstractController{
     public void updateWarehouse(List<Map<Resource, Integer>> depots){
         int k=0;
 
-        //cancello le immagini già presenti
         for (ArrayList<ImageView> array : warehouseDepot)
             for(ImageView img : array)
                 img.setImage(null);
@@ -449,7 +448,7 @@ public class PersonalBoardController extends  AbstractController{
         }
     }
 
-    public void setDevelopmentCardSpace(ArrayList<ArrayList<Integer>> cardsState) { //da sistemare non funziona
+    public void setDevelopmentCardSpace(ArrayList<ArrayList<Integer>> cardsState) {
 
         int h = 0;
         topDevCards.clear();
