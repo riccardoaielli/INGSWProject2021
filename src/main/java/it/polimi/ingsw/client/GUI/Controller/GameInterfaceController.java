@@ -3,24 +3,17 @@ package it.polimi.ingsw.client.GUI.Controller;
 import it.polimi.ingsw.client.CLI.LocalModel.LocalPhase;
 import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.common.messages.messagesToServer.EndTurnMessage;
-import it.polimi.ingsw.common.messages.messagesToServer.TakeFromMarketMessage;
 import it.polimi.ingsw.server.model.RankPosition;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.ToolBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +46,7 @@ public class GameInterfaceController extends AbstractController {
 
     //PERSONAL BOARDS
     @FXML
-    private TabPane personalTab;
+    private TabPane personalTabs;
     private Map<String, PersonalBoardController> personalBoardControllerMap;
 
     //MARKET
@@ -122,7 +115,7 @@ public class GameInterfaceController extends AbstractController {
             try {
                 Tab playerTab = new Tab(nickname, tabContent.load());
                 personalBoardControllerMap.put(nickname, tabContent.getController());
-                personalTab.getTabs().add(playerTab);
+                personalTabs.getTabs().add(playerTab);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -216,7 +209,7 @@ public class GameInterfaceController extends AbstractController {
             endTurnButton.setDisable(true);
         }
 
-        ObservableList<Tab> list = personalTab.getTabs();
+        ObservableList<Tab> list = personalTabs.getTabs();
         for(Tab tab : list){
             tab.setStyle("-fx-background-color: white");
             if(tab.getText().equals(nickname)){
@@ -265,6 +258,10 @@ public class GameInterfaceController extends AbstractController {
 
     public MarketController getMarketGridController() {
         return marketGridController;
+    }
+
+    public TabPane getPersonalTabs() {
+        return personalTabs;
     }
 
 }

@@ -31,20 +31,17 @@ public class ClientSocket implements MessageSender {
 
         try {
             socket = new Socket(hostAddress, portNumber);
-            out = new PrintWriter(socket.getOutputStream(), true);//stream su cui scrivere per mandare al server
+            //Stream to write to and send to the server
+            out = new PrintWriter(socket.getOutputStream(), true);
+            Thread inputThread = new Thread(new SocketInReader(socket, this));
+            inputThread.start();
 
         } catch (UnknownHostException e) {
-            System.err.println("Don't know about host, please insert a valid host " + hostAddress);
-            System.exit(1);
+            clientView.closeGame("Don't know about host, please insert a valid host " + hostAddress);
         } catch (IOException e) {
-            System.err.println("Couldn't get I/O for the connection to " +
+            clientView.closeGame("Couldn't connect to " +
                     hostAddress);
-            System.exit(1);
         }
-
-        Thread inputThread = new Thread(new SocketInReader(socket, this));
-        inputThread.start();
-        //Thread.currentThread().interrupt();
     }
 
     /**
@@ -63,7 +60,7 @@ public class ClientSocket implements MessageSender {
      */
     @Override
     public void sendMessage(MessageToServer message) {
-        //serializza e invia sul socket
+        //Serializes and sends to socket
         out.println(gson.toJson(message));
     }
 
@@ -72,13 +69,12 @@ public class ClientSocket implements MessageSender {
      */
     public void disconnect() {
         try {
-            System.out.println("Aborted StdinReader thread, you will be disconnected");
             if (!socket.isClosed()) {
-                System.out.println("Socket closed");
+                clientView.closeGame("Could not reach server, you will be disconnected");
                 socket.close();
             }
         } catch (IOException e) {
-            System.out.println("Could not disconnect.");
+            clientView.closeGame("Could not disconnect.");
         }
     }
 }

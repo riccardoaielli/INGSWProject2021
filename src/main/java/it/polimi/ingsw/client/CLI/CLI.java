@@ -220,7 +220,12 @@ public class CLI implements ClientView {
     public void askResourceChoice() {
         int totalResources = 0;
         int numOfResourceToChoose = localModel.getNumOfResourceToChoose();
-        System.out.println("Choose " + numOfResourceToChoose + " resource to add to your depot");
+        if(numOfResourceToChoose>1){
+            System.out.println("Choose " + numOfResourceToChoose + " resources to add to your depot");
+        }
+        else{
+            System.out.println("Choose " + numOfResourceToChoose + " resource to add to your depot");
+        }
         Map<Resource,Integer> resources = new HashMap<>();
 
         do {
