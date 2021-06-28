@@ -4,10 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.server.model.*;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
+import java.util.Objects;
 import java.util.Stack;
 
 /**
@@ -17,10 +17,10 @@ public class LeaderCardParser {
 
     private Stack<LeaderCard> leaderCards;
 
-    private static final String pathLeaderCardDepot = "src/main/resources/server/leaderCardDepot.json";
-    private static final String pathLeaderCardDiscount = "src/main/resources/server/leaderCardDiscount.json";
-    private static final String pathLeaderCardMarble = "src/main/resources/server/leaderCardMarble.json";
-    private static final String pathLeaderCardProduction = "src/main/resources/server/leaderCardProduction.json";
+    private static final String pathLeaderCardDepot = "/server/leaderCardDepot.json";
+    private static final String pathLeaderCardDiscount = "/server/leaderCardDiscount.json";
+    private static final String pathLeaderCardMarble = "/server/leaderCardMarble.json";
+    private static final String pathLeaderCardProduction = "/server/leaderCardProduction.json";
 
     Reader reader = null;
     Gson gson = new Gson();
@@ -59,11 +59,7 @@ public class LeaderCardParser {
         Stack<LeaderDepot> leaderCardDepot;
 
         //Deserializing leaderCardDepot
-        try {
-            reader = new FileReader(pathLeaderCardDepot);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(this.getClass().getResourceAsStream(pathLeaderCardDepot)));
 
         Type myDataType = new TypeToken<Stack<LeaderDepot>>(){}.getType();
         leaderCardDepot = gson.fromJson(reader, myDataType);
@@ -76,11 +72,7 @@ public class LeaderCardParser {
         Stack<LeaderMarble> leaderCardMarble;
 
         //Deserializing leaderCardMarble
-        try {
-            reader = new FileReader(pathLeaderCardMarble);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(this.getClass().getResourceAsStream(pathLeaderCardMarble)));
 
         Type myDataType = new TypeToken<Stack<LeaderMarble>>(){}.getType();
         leaderCardMarble = gson.fromJson(reader, myDataType);
@@ -93,11 +85,7 @@ public class LeaderCardParser {
         Stack<LeaderProduction> leaderCardProduction;
 
         //Deserializing leaderCardProduction
-        try {
-            reader = new FileReader(pathLeaderCardProduction);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(this.getClass().getResourceAsStream(pathLeaderCardProduction)));
 
         Type myDataType = new TypeToken<Stack<LeaderProduction>>(){}.getType();
         leaderCardProduction = gson.fromJson(reader, myDataType);
@@ -110,11 +98,7 @@ public class LeaderCardParser {
         Stack<LeaderDiscount> leaderCardDiscount;
 
         //Deserializing leaderCardDiscount
-        try {
-            reader = new FileReader(pathLeaderCardDiscount);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(this.getClass().getResourceAsStream(pathLeaderCardDiscount)));
 
         Type myDataType = new TypeToken<Stack<LeaderDiscount>>(){}.getType();
         leaderCardDiscount = gson.fromJson(reader, myDataType);

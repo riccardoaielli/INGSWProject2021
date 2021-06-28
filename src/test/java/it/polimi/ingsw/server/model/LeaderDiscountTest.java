@@ -25,16 +25,16 @@ class LeaderDiscountTest {
         resourcesTest.put(Resource.SHIELD,1);
         try {
             leaderCardTest.abilityDiscount(resourcesTest);
-            assertTrue(resourcesTest.get(Resource.SHIELD) == 0);
+            assertNull(resourcesTest.get(Resource.SHIELD));
 
             leaderCardTest.abilityDiscount(resourcesTest);
-            assertTrue(resourcesTest.get(Resource.SHIELD) == 0);
+            assertNull(resourcesTest.get(Resource.SHIELD));
 
             resourcesTest.put(Resource.COIN, 4);
             resourcesTest.put(Resource.SHIELD,3);
             leaderCardTest.abilityDiscount(resourcesTest);
-            assertTrue(resourcesTest.get(Resource.SHIELD) == 1);
-            assertTrue(resourcesTest.get(Resource.COIN) == 4);
+            assertEquals(1, (int) resourcesTest.get(Resource.SHIELD));
+            assertEquals(4, (int) resourcesTest.get(Resource.COIN));
         }catch (InvalidLeaderAction exception){
             assert false;
         }

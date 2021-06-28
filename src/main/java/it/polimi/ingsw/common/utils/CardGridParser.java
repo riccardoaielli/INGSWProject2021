@@ -4,10 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.server.model.DevelopmentCard;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.util.Objects;
 import java.util.Stack;
 
 
@@ -19,15 +18,9 @@ public class CardGridParser {
 
     public Stack<DevelopmentCard>[][] parse() {
 
-    String path = "src/main/resources/server/developmentCards.json";
+    String path = "/server/developmentCards.json";
+    InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(this.getClass().getResourceAsStream(path)));
 
-    Reader reader = null;
-    try {
-        reader = new FileReader(path);
-    } catch (
-            FileNotFoundException e) {
-        e.printStackTrace();
-    }
 
     Type myDataType = new TypeToken<Stack<DevelopmentCard>[][]>() {}.getType();
     cardGridMatrix = gson.fromJson(reader, myDataType);

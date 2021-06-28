@@ -1,5 +1,5 @@
 .menuBackground {
-    -fx-background-image: url("../../../src/main/resources/BlurredBackground.png");
+    -fx-background-image: url("/BlurredBackground.png");
     -fx-background-size: cover;
     -fx-position: relative;
 }
@@ -10,7 +10,7 @@
 
 @font-face {
     font-family: "Dominican Italic";
-    src: url("../../../src/main/resources/css/Dominican-Italic.ttf");
+    src: url("/css/Dominican-Italic.ttf");
 }
 
 .button{
