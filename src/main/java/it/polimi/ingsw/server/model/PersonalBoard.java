@@ -454,12 +454,7 @@ public class PersonalBoard extends MessageObservable {
         }
         //Activate leader card
         leaderCard.activate();
-
-        try {
-            leaderCard.abilityDepot(warehouseDepots);
-        } catch (InvalidLeaderAction invalidLeaderAction) {
-            invalidLeaderAction.printStackTrace();
-        }
+        leaderCard.abilityDepot(warehouseDepots);
 
         warehouseDepots.doNotify();
         notifyObservers(new LeaderCardActivatedUpdate(this.getNickname(), numLeaderCard, leaderCard.getId()));

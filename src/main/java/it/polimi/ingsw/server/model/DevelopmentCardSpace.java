@@ -118,7 +118,7 @@ public class DevelopmentCardSpace extends MessageObservable implements Observabl
      */
     public PowerOfProduction getPowerOfProduction(int cardPosition) throws InvalidParameterException{
         cardPosition = cardPosition - 1;
-        if(cardPosition >= 0 && cardPosition <  numOfStacks && cards.get(cardPosition) != null) {
+        if(cardPosition >= 0 && cardPosition <  numOfStacks && cards.get(cardPosition) != null && cards.get(cardPosition).size() != 0) {
             ArrayList<DevelopmentCard> cardStack = cards.get(cardPosition);
             return cardStack.get(cardStack.size() - 1).getPowerOfProduction();
         }

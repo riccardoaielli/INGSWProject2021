@@ -100,6 +100,11 @@ public class GUI implements ClientView {
     }
 
     @Override
+    public void setFirstProductionDone(boolean firstProductionDone) {
+
+    }
+
+    @Override
     public void askForLeaderPower() {
         SceneManager.getInstance().showPopup("whiteMarbleLeaderPower");
     }

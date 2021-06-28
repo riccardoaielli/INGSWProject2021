@@ -72,10 +72,8 @@ public abstract class LeaderCard {
     /**
      * Method to use the depot ability of the card
      * @param warehouseDepots the warehouse depot where the new depot will be added
-     * @throws InvalidLeaderAction when the card does not have this ability
      */
-    public  void abilityDepot(WarehouseDepots warehouseDepots) throws InvalidLeaderAction{
-        throw new InvalidLeaderAction("The selected card doesn't have the special depot ability");
+    public  void abilityDepot(WarehouseDepots warehouseDepots) {
     }
 
     /**

@@ -28,6 +28,7 @@ public class CLI implements ClientView {
     private boolean mainTurnActionDone;
     private boolean firstTurn;
     private boolean demo;
+    private boolean firstProductionDone;
 
     private StdInReader readLineThread;
 
@@ -45,6 +46,7 @@ public class CLI implements ClientView {
         mainTurnActionDone = false;
         firstTurn = true;
         demo = false;
+        firstProductionDone = false;
 
         readLineThread = new StdInReader();
         readLineThread.start();
@@ -515,11 +517,13 @@ public class CLI implements ClientView {
      */
     @Override
     public void askProduction() {
-        int productionChoice = readInt("Choose which kind of production you want to activate:" +
-                "\n1. Basic Production" +
-                "\n2. Leader Production" +
-                "\n3. Card Production" +
-                "\n4. End production");
+        String actions = "\n1. Basic Production\n2. Leader Production\n3. Card Production";
+        if(!firstProductionDone) {
+            actions = actions + ("\n4. Back to menu");
+        }
+        else
+            actions = actions + ("\n4. End production");
+        int productionChoice = readInt("Choose which kind of production you want to activate:" + actions);
         while (!(productionChoice>= 1 && productionChoice <=4)){
             productionChoice = readInt("Invalid number, choose a number between 1 and 4");
         }
@@ -534,10 +538,19 @@ public class CLI implements ClientView {
                 askCardProduction();
                 break;
             case 4:
-                messageSender.sendMessage(new EndProduction(getNickname()));
+                if(firstProductionDone)
+                    messageSender.sendMessage(new EndProduction(getNickname()));
+                else{
+                    setPhase(LocalPhase.MENU);
+                    getPhase().handlePhase(this);
+                }
                 break;
         }
 
+    }
+
+    public void setFirstProductionDone(boolean firstProductionDone) {
+        this.firstProductionDone = firstProductionDone;
     }
 
     /**
@@ -665,6 +678,7 @@ public class CLI implements ClientView {
     @Override
     public void setMainTurnActionDone(boolean mainTurnActionDone) {
         this.mainTurnActionDone = mainTurnActionDone;
+        firstProductionDone = false;
     }
 
     /**

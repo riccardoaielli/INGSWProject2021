@@ -56,6 +56,11 @@ public interface ClientView extends View {
     void askProduction();
 
     /**
+     * Setter for the boolean firstProductionDone
+     */
+    void setFirstProductionDone(boolean firstProductionDone);
+
+    /**
      * Method to ask the player a leader power to use
      */
     void askForLeaderPower();

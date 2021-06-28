@@ -21,6 +21,7 @@ public class ProductionDoneUpdate extends MessageToClient{
      */
     @Override
     public void handleMessage(ClientView clientView) {
+        clientView.setFirstProductionDone(true);
         clientView.getPhase().handlePhase(clientView);
     }
 }
