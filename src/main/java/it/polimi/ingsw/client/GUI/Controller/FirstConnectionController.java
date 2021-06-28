@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
 import it.polimi.ingsw.client.GUI.JavaFXGUI;
+import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.common.messages.messagesToServer.CreateMatchReplyMessage;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -27,8 +28,9 @@ public class FirstConnectionController extends AbstractController {
         String nickname = this.nickname.getText();
         int numOfPlayers = choiceBox.getValue();
         System.out.println(nickname + numOfPlayers);
-        this.getGui().getMessageSender().sendMessage(new CreateMatchReplyMessage(nickname, numOfPlayers));
         this.getGui().setMyNickname(nickname);
+        SceneManager.getInstance().setRootFXML("loadingScreen");
+        this.getGui().getMessageSender().sendMessage(new CreateMatchReplyMessage(nickname, numOfPlayers));
     }
 
 

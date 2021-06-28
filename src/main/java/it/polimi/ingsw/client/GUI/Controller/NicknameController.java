@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.common.messages.messagesToServer.CreateMatchReplyMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.NicknameReplyMessage;
 import javafx.event.Event;
@@ -22,9 +23,9 @@ public class NicknameController extends AbstractController {
 
     private void onJoinClick(Event event){
         String nickname = this.nickname.getText();
-        System.out.println(nickname);
-        this.getGui().getMessageSender().sendMessage(new NicknameReplyMessage(nickname));
         this.getGui().setMyNickname(nickname);
+        SceneManager.getInstance().setRootFXML("loadingScreen");
+        this.getGui().getMessageSender().sendMessage(new NicknameReplyMessage(nickname));
     }
 
 }

@@ -64,7 +64,7 @@ public class SceneManager {
         Platform.runLater(()-> setRoot(rootMap.get(fxml)));
     }
 
-    public void loadSceneAndController(String fxml){
+    private void loadSceneAndController(String fxml){
         FXMLLoader loader = loadFXML(fxml);
         try {
             Parent root = loader.load();

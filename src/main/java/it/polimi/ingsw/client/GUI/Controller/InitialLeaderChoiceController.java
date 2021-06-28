@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.common.messages.messagesToServer.DiscardInitialLeaderMessage;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -70,8 +71,10 @@ public class InitialLeaderChoiceController extends AbstractController{
                 numOfChoosenCards++;
             }
         }
-        if (numOfChoosenCards == 2)
+        if (numOfChoosenCards == 2){
+            SceneManager.getInstance().setRootFXML("loadingScreen");
             this.getGui().getMessageSender().sendMessage(new DiscardInitialLeaderMessage(getGui().getNickname(),firstCard,secondCard));
+        }
     }
 
     public void setLeaderCards(ArrayList<Integer> initialLeaderCardsID){
