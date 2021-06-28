@@ -86,7 +86,7 @@ public class FaithTrack extends MessageObservable implements ObservableGameEnder
 
     /**
      * this method is implemented for testing purpose
-     * @param tileNumber represents the number of the tile from 0 to 2
+     * @param tileNumber represents the number of the tile from 1 to 3
      * @return an int representing the value of the tile
      */
     public int getPopeFavourTileValue(int tileNumber){
@@ -123,8 +123,8 @@ public class FaithTrack extends MessageObservable implements ObservableGameEnder
                     popeFavourTiles.set(tileNumber, active);
                 else
                     popeFavourTiles.set(tileNumber, nonActivated);
+                notifyObservers(new PopeFavourTilesUpdate(getNickname(),new ArrayList<>(popeFavourTiles)));
             }
-            notifyObservers(new PopeFavourTilesUpdate(getNickname(),new ArrayList<>(popeFavourTiles)));
     }
 
     /**

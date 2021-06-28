@@ -110,6 +110,7 @@ public class PersonalBoard extends MessageObservable {
         pay(costStrongbox, costWarehouseDepot);
         //Adding production to strongbox and/or faithTrack
         dispatch(production);
+        checkVaticanReport();
         strongbox.add(production);
     }
 
@@ -536,15 +537,15 @@ public class PersonalBoard extends MessageObservable {
      * This method checks the conditions to activate the vatican report and activates the report for all the players.
      */
     public void checkVaticanReport() {
-        if (faithTrack.getPopeFavourTile(1) && 4 < faithTrack.getFaithTrackPosition() && faithTrack.getFaithTrackPosition() < 9){
+        if (faithTrack.getPopeFavourTile(1) && !faithTrack.getPopeFavourTile(2) && faithTrack.getFaithTrackPosition() > 7){
             //calls the vatican report for all the other players
             match.vaticanReport(1);
         }
-        else if(faithTrack.getPopeFavourTile(2) && 11 < faithTrack.getFaithTrackPosition() && faithTrack.getFaithTrackPosition() < 17){
+        else if(faithTrack.getPopeFavourTile(2) && !faithTrack.getPopeFavourTile(3) && faithTrack.getFaithTrackPosition() > 15){
             //calls the vatican report for all the other players
             match.vaticanReport(2);
         }
-        else if(faithTrack.getPopeFavourTile(3) && 18 < faithTrack.getFaithTrackPosition() && faithTrack.getFaithTrackPosition() < 25){
+        else if(faithTrack.getPopeFavourTile(3) && faithTrack.getFaithTrackPosition() == 24){
             //calls the vatican report for all the other players
             match.vaticanReport(3);
         }

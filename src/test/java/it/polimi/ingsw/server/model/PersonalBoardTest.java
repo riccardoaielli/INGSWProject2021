@@ -1,8 +1,5 @@
 package it.polimi.ingsw.server.model;
 
-
-import it.polimi.ingsw.server.model.Match;
-import it.polimi.ingsw.server.model.PersonalBoard;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
@@ -27,6 +24,7 @@ class PersonalBoardTest {
         }
         try {
             match.addPlayer("Mario",new ViewStub());
+            match.getPlayer("Mario").getPersonalBoard().setDemo();
         } catch (InvalidNickName invalidNickName) {
             assert false;
         }
@@ -79,8 +77,8 @@ class PersonalBoardTest {
 
         personalBoard.endProduction();
 
-        assertEquals(1, personalBoard.getStrongbox().getResourceQuantity(Resource.STONE));
-        assertEquals(2, personalBoard.getStrongbox().getResourceQuantity(Resource.SERVANT));
+        assertEquals(11, personalBoard.getStrongbox().getResourceQuantity(Resource.STONE));
+        assertEquals(12, personalBoard.getStrongbox().getResourceQuantity(Resource.SERVANT));
         assertEquals(1, personalBoard.getWarehouseDepots().getDepot(2).getNumberResources());
 
 
@@ -100,6 +98,32 @@ class PersonalBoardTest {
 
     @Test
     void takeFromMarket() {
+        Map<Marble,Integer> testMarbles = new HashMap<>();
+        try {
+            personalBoard.takeFromMarket(0,0);
+        } catch (InvalidParameterException e) {
+            assert false;
+        }
+        testMarbles = personalBoard.getTemporaryMarbles();
+        assertEquals(1,testMarbles.get(Marble.BLUEMARBLE));
+        assertEquals(1,testMarbles.get(Marble.PURPLEMARBLE));
+        assertEquals(1,testMarbles.get(Marble.REDMARBLE));
+        assertEquals(1,testMarbles.get(Marble.WHITEMARBLE));
+
+        try {
+            personalBoard.takeFromMarket(1,1);
+        } catch (InvalidParameterException e) {
+            assert false;
+        }
+        testMarbles = personalBoard.getTemporaryMarbles();
+        assertEquals(2,testMarbles.get(Marble.GREYMARBLE));
+        assertEquals(1,testMarbles.get(Marble.PURPLEMARBLE));
+
+        try {
+            personalBoard.takeFromMarket(3,1);
+        } catch (InvalidParameterException e) {
+            assert true;
+        }
     }
 
     @Test
@@ -165,6 +189,36 @@ class PersonalBoardTest {
 
     @Test
     void activateLeader() {
+        try {
+            personalBoard.activateLeader(0);
+        } catch (RequirementNotMetException e) {
+            assert false;
+        } catch (InvalidParameterException e) {
+            assert true;
+        }
+
+        try {
+            personalBoard.activateLeader(2);
+        } catch (RequirementNotMetException e) {
+            assert true;
+        } catch (InvalidParameterException e) {
+            assert false;
+        }
+
+        try {
+            personalBoard.activateLeader(1);
+        } catch (RequirementNotMetException | InvalidParameterException e) {
+            assert false;
+        }
+
+        try {
+            personalBoard.activateLeader(1);
+        } catch (RequirementNotMetException e) {
+            assert false;
+        } catch (InvalidParameterException e) {
+            assert true;
+        }
+
     }
 
     @Test
@@ -172,22 +226,66 @@ class PersonalBoardTest {
     }
 
     @Test
-    void checkVaticanReport() {
-    }
-
-    @Test
-    void notifyVaticanReport() {
-    }
-
-    @Test
     void sumVictoryPoints() {
     }
 
     @Test
-    void moveFaithMarker() {
-    }
+    void vaticanReport() {
+        PersonalBoard mario = null;
+        PersonalBoard marco = null;
+        PersonalBoard massimo = null;
+        try {
+            mario = match.getPlayer("Mario").getPersonalBoard();
 
-    @Test
-    void activateVaticanReport() {
+            match.addPlayer("Marco",new ViewStub());
+            marco = match.getPlayer("Marco").getPersonalBoard();
+            marco.setDemo();
+
+            match.addPlayer("Massimo",new ViewStub());
+            massimo = match.getPlayer("Massimo").getPersonalBoard();
+            massimo.setDemo();
+        } catch (InvalidNickName invalidNickName) {
+            assert false;
+        }
+        try {
+            marco.moveFaithMarker(6);
+            marco.checkVaticanReport();
+            mario.moveFaithMarker(9);
+            mario.checkVaticanReport();
+        } catch (InvalidParameterException e) {
+            assert false;
+        }
+        assertEquals(2,mario.getFaithTrack().getPopeFavourTileValue(1));
+        assertEquals(2,marco.getFaithTrack().getPopeFavourTileValue(1));
+        assertEquals(1,massimo.getFaithTrack().getPopeFavourTileValue(1));
+
+        try {
+            marco.moveFaithMarker(8);
+            marco.checkVaticanReport();
+            mario.moveFaithMarker(9);
+            mario.checkVaticanReport();
+        } catch (InvalidParameterException e) {
+            assert false;
+        }
+        assertEquals(2,mario.getFaithTrack().getPopeFavourTileValue(1));
+        assertEquals(2,marco.getFaithTrack().getPopeFavourTileValue(1));
+        assertEquals(1,massimo.getFaithTrack().getPopeFavourTileValue(1));
+
+        assertEquals(2,mario.getFaithTrack().getPopeFavourTileValue(2));
+        assertEquals(2,marco.getFaithTrack().getPopeFavourTileValue(2));
+        assertEquals(1,massimo.getFaithTrack().getPopeFavourTileValue(2));
+
+        try {
+            marco.moveFaithMarker(8);
+            marco.checkVaticanReport();
+            mario.moveFaithMarker(9);
+            mario.checkVaticanReport();
+        } catch (InvalidParameterException e) {
+            assert false;
+        }
+        assertEquals(2,mario.getFaithTrack().getPopeFavourTileValue(3));
+        assertEquals(2,marco.getFaithTrack().getPopeFavourTileValue(3));
+        assertEquals(1,massimo.getFaithTrack().getPopeFavourTileValue(3));
+
     }
 }
