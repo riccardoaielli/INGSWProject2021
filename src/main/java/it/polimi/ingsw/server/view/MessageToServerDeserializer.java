@@ -9,14 +9,14 @@ import java.lang.reflect.Type;
 /**
  * This class offers a custom deserializer to deserialize a json string into a massage without knowing the type of the message
  */
-public class MessageDeserializer implements JsonDeserializer <MessageToServer>{
+public class MessageToServerDeserializer implements JsonDeserializer <MessageToServer>{
     private GsonBuilder gsonBuilder;
     private Gson customGson;
 
     /**
      * This constructor creates the custom gsonBuilder to deserialize the messages
      */
-    public MessageDeserializer() {
+    public MessageToServerDeserializer() {
         gsonBuilder = new GsonBuilder().registerTypeAdapter(MessageToServer.class,this);
         customGson = gsonBuilder.create();
     }

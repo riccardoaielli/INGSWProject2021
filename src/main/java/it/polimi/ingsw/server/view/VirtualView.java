@@ -24,7 +24,7 @@ public class VirtualView implements Runnable,View {
     private PrintWriter out;
     private BufferedReader in;
     private Gson gson;
-    private static final MessageDeserializer messageDeserializer = new MessageDeserializer();
+    private static final MessageToServerDeserializer messageDeserializer = new MessageToServerDeserializer();
     private String nickname;
     private Lobby lobby;
 

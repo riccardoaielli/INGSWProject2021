@@ -39,6 +39,32 @@ class PersonalBoardTest {
 
     @Test
     void activateCardProduction() {
+        DevelopmentCard card = null;
+        Map<Resource,Integer> costStrongbox = new HashMap<>();
+        costStrongbox.put(Resource.SERVANT,1);
+        Map<Resource,Integer> costWarehouseDepot = new HashMap<>();
+        costWarehouseDepot.put(Resource.STONE,1);
+        try {
+            card = match.getCardGrid().getCard(2,0);
+            personalBoard.getDevelopmentCardSpace().addCard(card,1);
+            personalBoard.getWarehouseDepots().add(2,costWarehouseDepot);
+            personalBoard.getWarehouseDepots().add(2,costWarehouseDepot);
+        } catch (NoCardException | InvalidDevelopmentCardException | InvalidParameterException | InvalidAdditionException e) {
+            assert false;
+        }
+
+        try {
+            personalBoard.activateCardProduction(costStrongbox,costWarehouseDepot,1);
+        } catch (InvalidProductionException | InvalidRemovalException | InvalidCostException | InvalidParameterException e) {
+            assert false;
+        }
+
+        personalBoard.endProduction();
+
+        assertEquals(12,personalBoard.getStrongbox().getResourceQuantity(Resource.COIN));
+        assertEquals(1,personalBoard.getFaithTrack().getFaithTrackPosition());
+        assertEquals(1,personalBoard.getWarehouseDepots().getDepot(2).getMapResource().get(Resource.STONE));
+
     }
 
     @Test
@@ -95,11 +121,33 @@ class PersonalBoardTest {
 
     @Test
     void activateLeaderProduction() {
+        Map<Resource,Integer> costStrongbox = new HashMap<>();
+        costStrongbox.put(Resource.STONE,1);
+        Map<Resource,Integer> costWarehouseDepot = new HashMap<>();
+        try {
+            personalBoard.getDevelopmentCardSpace().addCard(match.getCardGrid().getCard(2,3),1);
+            personalBoard.getDevelopmentCardSpace().addCard(match.getCardGrid().getCard(1,3),1);
+            personalBoard.discardInitialLeader(1,2);
+            personalBoard.activateLeader(2);
+        } catch (RequirementNotMetException | InvalidParameterException | NoCardException | InvalidDevelopmentCardException e) {
+            assert false;
+        }
+        try {
+            personalBoard.activateLeaderProduction(costStrongbox,costWarehouseDepot,2,Resource.COIN);
+        } catch (InvalidProductionException | InvalidCostException | InvalidLeaderAction | InvalidRemovalException e) {
+            assert false;
+        }
+
+        assertEquals(1,personalBoard.getFaithTrack().getFaithTrackPosition());
+        assertEquals(11,personalBoard.getStrongbox().getResourceQuantity(Resource.COIN));
+        assertEquals(9,personalBoard.getStrongbox().getResourceQuantity(Resource.STONE));
+
     }
 
     @Test
     void takeFromMarket() {
         Map<Marble,Integer> testMarbles = new HashMap<>();
+        Map<Resource,Integer> testTemporaryResources = new HashMap<>();
         try {
             personalBoard.takeFromMarket(0,0);
         } catch (InvalidParameterException e) {
@@ -110,6 +158,15 @@ class PersonalBoardTest {
         assertEquals(1,testMarbles.get(Marble.PURPLEMARBLE));
         assertEquals(1,testMarbles.get(Marble.REDMARBLE));
         assertEquals(1,testMarbles.get(Marble.WHITEMARBLE));
+
+        personalBoard.transformMarbles();
+        testTemporaryResources = personalBoard.getTemporaryMapResource();
+        assertEquals(1,testTemporaryResources.get(Resource.SHIELD));
+        assertEquals(1,testTemporaryResources.get(Resource.SERVANT));
+        assertEquals(1,personalBoard.getFaithTrack().getFaithTrackPosition());
+
+        personalBoard.discardResourcesFromMarket();
+        assertEquals(0,testTemporaryResources.size());
 
         try {
             personalBoard.takeFromMarket(1,1);

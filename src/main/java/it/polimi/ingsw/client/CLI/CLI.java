@@ -65,8 +65,10 @@ public class CLI implements ClientView {
      */
     public void clearConsoleAndReprint() {
         System.out.print("\033[H\033[2J");
+        for(int i = 0; i < 100; i++)
+            System.out.println("\n");
         System.out.flush();
-        localModel.printView();
+        localModel.printView(phase);
         //Add reprint view
     }
 
@@ -386,7 +388,7 @@ public class CLI implements ClientView {
     public void askRearrange() {
         int rearrangeChoice = readInt("0. Go back to menu\n" +
                 "1. Move to/from special depot\n" +
-                "2. Swap resources in standard depot shelves\n");
+                "2. Swap resources in standard depot shelves");
         while (!(rearrangeChoice>= 0 && rearrangeChoice <=2)){
             rearrangeChoice = readInt("Invalid number, choose a number between 0 and 2");
         }
@@ -523,7 +525,7 @@ public class CLI implements ClientView {
         }
         else
             actions = actions + ("\n4. End production");
-        int productionChoice = readInt("Choose which kind of production you want to activate:" + actions);
+        int productionChoice = readInt("Choose which kind of production you want to activate:" + actions + "\nInsert a number between 1 and 4:");
         while (!(productionChoice>= 1 && productionChoice <=4)){
             productionChoice = readInt("Invalid number, choose a number between 1 and 4");
         }
@@ -624,7 +626,7 @@ public class CLI implements ClientView {
      */
     @Override
     public void askActivateLeader() {
-        int numLeaderCard = readInt("Choose the number of the card to activate: ");
+        int numLeaderCard = readInt("Choose the number of the card to activate[Type 0 to go back to menu]: ");
         while (numLeaderCard < 0 || numLeaderCard > 2){
             numLeaderCard = readInt("-Type 0 to go back to menu.\nChoose the number of the card to activate: ");
         }
@@ -743,6 +745,7 @@ public class CLI implements ClientView {
     @Override
     public void showUpdatedWarehouse(String nickname, List<Map<Resource, Integer>> depots) {
         localModel.getPlayer(nickname).setWareHouseDepots(depots);
+        clearConsoleAndReprint();
     }
 
     /**
@@ -753,6 +756,7 @@ public class CLI implements ClientView {
     @Override
     public void showUpdatedStrongbox(String nickname, Map<Resource, Integer> strongbox) {
         localModel.getPlayer(nickname).setStrongbox(strongbox);
+        clearConsoleAndReprint();
     }
 
     /**
@@ -763,6 +767,7 @@ public class CLI implements ClientView {
     @Override
     public void showUpdatedDevCardSpace(String nickname, ArrayList<ArrayList<Integer>> cardsState) {
         localModel.getPlayer(nickname).setDevelopmentCardSpace(cardsState);
+        clearConsoleAndReprint();
     }
 
     /**
@@ -773,6 +778,7 @@ public class CLI implements ClientView {
     @Override
     public void showUpdateTemporaryMarbles(String nickname, Map<Marble, Integer> temporaryMarbles) {
         localModel.getPlayer(nickname).setTemporaryMarbles(temporaryMarbles);
+        clearConsoleAndReprint();
         if(!temporaryMarbles.isEmpty()) {
             System.out.println(nickname + " obtained these marbles from the market:");
             localModel.getPlayer(nickname).printTermporaryMarbles();
@@ -787,7 +793,7 @@ public class CLI implements ClientView {
     @Override
     public void showUpdateRedcrossPosition(String nickname, int redcrossPosition) {
         localModel.getPlayer(nickname).setRedCrossPosition(redcrossPosition);
-        //System.out.println("redCross Updated");//this print id temporary
+        clearConsoleAndReprint();
     }
 
     /**
@@ -798,6 +804,7 @@ public class CLI implements ClientView {
     @Override
     public void showUpdatePopeFavourTiles(String nickname, ArrayList<Integer> popeFavourTiles) {
         localModel.getPlayer(nickname).setPopeFavourTiles(popeFavourTiles);
+        clearConsoleAndReprint();
     }
 
     /**
@@ -806,14 +813,13 @@ public class CLI implements ClientView {
      */
     @Override
     public void showUpdatePlayerTurn(String nickname) {
+        clearConsoleAndReprint();
         if (nickname.equals(localModel.getLocalPlayer().getNickname())){
             System.out.println("It's your turn");
         }
         else {
             System.out.println("It's " + nickname + "'s turn");
         }
-
-
     }
 
     /**
@@ -824,6 +830,7 @@ public class CLI implements ClientView {
     @Override
     public void showUpdateMarket(Marble[][] marketMatrix, Marble marbleOut) {
         localModel.setMarket(marketMatrix,marbleOut);
+        clearConsoleAndReprint();
     }
 
     /**
@@ -833,7 +840,6 @@ public class CLI implements ClientView {
      */
     @Override
     public void showUpdateAddSpecialDepotUpdate(String nickname, Resource depotResourceType) {
-
     }
 
     /**
@@ -843,6 +849,7 @@ public class CLI implements ClientView {
     @Override
     public void showUpdateCardGridUpdate(int[][] cardGridMatrixUpdate) {
         localModel.setCardGrid(cardGridMatrixUpdate);
+        clearConsoleAndReprint();
     }
 
     /**
@@ -853,6 +860,7 @@ public class CLI implements ClientView {
     @Override
     public void showUpdateDiscardedLeaderUpdate(String nickname, int leaderPosition) {
         localModel.removeLeaderCard(nickname, leaderPosition);
+        clearConsoleAndReprint();
         System.out.println(nickname + " has discarded a leader card");
     }
 
@@ -865,6 +873,7 @@ public class CLI implements ClientView {
     @Override
     public void showUpdateLeaderCardActivatedUpdate(String nickname, int numLeadercard, int leaderCardID) {
         localModel.activeLeaderCard(nickname,numLeadercard,leaderCardID);
+        clearConsoleAndReprint();
         System.out.println(nickname+ " has activated a leader card");
     }
 
@@ -875,6 +884,7 @@ public class CLI implements ClientView {
      */
     @Override
     public void showUpdateRank(String nickname, ArrayList<RankPosition> rank) {
+        clearConsoleAndReprint();
         System.out.println("The game ended.\nFinal Rank:");
         for (int pos = 0;pos < rank.size();pos++){
             if (rank.get(pos).getNickname().equals(nickname))
@@ -891,6 +901,7 @@ public class CLI implements ClientView {
     @Override
     public void showUpdateBlackcrossPosition(int blackCrossPosition) {
         localModel.setBlackCrossPosition(blackCrossPosition);
+        clearConsoleAndReprint();
     }
 
     /**
@@ -901,6 +912,7 @@ public class CLI implements ClientView {
      */
     @Override
     public void showUpdateLorenzoDraw(String nickname, int row, int column) {
+        clearConsoleAndReprint();
         System.out.println(nickname + " discarded a card from the card grid: [Row " + (row + 1) + ",Column " + (column + 1) + "]");
     }
 

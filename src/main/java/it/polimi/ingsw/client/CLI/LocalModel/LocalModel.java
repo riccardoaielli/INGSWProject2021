@@ -190,20 +190,26 @@ public class LocalModel {
     /**
      * Method to print the complete view
      */
-    public void printView(){
-        printMarket();
-        printCardGrid();
-        if (players.size() == 1)
-            printLorenzosFaithTrack();
-        for(PlayerCLI player : players) {
-            player.printPersonalBoards(localPlayer.getNickname());
-            if(!player.getLeaderCards().isEmpty()){
-                System.out.println("LEADER CARDS:");
-                printLeaderCards(player);
-            }
-            if(!player.getDevelopmentCardSpace().isEmpty()) {
-                System.out.println("DEVELOPMENT CARDS:");
-                printDevelopmentCards(player);
+    public void printView(LocalPhase phase){
+        if(phase != LocalPhase.LEADER_CHOICE && phase != LocalPhase.DEFAULT && phase != LocalPhase.FIRST_PLAYER && phase != LocalPhase.NICKNAME && phase != LocalPhase.RESOURCE_CHOICE) {
+            if (market != null)
+                printMarket();
+            if (cardGridMatrix != null)
+                printCardGrid();
+            if (players.size() != 0) {
+                if (players.size() == 1)
+                    printLorenzosFaithTrack();
+                for (PlayerCLI player : players) {
+                    player.printPersonalBoards(localPlayer.getNickname());
+                    if (!player.getLeaderCards().isEmpty()) {
+                        System.out.println("LEADER CARDS:");
+                        printLeaderCards(player);
+                    }
+                    if (!player.getDevelopmentCardSpace().isEmpty()) {
+                        System.out.println("DEVELOPMENT CARDS:");
+                        printDevelopmentCards(player);
+                    }
+                }
             }
         }
     }
