@@ -678,4 +678,13 @@ public class PersonalBoard extends MessageObservable {
     public void setPersonalBoardPhase(PersonalBoardPhase personalBoardPhase) {
         this.personalBoardPhase = personalBoardPhase;
     }
+
+    /**
+     * Getter for leader cards of the personal board
+     * To use only for testing
+     * @return a list of leader cards
+     */
+    public ArrayList<LeaderCard> getLeaderCards(){
+        return leaderCards;
+    }
 }
