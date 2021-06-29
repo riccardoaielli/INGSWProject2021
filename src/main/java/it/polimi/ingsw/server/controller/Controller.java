@@ -5,6 +5,7 @@ import it.polimi.ingsw.common.messages.messagesToClient.FirstConnectedUpdate;
 import it.polimi.ingsw.common.View;
 import it.polimi.ingsw.common.messages.messagesToClient.MainTurnActionDoneUpdate;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
+import it.polimi.ingsw.server.Lobby;
 import it.polimi.ingsw.server.model.Match;
 import it.polimi.ingsw.server.model.PersonalBoard;
 import it.polimi.ingsw.server.model.SoloMatch;
@@ -12,17 +13,21 @@ import it.polimi.ingsw.server.model.enumerations.MatchPhase;
 import it.polimi.ingsw.server.model.enumerations.PersonalBoardPhase;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
-import it.polimi.ingsw.server.view.VirtualView;
 
-import java.util.List;
 import java.util.Map;
 
 public class Controller extends MessageObservable{
     private Match match;
     private Boolean firstConnected;
-    private Boolean demo;
+    private final Boolean demo;
+    private Lobby lobby;
 
-    public Controller(Boolean demo) {
+    public Controller(Boolean demo, Lobby lobby) {
+        this(demo);
+        this.lobby = lobby;
+    }
+
+    public Controller(Boolean demo){
         this.demo = demo;
         firstConnected = false;
     }
@@ -32,14 +37,29 @@ public class Controller extends MessageObservable{
      * @param view the view associated with the new client
      */
     public synchronized void newConnection(View view){
+        this.addObserver(view);
         if(!firstConnected){
             firstConnected = true;
             view.update(new FirstConnectedUpdate(true));
         }
         else if (match != null)
             view.update(new FirstConnectedUpdate(false));
-        else view.update(new ErrorMessage(null, "The first connected player is choosing the number of players. Wait..."));
+        else {
+            assert false;
+            view.update(new ErrorMessage(null, "The first connected player is choosing the number of players. Wait..."));
+        }
     }
+
+
+    //TODO is synchronized needed
+    public synchronized Boolean hasFirstConnected() {
+        return firstConnected;
+    }
+
+    public Boolean isNumOfPlayerChosen(){
+        return match != null;
+    }
+
 
     /**
      * Handles a nicknameReplyMessage
@@ -75,7 +95,9 @@ public class Controller extends MessageObservable{
                 //creates a player
                 handleNicknameReplyMessage(nickname,view);
                 firstConnected = true;
-                this.getMessageObservers().stream().filter(x -> !x.equals(view)).forEach(x -> x.update(new FirstConnectedUpdate(false)));
+
+                //Notify waiting clients that the number of players has been chosen
+                if(lobby!= null) lobby.notifyNumOfPlayers(numOfPlayers);
             }
             else{
                 view.update(new ErrorMessage(nickname, "Invalid command"));

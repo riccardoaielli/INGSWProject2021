@@ -5,6 +5,7 @@ import it.polimi.ingsw.common.messages.messagesToClient.DisconnectedUpdate;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.common.messages.messagesToClient.ErrorMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.MessageToServer;
+import it.polimi.ingsw.server.Lobby;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.ObservableGameEnder;
 
@@ -25,21 +26,19 @@ public class VirtualView implements Runnable,View {
     private Gson gson;
     private static final MessageDeserializer messageDeserializer = new MessageDeserializer();
     private String nickname;
+    private Lobby lobby;
 
 
-    public VirtualView(Socket socket, Controller controller) {
-        this.controller = controller;
+    public VirtualView(Socket socket, Lobby lobby) {
+        this.controller = null;
+        this.lobby = lobby;
         this.socket = socket;
         clientAddress = socket.getInetAddress();
         clientPort = socket.getPort();
         gson = new Gson();
-        controller.addObserver(this);
+        //TODO gestire observer
+        //controller.addObserver(this);
         nickname = null;
-    }
-
-    public boolean checkIsTheCorrectVirtualView(InetAddress clientAddress,int clientPort){
-
-        return false;
     }
 
     public void run() {
@@ -48,7 +47,15 @@ public class VirtualView implements Runnable,View {
         try {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
-            controller.newConnection(this);
+
+            controller = lobby.getAvailableMatch(this);
+            if(controller != null){
+                controller.newConnection(this);
+            }
+            else{
+                this.update(new ErrorMessage(null, "A player is choosing the number of players. Wait..."));
+            }
+
             // Leggo e scrivo nella connessione finche' non ricevo "quit"
             while (true) {
                 String line = in.readLine();
@@ -56,19 +63,26 @@ public class VirtualView implements Runnable,View {
                     System.out.println("quit ricevuto, esco dal while");
                     break;
                 } else {
-                    System.out.println("Received: " + line);
-                    MessageToServer messageToServer = messageDeserializer.deserializeMessage(line);
-                    if (nickname!= null){
-                        if(!nickname.equals(messageToServer.getNickname())){
-                            this.update(new ErrorMessage(nickname, "This message cannot be sent by this client"));
-                            //TODO fare l'enum per questo messaggio
+                    synchronized (this){
+                        if(controller == null){
+                            this.update(new ErrorMessage(null, "The first connected player is choosing the number of players. Wait..."));
                         }
                         else{
-                            messageToServer.handleMessage(controller,this);
+                            System.out.println("Received: " + line);
+                            MessageToServer messageToServer = messageDeserializer.deserializeMessage(line);
+
+                            if (nickname!= null){
+                                if(!nickname.equals(messageToServer.getNickname())){
+                                    this.update(new ErrorMessage(nickname, "This message cannot be sent by this client"));
+                                }
+                                else{
+                                    messageToServer.handleMessage(controller,this);
+                                }
+                            }
+                            else{
+                                messageToServer.handleMessage(controller,this);
+                            }
                         }
-                    }
-                    else{
-                        messageToServer.handleMessage(controller,this);
                     }
 
                 }
@@ -122,6 +136,13 @@ public class VirtualView implements Runnable,View {
     public void update(MessageToClient message) {
         out.println(gson.toJson(message));
         System.out.println("Sent:" + gson.toJson(message));
+    }
+
+    public void setController(Controller controller){
+        synchronized (this){
+            this.controller = controller;
+            controller.newConnection(this);
+        }
     }
 
     /**

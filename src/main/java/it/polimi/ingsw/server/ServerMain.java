@@ -20,15 +20,14 @@ public class ServerMain {
     private static final int MAX_PORT = 65535;
 
     private static int portNumber;
-    private Controller controller;
+    private Lobby lobby;
 
     public ServerMain(int port) {
         ServerMain.portNumber = port;
     }
 
     public void startServer(Boolean demo) {
-
-        controller = new Controller(demo);
+        lobby = new Lobby(demo);
         ExecutorService executor = Executors.newCachedThreadPool();
         ServerSocket serverSocket;
 
@@ -47,7 +46,7 @@ public class ServerMain {
                 clientSocket = serverSocket.accept();
                 System.out.println("Accepted \nclientAddress: " + clientSocket.getInetAddress() + " portName: " + clientSocket.getPort());
                 System.out.println("Creating thread..");
-                executor.submit(new VirtualView(clientSocket, controller));
+                executor.submit(new VirtualView(clientSocket, lobby));
             } catch (IOException e) {
                 break;
             }
