@@ -48,7 +48,7 @@ public class FaithTrack extends MessageObservable implements ObservableGameEnder
      * this method moves forward the red cross
      * @param numOfSteps represents the amount of movements that the red cross has to do on the faith track
      */
-    public void moveFaithMarker(int numOfSteps) throws InvalidParameterException {
+    public void moveFaithMarker(int numOfSteps){
         if (numOfSteps >= 0) {
             int steps = 0;
             Integer tileNumber = null;
@@ -80,7 +80,6 @@ public class FaithTrack extends MessageObservable implements ObservableGameEnder
                 if(matchToNotify != null) matchToNotify.update();
             }
         }
-        else throw new InvalidParameterException("Only positive values are admitted");
     }
 
 
@@ -135,6 +134,7 @@ public class FaithTrack extends MessageObservable implements ObservableGameEnder
         return calculateVPfromFaithPoints() + calculateVPfromTiles();
     }
 
+    //private method to calculate victory points from the faith points
     private int calculateVPfromFaithPoints(){
         //rounds down faithpoints to the maximum multiple of 3 and then assings victory points with a switch case
         int vp;

@@ -12,6 +12,10 @@ import it.polimi.ingsw.server.model.exceptions.InvalidRemovalException;
 import java.util.*;
 import java.util.Map;
 
+/**
+ * Class that represents the warehouse of the personal board.
+ * This class coordinates the depots where resources from the market are stored
+ */
 public class WarehouseDepots extends MessageObservable {
     private final int STANDARDDEPOTS = 3;
     private final ArrayList<Depot> depots = new ArrayList<>();
@@ -206,11 +210,11 @@ public class WarehouseDepots extends MessageObservable {
     }
 
     /**
-     * Method that returns the depot associated with the passed number
+     * Method that returns the depot associated with the passed number.
+     * Method to use only for testing purpose
      * @param numberDepot The number of the depot that has to be returned
      * @return The depot that is associated with the passed number
      */
-    //Method for testing purposes
     public Depot getDepot(int numberDepot){
         return depots.get(numberDepot-1);
     }

@@ -24,12 +24,8 @@ class FaithTrackTest {
             assert false;
         }
         //testing negative values
-        try {
-            testFaithTrack.moveFaithMarker(-2);
-            assertEquals(20, testFaithTrack.getFaithTrackPosition());
-        }catch (Exception exception){
-            assert true;
-        }
+        testFaithTrack.moveFaithMarker(-2);
+        assertEquals(24, testFaithTrack.getFaithTrackPosition());
     }
 
     /**
@@ -72,14 +68,22 @@ class FaithTrackTest {
     public void testCalculateVictoryPoints(){
         try {
             assertEquals(0, testFaithTrack.calculateVictoryPoints());
-            testFaithTrack.moveFaithMarker(8);
+            testFaithTrack.moveFaithMarker(4);
+            assertEquals(1, testFaithTrack.calculateVictoryPoints());
+            testFaithTrack.moveFaithMarker(4);
             assertEquals(4, testFaithTrack.calculateVictoryPoints());
-
-            testFaithTrack.moveFaithMarker(9);
-            assertEquals(14,testFaithTrack.calculateVictoryPoints());
-
-            testFaithTrack.moveFaithMarker(7);
-            assertEquals(29,testFaithTrack.calculateVictoryPoints());
+            testFaithTrack.moveFaithMarker(2);
+            assertEquals(6, testFaithTrack.calculateVictoryPoints());
+            testFaithTrack.moveFaithMarker(4);
+            assertEquals(8, testFaithTrack.calculateVictoryPoints());
+            testFaithTrack.moveFaithMarker(3);
+            assertEquals(14, testFaithTrack.calculateVictoryPoints());
+            testFaithTrack.moveFaithMarker(2);
+            assertEquals(17, testFaithTrack.calculateVictoryPoints());
+            testFaithTrack.moveFaithMarker(3);
+            assertEquals(21, testFaithTrack.calculateVictoryPoints());
+            testFaithTrack.moveFaithMarker(5);
+            assertEquals(29, testFaithTrack.calculateVictoryPoints());
         }catch (Exception exception){
             assert false;
         }

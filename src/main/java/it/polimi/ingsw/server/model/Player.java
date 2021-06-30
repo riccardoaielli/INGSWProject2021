@@ -7,10 +7,8 @@ import it.polimi.ingsw.common.View;
  */
 public class Player {
     private final String nickname;
-    private  PersonalBoard personalBoard;
-    private View view;
-    private boolean connected;//todo: togliere(anche metodo setConnection) se non si implementa una FA che lo usa
-
+    private final PersonalBoard personalBoard;
+    private final View view;
 
     public Player(String nickname, PersonalBoard personalBoard, View view) {
         this.nickname = nickname;
@@ -32,10 +30,6 @@ public class Player {
      */
     public String getNickname() {
         return nickname;
-    }
-
-    public void setConnection(boolean connected) {
-        this.connected = connected;
     }
 
     /**

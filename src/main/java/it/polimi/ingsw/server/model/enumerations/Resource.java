@@ -16,10 +16,7 @@ public enum Resource {
     FAITH("FAITH"){
         @Override
         public void dispatch(Map<Resource, Integer> resourceMap, FaithTrack faithTrack) {
-            try {
-                faithTrack.moveFaithMarker(resourceMap.get(FAITH));
-            } catch (InvalidParameterException ignored) {
-            }
+            faithTrack.moveFaithMarker(resourceMap.get(FAITH));
             resourceMap.remove(FAITH);
         }
     };

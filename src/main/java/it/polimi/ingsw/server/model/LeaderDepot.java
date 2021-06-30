@@ -22,6 +22,10 @@ public class LeaderDepot extends LeaderCard{
         warehouseDepots.addSpecialDepot(specialDepotResource);
     }
 
+    /**
+     * Getter for the resource of the special depot created by the leader power
+     * @return the resource of the special depot created
+     */
     public Resource getSpecialDepotResource() {
         return specialDepotResource;
     }

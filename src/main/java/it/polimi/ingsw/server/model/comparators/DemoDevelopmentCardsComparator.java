@@ -1,4 +1,6 @@
-package it.polimi.ingsw.server.model;
+package it.polimi.ingsw.server.model.comparators;
+
+import it.polimi.ingsw.server.model.DevelopmentCard;
 
 import java.util.Comparator;
 

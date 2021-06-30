@@ -6,6 +6,7 @@ import it.polimi.ingsw.common.messages.messagesToClient.PlayersOrderUpdate;
 import it.polimi.ingsw.common.messages.messagesToClient.RankUpdate;
 import it.polimi.ingsw.common.utils.LeaderCardParser;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
+import it.polimi.ingsw.server.model.comparators.CustomPlayerComparator;
 import it.polimi.ingsw.server.model.enumerations.MatchPhase;
 import it.polimi.ingsw.server.model.enumerations.PersonalBoardPhase;
 import it.polimi.ingsw.server.model.exceptions.InvalidNickName;
@@ -21,7 +22,6 @@ import java.util.Stack;
  * The controller interacts with the model by the methods of this class
  */
 public class Match extends MessageObservable implements EndGameConditionsObserver {
-    private final int DEMO_TURNS = 100;
     private final int matchID;
     private final int numOfPlayers;
     private int numOfPlayersReady;
@@ -33,6 +33,7 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
     private Market market;
     private CardGrid cardGrid;
     private ArrayList<Player> rank;
+    private ArrayList<RankPosition> finalRank;
     private Boolean demo;
 
     /**
@@ -63,15 +64,6 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         players = new ArrayList<>();
         this.demo = demo;
     }
-
-    //todo: costruttore non utilizzato da eliminare dopo aver completato i tests
-    public Match(int matchID, int numOfPlayers, Stack<LeaderCard> leaderCards, Market market, CardGrid cardGrid) throws InvalidParameterException{
-        this(matchID, numOfPlayers, false);
-        this.leaderCards = leaderCards;
-        this.market = market;
-        this.cardGrid = cardGrid;
-    }
-
 
     /**
      * This method is called when a player wants to join the match
@@ -145,17 +137,11 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
                                 break;
                             case 3:
                                 players.get(2).getPersonalBoard().setNumOfResourcesToChoose(1);
-                                try {
-                                    players.get(2).getPersonalBoard().moveFaithMarker(1);
-                                } catch (InvalidParameterException ignored) {
-                                }
+                                players.get(2).getPersonalBoard().moveFaithMarker(1);
                                 break;
                             case 4:
                                 players.get(3).getPersonalBoard().setNumOfResourcesToChoose(2);
-                                try {
-                                    players.get(3).getPersonalBoard().moveFaithMarker(1);
-                                } catch (InvalidParameterException ignored) {
-                                }
+                                players.get(3).getPersonalBoard().moveFaithMarker(1);
                                 break;
                         }
                     }
@@ -199,10 +185,7 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         }
         //changes the current player to the next player
         currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % numOfPlayers);
-        if(demo && numOfTurnsPlayed == DEMO_TURNS)
-            endGame();
-        else
-            notifyObservers(new PlayerTurnUpdate(currentPlayer.getNickname()));//updates every player about the new current player
+        notifyObservers(new PlayerTurnUpdate(currentPlayer.getNickname()));//updates every player about the new current player
     }
 
     /**
@@ -244,26 +227,27 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         rank = new ArrayList<>(players);
         rank.sort(new CustomPlayerComparator());
 
-        ArrayList<RankPosition> finalRank = new ArrayList<>();
+        finalRank = new ArrayList<>();
         rank.forEach(x-> finalRank.add(new RankPosition(x.getNickname(),x.getPersonalBoard().getVictoryPoints())));
 
         matchPhase = MatchPhase.GAMEOVER;
         notifyObservers(new RankUpdate(finalRank));
     }
 
+    /**
+     * Getter for testing purpose
+     * @return the final rank
+     */
+    public ArrayList<RankPosition> getFinalRank() {
+        return finalRank;
+    }
 
     /**
      * This method moves the faith marker for all the players out of the current player
      * @param positions is the number of steps to make on the faith track for each player
      */
     public void moveFaithMarkerAll(int positions){
-        players.stream().filter(x -> x != currentPlayer).forEach(x -> {
-            try {
-                x.getPersonalBoard().moveFaithMarker(positions);
-            } catch (InvalidParameterException invalidParameterException) {
-                invalidParameterException.printStackTrace();
-            }
-        });
+        players.stream().filter(x -> x != currentPlayer).forEach(x -> x.getPersonalBoard().moveFaithMarker(positions));
         players.stream().filter(x -> x != currentPlayer).forEach(x -> x.getPersonalBoard().checkVaticanReport());
     }
 

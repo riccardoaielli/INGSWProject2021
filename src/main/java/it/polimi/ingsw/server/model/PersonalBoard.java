@@ -10,27 +10,25 @@ import it.polimi.ingsw.server.model.exceptions.*;
 import java.util.*;
 import java.util.Map;
 
+/**
+ * This class is the personal board of a player, it is used to from the player to perform any action.
+ * The personal board coordinates every element of the game that is owned by the player
+ */
 public class PersonalBoard extends MessageObservable {
     private Player myPlayer;
     private final int TOTPOWERPRODUCTIONS = 6;
     private int victoryPoints;
     private Map<Marble,Integer> temporaryMarbles;
     private Map<Resource, Integer> temporaryMapResource;
-    private ArrayList<LeaderCard> leaderCards;
-    private FaithTrack faithTrack;
-    private Match match;
-    private Strongbox strongbox;
-    private WarehouseDepots warehouseDepots;
-    private Market market;
-    private CardGrid cardGrid;
-    private DevelopmentCardSpace developmentCardSpace;
-
-    /*Array of booleans used to check if a powerOfProduction has already been used in the same turn
-    Position 0: Basic Production
-    Position 1,2,3: Development Card Production slot 1,2,3
-    Position 4,5: Leader Card Production, card 1 and 2
-     */
-    private Boolean[] powerOfProductionUsed = new Boolean[TOTPOWERPRODUCTIONS];
+    private final ArrayList<LeaderCard> leaderCards;
+    private final FaithTrack faithTrack;
+    private final Match match;
+    private final Strongbox strongbox;
+    private final WarehouseDepots warehouseDepots;
+    private final Market market;
+    private final CardGrid cardGrid;
+    private final DevelopmentCardSpace developmentCardSpace;
+    private final Boolean[] powerOfProductionUsed = new Boolean[TOTPOWERPRODUCTIONS];
     private PersonalBoardPhase personalBoardPhase;
     private int numOfResourcesToChoose;
 
@@ -339,7 +337,11 @@ public class PersonalBoard extends MessageObservable {
             }
         }
     }
-    
+
+    /**
+     * This method empties the temporary resources of the player
+     * and gives a faith point for each resource discarded to every other player
+     */
     public void discardResourcesFromMarket(){
         int total = 0;
         for (int singleQuantity : temporaryMapResource.values()){
@@ -581,7 +583,7 @@ public class PersonalBoard extends MessageObservable {
      * @param numOfSteps is the number of steps to make on the faith track
      * @throws InvalidParameterException when numOfSteps is negative
      */
-    private void moveFaithMarkerInternally(int numOfSteps) throws InvalidParameterException {
+    private void moveFaithMarkerInternally(int numOfSteps){
         //moves the faith marker
         faithTrack.moveFaithMarker(numOfSteps);
         //activates checks vatican report
@@ -591,9 +593,8 @@ public class PersonalBoard extends MessageObservable {
     /**
      * This method moves the faith marker without checking for the vatican report
      * @param numOfSteps is the number of steps to make on the faith track
-     * @throws InvalidParameterException when numOfSteps is negative
      */
-    public void moveFaithMarker(int numOfSteps) throws InvalidParameterException {
+    public void moveFaithMarker(int numOfSteps){
         //moves the faith marker
         faithTrack.moveFaithMarker(numOfSteps);
     }
@@ -619,26 +620,45 @@ public class PersonalBoard extends MessageObservable {
         return temporaryMarbles;
     }
 
+    /**
+     * @return The strongbox of the personal board
+     */
     public Strongbox getStrongbox() {
         return strongbox;
     }
 
+    /**
+     * @return The warehouse of the personal board
+     */
     public WarehouseDepots getWarehouseDepots() {
         return warehouseDepots;
     }
 
+    /**
+     * @return the card grid of the match
+     */
     public CardGrid getCardGrid() {
         return cardGrid;
     }
 
+    /**
+     * @return The development card space of the personal board
+     */
     public DevelopmentCardSpace getDevelopmentCardSpace() {
         return developmentCardSpace;
     }
 
+    /**
+     * @return The phase of the personal board
+     */
     public PersonalBoardPhase getPersonalBoardPhase() {
         return personalBoardPhase;
     }
 
+    /**
+     * Setter for the number of resources that the player has to choose at the beginning of the game
+     * @param numOfResourcesToChoose the number of resources to choose
+     */
     public void setNumOfResourcesToChoose(int numOfResourcesToChoose) {
         this.numOfResourcesToChoose = numOfResourcesToChoose;
     }
@@ -651,6 +671,10 @@ public class PersonalBoard extends MessageObservable {
         return faithTrack;
     }
 
+    /**
+     * Setter for the player associated with the personal board
+     * @param myPlayer the player of the personal board
+     */
     public void setPlayer(Player myPlayer){
         this.myPlayer = myPlayer;
         this.setNickname(myPlayer.getNickname());
@@ -670,11 +694,18 @@ public class PersonalBoard extends MessageObservable {
             myPlayer.getView().update(new InitialLeaderCardsUpdate(myPlayer.getNickname(),initialLeaderCardsID));
     }
 
+    /**
+     * Method to end the turn of the player
+     */
     public void endTurn(){
         Arrays.fill(this.powerOfProductionUsed, false);
         personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_AVAILABLE;
     }
 
+    /**
+     * Setter for the phase of the personal board
+     * @param personalBoardPhase the new phase
+     */
     public void setPersonalBoardPhase(PersonalBoardPhase personalBoardPhase) {
         this.personalBoardPhase = personalBoardPhase;
     }

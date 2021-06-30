@@ -9,7 +9,6 @@ import java.util.Map;
  * Class that represents one of the two optional depots of the warehouse depots
  */
 public class SpecialDepot extends Depot{
-
     private final Resource specialResource;
 
     public SpecialDepot(Resource resource) {
@@ -28,6 +27,4 @@ public class SpecialDepot extends Depot{
         if (addedResourceMap.get(this.specialResource) == null) throw new InvalidAdditionException("Resource not compatible with this special depot");
         super.checkAdd(addedResourceMap);
     }
-
-
 }

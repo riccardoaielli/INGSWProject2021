@@ -54,19 +54,30 @@ class CardGridTest {
     public void buyCardTest(){
 
         DevelopmentCard card0 = null;
+
         try {
             card0 = cardGrid.buyCard(2, 0);
         } catch (NoCardException e) {
-            e.printStackTrace();
+            assert false;
         }
 
         DevelopmentCard card00 = null;
         try {
             card00 = cardGrid.buyCard(2, 0);
         } catch (NoCardException e) {
-            e.printStackTrace();
+            assert false;
         }
         assertNotEquals(card0, card00);
+
+        try {
+            card0 = cardGrid.buyCard(1, 1);
+            card0 = cardGrid.buyCard(1, 1);
+            card0 = cardGrid.buyCard(1, 1);
+            card0 = cardGrid.buyCard(1, 1);
+            card0 = cardGrid.buyCard(1, 1);
+        } catch (NoCardException e) {
+            assert true;
+        }
     }
 
     @Test

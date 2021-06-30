@@ -103,10 +103,10 @@ public class Market extends MessageObservable {
         return temporaryMapMarble;
     }
 
-    public Marble[][] getMarketMatrix() {
-        return marketMatrix;
-    }
-
+    /**
+     * Getter for the marble out of the market
+     * @return a marble
+     */
     public Marble getMarbleOut() {
         return marbleOut;
     }

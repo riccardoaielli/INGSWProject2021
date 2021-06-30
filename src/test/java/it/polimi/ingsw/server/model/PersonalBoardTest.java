@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.model.enumerations.Marble;
+import it.polimi.ingsw.server.model.enumerations.PersonalBoardPhase;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +46,7 @@ class PersonalBoardTest {
         Map<Resource,Integer> costWarehouseDepot = new HashMap<>();
         costWarehouseDepot.put(Resource.STONE,1);
         try {
-            card = match.getCardGrid().getCard(2,0);
+            card = personalBoard.getCardGrid().getCard(2,0);
             personalBoard.getDevelopmentCardSpace().addCard(card,1);
             personalBoard.getWarehouseDepots().add(2,costWarehouseDepot);
             personalBoard.getWarehouseDepots().add(2,costWarehouseDepot);
@@ -65,6 +66,8 @@ class PersonalBoardTest {
         assertEquals(1,personalBoard.getFaithTrack().getFaithTrackPosition());
         assertEquals(1,personalBoard.getWarehouseDepots().getDepot(2).getMapResource().get(Resource.STONE));
 
+        assertEquals(PersonalBoardPhase.MAIN_TURN_ACTION_DONE,personalBoard.getPersonalBoardPhase());
+        personalBoard.endTurn();
     }
 
     @Test
@@ -394,6 +397,13 @@ class PersonalBoardTest {
         resourceToDepot.put(Resource.SHIELD,2);
         costWarehouseDepot.put(Resource.SHIELD,2);
         try {
+            personalBoard.buyDevelopmentCard(3,1,costStrongbox,costWarehouseDepot,0,1);
+        } catch (NoCardException | InvalidCostException| InvalidLeaderAction | InvalidDevelopmentCardException | InvalidParameterException e) {
+            assert false;
+        } catch (InvalidRemovalException e) {
+            assert true;
+        }
+        try {
             personalBoard.getWarehouseDepots().add(3,resourceToDepot);
         } catch (InvalidAdditionException e) {
             assert false;
@@ -514,26 +524,22 @@ class PersonalBoardTest {
         } catch (InvalidNickName invalidNickName) {
             assert false;
         }
-        try {
-            marco.moveFaithMarker(6);
-            marco.checkVaticanReport();
-            mario.moveFaithMarker(9);
-            mario.checkVaticanReport();
-        } catch (InvalidParameterException e) {
-            assert false;
-        }
+
+        marco.moveFaithMarker(6);
+        marco.checkVaticanReport();
+        mario.moveFaithMarker(9);
+        mario.checkVaticanReport();
+
         assertEquals(2,mario.getFaithTrack().getPopeFavourTileValue(1));
         assertEquals(2,marco.getFaithTrack().getPopeFavourTileValue(1));
         assertEquals(1,massimo.getFaithTrack().getPopeFavourTileValue(1));
 
-        try {
-            marco.moveFaithMarker(8);
-            marco.checkVaticanReport();
-            mario.moveFaithMarker(9);
-            mario.checkVaticanReport();
-        } catch (InvalidParameterException e) {
-            assert false;
-        }
+
+        marco.moveFaithMarker(8);
+        marco.checkVaticanReport();
+        mario.moveFaithMarker(9);
+        mario.checkVaticanReport();
+
         assertEquals(2,mario.getFaithTrack().getPopeFavourTileValue(1));
         assertEquals(2,marco.getFaithTrack().getPopeFavourTileValue(1));
         assertEquals(1,massimo.getFaithTrack().getPopeFavourTileValue(1));
@@ -542,14 +548,11 @@ class PersonalBoardTest {
         assertEquals(2,marco.getFaithTrack().getPopeFavourTileValue(2));
         assertEquals(1,massimo.getFaithTrack().getPopeFavourTileValue(2));
 
-        try {
-            marco.moveFaithMarker(8);
-            marco.checkVaticanReport();
-            mario.moveFaithMarker(9);
-            mario.checkVaticanReport();
-        } catch (InvalidParameterException e) {
-            assert false;
-        }
+        marco.moveFaithMarker(8);
+        marco.checkVaticanReport();
+        mario.moveFaithMarker(9);
+        mario.checkVaticanReport();
+
         assertEquals(2,mario.getFaithTrack().getPopeFavourTileValue(3));
         assertEquals(2,marco.getFaithTrack().getPopeFavourTileValue(3));
         assertEquals(1,massimo.getFaithTrack().getPopeFavourTileValue(3));

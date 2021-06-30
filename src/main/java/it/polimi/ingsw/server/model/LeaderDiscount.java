@@ -32,10 +32,10 @@ public class LeaderDiscount extends LeaderCard{
         }
     }
 
-    public int getDiscount() {
-        return discount;
-    }
-
+    /**
+     * Getter for the discounted resource
+     * @return the resource discounted by the leader power
+     */
     public Resource getResourceDiscounted() {
         return resourceDiscounted;
     }

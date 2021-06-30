@@ -70,7 +70,6 @@ public class Strongbox extends MessageObservable {
      * Removes the given map of resources from the strongbox, must be called only after performing checks with checkAvailability
      * @param resourceMap The map of resources to remove
      */
-
     public void uncheckedRemove(Map<Resource, Integer> resourceMap){
         for (Resource resource : resourceMap.keySet())  {
             if (strongbox.get(resource).equals(resourceMap.get(resource)))

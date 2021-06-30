@@ -14,7 +14,7 @@ public class SoloMatch extends Match{
      */
     public SoloMatch(int matchID, boolean demo) throws InvalidParameterException {
         super(matchID, 1,demo);
-        lorenzo = new Lorenzo(this.getCardGrid());
+        lorenzo = new Lorenzo(this);
         lorenzo.addObserver(this);
         lorenzo.addObserverList(this.getMessageObservers());
     }
@@ -45,5 +45,13 @@ public class SoloMatch extends Match{
     public void update() {
         super.update();
         endGame();
+    }
+
+    /**
+     * Getter for testing purpose
+     * @return lorenzo
+     */
+    public Lorenzo getLorenzo() {
+        return lorenzo;
     }
 }

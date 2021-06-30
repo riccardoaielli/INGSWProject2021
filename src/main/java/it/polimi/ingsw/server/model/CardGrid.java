@@ -1,48 +1,38 @@
 package it.polimi.ingsw.server.model;
 
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 import it.polimi.ingsw.common.messages.messagesToClient.CardGridUpdate;
 import it.polimi.ingsw.common.messages.messagesToClient.LorenzoDrawUpdate;
 import it.polimi.ingsw.common.utils.CardGridParser;
 import it.polimi.ingsw.common.utils.observe.MessageObservable;
+import it.polimi.ingsw.server.model.comparators.DemoDevelopmentCardsComparator;
 import it.polimi.ingsw.server.model.enumerations.DevelopmentCardColor;
 import it.polimi.ingsw.server.model.exceptions.NoCardException;
 
-import java.lang.reflect.Type;
 import java.util.*;
-import java.io.*;
 
 /**
  * This class represents the development card grid
  */
 public class CardGrid extends MessageObservable {
-
-    private int i, j;
+    private int row, column;
     private final int maxRow = 3, maxColumn = 4;
-
     boolean alreadyLost = false;
-
     private Match matchToNotify;
-
     private Stack<DevelopmentCard>[][] cardGridMatrix;
     private DevelopmentCard cardToBeReturned;
-
 
     /**
      * This constructor creates the cardGrid structure, reading the development cards form the json file developmentCards.json and initializes each cards stack randomly
      */
     public CardGrid(boolean demo){
-
         CardGridParser cardGridParser = new CardGridParser();
         cardGridMatrix = cardGridParser.parse();
-
-        for (i = 0; i < maxRow; i++)
-            for (j = 0; j < maxColumn; j++) {
+        for (row = 0; row < maxRow; row++)
+            for (column = 0; column < maxColumn; column++) {
                 if(demo)
-                   cardGridMatrix[i][j].sort(new DemoDevelopmentCardsComparator());
+                   cardGridMatrix[row][column].sort(new DemoDevelopmentCardsComparator());
                 else
-                    Collections.shuffle(cardGridMatrix[i][j]);
+                    Collections.shuffle(cardGridMatrix[row][column]);
         }
     }
 
@@ -58,22 +48,18 @@ public class CardGrid extends MessageObservable {
      * Returns the top card of the specified stack
      */
     public DevelopmentCard getCard(int x, int y) throws NoCardException {
-
         try{
             cardToBeReturned = cardGridMatrix[x][y].peek();
         }catch(EmptyStackException e){
             throw new NoCardException("\"There is no card in the specified position of card grid\"");
         }
-
         return cardToBeReturned;
-
     }
 
     /**
      * Implementation of buyCard returns the top card of the specified stack and deletes it from the stack
      */
     public DevelopmentCard buyCard(int x, int y)  throws NoCardException{
-
         try{
             cardToBeReturned = cardGridMatrix[x][y].pop();
         }catch(EmptyStackException e){
@@ -81,34 +67,29 @@ public class CardGrid extends MessageObservable {
         }
         doNotify();
         return cardToBeReturned;
-
     }
 
     /**
      * Implementation of remove, it removes one developmentCard whit the specified color from the card grid starting from level one to level three
      * */
     public String remove(DevelopmentCardColor color) {
-
         int column = -1;
-
         if (!alreadyLost) {
             //looking for the correct column according to the color parameter
-            for (i = 0; i < maxRow; i++)
-                for (j = 0; j < maxColumn; j++) {
+            for (row = 0; row < maxRow; row++)
+                for (this.column = 0; this.column < maxColumn; this.column++) {
                     try {
-                        if ((!cardGridMatrix[i][j].empty()) && getCard(i, j).getColor().equals(color)) {
-                            column = j;
+                        if ((!cardGridMatrix[row][this.column].empty()) && getCard(row, this.column).getColor().equals(color)) {
+                            column = this.column;
                         }
                     } catch (NoCardException e) {
                         e.printStackTrace();
                     }
                 }
-
-
-            for (i = maxRow - 1; i >= 0; i--) {
-                if (!cardGridMatrix[i][column].empty()) {//if the bottom stack is empty, don't do anything and go to the upper stack
-                    cardGridMatrix[i][column].pop(); //removing only one card of the lowest level available of the color passed by parameter
-                    notifyObservers(new LorenzoDrawUpdate("Lorenzo",i,column));
+            for (row = maxRow - 1; row >= 0; row--) {
+                if (!cardGridMatrix[row][column].empty()) {//if the bottom stack is empty, don't do anything and go to the upper stack
+                    cardGridMatrix[row][column].pop(); //removing only one card of the lowest level available of the color passed by parameter
+                    notifyObservers(new LorenzoDrawUpdate("Lorenzo", row,column));
                     if (cardGridMatrix[0][column].empty() && cardGridMatrix[1][column].empty() && cardGridMatrix[2][column].empty()) {
                         alreadyLost = true;//one column is completely empty (column are of the same color)
                         //TODO avviso match fine partita, hai perso. Metti void e rimuovi stringhe
@@ -127,16 +108,29 @@ public class CardGrid extends MessageObservable {
      */
     public void doNotify(){
         int[][] cardGridMatrixUpdate = new int[maxRow][maxColumn];
-
-        for (i = 0; i < maxRow; i++)
-            for (j = 0; j < maxColumn; j++) {
-                if(cardGridMatrix[i][j].size() != 0)
-                    cardGridMatrixUpdate[i][j] = cardGridMatrix[i][j].peek().getId();
+        for (row = 0; row < maxRow; row++)
+            for (column = 0; column < maxColumn; column++) {
+                if(cardGridMatrix[row][column].size() != 0)
+                    cardGridMatrixUpdate[row][column] = cardGridMatrix[row][column].peek().getId();
                 else
-                    cardGridMatrixUpdate[i][j] = 0;
+                    cardGridMatrixUpdate[row][column] = 0;
             }
-
         notifyObservers(new CardGridUpdate(cardGridMatrixUpdate));
     }
 
+    /**
+     * Getter for testing purpose
+     * @param color the color to consider
+     * @return the amount of cards with a specific color
+     */
+    public int getNumOfCardsByColor(DevelopmentCardColor color) {
+        int numOfCards = 0;
+        for (row = 0; row < maxRow; row++) {
+            for (column = 0; column < maxColumn; column++) {
+                if (cardGridMatrix[row][column].peek().getColor().equals(color))
+                    numOfCards = numOfCards + cardGridMatrix[row][column].size();
+            }
+        }
+        return numOfCards;
+    }
 }

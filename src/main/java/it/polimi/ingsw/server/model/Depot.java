@@ -19,10 +19,18 @@ public class Depot {
         mapResource = new HashMap<>();
     }
 
+    /**
+     * Getter for the size of the depot
+     * @return the amount of resources that can be stored in the depot
+     */
     public int getSIZE() {
         return SIZE;
     }
 
+    /**
+     * Getter for the resource stored in the depot
+     * @return a map with the resource stored in the depot
+     */
     public Map<Resource, Integer> getMapResource() {
         return mapResource;
     }

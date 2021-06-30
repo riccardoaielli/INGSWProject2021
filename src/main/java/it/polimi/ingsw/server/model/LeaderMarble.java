@@ -35,6 +35,10 @@ public class LeaderMarble extends LeaderCard{
         }
     }
 
+    /**
+     * Getter for the marble of the leader power
+     * @return the marble transformed by the leader power
+     */
     public Marble getMarble() {
         return marble;
     }

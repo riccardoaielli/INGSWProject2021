@@ -10,6 +10,7 @@ import java.util.*;
  */
 public class Lorenzo extends MessageObservable implements ObservableGameEnder<EndGameConditionsObserver> {
 
+    private Match match;
     private int faithTrackPositionBlack = 0;
     private Stack<SoloActionToken> soloActionTokenStack;
     private Stack<SoloActionToken> soloActionTokenUsedStack;
@@ -21,9 +22,9 @@ public class Lorenzo extends MessageObservable implements ObservableGameEnder<En
     /**
      * this constructor creates the soloActionTokenStack and initializes it with randomly placed token
      */
-    public Lorenzo(CardGrid cardGrid){
-
-        this.cardGrid = cardGrid;
+    public Lorenzo(SoloMatch match){
+        this.match = match;
+        this.cardGrid = match.getCardGrid();
         soloActionTokenStack = new Stack<>();
         soloActionTokenUsedStack = new Stack<>();
 
@@ -36,7 +37,6 @@ public class Lorenzo extends MessageObservable implements ObservableGameEnder<En
         soloActionTokenStack.push(new BlackCrossTwo(this));
 
         Collections.shuffle(soloActionTokenStack);
-
     }
 
 
@@ -47,8 +47,15 @@ public class Lorenzo extends MessageObservable implements ObservableGameEnder<En
     public void moveFaithMarker(int numOfSteps){
         assert  numOfSteps >= 0;
         faithTrackPositionBlack = faithTrackPositionBlack + numOfSteps;
-        if (faithTrackPositionBlack > 20) {    // the maximum amount of space in the track is 20
-            faithTrackPositionBlack = 20;
+        if(faithTrackPositionBlack >= 8 && faithTrackPositionBlack < 16)
+            match.vaticanReport(1);
+        if(faithTrackPositionBlack >= 16 && faithTrackPositionBlack < 24)
+            match.vaticanReport(2);
+        if(faithTrackPositionBlack >= 24)
+            match.vaticanReport(3);
+
+        if (faithTrackPositionBlack > 24) {    // the maximum amount of space in the track is 24
+            faithTrackPositionBlack = 24;
             matchToNotify.update();
         }
         notifyObservers(new LorenzoBlackCrossUpdate("Lorenzo",faithTrackPositionBlack));
@@ -66,7 +73,6 @@ public class Lorenzo extends MessageObservable implements ObservableGameEnder<En
      * this method resets soloActionTokenStack and shuffles it
      */
     public void shuffle(){
-
         while(!soloActionTokenUsedStack.empty()){
             currentActionToken = soloActionTokenUsedStack.pop();
             soloActionTokenStack.push(currentActionToken);
