@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.client.GUI.PopupController;
 import it.polimi.ingsw.common.messages.messagesToServer.ActivateLeaderMessage;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -7,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class QuitInterfaceController extends  AbstractController{
+public class QuitInterfaceController extends PopupController {
 
     @FXML
     private Button quitButton;

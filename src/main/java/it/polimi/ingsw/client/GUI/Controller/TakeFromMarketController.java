@@ -1,13 +1,16 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.client.CLI.LocalModel.LocalPhase;
+import it.polimi.ingsw.client.GUI.PopupController;
 import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.common.messages.messagesToServer.TakeFromMarketMessage;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class TakeFromMarketController extends AbstractController {
+public class TakeFromMarketController extends PopupController {
     //MARKET
     @FXML
     private MarketController marketGridController;
@@ -29,5 +32,14 @@ public class TakeFromMarketController extends AbstractController {
             Stage stage = (Stage) doneButton.getScene().getWindow();
             stage.close();
         }
+    }
+
+    @Override
+    public void setOnClose(Stage popupStage) {
+        popupStage.setOnCloseRequest(event ->{
+            event.consume();
+            getGui().setPhase(LocalPhase.MENU);
+            popupStage.close();
+        });
     }
 }

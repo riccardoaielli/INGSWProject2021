@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.client.GUI.PopupController;
 import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.common.messages.messagesToServer.AddToWarehouseMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.DiscardResourcesFromMarketMessage;
@@ -16,7 +17,7 @@ import javafx.stage.Stage;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddToWarehouseController extends AbstractController{
+public class AddToWarehouseController extends PopupController {
     private final DropShadow highlightEffect = new DropShadow(4, Color.web("#f9dc52"));
     private ImageView selectedResourceImageView = null;
     private Resource selectedResource = null;

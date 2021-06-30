@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.client.GUI.PopupController;
 import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.common.messages.messagesToServer.ActivateCardProductionMessage;
 import javafx.event.Event;
@@ -15,7 +16,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardProductionController extends AbstractController {
+public class CardProductionController extends PopupController {
 
     @FXML
     private ResourceChoiceController resourceChoiceController;

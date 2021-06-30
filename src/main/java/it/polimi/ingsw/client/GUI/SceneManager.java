@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.GUI.Controller.ClientDisconnectedInterfaceControll
 import it.polimi.ingsw.client.GUI.Controller.ErrorController;
 import it.polimi.ingsw.client.GUI.Controller.StartController;
 import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -159,11 +160,10 @@ public class SceneManager {
             FXMLLoader popupLoader = loadFXML(fxml);
             try {
                 Parent root = popupLoader.load();
-                AbstractController abstractController = popupLoader.getController();
-                abstractController.setGui(gui);
+                PopupController popupController = popupLoader.getController();
+                popupController.setGui(gui);
+                popupController.setOnClose(popupStage);
                 popupStage.setScene(new Scene(root));
-                //popupStage.setAlwaysOnTop(true);
-                popupStage.initStyle(StageStyle.UNDECORATED);
                 popupStage.show();
             } catch (IOException e) {
                 e.printStackTrace();

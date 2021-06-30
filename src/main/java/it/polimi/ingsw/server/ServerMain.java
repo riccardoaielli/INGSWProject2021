@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Logger;
 
 public class ServerMain {
 
@@ -18,6 +19,7 @@ public class ServerMain {
     private static final int DEFAULT_PORT = 1334;
     private static final int MIN_PORT = 1024;
     private static final int MAX_PORT = 65535;
+    private static final Logger LOGGER = Logger.getLogger(ServerMain.class.getName());
 
     private static int portNumber;
     private Lobby lobby;
@@ -37,15 +39,14 @@ public class ServerMain {
             System.err.println(e.getMessage()); // Porta non disponibile
             return;
         }
-        System.out.println("Server ready");
+        ServerMain.LOGGER.info("Server ready");
         Socket clientSocket;
 
         while (true) {
             System.out.println("Accepting..");
             try {
                 clientSocket = serverSocket.accept();
-                System.out.println("Accepted \nclientAddress: " + clientSocket.getInetAddress() + " portName: " + clientSocket.getPort());
-                System.out.println("Creating thread..");
+                ServerMain.LOGGER.info("Accepted clientAddress: " + clientSocket.getInetAddress() + " portName: " + clientSocket.getPort());
                 executor.submit(new VirtualView(clientSocket, lobby));
             } catch (IOException e) {
                 break;
@@ -88,5 +89,9 @@ public class ServerMain {
 
         ServerMain echoServer = new ServerMain(portNumber);
         echoServer.startServer(demo);
+    }
+
+    public static Logger getLOGGER() {
+        return LOGGER;
     }
 }

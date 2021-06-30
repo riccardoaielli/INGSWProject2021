@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.client.CLI.LocalModel.LocalPhase;
+import it.polimi.ingsw.client.GUI.PopupController;
 import it.polimi.ingsw.common.messages.messagesToServer.ActivateLeaderMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.BuyDevelopmentCardMessage;
 import javafx.event.Event;
@@ -13,7 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class BuyCardInterfaceController extends AbstractController {
+public class BuyCardInterfaceController extends PopupController {
 
     @FXML
     private GridPane cardGrid;
@@ -53,6 +55,15 @@ public class BuyCardInterfaceController extends AbstractController {
         leaderTwoImgView.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onImgLeaderCardClick);
 
         buyCardButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBuyCardButtonClick);
+    }
+
+    @Override
+    public void setOnClose(Stage popupStage) {
+        popupStage.setOnCloseRequest(event ->{
+            event.consume();
+            getGui().setPhase(LocalPhase.MENU);
+            popupStage.close();
+        });
     }
 
     private void onBuyCardButtonClick(Event event){

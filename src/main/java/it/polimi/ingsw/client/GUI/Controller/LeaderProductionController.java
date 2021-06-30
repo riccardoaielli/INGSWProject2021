@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.client.GUI.PopupController;
 import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.common.messages.messagesToServer.ActivateBasicProductionMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.ActivateLeaderProductionMessage;
@@ -13,7 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class LeaderProductionController extends AbstractController {
+public class LeaderProductionController extends PopupController{
     @FXML
     private ResourceChoiceController resourceChoiceController;
 

@@ -16,6 +16,9 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 
+/**
+ * This class handles the connection to the client, server side
+ */
 public class VirtualView implements Runnable,View {
     private Socket socket;
     private Controller controller;
@@ -28,10 +31,15 @@ public class VirtualView implements Runnable,View {
     private String nickname;
     private Lobby lobby;
     private String line = "";
-    private final int TIMEOUT_TIME = 5000;
+    private final int TIMEOUT_TIME = 10000;
     private final String PING = "ping";
 
 
+    /**
+     * Constructor of the virtual view, after a client has requested a connection
+     * @param socket The socket used to communicate to client
+     * @param lobby The lobby to manage a waiting list of players
+     */
     public VirtualView(Socket socket, Lobby lobby) {
         this.controller = null;
         this.lobby = lobby;
@@ -81,42 +89,14 @@ public class VirtualView implements Runnable,View {
                         }
                     }
                 }
-                else System.out.println("ping received");
             }
             disconnect();
         } catch (IOException e) {
             disconnect();
-
-            /*if(nickname == null){
-                System.err.println(e.getMessage());
-                System.out.println("Stream di rete terminato");
-                try {
-                    in.close();
-                    out.close();
-                    socket.close();
-                } catch (IOException | NullPointerException ioException) {
-                    ioException.printStackTrace();
-                }
-            } else {
-                System.err.println(e.getMessage());
-                System.out.println("Stream di rete terminato");
-                controller.removeObserver(this);
-                try {
-                    in.close();
-                    out.close();
-                    socket.close();
-                } catch (IOException | NullPointerException ioException) {
-                    ioException.printStackTrace();
-                }
-                controller.notifyObservers(new DisconnectedUpdate(nickname));
-                //controller.notifyObservers(new ); // creare messaggio di disconnessione client
-            }
-        } catch (IllegalStateException e) {
-            System.err.println(e.getMessage());
-            System.out.println("stream di rete terminato");*/
         }
     }
 
+    //Method used to manage the disconnection of a client
     private void disconnect(){
         try {
             out.close();
@@ -135,6 +115,10 @@ public class VirtualView implements Runnable,View {
         else lobby.removeFromQueue(this);
     }
 
+    /**
+     * Setter for nickname
+     * @param nickname The nickname to assign to the virtual view, after the client has chosen one
+     */
     @Override
     public void setNickname(String nickname) {
         this.nickname = nickname;
@@ -142,7 +126,6 @@ public class VirtualView implements Runnable,View {
 
     /**
      * Sends message to client
-     *
      * @param message Message notified by {@link ObservableGameEnder}
      */
     @Override
@@ -151,20 +134,14 @@ public class VirtualView implements Runnable,View {
         System.out.println("Sent:" + gson.toJson(message));
     }
 
+    /**
+     * Sets the controller of the match after the player was put in a waiting list in Lobby
+     * @param controller controller to set
+     */
     public void setController(Controller controller){
         synchronized (this){
             this.controller = controller;
             controller.newConnection(this);
         }
     }
-
-
-    /*public void enableHeartbeat(boolean enable) {
-        if (enabled) {
-            pinger.scheduleAtFixedRate(() -> sendMessage(new PingMessage()), 0, 1000, TimeUnit.MILLISECONDS);
-        } else {
-            pinger.shutdownNow();
-        }
-    }*/
-
 }

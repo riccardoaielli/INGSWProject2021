@@ -27,6 +27,7 @@ public class GUI implements ClientView {
     private int portNumber;
     private boolean mainTurnActionDone;
     private boolean firstTurn;
+    private boolean firstProductionDone;
 
     public GUI(String hostAddress, int portNumber) {
         this.hostAddress = hostAddress;
@@ -101,7 +102,7 @@ public class GUI implements ClientView {
 
     @Override
     public void setFirstProductionDone(boolean firstProductionDone) {
-
+        this.firstProductionDone = firstProductionDone;
     }
 
     @Override
@@ -282,6 +283,7 @@ public class GUI implements ClientView {
     @Override
     public void setMainTurnActionDone(boolean mainTurnActionDone) {
         this.mainTurnActionDone = mainTurnActionDone;
+        firstProductionDone = false;
         if(mainTurnActionDone){
             GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterface");
             Platform.runLater(()-> gameInterfaceController.updateMainTurnAction());
@@ -329,5 +331,9 @@ public class GUI implements ClientView {
 
     public boolean isFirstTurn() {
         return firstTurn;
+    }
+
+    public boolean isFirstProductionDone() {
+        return firstProductionDone;
     }
 }

@@ -10,6 +10,7 @@ import it.polimi.ingsw.server.model.ObservableGameEnder;
 import it.polimi.ingsw.server.model.RankPosition;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +30,7 @@ public class CLI implements ClientView {
     private boolean firstTurn;
     private boolean demo;
     private boolean firstProductionDone;
+    private final PrintStream out;
 
     private StdInReader readLineThread;
 
@@ -39,6 +41,7 @@ public class CLI implements ClientView {
      * @param portNumber is the port number of the remote server
      */
     public CLI(String hostAddress, int portNumber){
+        out = System.out;
         this.hostAddress = hostAddress;
         this.portNumber = portNumber;
         localModel = new LocalModel();
@@ -64,10 +67,8 @@ public class CLI implements ClientView {
      * Clears the console and prints the view with all the players
      */
     public void clearConsoleAndReprint() {
-        System.out.print("\033[H\033[2J");
-        for(int i = 0; i < 100; i++)
-            System.out.println("\n");
-        System.out.flush();
+        out.print("\033[H\033[2J");
+        out.flush();
         localModel.printView(phase);
         //Add reprint view
     }
@@ -921,7 +922,7 @@ public class CLI implements ClientView {
      * @param message Message notified by {@link ObservableGameEnder}
      */
     @Override
-    public synchronized void update(MessageToClient message) {
+    public void update(MessageToClient message) {
         message.handleMessage(this);
     }
 

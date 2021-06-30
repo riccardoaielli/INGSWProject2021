@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.client.GUI.PopupController;
 import it.polimi.ingsw.common.messages.messagesToServer.DiscardLeaderMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.SwapMessage;
 import javafx.event.Event;
@@ -9,7 +10,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class SwapInterfaceController extends AbstractController{
+public class SwapInterfaceController extends PopupController {
 
     @FXML
     private ChoiceBox<Integer> choiceBox1;

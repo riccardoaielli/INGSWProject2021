@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.client.CLI.LocalModel.LocalPhase;
+import it.polimi.ingsw.client.GUI.PopupController;
 import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.common.messages.messagesToServer.DiscardLeaderMessage;
 import javafx.event.Event;
@@ -11,7 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class DiscardLeaderInterfaceController extends AbstractController{
+public class DiscardLeaderInterfaceController extends PopupController {
 
     @FXML
     private Button discardLeaderButton;
@@ -60,5 +62,14 @@ public class DiscardLeaderInterfaceController extends AbstractController{
             selectedImageView.setEffect(highlightEffect);
         }
         numLeaderCard = Integer.parseInt(imageView.getId());
+    }
+
+    @Override
+    public void setOnClose(Stage popupStage) {
+        popupStage.setOnCloseRequest(event ->{
+            event.consume();
+            getGui().setPhase(LocalPhase.MENU);
+            popupStage.close();
+        });
     }
 }

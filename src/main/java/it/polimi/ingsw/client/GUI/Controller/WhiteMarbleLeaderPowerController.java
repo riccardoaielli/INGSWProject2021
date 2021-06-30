@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.client.GUI.PopupController;
 import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.common.messages.messagesToServer.TransformMarblesMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.TransformWhiteMarblesMessage;
@@ -14,7 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class WhiteMarbleLeaderPowerController extends AbstractController {
+public class WhiteMarbleLeaderPowerController extends PopupController {
     @FXML
     private Button noButton;
     @FXML

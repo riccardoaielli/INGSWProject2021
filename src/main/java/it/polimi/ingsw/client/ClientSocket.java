@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -24,6 +25,7 @@ public class ClientSocket implements MessageSender {
     private Socket socket;
     private ClientView clientView;
     private final String PING = "ping";
+    private final Executor executor;
 
     private MessageToClientDeserializer messageToClientDeserializer = new MessageToClientDeserializer();
 
@@ -33,6 +35,7 @@ public class ClientSocket implements MessageSender {
     public ClientSocket(String hostAddress, int portNumber, ClientView clientView) {
 
         this.clientView = clientView;
+        executor = Executors.newSingleThreadExecutor();
         try {
             socket = new Socket(hostAddress, portNumber);
             //Stream to write to and send to the server
@@ -55,7 +58,9 @@ public class ClientSocket implements MessageSender {
         MessageToClient message;
         this.SocketInReaderLine = line;
         message = messageToClientDeserializer.deserializeMessage(line);
-        clientView.update(message);
+        executor.execute(() -> {
+            clientView.update(message);
+        });
     }
 
     /**

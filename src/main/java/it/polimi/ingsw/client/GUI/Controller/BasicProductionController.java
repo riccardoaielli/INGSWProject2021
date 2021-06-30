@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.client.GUI.PopupController;
 import it.polimi.ingsw.common.messages.messagesToServer.ActivateBasicProductionMessage;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import javafx.fxml.FXML;
@@ -11,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
-public class BasicProductionController extends AbstractController {
+public class BasicProductionController extends PopupController {
     @FXML
     private ResourceChoiceController resourceChoiceController;
     private final DropShadow highlightEffect = new DropShadow(4, Color.web("#f9dc52"));

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.client.GUI.PopupController;
 import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.common.messages.messagesToServer.ChooseInitialResourcesMessage;
 import it.polimi.ingsw.server.model.enumerations.Resource;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class InitialResourceChoiceController extends AbstractController {
+public class InitialResourceChoiceController extends PopupController {
     @FXML
     private Label resourceChoiceLabel;
     @FXML

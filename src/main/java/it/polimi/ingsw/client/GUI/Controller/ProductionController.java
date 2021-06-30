@@ -1,5 +1,7 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.client.CLI.LocalModel.LocalPhase;
+import it.polimi.ingsw.client.GUI.PopupController;
 import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.common.messages.messagesToServer.EndProduction;
 import javafx.fxml.FXML;
@@ -7,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class ProductionController extends AbstractController{
+public class ProductionController extends PopupController {
     @FXML
     private Button basicProductionButton;
     @FXML
@@ -22,6 +24,21 @@ public class ProductionController extends AbstractController{
         leaderCardProductionButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onLeaderProductionClick);
         devCardProductionButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onDevCardProductionClick);
         endProductionButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onEndProductionClick);
+    }
+
+    @Override
+    public void setOnClose(Stage popupStage) {
+        if (getGui().isFirstProductionDone()){
+            //if first production done window can't be closed
+            super.setOnClose(popupStage);
+        }
+        else{
+            popupStage.setOnCloseRequest(event ->{
+                event.consume();
+                getGui().setPhase(LocalPhase.MENU);
+                popupStage.close();
+            });
+        }
     }
 
     private void onBasicProductionClick(MouseEvent e){
