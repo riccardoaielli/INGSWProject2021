@@ -27,6 +27,9 @@ public class VirtualView implements Runnable,View {
     private static final MessageToServerDeserializer messageDeserializer = new MessageToServerDeserializer();
     private String nickname;
     private Lobby lobby;
+    private String line = "";
+    private final int TIMEOUT_TIME = 5000;
+    private final String PING = "ping";
 
 
     public VirtualView(Socket socket, Lobby lobby) {
@@ -36,15 +39,13 @@ public class VirtualView implements Runnable,View {
         clientAddress = socket.getInetAddress();
         clientPort = socket.getPort();
         gson = new Gson();
-        //TODO gestire observer
-        //controller.addObserver(this);
         nickname = null;
     }
 
     public void run() {
         System.out.println("Thread created");
-
         try {
+            socket.setSoTimeout(TIMEOUT_TIME);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
 
@@ -56,13 +57,8 @@ public class VirtualView implements Runnable,View {
                 this.update(new ErrorMessage(null, "A player is choosing the number of players. Wait..."));
             }
 
-            // Leggo e scrivo nella connessione finche' non ricevo "quit"
-            while (true) {
-                String line = in.readLine();
-                if (line.equals("quit")) { //todo capire come gestire la disconnessione
-                    System.out.println("quit ricevuto, esco dal while");
-                    break;
-                } else {
+            while ((line = in.readLine()) != null) {
+                if(!line.equals(PING)){
                     synchronized (this){
                         if(controller == null){
                             this.update(new ErrorMessage(null, "The first connected player is choosing the number of players. Wait..."));
@@ -84,15 +80,14 @@ public class VirtualView implements Runnable,View {
                             }
                         }
                     }
-
                 }
+                else System.out.println("ping received");
             }
-            // Chiudo gli stream e il socket
-            in.close();
-            out.close();
-            socket.close();
+            disconnect();
         } catch (IOException e) {
-            if(nickname == null){
+            disconnect();
+
+            /*if(nickname == null){
                 System.err.println(e.getMessage());
                 System.out.println("Stream di rete terminato");
                 try {
@@ -118,8 +113,26 @@ public class VirtualView implements Runnable,View {
             }
         } catch (IllegalStateException e) {
             System.err.println(e.getMessage());
-            System.out.println("stream di rete terminato");
+            System.out.println("stream di rete terminato");*/
         }
+    }
+
+    private void disconnect(){
+        try {
+            out.close();
+            in.close();
+            socket.close();
+        } catch (IOException e) {
+            System.out.println("Could not disconnect");
+        }
+        //if a controller is assigned the player is inside a match
+        if(controller!= null){
+            lobby.advanceQueue();
+            controller.removeObserver(this);
+            controller.notifyObservers(new DisconnectedUpdate(nickname));
+        }
+        //else the player was waiting and is removed from the queue
+        else lobby.removeFromQueue(this);
     }
 
     @Override
@@ -145,12 +158,8 @@ public class VirtualView implements Runnable,View {
         }
     }
 
-    /**
-     * Enable pinger between server and client's sockets.
-     * @param enable set this argument to true to enable the pinger, set it to false to disable
-     *
-     */
-    /*public void enablePinger(boolean enable) {
+
+    /*public void enableHeartbeat(boolean enable) {
         if (enabled) {
             pinger.scheduleAtFixedRate(() -> sendMessage(new PingMessage()), 0, 1000, TimeUnit.MILLISECONDS);
         } else {

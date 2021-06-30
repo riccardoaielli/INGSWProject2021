@@ -24,6 +24,7 @@ public class StartController extends AbstractController{
 
     private void setOnlineMatch(Event event){
         this.getGui().setOnline(true);
+        SceneManager.getInstance().setRootFXML("loadingScreen");
     }
 
     private void setLocalMatch(Event event){

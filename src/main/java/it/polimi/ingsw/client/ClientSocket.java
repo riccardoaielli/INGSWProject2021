@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class is only for online mode and manage the connection to the server using sockets
@@ -15,10 +18,12 @@ public class ClientSocket implements MessageSender {
 
     private Gson gson = new Gson();
     private PrintWriter out;
+    private ScheduledExecutorService pinger;
 
     private String SocketInReaderLine;
     private Socket socket;
     private ClientView clientView;
+    private final String PING = "ping";
 
     private MessageToClientDeserializer messageToClientDeserializer = new MessageToClientDeserializer();
 
@@ -28,14 +33,13 @@ public class ClientSocket implements MessageSender {
     public ClientSocket(String hostAddress, int portNumber, ClientView clientView) {
 
         this.clientView = clientView;
-
         try {
             socket = new Socket(hostAddress, portNumber);
             //Stream to write to and send to the server
             out = new PrintWriter(socket.getOutputStream(), true);
             Thread inputThread = new Thread(new SocketInReader(socket, this));
             inputThread.start();
-
+            enableHeartbeat();
         } catch (UnknownHostException e) {
             clientView.closeGame("Don't know about host, please insert a valid host " + hostAddress);
         } catch (IOException e) {
@@ -70,11 +74,19 @@ public class ClientSocket implements MessageSender {
     public void disconnect() {
         try {
             if (!socket.isClosed()) {
-                clientView.closeGame("Could not reach server, you will be disconnected");
                 socket.close();
+                clientView.closeGame("Could not reach server, you will be disconnected");
             }
         } catch (IOException e) {
             clientView.closeGame("Could not disconnect.");
         }
+    }
+
+    /**
+     * Enable heartbeat between server and client sockets.
+     */
+    private void enableHeartbeat() {
+        this.pinger = Executors.newSingleThreadScheduledExecutor();
+        pinger.scheduleAtFixedRate(() -> out.println(PING), 0, 1000, TimeUnit.MILLISECONDS);
     }
 }

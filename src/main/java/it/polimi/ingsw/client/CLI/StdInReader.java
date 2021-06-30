@@ -37,7 +37,6 @@ public class StdInReader extends Thread{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
     }
 
     public synchronized String readUserInput(){
@@ -60,7 +59,7 @@ public class StdInReader extends Thread{
 
     private synchronized void handleLine(){
         questionAsked = false;
-        //sveglia readUserInput
+        //wake readUserInput
         notifyAll();
     }
 

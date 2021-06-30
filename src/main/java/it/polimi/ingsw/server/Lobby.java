@@ -9,7 +9,7 @@ import java.util.*;
  * Class used to implement a lobby for creating multiple matches and managing players waiting for a player to choose the number of players
  */
 public class Lobby {
-    private Queue<VirtualView> waitingQueue;
+    private LinkedList<VirtualView> waitingQueue;
     private Controller currSetupMatch;
     private int remainingFreeSlots;
     private Boolean demo;
@@ -80,5 +80,23 @@ public class Lobby {
             virtualViewToAdd.setController(currSetupMatch);
             remainingFreeSlots--;
         }
+    }
+
+    /**
+     * Method used to make the queue move in case the player choosing disconnected
+     */
+    public synchronized void advanceQueue(){
+        this.notifyNumOfPlayers(1);
+        if(waitingQueue.isEmpty()){
+            currSetupMatch = new Controller(demo, this);
+        }
+    }
+
+    /**
+     * Method used to remove a client from list in case he disconnects before being assigned to a match
+     * @param virtualView client to remove from the waiting list
+     */
+    public synchronized void removeFromQueue(VirtualView virtualView){
+        waitingQueue.remove(virtualView);
     }
 }

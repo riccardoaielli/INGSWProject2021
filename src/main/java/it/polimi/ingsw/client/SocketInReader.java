@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * This class reads from the socket input stream of the client
@@ -38,6 +40,7 @@ public class SocketInReader implements Runnable {
                 //System.out.println("Read this line from socket: " + line);
                 clientSocket.readMessage(line);
             }
+            clientSocket.disconnect();
         } catch (IOException ex) {
             clientSocket.disconnect();
         }
