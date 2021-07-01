@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
-import it.polimi.ingsw.client.CLI.LocalModel.LocalPhase;
+import it.polimi.ingsw.client.LocalPhase;
 import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.common.messages.messagesToServer.EndTurnMessage;
 import it.polimi.ingsw.server.model.RankPosition;

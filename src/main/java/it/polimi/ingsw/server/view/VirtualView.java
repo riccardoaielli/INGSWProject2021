@@ -6,6 +6,7 @@ import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.common.messages.messagesToClient.ErrorMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.MessageToServer;
 import it.polimi.ingsw.server.Lobby;
+import it.polimi.ingsw.server.ServerMain;
 import it.polimi.ingsw.server.controller.Controller;
 import it.polimi.ingsw.server.model.ObservableGameEnder;
 
@@ -51,9 +52,8 @@ public class VirtualView implements Runnable,View {
     }
 
     public void run() {
-        System.out.println("Thread created");
         try {
-            socket.setSoTimeout(TIMEOUT_TIME);
+            //socket.setSoTimeout(TIMEOUT_TIME);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
 
@@ -113,6 +113,12 @@ public class VirtualView implements Runnable,View {
         }
         //else the player was waiting and is removed from the queue
         else lobby.removeFromQueue(this);
+        String disconnectionMessage = "Client disconnected. Address: " + socket.getInetAddress().getHostAddress() + " Port:" + socket.getPort();
+        if (nickname == null){
+            disconnectionMessage = disconnectionMessage + " Nickname: not yet set";
+        }
+        else disconnectionMessage = disconnectionMessage + " Nickname:" + nickname;
+        ServerMain.getLOGGER().info(disconnectionMessage);
     }
 
     /**

@@ -1,8 +1,7 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
-import it.polimi.ingsw.client.CLI.LocalModel.LocalPhase;
+import it.polimi.ingsw.client.LocalPhase;
 import it.polimi.ingsw.client.GUI.PopupController;
-import it.polimi.ingsw.common.messages.messagesToServer.ActivateLeaderMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.BuyDevelopmentCardMessage;
 import javafx.event.Event;
 import it.polimi.ingsw.client.GUI.SceneManager;

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.common.messages.messagesToClient;
 
 import it.polimi.ingsw.client.ClientView;
-import it.polimi.ingsw.client.CLI.LocalModel.LocalPhase;
+import it.polimi.ingsw.client.LocalPhase;
 import it.polimi.ingsw.common.messages.MessageType;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class PlayersOrderUpdate extends MessageToClient{
     public void handleMessage(ClientView clientView) {
 
         clientView.showUpdatePlayersOrder(playerNicknames);
-        //TODO in playerTurnUpdate would be better
+        //if first player
         if (playerNicknames.indexOf(clientView.getNickname())== 0){
             clientView.setPhase(LocalPhase.MENU);
         }

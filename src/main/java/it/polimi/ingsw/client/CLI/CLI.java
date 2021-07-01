@@ -2,7 +2,7 @@ package it.polimi.ingsw.client.CLI;
 
 import it.polimi.ingsw.client.*;
 import it.polimi.ingsw.client.CLI.LocalModel.LocalModel;
-import it.polimi.ingsw.client.CLI.LocalModel.LocalPhase;
+import it.polimi.ingsw.client.LocalPhase;
 import it.polimi.ingsw.client.CLI.LocalModel.CliColor;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.common.messages.messagesToServer.*;
@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * This class is the ClientView
@@ -31,7 +33,7 @@ public class CLI implements ClientView {
     private boolean demo;
     private boolean firstProductionDone;
     private final PrintStream out;
-
+    private final Executor executor;
     private StdInReader readLineThread;
 
 
@@ -50,6 +52,8 @@ public class CLI implements ClientView {
         firstTurn = true;
         demo = false;
         firstProductionDone = false;
+        //executor = Executors.newSingleThreadExecutor();
+        executor = Executors.newFixedThreadPool(2);
 
         readLineThread = new StdInReader();
         readLineThread.start();
@@ -923,7 +927,9 @@ public class CLI implements ClientView {
      */
     @Override
     public void update(MessageToClient message) {
-        message.handleMessage(this);
+        executor.execute(() -> {
+            message.handleMessage(this);
+        });
     }
 
     /**

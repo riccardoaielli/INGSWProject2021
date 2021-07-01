@@ -1,8 +1,4 @@
-package it.polimi.ingsw.client.CLI.LocalModel;
-
-import it.polimi.ingsw.client.ClientView;
-
-import java.util.concurrent.Phaser;
+package it.polimi.ingsw.client;
 
 /**
  * Enum to represent the possible phases of the client
