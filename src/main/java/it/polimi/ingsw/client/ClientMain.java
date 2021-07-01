@@ -36,7 +36,7 @@ public class ClientMain {
     /**
      * Main method parses the arguments and starts the CLI or GUI
      */
-    public static void main(String[] args) {
+    public static void start(String[] args) {
 
         List<String> arguments = new ArrayList<>(Arrays.asList(args));
         boolean cliMode = false;
@@ -50,7 +50,7 @@ public class ClientMain {
                     "-host: followed by the desired server host ip address\n" +
                     "-port: followed by the desired server port number between " + MIN_PORT + " and " + MAX_PORT + " as argument\n" +
                     "-cli: to start the client in command line interface mode\n" +
-                    "-help: to get help\n";
+                    "-help: to get this help\n";
             System.out.println(helpString);
             return;
         }

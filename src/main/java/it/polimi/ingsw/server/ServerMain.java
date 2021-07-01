@@ -24,10 +24,6 @@ public class ServerMain {
     private static int portNumber;
     private Lobby lobby;
 
-    public ServerMain(int port) {
-        ServerMain.portNumber = port;
-    }
-
     public void startServer(Boolean demo) {
         lobby = new Lobby(demo);
         ExecutorService executor = Executors.newCachedThreadPool();
@@ -54,12 +50,12 @@ public class ServerMain {
         executor.shutdown();
     }
 
-    public static void main(String[] args) {
+    public void start(String[] args) {
 
         List<String> arguments = new ArrayList<>(Arrays.asList(args));
         boolean demo = false;
 
-        if(arguments.size() == 1 && arguments.contains(HELP_ARGUMENT)) {
+        if(arguments.contains(HELP_ARGUMENT)) {
             String helpString = "The default server port is " + DEFAULT_PORT + "\n\n" +
                     "Here is a list of all the available commands:\n" +
                     "-port: followed by the desired port number between " + MIN_PORT + " and " + MAX_PORT + " as argument\n" +
@@ -86,8 +82,7 @@ public class ServerMain {
 
         System.out.println("Server started!");
 
-        ServerMain echoServer = new ServerMain(portNumber);
-        echoServer.startServer(demo);
+        startServer(demo);
     }
 
     public static Logger getLOGGER() {
