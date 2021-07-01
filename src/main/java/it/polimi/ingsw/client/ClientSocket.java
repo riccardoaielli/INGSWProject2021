@@ -3,6 +3,8 @@ package it.polimi.ingsw.client;
 import com.google.gson.Gson;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.common.messages.messagesToServer.MessageToServer;
+import it.polimi.ingsw.common.messages.messagesToServer.PingMessage;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -24,7 +26,6 @@ public class ClientSocket implements MessageSender {
     private String SocketInReaderLine;
     private Socket socket;
     private ClientView clientView;
-    private final String PING = "ping";
 
     private MessageToClientDeserializer messageToClientDeserializer = new MessageToClientDeserializer();
 
@@ -64,7 +65,7 @@ public class ClientSocket implements MessageSender {
      * @param message is the message to be sent.
      */
     @Override
-    public void sendMessage(MessageToServer message) {
+    public synchronized void sendMessage(MessageToServer message) {
         //Serializes and sends to socket
         out.println(gson.toJson(message));
     }
@@ -88,6 +89,6 @@ public class ClientSocket implements MessageSender {
      */
     private void enableHeartbeat() {
         this.pinger = Executors.newSingleThreadScheduledExecutor();
-        pinger.scheduleAtFixedRate(() -> out.println(PING), 0, 1000, TimeUnit.MILLISECONDS);
+        pinger.scheduleAtFixedRate(() -> sendMessage(new PingMessage()), 0, 1000, TimeUnit.MILLISECONDS);
     }
 }

@@ -24,4 +24,12 @@ public abstract class Message {
     public String getNickname() {
         return nickname;
     }
+
+    /**
+     * Getter for the message type
+     * @return message type of this message
+     */
+    public MessageType getMessageType() {
+        return messageType;
+    }
 }

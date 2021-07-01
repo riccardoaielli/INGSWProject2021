@@ -107,7 +107,6 @@ public class CardGridController extends AbstractController {
         }
         selx = GridPane.getRowIndex(selectedImageView);
         sely = GridPane.getColumnIndex(selectedImageView);
-        //todo passo la posizione a chi serve per creare il messaggio
     }
 
     public int getSelx() {
@@ -120,9 +119,5 @@ public class CardGridController extends AbstractController {
 
     public int[][] getCardGridMatrixCurrent() {
         return cardGridMatrixCurrent;
-    }
-
-    public GridPane getCardGridPane() {
-        return cardGridPane;
     }
 }

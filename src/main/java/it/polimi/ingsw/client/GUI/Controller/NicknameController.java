@@ -23,7 +23,7 @@ public class NicknameController extends AbstractController {
 
     private void onJoinClick(Event event){
         String nickname = this.nickname.getText();
-        this.getGui().setMyNickname(nickname);
+        this.getGui().setNickname(nickname);
         SceneManager.getInstance().setRootFXML("loadingScreen");
         this.getGui().getMessageSender().sendMessage(new NicknameReplyMessage(nickname));
     }

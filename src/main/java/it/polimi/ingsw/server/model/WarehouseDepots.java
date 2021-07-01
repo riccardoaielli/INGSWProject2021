@@ -126,7 +126,7 @@ public class WarehouseDepots extends MessageObservable {
     public void moveToFromSpecialDepot(int sourceDepotNumber, int destinationDepotNumber, int quantity) throws InvalidRemovalException, InvalidAdditionException, InvalidMoveException {
         //Throw exception if the condition that exactly one of the two depots can be a special depot is not respected
         if(sourceDepotNumber <= STANDARDDEPOTS == destinationDepotNumber <= STANDARDDEPOTS) {
-            throw new InvalidMoveException("At least one of the two depots can't be a special depot");
+            throw new InvalidMoveException("Not exactly one of the two depots is a special depot");
         }
         //Throw exception if the depot does not exist
         if (sourceDepotNumber > depots.size() || destinationDepotNumber > depots.size()) {

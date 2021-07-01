@@ -4,6 +4,7 @@ import it.polimi.ingsw.client.*;
 import it.polimi.ingsw.client.CLI.LocalModel.LocalModel;
 import it.polimi.ingsw.client.LocalPhase;
 import it.polimi.ingsw.client.CLI.LocalModel.CliColor;
+import it.polimi.ingsw.common.messages.MessageType;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.common.messages.messagesToServer.*;
 import it.polimi.ingsw.server.model.ObservableGameEnder;
@@ -204,7 +205,7 @@ public class CLI implements ClientView {
     public void askCreateMatch(){
         int numPlayerInput = readInt("How many players?");
         String nicknameInput = readInput("Insert nickname");
-        localModel.setLocalPlayer(nicknameInput);
+        setNickname(nicknameInput);
         messageSender.sendMessage(new CreateMatchReplyMessage(nicknameInput, numPlayerInput));
         if(numPlayerInput != 1)
             System.out.println("Wait for other players to join the game...");
@@ -216,7 +217,7 @@ public class CLI implements ClientView {
     @Override
     public void askNickname(){
         String nicknameInput = readInput("Insert nickname");
-        localModel.setLocalPlayer(nicknameInput);
+        setNickname(nicknameInput);
         messageSender.sendMessage(new NicknameReplyMessage(nicknameInput));
         System.out.println("Wait for other players to join the game...");
     }
@@ -921,9 +922,15 @@ public class CLI implements ClientView {
      */
     @Override
     public void update(MessageToClient message) {
-        executor.execute(() -> {
+        //Immediately show disconnection and close game
+        if(message.getMessageType() == MessageType.DISCONNECTED_UPDATE){
             message.handleMessage(this);
-        });
+        }
+        else {
+            executor.execute(() -> {
+                message.handleMessage(this);
+            });
+        }
     }
 
     /**
@@ -937,6 +944,6 @@ public class CLI implements ClientView {
 
     @Override
     public void setNickname(String nickname) {
-        //TODO move nickname here and implement method
+        localModel.setLocalPlayer(nickname);
     }
 }

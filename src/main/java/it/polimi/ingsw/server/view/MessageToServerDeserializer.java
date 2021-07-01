@@ -74,6 +74,8 @@ public class MessageToServerDeserializer implements JsonDeserializer <MessageToS
                 return gson.fromJson(jsonObject, EndTurnMessage.class);
             case "DISCARD_RESOURCES_FROM_MARKET":
                 return gson.fromJson(jsonObject, DiscardResourcesFromMarketMessage.class);
+            case "PING":
+                return gson.fromJson(jsonObject, PingMessage.class);
         }
 
         return null;

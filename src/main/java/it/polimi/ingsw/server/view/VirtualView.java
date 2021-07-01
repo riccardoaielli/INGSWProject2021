@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.view;
 import com.google.gson.Gson;
 import it.polimi.ingsw.common.View;
+import it.polimi.ingsw.common.messages.MessageType;
 import it.polimi.ingsw.common.messages.messagesToClient.DisconnectedUpdate;
 import it.polimi.ingsw.common.messages.messagesToClient.MessageToClient;
 import it.polimi.ingsw.common.messages.messagesToClient.ErrorMessage;
@@ -33,7 +34,6 @@ public class VirtualView implements Runnable,View {
     private Lobby lobby;
     private String line = "";
     private final int TIMEOUT_TIME = 10000;
-    private final String PING = "ping";
 
 
     /**
@@ -53,7 +53,7 @@ public class VirtualView implements Runnable,View {
 
     public void run() {
         try {
-            //socket.setSoTimeout(TIMEOUT_TIME);
+            socket.setSoTimeout(TIMEOUT_TIME);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
 
@@ -66,15 +66,14 @@ public class VirtualView implements Runnable,View {
             }
 
             while ((line = in.readLine()) != null) {
-                if(!line.equals(PING)){
+                MessageToServer messageToServer = messageDeserializer.deserializeMessage(line);
+                if(!(messageToServer.getMessageType() == MessageType.PING)){
                     synchronized (this){
                         if(controller == null){
                             this.update(new ErrorMessage(null, "The first connected player is choosing the number of players. Wait..."));
                         }
                         else{
                             System.out.println("Received: " + line);
-                            MessageToServer messageToServer = messageDeserializer.deserializeMessage(line);
-
                             if (nickname!= null){
                                 if(!nickname.equals(messageToServer.getNickname())){
                                     this.update(new ErrorMessage(nickname, "This message cannot be sent by this client"));

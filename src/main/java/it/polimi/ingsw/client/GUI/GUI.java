@@ -316,13 +316,9 @@ public class GUI implements ClientView {
         return myNickname;
     }
 
-    public void setMyNickname(String myNickname) {
-        this.myNickname = myNickname;
-    }
-
     @Override
     public void setNickname(String nickname) {
-        //TODO move nickname here and implement method
+        this.myNickname = myNickname;
     }
 
     public void exitGame() {
