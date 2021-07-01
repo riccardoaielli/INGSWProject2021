@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.CLI.LocalModel;
 
+import it.polimi.ingsw.client.LocalPhase;
 import it.polimi.ingsw.common.utils.CardGridParser;
 import it.polimi.ingsw.common.utils.LeaderCardParser;
 import it.polimi.ingsw.server.model.*;
@@ -209,7 +210,7 @@ public class LocalModel {
      */
     public void discardInitialLeaders(String nickname, int indexLeaderCard1, int indexLeaderCard2) {
         players.stream().filter(x->x.getNickname().equals(nickname)).forEach(x->x.discardInitialLeaders(indexLeaderCard1,indexLeaderCard2));
-        if(!players.contains(nickname))
+        if(!localPlayer.getNickname().equals(nickname))
             players.add(new PlayerCLI(nickname));
     }
 

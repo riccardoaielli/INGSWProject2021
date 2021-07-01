@@ -41,12 +41,11 @@ public class ServerMain {
         }
         ServerMain.LOGGER.info("Server ready");
         Socket clientSocket;
-
+        ServerMain.LOGGER.info("Accepting..");
         while (true) {
-            System.out.println("Accepting..");
             try {
                 clientSocket = serverSocket.accept();
-                ServerMain.LOGGER.info("Accepted clientAddress: " + clientSocket.getInetAddress() + " portName: " + clientSocket.getPort());
+                ServerMain.LOGGER.info("Accepted client. Address: " + clientSocket.getInetAddress().getHostAddress() + " PortName: " + clientSocket.getPort());
                 executor.submit(new VirtualView(clientSocket, lobby));
             } catch (IOException e) {
                 break;

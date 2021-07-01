@@ -54,14 +54,19 @@ public class CardGridController extends AbstractController {
      * @param j is the column
      */
     private void drawCards(int id, int i, int j) {
-        Image img = new Image("cardsImage/" + id + ".png");
         Node node = gridPaneArray[i][j];
         ImageView imgView = (ImageView) node;
         imgView.setFitWidth(w);
         imgView.setFitHeight(h);
         imgView.setPreserveRatio(true);
         imgView.setId(Integer.toString(id));
-        imgView.setImage(img);
+        if(id == 0){
+            imgView.setVisible(false);
+        }
+        else{
+            Image img = new Image("cardsImage/" + id + ".png");
+            imgView.setImage(img);
+        }
     }
 
     private void initializeCardGridPaneArray()

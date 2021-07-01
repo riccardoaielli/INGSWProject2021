@@ -25,7 +25,6 @@ public class ClientSocket implements MessageSender {
     private Socket socket;
     private ClientView clientView;
     private final String PING = "ping";
-    private final Executor executor;
 
     private MessageToClientDeserializer messageToClientDeserializer = new MessageToClientDeserializer();
 
@@ -35,7 +34,6 @@ public class ClientSocket implements MessageSender {
     public ClientSocket(String hostAddress, int portNumber, ClientView clientView) {
 
         this.clientView = clientView;
-        executor = Executors.newSingleThreadExecutor();
         try {
             socket = new Socket(hostAddress, portNumber);
             //Stream to write to and send to the server
@@ -58,9 +56,7 @@ public class ClientSocket implements MessageSender {
         MessageToClient message;
         this.SocketInReaderLine = line;
         message = messageToClientDeserializer.deserializeMessage(line);
-        executor.execute(() -> {
-            clientView.update(message);
-        });
+        clientView.update(message);
     }
 
     /**
