@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.logging.Logger;
 
 /**
  * This class handles the connection to the client, server side
@@ -34,6 +35,7 @@ public class VirtualView implements Runnable,View {
     private Lobby lobby;
     private String line = "";
     private final int TIMEOUT_TIME = 10000;
+    private static final Logger LOGGER = Logger.getLogger(VirtualView.class.getName());
 
 
     /**
@@ -97,6 +99,12 @@ public class VirtualView implements Runnable,View {
 
     //Method used to manage the disconnection of a client
     private void disconnect(){
+        String disconnectionMessage = "Client disconnected. Address: " + socket.getInetAddress().getHostAddress() + " Port:" + socket.getPort();
+        if (nickname == null){
+            disconnectionMessage = disconnectionMessage + " Nickname: not yet set";
+        }
+        else disconnectionMessage = disconnectionMessage + " Nickname:" + nickname;
+
         try {
             out.close();
             in.close();
@@ -112,12 +120,7 @@ public class VirtualView implements Runnable,View {
         }
         //else the player was waiting and is removed from the queue
         else lobby.removeFromQueue(this);
-        String disconnectionMessage = "Client disconnected. Address: " + socket.getInetAddress().getHostAddress() + " Port:" + socket.getPort();
-        if (nickname == null){
-            disconnectionMessage = disconnectionMessage + " Nickname: not yet set";
-        }
-        else disconnectionMessage = disconnectionMessage + " Nickname:" + nickname;
-        ServerMain.getLOGGER().info(disconnectionMessage);
+        LOGGER.info(disconnectionMessage);
     }
 
     /**

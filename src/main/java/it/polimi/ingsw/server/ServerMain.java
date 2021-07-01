@@ -84,8 +84,4 @@ public class ServerMain {
 
         startServer(demo);
     }
-
-    public static Logger getLOGGER() {
-        return LOGGER;
-    }
 }
