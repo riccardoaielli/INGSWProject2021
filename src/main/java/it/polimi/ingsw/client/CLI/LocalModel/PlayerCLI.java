@@ -10,6 +10,7 @@ import java.util.*;
  */
 public class PlayerCLI {
     private final int CARD_BACK = 65;
+    private final int EMPTY_CARD = 66;
     private final String nickname;
     private final GetColorString color;
     private ArrayList <Integer> leaderCards;
@@ -20,6 +21,9 @@ public class PlayerCLI {
     private StrongboxCLI strongbox;
     private Map<Marble, Integer> temporaryMarbles;
     private Map<Resource, Integer> temporaryMapResource;
+    private ArrayList<String> personalBoardStrings;
+    private ArrayList<String> developmentCardSpaceStrings;
+    private ArrayList<String> leaderCardsStrings;
 
     public PlayerCLI(String nickname) {
         this.nickname = nickname;
@@ -175,15 +179,55 @@ public class PlayerCLI {
      * @param localPlayer the nickname of the local user
      */
     public void printPersonalBoards(String localPlayer){
-        if(localPlayer.equals(nickname))
-            System.out.println("Your Personal Board: ");
-        else
-            System.out.println("Personal board di " + nickname + ":");
-        printTermporaryMarbles();
+        personalBoardStrings = new ArrayList<>();
+        personalBoardStrings.add("╔═════════════════════════════════════════════════════════════════╗");
+        int numOfSpaces = 65;
+        String out = "";
+        if(localPlayer.equals(nickname)) {
+            out = "Your Personal Board: ";
+            numOfSpaces = numOfSpaces - out.length();
+        }
+        else {
+            out = ("Personal board di " + nickname + ":");
+            numOfSpaces = numOfSpaces - out.length();
+        }
+        for(int space = 0; space<numOfSpaces; space++){
+            out = out + " ";
+        }
+        personalBoardStrings.add("║" + out + "║");
+
+        //printTermporaryMarbles();
+
         faithTrackCLI.printFaithTrack();
+        personalBoardStrings.add("║" + faithTrackCLI.getFaithTrackByRow(0) + "║");
+        personalBoardStrings.add("║" + faithTrackCLI.getFaithTrackByRow(1) + "║");
+
         wareHouseDepots.printWhareHouseDepots();
         strongbox.printStrongbox();
 
+        for(int row = 0; row < 6; row++){
+            if(row == 0 || row == 1){
+                out = " " + wareHouseDepots.getByRow(row) + "  " + strongbox.getByRow(row) + "  " + developmentCardSpaceStrings.get(row) + "   ";
+            }
+            if(row == 2){
+                out = " " + wareHouseDepots.getByRow(row) + "                " + developmentCardSpaceStrings.get(row) + "   ";
+            }
+            if(row > 2){
+                out = "                       " + developmentCardSpaceStrings.get(row) + "   ";
+            }
+            personalBoardStrings.add("║" + out + "║");
+        }
+
+        for(String leaderRow: leaderCardsStrings){
+            personalBoardStrings.add("║  " + leaderRow + "                                     " + "║" );
+        }
+
+        personalBoardStrings.add("╚═════════════════════════════════════════════════════════════════╝");
+
+    }
+
+    public ArrayList<String> getPersonalBoardStrings() {
+        return personalBoardStrings;
     }
 
     /**
@@ -209,5 +253,46 @@ public class PlayerCLI {
             out = out + getColorString.getColorMarble(marble) + "●: " + temporaryMarbles.get(marble) + " " + CliColor.RESET;
         }
         System.out.println(out.concat("]"));
+    }
+
+    public void printDevelopmentCardSpace(Map<Integer, ArrayList<String>> cliCardString) {
+        developmentCardSpaceStrings = new ArrayList<>();
+        String rowString = "";
+        for(int cardRow = 0; cardRow < 6; cardRow++) {
+            if(developmentCardSpace.size() != 0) {
+                for (ArrayList<Integer> row : developmentCardSpace) {
+                    if (row.size() != 0) {
+                        for (int card : row) {
+                            if (row.indexOf(card) == (row.size() - 1))
+                                rowString = rowString.concat(cliCardString.get(card).get(cardRow));
+                        }
+                    } else
+                        rowString = rowString.concat(cliCardString.get(EMPTY_CARD).get(cardRow));
+                }
+            }
+            else
+                rowString = cliCardString.get(EMPTY_CARD).get(cardRow) + cliCardString.get(EMPTY_CARD).get(cardRow) + cliCardString.get(EMPTY_CARD).get(cardRow);
+
+            developmentCardSpaceStrings.add(rowString);
+            //System.out.println(rowString);
+            rowString = "";
+        }
+    }
+
+    public void printLeaderCards(Map<Integer, ArrayList<String>> cliCardString) {
+        leaderCardsStrings = new ArrayList<>();
+        String rowString = "";
+        for(int cardRow = 0; cardRow < 5; cardRow++){
+            for(Integer card : leaderCards) {
+                if(cardRow == 4 && isLeaderActive(card)){
+                    rowString = rowString + CliColor.COLOR_YELLOW + cliCardString.get(card).get(cardRow) + CliColor.RESET;
+                }
+                else
+                    rowString = rowString.concat(cliCardString.get(card).get(cardRow));
+            }
+            leaderCardsStrings.add(rowString);
+            //System.out.println(rowString);
+            rowString = "";
+        }
     }
 }

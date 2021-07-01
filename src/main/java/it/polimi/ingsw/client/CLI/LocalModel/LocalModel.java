@@ -19,13 +19,14 @@ public class LocalModel {
     private final int CARD_WIDTH = 13;
     private final GetColorString getColorString = new GetColorString();
     private final Map<Integer,ArrayList <String>> cliCardString = new HashMap<>();
-
     private ArrayList <PlayerCLI> players;
     private PlayerCLI localPlayer;
     private MarketCLI market;
     private int blackCrossPosition;
     private final int maxRow = 3, maxColumn = 4;
     private int[][] cardGridMatrix;
+    private ArrayList<String> cardGridStrings;
+
 
     public LocalModel() {
         players = new ArrayList<>();
@@ -105,6 +106,7 @@ public class LocalModel {
      * Method to print the card grid
      */
     public void printCardGrid(){
+        cardGridStrings = new ArrayList<>();
         String cardRowString = "";
         for(int row = 0; row < maxRow ; row++){
             for(int cardRow = 0; cardRow < 6; cardRow++){
@@ -114,7 +116,7 @@ public class LocalModel {
                     else
                         cardRowString = cardRowString.concat(cliCardString.get(EMPTY_CARD).get(cardRow));
                 }
-                System.out.println(cardRowString);
+                cardGridStrings.add(cardRowString);
                 cardRowString = "";
             }
         }
@@ -136,49 +138,6 @@ public class LocalModel {
     }
 
     /**
-     * Method to print the leader cards of a player
-     * @param player the nickname of the player
-     */
-    public void printLeaderCards(PlayerCLI player) {
-        String rowString = "";
-        ArrayList <Integer> leaderCard = player.getLeaderCards();
-        for(int cardRow = 0; cardRow < 5; cardRow++){
-            for(Integer card : leaderCard) {
-                if(cardRow == 4 && player.isLeaderActive(card)){
-                    rowString = rowString + CliColor.COLOR_YELLOW + cliCardString.get(card).get(cardRow) + CliColor.RESET;
-                }
-                else
-                    rowString = rowString.concat(cliCardString.get(card).get(cardRow));
-            }
-            System.out.println(rowString);
-            rowString = "";
-        }
-    }
-
-    /**
-     * Method to print the development cards of a player
-     * @param player the nickname of a player
-     */
-    private void printDevelopmentCards(PlayerCLI player) {
-        String rowString = "";
-        ArrayList <ArrayList<Integer>> developmentCardSpace = player.getDevelopmentCardSpace();
-        for(int cardRow = 0; cardRow < 6; cardRow++) {
-            for (ArrayList<Integer> row : developmentCardSpace) {
-                if(row.size() != 0) {
-                    for (int card : row) {
-                        if (row.indexOf(card) == (row.size() - 1))
-                            rowString = rowString.concat(cliCardString.get(card).get(cardRow));
-                    }
-                }else
-                    rowString = rowString.concat(cliCardString.get(EMPTY_CARD).get(cardRow));
-            }
-
-            System.out.println(rowString);
-            rowString = "";
-        }
-    }
-
-    /**
      * Setter for the local player's nickname
      * @param localPlayer the nickname typed by the user
      */
@@ -191,25 +150,54 @@ public class LocalModel {
      * Method to print the complete view
      */
     public void printView(LocalPhase phase){
+        int rowIndex;
+        String boardRow;
         if(phase != LocalPhase.LEADER_CHOICE && phase != LocalPhase.DEFAULT && phase != LocalPhase.FIRST_PLAYER && phase != LocalPhase.NICKNAME && phase != LocalPhase.RESOURCE_CHOICE) {
-            if (market != null)
+            if(market != null && cardGridMatrix != null) {
                 printMarket();
-            if (cardGridMatrix != null)
                 printCardGrid();
+                for (int row = 0; row < 18; row++) {
+                    if (row >= 14)
+                        System.out.println(cardGridStrings.get(row) + "    " + market.getByRow(row - 14));
+                    else
+                        System.out.println(cardGridStrings.get(row));
+                }
+            }
+
+            ArrayList<String> finalBoards = new ArrayList<>();
+            if (players.size() == 1)
+                printLorenzosFaithTrack();
             if (players.size() != 0) {
-                if (players.size() == 1)
-                    printLorenzosFaithTrack();
                 for (PlayerCLI player : players) {
+                    if(!player.getLeaderCards().isEmpty() || !player.getDevelopmentCardSpace().isEmpty())
+                    player.printDevelopmentCardSpace(cliCardString);
+                    player.printLeaderCards(cliCardString);
                     player.printPersonalBoards(localPlayer.getNickname());
-                    if (!player.getLeaderCards().isEmpty()) {
-                        System.out.println("LEADER CARDS:");
-                        printLeaderCards(player);
+                    ArrayList<String> personalBoard = player.getPersonalBoardStrings();
+
+                    if(players.indexOf(player) == 0 || players.indexOf(player) == 2) {
+                        for (String row : personalBoard)
+                            finalBoards.add(row);
                     }
-                    if (!player.getDevelopmentCardSpace().isEmpty()) {
-                        System.out.println("DEVELOPMENT CARDS:");
-                        printDevelopmentCards(player);
+                    else if(players.indexOf(player) == 1) {
+                        rowIndex = 0;
+                        for (String row : personalBoard) {
+                            boardRow = finalBoards.get(rowIndex).concat(row);
+                            finalBoards.set(rowIndex, boardRow);
+                            rowIndex ++;
+                        }
+                    }
+                    else if(players.indexOf(player) == 3) {
+                        rowIndex = 16;
+                        for (String row : personalBoard) {
+                            boardRow = finalBoards.get(rowIndex).concat(row);
+                            finalBoards.set(rowIndex, finalBoards.get(rowIndex).concat(row));
+                            rowIndex ++;
+                        }
                     }
                 }
+                for(String finalRow:finalBoards)
+                    System.out.println(finalRow);
             }
         }
     }

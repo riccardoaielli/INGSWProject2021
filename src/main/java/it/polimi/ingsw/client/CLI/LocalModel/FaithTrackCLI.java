@@ -11,6 +11,7 @@ public class FaithTrackCLI {
     private int redcrossPosition;
     private ArrayList<Integer> popeFavourTiles;
     private GetColorString getColorString = new GetColorString();
+    private ArrayList<String> faithTrackStrings;
 
     public FaithTrackCLI() {
         redcrossPosition = 0;
@@ -40,6 +41,7 @@ public class FaithTrackCLI {
      * Method used to print the faith track
      */
     public void printFaithTrack(){
+        faithTrackStrings = new ArrayList<>();
         String cell = "|";
         String redCross = getColorString.getColorResource(Resource.FAITH)+"┼"+ CliColor.RESET;
         String faithTrack = "";
@@ -50,6 +52,7 @@ public class FaithTrackCLI {
             else
                 faithTrack = faithTrack.concat(String.valueOf(pos)).concat(cell);
         }
+        faithTrackStrings.add(faithTrack);
 
         String tile = "";
         for (int i = 0; i < popeFavourTiles.size(); i++){
@@ -77,7 +80,10 @@ public class FaithTrackCLI {
         popeFavourTilesString = popeFavourTilesString.replace("y","2");
         popeFavourTilesString = popeFavourTilesString.replace("z","4");
 
-        String outString = faithTrack.concat("\n").concat(popeFavourTilesString);
-        System.out.println(outString);
+        faithTrackStrings.add(popeFavourTilesString);
+    }
+
+    public String getFaithTrackByRow(int row){
+        return faithTrackStrings.get(row);
     }
 }

@@ -14,6 +14,7 @@ public class WareHouseDepotsCLI {
     private final int NUM_OF_DEPOTS = 3;
     private List<Map<Resource, Integer>> depots;
     private GetColorString color;
+    private ArrayList<String> warehouseStrings;
 
     public WareHouseDepotsCLI() {
         color = new GetColorString();
@@ -34,30 +35,32 @@ public class WareHouseDepotsCLI {
      * Method to print the warehouse depot
      */
     public void printWhareHouseDepots(){
+        warehouseStrings = new ArrayList<>();
         String line = "";
+        String lineSpaces = "";
         int spaces = 0;
         HashMap<Resource,Integer> depot = new HashMap<>();
-        System.out.println("DEPOTS: ");
         for(int i = 0; i < depots.size(); i++){
             switch (i + 1){
                 case 1:
                     spaces = 1;
-                    line = "  ";
+                    lineSpaces = "  ";
                     break;
                 case 2:
                     spaces = 2;
-                    line = " ";
+                    lineSpaces = " ";
                     break;
                 case 4:
                 case 5:
                     spaces = 2;
-                    line = "";
+                    lineSpaces = "";
                     break;
                 case 3:
                     spaces = 3;
-                    line = "";
+                    lineSpaces = "";
                     break;
             }
+            line = lineSpaces;
 
             depot = new HashMap<>(depots.get(i));
             if(depot.keySet().size() != 0) {
@@ -74,7 +77,13 @@ public class WareHouseDepotsCLI {
             else
                 for(int emptySpace = 0;emptySpace<spaces;emptySpace++)
                     line = line.concat("◌ ");
-            System.out.println(line);
+            line = line.concat(lineSpaces);
+            warehouseStrings.add(line);
         }
     }
+
+    public String getByRow(int row){
+        return warehouseStrings.get(row);
+    }
+
 }

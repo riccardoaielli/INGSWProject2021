@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.CLI.LocalModel;
 
 import it.polimi.ingsw.server.model.enumerations.Resource;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import java.util.Map;
 public class StrongboxCLI {
     private Map<Resource, Integer> strongbox;
     private GetColorString color;
+    private ArrayList<String> strongboxStrings;
 
     public StrongboxCLI() {
         color = new GetColorString();
@@ -33,8 +35,25 @@ public class StrongboxCLI {
      * Method to print the strongbox
      */
     public void printStrongbox(){
-        System.out.print("STRONGBOX[");
-        strongbox.keySet().forEach(x -> System.out.print(color.getColorResource(x) + "●" + CliColor.RESET + ": " + strongbox.get(x) + " "));
-        System.out.println("]");
+        strongboxStrings = new ArrayList<>();
+        String resource;
+        resource = (color.getColorResource(Resource.COIN) + "●" + CliColor.RESET + ": " + strongbox.get(Resource.COIN) + " ");
+        if(strongbox.get(Resource.COIN) < 10)
+            resource = resource.concat(" ");
+        resource = resource.concat(color.getColorResource(Resource.SERVANT) + "●" + CliColor.RESET + ": " + strongbox.get(Resource.SERVANT) + " ");
+        if(strongbox.get(Resource.SERVANT) < 10)
+            resource = resource.concat(" ");
+        strongboxStrings.add(resource);
+        resource = (color.getColorResource(Resource.SHIELD) + "●" + CliColor.RESET + ": " + strongbox.get(Resource.SHIELD) + " ");
+        if(strongbox.get(Resource.SHIELD) < 10)
+            resource = resource.concat(" ");
+        resource = resource.concat(color.getColorResource(Resource.STONE) + "●" + CliColor.RESET + ": " + strongbox.get(Resource.STONE) + " ");
+        if(strongbox.get(Resource.STONE) < 10)
+            resource = resource.concat(" ");
+        strongboxStrings.add(resource);
+    }
+
+    public String getByRow(int row){
+        return strongboxStrings.get(row);
     }
 }

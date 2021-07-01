@@ -70,7 +70,6 @@ public class CLI implements ClientView {
         out.print("\033[H\033[2J");
         out.flush();
         localModel.printView(phase);
-        //Add reprint view
     }
 
     /**
