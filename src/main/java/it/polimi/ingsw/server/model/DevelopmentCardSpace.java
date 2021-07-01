@@ -74,7 +74,7 @@ public class DevelopmentCardSpace extends MessageObservable implements Observabl
         doNotify();
         //notifies match when reaches 7 cards in the development card space
         if(numOfcards == 7 && matchToNotify != null)
-            matchToNotify.update();
+            matchToNotify.update(false);
     }
 
 

@@ -66,18 +66,19 @@ public class FaithTrack extends MessageObservable implements ObservableGameEnder
                         break;
                 }
                 if(tileNumber != null)
-                    if(popeFavourTiles.get(tileNumber) == nonActive)
+                    if(popeFavourTiles.get(tileNumber) == nonActive) {
                         popeFavourTiles.set(tileNumber, active);
-                    //todo: si potrebbe spostare qui l'attivazione del rapporto in vaticano con un observer
+                        notifyObservers(new PopeFavourTilesUpdate(getNickname(),new ArrayList<>(popeFavourTiles)));
+                    }
                 steps++;
                 tileNumber = null;
             }
             notifyObservers(new RedCrossPositionUpdate(getNickname(),faithTrackPosition));
 
-            if (faithTrackPosition > 24) {      // the maximum amount of space in the track is 24
+            if (faithTrackPosition >= 24) {      // the maximum amount of space in the track is 24
                 faithTrackPosition = 24;
                 //notifies match
-                if(matchToNotify != null) matchToNotify.update();
+                if(matchToNotify != null) matchToNotify.update(false);
             }
         }
     }

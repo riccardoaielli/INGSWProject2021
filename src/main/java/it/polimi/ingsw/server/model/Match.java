@@ -261,9 +261,10 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
 
     /**
     * This method is called by the faithTracks and by the developmentCardSpaces when they reaches the condition to end the game
-    */
+     * @param message
+     */
     @Override
-    public void update() {
+    public void update(boolean message) {
         if(matchPhase == MatchPhase.STANDARDROUND)
             matchPhase = MatchPhase.LASTROUND;
     }

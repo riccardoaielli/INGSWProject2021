@@ -92,8 +92,7 @@ public class CardGrid extends MessageObservable {
                     notifyObservers(new LorenzoDrawUpdate("Lorenzo", row,column));
                     if (cardGridMatrix[0][column].empty() && cardGridMatrix[1][column].empty() && cardGridMatrix[2][column].empty()) {
                         alreadyLost = true;//one column is completely empty (column are of the same color)
-                        //TODO avviso match fine partita, hai perso. Metti void e rimuovi stringhe
-                        //matchToNotify.endGame("Hai Perso");
+                        if(matchToNotify != null) matchToNotify.update(true);
                         return "Hai Perso";
                     }
                     return "Non hai ancora perso"; //fondamentale per non creare errori

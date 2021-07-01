@@ -889,13 +889,8 @@ public class CLI implements ClientView {
     @Override
     public void showUpdateRank(String nickname, ArrayList<RankPosition> rank) {
         clearConsoleAndReprint();
-        System.out.println("The game ended.\nFinal Rank:");
-        for (int pos = 0;pos < rank.size();pos++){
-            if (rank.get(pos).getNickname().equals(nickname))
-                System.out.println((pos+1) + "° " + CliColor.COLOR_YELLOW + rank.get(pos).toString() + CliColor.RESET);
-            else
-                System.out.println((pos+1) + "° " + rank.get(pos).toString());
-        }
+        localModel.printRank(nickname, rank);
+
     }
 
     /**

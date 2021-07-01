@@ -649,4 +649,22 @@ public class LocalModel {
                 "|/   \\__/(_______/\\_______/|/    )_)(_______/\\_______)\\_______)|/     \\||/    )_)(_______/(_______/\n" +
                 "                                                                                                   \n");
     }
+
+    public void printRank(String nickname, ArrayList<RankPosition> rank) {
+        if(players.size() == 1){
+            if(rank.get(0).getNickname().equals("Lorenzo"))
+                System.out.println("Lorenzo ended the game, you lost.");
+            else
+                System.out.println("You won!\n" + rank.get(0).toString());
+        }
+        else {
+            System.out.println("The game ended.\nFinal Rank:");
+            for (int pos = 0; pos < rank.size(); pos++) {
+                if (rank.get(pos).getNickname().equals(nickname))
+                    System.out.println((pos + 1) + "° " + CliColor.COLOR_YELLOW + rank.get(pos).toString() + CliColor.RESET);
+                else
+                    System.out.println((pos + 1) + "° " + rank.get(pos).toString());
+            }
+        }
+    }
 }

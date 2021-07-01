@@ -54,9 +54,10 @@ public class Lorenzo extends MessageObservable implements ObservableGameEnder<En
         if(faithTrackPositionBlack >= 24)
             match.vaticanReport(3);
 
-        if (faithTrackPositionBlack > 24) {    // the maximum amount of space in the track is 24
+        if (faithTrackPositionBlack >= 24) {    // the maximum amount of space in the track is 24
             faithTrackPositionBlack = 24;
-            matchToNotify.update();
+            matchToNotify.update(true);
+            return;
         }
         notifyObservers(new LorenzoBlackCrossUpdate("Lorenzo",faithTrackPositionBlack));
     }
