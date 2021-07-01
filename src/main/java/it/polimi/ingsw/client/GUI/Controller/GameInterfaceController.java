@@ -147,7 +147,6 @@ public class GameInterfaceController extends AbstractController {
     }
 
     public void setActivateLeader(String nickname, int numLeaderCard, int leaderCardID){
-        //nickname = SceneManager.getInstance().getGui().getNickname();  serve solo se voglio lavorare sulla mia personal board, non è questo il caso
         PersonalBoardController personalBoardController = personalBoardControllerMap.get(nickname);
         personalBoardController.updateActivatedLeader(numLeaderCard, leaderCardID);
     }
@@ -213,7 +212,7 @@ public class GameInterfaceController extends AbstractController {
         for(Tab tab : list){
             tab.setStyle("-fx-background-color: white");
             if(tab.getText().equals(nickname)){
-                tab.setStyle("-fx-background-color: #34eb61"); //#34eb61 colore verde chiaro
+                tab.setStyle("-fx-background-color: #34eb61"); //#34eb61 green
             }
         }
     }

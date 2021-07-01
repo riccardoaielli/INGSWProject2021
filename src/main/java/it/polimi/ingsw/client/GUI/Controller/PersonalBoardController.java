@@ -447,13 +447,26 @@ public class PersonalBoardController extends  AbstractController{
                     case 1 : imgV.setVisible(false);
                         break;
                     case 2 :
-                        imgV.setImage(new Image("personalBoardImage/" + "popeZeroFront" + ".png"));
+                        imgV.setImage(new Image("personalBoardImage/" + imageChooserPopeFavourTiles(k) + ".png"));
                         imgV.setId(Integer.toString(x));
                         break;
                 }
             }
             k++;
         }
+    }
+
+    private String imageChooserPopeFavourTiles(int k){
+        String imgName = "";
+        switch (k) {
+            case 0 : imgName = "popeZeroFront";
+                break;
+            case 1 : imgName = "popeOneFront";
+                break;
+            case 2 : imgName = "popeTwoFront";
+                break;
+        }
+        return imgName;
     }
 
     public void setDevelopmentCardSpace(ArrayList<ArrayList<Integer>> cardsState) {

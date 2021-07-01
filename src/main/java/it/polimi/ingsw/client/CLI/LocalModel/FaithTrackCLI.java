@@ -45,7 +45,7 @@ public class FaithTrackCLI {
         String cell = "|";
         String redCross = getColorString.getColorResource(Resource.FAITH)+"┼"+ CliColor.RESET;
         String faithTrack = "";
-        String popeFavourTilesString = "         └---x---┘       └-------y------┘     └----------z------┘";
+        String popeFavourTilesString = "         └---x---┘       └-------y------┘     └--------z--------┘";
         for (int pos = 0; pos<=24; pos++){
             if(redcrossPosition == pos)
                 faithTrack = faithTrack.concat(redCross).concat(cell);
@@ -64,7 +64,7 @@ public class FaithTrackCLI {
                     tile = "└-------y------┘";
                     break;
                 case 2:
-                    tile = "└----------z------┘";
+                    tile = "└--------z--------┘";
                     break;
             }
             switch (popeFavourTiles.get(i)){
@@ -77,7 +77,7 @@ public class FaithTrackCLI {
             }
         }
         popeFavourTilesString = popeFavourTilesString.replace("x","2");
-        popeFavourTilesString = popeFavourTilesString.replace("y","2");
+        popeFavourTilesString = popeFavourTilesString.replace("y","3");
         popeFavourTilesString = popeFavourTilesString.replace("z","4");
 
         faithTrackStrings.add(popeFavourTilesString);
