@@ -8,6 +8,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -37,13 +38,27 @@ public class DiscardLeaderInterfaceController extends PopupController {
 
         highlightEffect.setSpread(1);
 
-        leaderOneImgView.setImage(personalBoardController.getLeaderCard1Image());
-        leaderTwoImgView.setImage(personalBoardController.getLeaderCard2Image());
+        Image leaderOneImg = personalBoardController.getLeaderCard1Image();
+        Image leaderTwoImg = personalBoardController.getLeaderCard2Image();
+
+        if(leaderOneImg==null){
+            leaderOneImgView.setVisible(false);
+        }else{
+            leaderOneImgView.setImage(leaderOneImg);
+        }
+
+        if(leaderTwoImg==null){
+            leaderTwoImgView.setVisible(false);
+        }else{
+            leaderTwoImgView.setImage(leaderTwoImg);
+        }
 
         leaderOneImgView.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onImgLeaderCardClick);
         leaderTwoImgView.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onImgLeaderCardClick);
 
         discardLeaderButton.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onBuyCardButtonClick);
+
+        discardLeaderButton.setDisable(true);
     }
 
     private void onBuyCardButtonClick(Event event){
@@ -62,6 +77,7 @@ public class DiscardLeaderInterfaceController extends PopupController {
             selectedImageView.setEffect(highlightEffect);
         }
         numLeaderCard = Integer.parseInt(imageView.getId());
+        discardLeaderButton.setDisable(false);
     }
 
     @Override

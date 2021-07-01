@@ -9,6 +9,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -45,8 +46,21 @@ public class LeaderProductionController extends PopupController{
         GameInterfaceController gameInterfaceController = (GameInterfaceController) SceneManager.getInstance().getController("gameInterface");
         String nickname = SceneManager.getInstance().getGui().getNickname();
         PersonalBoardController personalBoardController = gameInterfaceController.getPersonalBoardControllerMap().get(nickname);
-        leaderOneImgView.setImage(personalBoardController.getLeaderCard1Image());
-        leaderTwoImgView.setImage(personalBoardController.getLeaderCard2Image());
+
+        Image leaderOneImg = personalBoardController.getLeaderCard1Image();
+        Image leaderTwoImg = personalBoardController.getLeaderCard2Image();
+
+        if(leaderOneImg==null){
+            leaderOneImgView.setVisible(false);
+        }else{
+            leaderOneImgView.setImage(leaderOneImg);
+        }
+
+        if(leaderTwoImg==null){
+            leaderTwoImgView.setVisible(false);
+        }else{
+            leaderTwoImgView.setImage(leaderTwoImg);
+        }
 
         leaderOneImgView.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onImgLeaderCardClick);
         leaderTwoImgView.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onImgLeaderCardClick);

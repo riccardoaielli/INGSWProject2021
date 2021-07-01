@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -37,9 +38,23 @@ public class WhiteMarbleLeaderPowerController extends PopupController {
 
         String nickname = SceneManager.getInstance().getGui().getNickname();
         PersonalBoardController personalBoardController = gameInterfaceController.getPersonalBoardControllerMap().get(nickname);
+
+
         //Load leader card images
-        leaderOneImgView.setImage(personalBoardController.getLeaderCard1Image());
-        leaderTwoImgView.setImage(personalBoardController.getLeaderCard2Image());
+        Image leaderOneImg = personalBoardController.getLeaderCard1Image();
+        Image leaderTwoImg = personalBoardController.getLeaderCard2Image();
+
+        if(leaderOneImg==null){
+            leaderOneImgView.setVisible(false);
+        }else{
+            leaderOneImgView.setImage(leaderOneImg);
+        }
+
+        if(leaderTwoImg==null){
+            leaderTwoImgView.setVisible(false);
+        }else{
+            leaderTwoImgView.setImage(leaderTwoImg);
+        }
 
         SpinnerValueFactory<Integer> spinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,4,1);
         whiteMarbleSpinner.setValueFactory(spinnerValueFactory);

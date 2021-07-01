@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.server.model.enumerations.Marble;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import javafx.collections.ObservableList;
@@ -115,9 +116,6 @@ public class PersonalBoardController extends  AbstractController{
     @FXML
     private Label servantStrongboxLabel;
 
-    private Image leaderCard1Image;
-    private Image leaderCard2Image;
-
     private ImageView topDevCard1;
 
 
@@ -125,21 +123,19 @@ public class PersonalBoardController extends  AbstractController{
     private final DropShadow highlightEffectGreen = new DropShadow(6, Color.web("#65f952")); //green #65f952, red #f03030, arancione #f9dc52
 
     public void setLeaderCard1(Image leaderCard1) {
-        leaderCard1Image = leaderCard1;
         this.leaderCard1.setImage(leaderCard1);
     }
 
     public void setLeaderCard2(Image leaderCard2) {
-        leaderCard2Image = leaderCard2;
         this.leaderCard2.setImage(leaderCard2);
     }
 
     public Image getLeaderCard1Image() {
-        return leaderCard1Image;
+        return leaderCard1.getImage();
     }
 
     public Image getLeaderCard2Image() {
-        return leaderCard2Image;
+        return leaderCard2.getImage();
     }
 
     private Node[][] imgViewResourceArray = null;
@@ -575,11 +571,15 @@ public class PersonalBoardController extends  AbstractController{
 
     public void updateDiscardedLeader(int numLeaderCard){
         if(numLeaderCard==1){
-            leaderCard1.setEffect(highlightEffectRed);
-            //leaderCard1.setImage(null);
-        }if(numLeaderCard==2){
-            leaderCard2.setEffect(highlightEffectRed);
-            //leaderCard1.setImage(null);
+            //leaderCard1.setEffect(highlightEffectRed);
+            leaderCard1.setImage(leaderCard2.getImage());
+            leaderCard2.setImage(null);
+            leaderCard2.setVisible(false);
+        }
+        if(numLeaderCard==2){
+            //leaderCard2.setEffect(highlightEffectRed);
+            leaderCard2.setImage(null);
+            leaderCard2.setVisible(false);
         }
     }
 
