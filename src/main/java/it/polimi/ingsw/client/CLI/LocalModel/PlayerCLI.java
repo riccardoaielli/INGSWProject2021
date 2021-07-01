@@ -185,11 +185,11 @@ public class PlayerCLI {
         int numOfSpaces = 65;
         String out = "";
         if(localPlayer.equals(nickname)) {
-            out = "Your Personal Board: ";
+            out = "Your personal board: ";
             numOfSpaces = numOfSpaces - out.length();
         }
         else {
-            out = ("Personal board di " + nickname + ":");
+            out = (nickname + "'s personal board: ");
             numOfSpaces = numOfSpaces - out.length();
         }
         for(int space = 0; space<numOfSpaces; space++){

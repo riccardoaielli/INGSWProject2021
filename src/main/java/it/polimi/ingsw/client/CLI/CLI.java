@@ -556,6 +556,10 @@ public class CLI implements ClientView {
 
     }
 
+    /**
+     * Setter for first production done
+     * @param firstProductionDone state of production to set
+     */
     public void setFirstProductionDone(boolean firstProductionDone) {
         this.firstProductionDone = firstProductionDone;
     }
@@ -699,7 +703,7 @@ public class CLI implements ClientView {
 
     /**
      * Method to print an error received from the Model
-     * @param errorString
+     * @param errorString string containing error to display
      */
     @Override
     public void showError(String errorString) {

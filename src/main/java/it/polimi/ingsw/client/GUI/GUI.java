@@ -318,7 +318,7 @@ public class GUI implements ClientView {
 
     @Override
     public void setNickname(String nickname) {
-        this.myNickname = myNickname;
+        this.myNickname = nickname;
     }
 
     public void exitGame() {

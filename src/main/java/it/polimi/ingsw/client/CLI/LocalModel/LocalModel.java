@@ -38,7 +38,7 @@ public class LocalModel {
 
     /**
      * Getter for Local Player data
-     * @return
+     * @return Local Player
      */
     public PlayerCLI getLocalPlayer() {
         return localPlayer;
@@ -538,10 +538,6 @@ public class LocalModel {
                 stringLength = stringLength + production.get(x).toString().length() + 1;
             }
         }
-
-        /*stringTemp = "1" + getColorString.getColorResource(Resource.FAITH) + "■" + CliColor.RESET;
-        string = string.concat(stringTemp);
-        stringLength = stringLength + 1 + 1; //the first 1 correspond to one faith as a product of the production*/
 
 
         string = string.concat("+?");

@@ -5,7 +5,7 @@ import it.polimi.ingsw.server.model.enumerations.Resource;
 import java.util.ArrayList;
 
 /**
- * Class that contains local information of the faith track and the relatives methods to print information on a CLI
+ * Class that contains local information of the faith track and the relative methods to print information on a CLI
  */
 public class FaithTrackCLI {
     private int redcrossPosition;
