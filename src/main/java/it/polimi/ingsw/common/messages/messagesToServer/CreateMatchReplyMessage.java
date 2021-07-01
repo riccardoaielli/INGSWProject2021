@@ -16,7 +16,7 @@ public class CreateMatchReplyMessage extends MessageToServer {
      * @param numOfPlayers the number of players to create the match
      */
     public CreateMatchReplyMessage(String nickname, int numOfPlayers) {
-        super(nickname, MessageType.CREATE_MATCH_REPLY);
+        super(nickname, MessageType.CREATE_MATCH);
         this.numOfPlayers = numOfPlayers;
     }
 

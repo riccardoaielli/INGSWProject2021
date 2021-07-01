@@ -14,7 +14,7 @@ public class NicknameReplyMessage extends MessageToServer {
      * @param nickname the nickname of the new player
      */
     public NicknameReplyMessage(String nickname) {
-        super(nickname, MessageType.NICKNAME_REPLY);
+        super(nickname, MessageType.ADD_PLAYER);
     }
 
     /**

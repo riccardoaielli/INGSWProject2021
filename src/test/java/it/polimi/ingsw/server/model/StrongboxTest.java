@@ -98,4 +98,22 @@ class StrongboxTest {
         assertEquals(15, strongbox1.getTotalResources());
     }
 
+    @Test
+    void testResourceNotAvailable(){
+        Strongbox strongbox1 = new Strongbox();
+        Map<Resource, Integer> resourceMap = new HashMap<>();
+        resourceMap.put(Resource.STONE, 10);
+        resourceMap.put(Resource.SERVANT, 2);
+        strongbox1.add(resourceMap);
+        Map<Resource, Integer> resourceMap2 = new HashMap<>();
+        resourceMap2.put(Resource.COIN, 3);
+        resourceMap2.put(Resource.SERVANT, 3);
+        resourceMap2.put(Resource.STONE, 5);
+        Map<Resource, Integer> resourceMap3;
+        resourceMap3 = strongbox1.resourcesNotAvailable(resourceMap2);
+        assertEquals(1, resourceMap3.get(Resource.SERVANT));
+        assertEquals(3, resourceMap3.get(Resource.COIN));
+        assertNull(resourceMap3.get(Resource.STONE));
+    }
+
 }

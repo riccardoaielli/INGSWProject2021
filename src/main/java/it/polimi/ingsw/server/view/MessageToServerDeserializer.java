@@ -36,13 +36,13 @@ public class MessageToServerDeserializer implements JsonDeserializer <MessageToS
         Gson gson = new Gson();
 
         switch (jsonObject.get("messageType").getAsString()){
-            case "NICKNAME_REPLY":
+            case "ADD_PLAYER":
                 return gson.fromJson(jsonObject, NicknameReplyMessage.class);
             case "DISCARD_INITIAL_LEADER":
                 return gson.fromJson(jsonObject, DiscardInitialLeaderMessage.class);
             case "CHOOSE_INITIAL_RESOURCES":
                 return gson.fromJson(jsonObject, ChooseInitialResourcesMessage.class);
-            case "CREATE_MATCH_REPLY":
+            case "CREATE_MATCH":
                 return gson.fromJson(jsonObject, CreateMatchReplyMessage.class);
             case "TAKE_FROM_MARKET":
                 return gson.fromJson(jsonObject, TakeFromMarketMessage.class);

@@ -449,7 +449,7 @@ public class CLI implements ClientView {
         String firstAnswer;
         do{
             firstAnswer = readInput("Do you want to use a leader power to transform white marbles?[y/n]");
-        }while (!(firstAnswer.equals("y")||firstAnswer.equals("n")));
+        }while (!(firstAnswer.equalsIgnoreCase("y")||firstAnswer.equalsIgnoreCase("n")));
         if (firstAnswer.equals("y")){
             String leaderCard;
             int leaderCardInt = 0;

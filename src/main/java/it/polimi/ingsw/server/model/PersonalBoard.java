@@ -269,7 +269,7 @@ public class PersonalBoard extends MessageObservable {
             notifyObservers(new TemporaryMarblesUpdate(this.getNickname(), new HashMap<>(temporaryMarbles)));
         }
         else
-            throw new InvalidParameterException("Invalid move: you don't ave this leader card or the asked marbles where negative ");
+            throw new InvalidParameterException("Invalid move: you don't have this leader card or the asked marbles were negative ");
     }
 
     /**
