@@ -17,6 +17,7 @@ import java.util.List;
 public class LocalModel {
     private final int CARD_BACK = 65;
     private final int EMPTY_CARD = 66;
+    private final int EMPTY_LEADER = 67;
     private final int CARD_WIDTH = 13;
     private final GetColorString getColorString = new GetColorString();
     private final Map<Integer,ArrayList <String>> cliCardString = new HashMap<>();
@@ -470,6 +471,14 @@ public class LocalModel {
         emptyCardArray.add("║           ║");
         emptyCardArray.add("╚═══════════╝");
         cliCardString.put(EMPTY_CARD, emptyCardArray);
+
+        ArrayList <String> discardedLeaderArray = new ArrayList<>();
+        discardedLeaderArray.add("╔═══════════╗");
+        discardedLeaderArray.add("║   CARD    ║");
+        discardedLeaderArray.add("║ DISCARDED ║");
+        discardedLeaderArray.add("║           ║");
+        discardedLeaderArray.add("╚═══════════╝");
+        cliCardString.put(EMPTY_LEADER, discardedLeaderArray);
     }
 
     private ArrayList <String> cardRequirementStringParser(LeaderCard leaderCard, ArrayList <String> stringArray){

@@ -52,8 +52,8 @@ public class CLI implements ClientView {
         firstTurn = true;
         demo = false;
         firstProductionDone = false;
-        //executor = Executors.newSingleThreadExecutor();
-        executor = Executors.newFixedThreadPool(2);
+        executor = Executors.newSingleThreadExecutor();
+        //executor = Executors.newFixedThreadPool(2);
 
         readLineThread = new StdInReader();
         readLineThread.start();

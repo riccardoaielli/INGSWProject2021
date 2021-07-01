@@ -86,4 +86,7 @@ public class WareHouseDepotsCLI {
         return warehouseStrings.get(row);
     }
 
+    public int getSize() {
+        return warehouseStrings.size();
+    }
 }

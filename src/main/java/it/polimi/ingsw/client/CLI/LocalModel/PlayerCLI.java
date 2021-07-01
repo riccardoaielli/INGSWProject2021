@@ -11,6 +11,7 @@ import java.util.*;
 public class PlayerCLI {
     private final int CARD_BACK = 65;
     private final int EMPTY_CARD = 66;
+    private final int EMPTY_LEADER = 67;
     private final String nickname;
     private final GetColorString color;
     private ArrayList <Integer> leaderCards;
@@ -206,13 +207,24 @@ public class PlayerCLI {
         strongbox.printStrongbox();
 
         for(int row = 0; row < 6; row++){
-            if(row == 0 || row == 1){
+            if(row == 0 || row == 1 ){
                 out = " " + wareHouseDepots.getByRow(row) + "  " + strongbox.getByRow(row) + "  " + developmentCardSpaceStrings.get(row) + "   ";
             }
-            if(row == 2){
+            if(row == 2)
                 out = " " + wareHouseDepots.getByRow(row) + "                " + developmentCardSpaceStrings.get(row) + "   ";
+            if(row == 3){
+                if(wareHouseDepots.getSize() == 4)
+                    out = " " + wareHouseDepots.getByRow(row) + "                  " + developmentCardSpaceStrings.get(row) + "   ";
+                else
+                    out = "                       " + developmentCardSpaceStrings.get(row) + "   ";
             }
-            if(row > 2){
+            if(row == 4){
+                if(wareHouseDepots.getSize() == 5)
+                    out = " " + wareHouseDepots.getByRow(row) + "                  " + developmentCardSpaceStrings.get(row) + "   ";
+                else
+                    out = "                       " + developmentCardSpaceStrings.get(row) + "   ";
+            }
+            if(row == 5){
                 out = "                       " + developmentCardSpaceStrings.get(row) + "   ";
             }
             personalBoardStrings.add("║" + out + "║");
@@ -281,17 +293,24 @@ public class PlayerCLI {
 
     public void printLeaderCards(Map<Integer, ArrayList<String>> cliCardString) {
         leaderCardsStrings = new ArrayList<>();
+        int card;
         String rowString = "";
         for(int cardRow = 0; cardRow < 5; cardRow++){
-            for(Integer card : leaderCards) {
-                if(cardRow == 4 && isLeaderActive(card)){
-                    rowString = rowString + CliColor.COLOR_YELLOW + cliCardString.get(card).get(cardRow) + CliColor.RESET;
+            for(int leaderCardSpaces = 0; leaderCardSpaces < 2;leaderCardSpaces++) {
+                if(leaderCardSpaces < leaderCards.size()) {
+                    card = leaderCards.get(leaderCardSpaces);
+                    if(cardRow == 4 && isLeaderActive(card)){
+                        rowString = rowString + CliColor.COLOR_YELLOW + cliCardString.get(card).get(cardRow) + CliColor.RESET;
+                    }
+                    else
+                        rowString = rowString.concat(cliCardString.get(card).get(cardRow));
                 }
-                else
+                else {
+                    card = EMPTY_LEADER;
                     rowString = rowString.concat(cliCardString.get(card).get(cardRow));
+                }
             }
             leaderCardsStrings.add(rowString);
-            //System.out.println(rowString);
             rowString = "";
         }
     }
