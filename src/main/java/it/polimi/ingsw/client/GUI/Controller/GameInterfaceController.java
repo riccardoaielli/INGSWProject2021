@@ -231,9 +231,6 @@ public class GameInterfaceController extends AbstractController {
         activateLeaderButton.setDisable(true);
         discardLeaderButton.setDisable(true);
         endTurnButton.setDisable(true);
-        /*SceneManager.getInstance().setRootFXML("rankInterface");
-        RankInterfaceController controller = (RankInterfaceController) SceneManager.getInstance().getController("rankInterface");
-        controller.setLabel(string);*/
     }
 
     /**

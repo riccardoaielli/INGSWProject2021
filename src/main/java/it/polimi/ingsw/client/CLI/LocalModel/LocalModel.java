@@ -373,7 +373,7 @@ public class LocalModel {
             ArrayList <String> stringArray = new ArrayList<>();
             stringArray.add("╔═══════════╗");//characters width: 15 ║
 
-            //codice di parsing della stringa che stampa la carta
+            //parsing code for leader depot string
             LeaderDepot leaderDepot = leaderCardDepot.pop();
             int id = leaderDepot.getId();
             cardRequirementStringParser(leaderDepot, stringArray);
@@ -396,7 +396,7 @@ public class LocalModel {
             ArrayList <String> stringArray = new ArrayList<>();
             stringArray.add("╔═══════════╗");//characters width: 15 ║
 
-            //codice di parsing della stringa che stampa la carta
+            //parsing code for leader discount string
             LeaderDiscount leaderDiscount = leaderCardDiscount.pop();
             int id = leaderDiscount.getId();
             cardRequirementStringParser(leaderDiscount, stringArray);
@@ -420,7 +420,7 @@ public class LocalModel {
             ArrayList <String> stringArray = new ArrayList<>();
             stringArray.add("╔═══════════╗");//characters width: 15 ║
 
-            //codice di parsing della stringa che stampa la carta
+            //parsing code for leader marble string
             LeaderMarble leaderMarble = leaderCardMarble.pop();
             int id = leaderMarble.getId();
             cardRequirementStringParser(leaderMarble, stringArray);
@@ -443,7 +443,7 @@ public class LocalModel {
             ArrayList <String> stringArray = new ArrayList<>();
             stringArray.add("╔═══════════╗");//characters width: 15 ║
 
-            //codice di parsing della stringa che stampa la carta
+            //parsing code for leader production string
             LeaderProduction leaderProduction = leaderCardProduction.pop();
             int id = leaderProduction.getId();
             PowerOfProduction powerOfProduction = leaderProduction.abilityProduction();
@@ -521,14 +521,19 @@ public class LocalModel {
 
         string = string.concat("=");
         stringLength++;
-        //stringTemp = getMapResourceIntegerParser(production);
+
         for(Resource x : Resource.values()){
-            if(cost.get(x)!= null){
-                stringTemp = cost.get(x) + "" + getColorString.getColorResource(x) + "■" + CliColor.RESET;
+            if(production.get(x)!= null){
+                stringTemp = production.get(x) + "" + getColorString.getColorResource(x) + "■" + CliColor.RESET;
                 string = string.concat(stringTemp);
-                stringLength = stringLength + cost.get(x).toString().length() + 1;
+                stringLength = stringLength + production.get(x).toString().length() + 1;
             }
         }
+
+        /*stringTemp = "1" + getColorString.getColorResource(Resource.FAITH) + "■" + CliColor.RESET;
+        string = string.concat(stringTemp);
+        stringLength = stringLength + 1 + 1; //the first 1 correspond to one faith as a product of the production*/
+
 
         string = string.concat("+?");
         stringLength = stringLength + 2;
