@@ -267,6 +267,10 @@ public class PlayerCLI {
         System.out.println(out.concat("]"));
     }
 
+    /**
+     * Method used to generate the development cards space to print
+     * @param cliCardString the strings of the cards
+     */
     public void printDevelopmentCardSpace(Map<Integer, ArrayList<String>> cliCardString) {
         developmentCardSpaceStrings = new ArrayList<>();
         String rowString = "";
@@ -291,6 +295,10 @@ public class PlayerCLI {
         }
     }
 
+    /**
+     * Method used to generate the leader cards space to print
+     * @param cliCardString the strings of the cards
+     */
     public void printLeaderCards(Map<Integer, ArrayList<String>> cliCardString) {
         leaderCardsStrings = new ArrayList<>();
         int card;

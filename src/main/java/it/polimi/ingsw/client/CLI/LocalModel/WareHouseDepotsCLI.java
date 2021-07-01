@@ -82,10 +82,18 @@ public class WareHouseDepotsCLI {
         }
     }
 
+    /**
+     * Getter for a row of the warehouse
+     * @param row the index of the row
+     * @return the string of the row
+     */
     public String getByRow(int row){
         return warehouseStrings.get(row);
     }
 
+    /**
+     * @return the number of depots in the warehouse
+     */
     public int getSize() {
         return warehouseStrings.size();
     }

@@ -73,13 +73,14 @@ public class FaithTrack extends MessageObservable implements ObservableGameEnder
                 steps++;
                 tileNumber = null;
             }
-            notifyObservers(new RedCrossPositionUpdate(getNickname(),faithTrackPosition));
-
             if (faithTrackPosition >= 24) {      // the maximum amount of space in the track is 24
                 faithTrackPosition = 24;
+                notifyObservers(new RedCrossPositionUpdate(getNickname(),faithTrackPosition));
                 //notifies match
                 if(matchToNotify != null) matchToNotify.update(false);
             }
+            else
+                notifyObservers(new RedCrossPositionUpdate(getNickname(),faithTrackPosition));
         }
     }
 

@@ -59,6 +59,13 @@ class PersonalBoardTest {
         } catch (InvalidProductionException | InvalidRemovalException | InvalidCostException | InvalidParameterException e) {
             assert false;
         }
+        try {
+            personalBoard.activateCardProduction(costStrongbox,costWarehouseDepot,1);
+        } catch (InvalidRemovalException | InvalidCostException | InvalidParameterException e) {
+            assert false;
+        } catch (InvalidProductionException e) {
+            assert true;
+        }
 
         personalBoard.endProduction();
 
@@ -131,14 +138,52 @@ class PersonalBoardTest {
             personalBoard.getDevelopmentCardSpace().addCard(match.getCardGrid().getCard(2,3),1);
             personalBoard.getDevelopmentCardSpace().addCard(match.getCardGrid().getCard(1,3),1);
             personalBoard.discardInitialLeader(1,2);
-            personalBoard.activateLeader(2);
-        } catch (RequirementNotMetException | InvalidParameterException | NoCardException | InvalidDevelopmentCardException e) {
+        } catch ( InvalidParameterException | NoCardException | InvalidDevelopmentCardException e) {
             assert false;
         }
         try {
             personalBoard.activateLeaderProduction(costStrongbox,costWarehouseDepot,2,Resource.COIN);
+        } catch ( InvalidCostException | InvalidLeaderAction | InvalidRemovalException e) {
+            assert false;
+        } catch (InvalidProductionException e) {
+            assert true;
+        }
+
+        try {
+            personalBoard.activateLeader(2);
+        } catch (RequirementNotMetException | InvalidParameterException e) {
+            assert false;
+        }
+
+
+        try {
+            personalBoard.activateLeaderProduction(costStrongbox,costWarehouseDepot,5,Resource.COIN);
+        } catch (InvalidCostException | InvalidLeaderAction | InvalidRemovalException e) {
+            assert false;
+        } catch (InvalidProductionException e) {
+            assert true;
+        }
+
+        try {
+            personalBoard.activateLeaderProduction(costStrongbox,costWarehouseDepot,2,Resource.FAITH);
+        } catch (InvalidCostException | InvalidLeaderAction | InvalidRemovalException e) {
+            assert false;
+        } catch (InvalidProductionException e) {
+            assert true;
+        }
+
+        try {
+            personalBoard.activateLeaderProduction(costStrongbox,costWarehouseDepot,2,Resource.COIN);
         } catch (InvalidProductionException | InvalidCostException | InvalidLeaderAction | InvalidRemovalException e) {
             assert false;
+        }
+
+        try {
+            personalBoard.activateLeaderProduction(costStrongbox,costWarehouseDepot,2,Resource.COIN);
+        } catch (InvalidCostException | InvalidLeaderAction | InvalidRemovalException e) {
+            assert false;
+        } catch (InvalidProductionException e) {
+            assert true;
         }
 
         assertEquals(1,personalBoard.getFaithTrack().getFaithTrackPosition());
@@ -220,6 +265,13 @@ class PersonalBoardTest {
         temporaryMarbles.put(Marble.YELLOWMARBLE,1);
         temporaryMarbles.remove(Marble.WHITEMARBLE,1);
         temporaryMarbles.putIfAbsent(Marble.WHITEMARBLE,0);
+        try {
+            personalBoard.transformWhiteMarble(10,1);
+        } catch (InvalidLeaderAction | NotEnoughWhiteMarblesException e) {
+            assert false;
+        } catch (InvalidParameterException invalidLeaderAction) {
+            assert true;
+        }
         try {
             personalBoard.transformWhiteMarble(3,1);
         } catch (InvalidParameterException | NotEnoughWhiteMarblesException | InvalidLeaderAction e) {
@@ -381,6 +433,13 @@ class PersonalBoardTest {
         } catch (InvalidCostException e) {
             assert true;
         }
+        try {
+            personalBoard.buyDevelopmentCard(3,1,costStrongbox,costWarehouseDepot,6,1);
+        } catch (NoCardException | InvalidCostException | InvalidRemovalException | InvalidDevelopmentCardException | InvalidParameterException e) {
+            assert false;
+        } catch (InvalidLeaderAction e) {
+            assert true;
+        }
 
         costStrongbox = new HashMap<>();
         costStrongbox.put(Resource.COIN,1);
@@ -446,6 +505,20 @@ class PersonalBoardTest {
             assert false;
         }
 
+        Map<Resource,Integer> map = new HashMap<>();
+        map.put(Resource.SHIELD,10);
+        personalBoard.getStrongbox().uncheckedRemove(map);
+        try {
+            personalBoard.activateLeader(1);
+        } catch (RequirementNotMetException e) {
+            assert true;
+        } catch (InvalidParameterException e) {
+            assert false;
+        }
+
+        map = new HashMap<>();
+        map.put(Resource.SHIELD,5);
+        personalBoard.getStrongbox().add(map);
         try {
             personalBoard.activateLeader(1);
         } catch (RequirementNotMetException | InvalidParameterException e) {
@@ -471,6 +544,16 @@ class PersonalBoardTest {
         assertEquals(64,leaderCards.get(3).getId());
 
         try {
+            personalBoard.activateLeader(1);
+        } catch (RequirementNotMetException | InvalidParameterException e) {
+            assert false;
+        }
+        try {
+            personalBoard.removeLeader(1);
+        } catch (InvalidParameterException e) {
+            assert true;
+        }
+        try {
             personalBoard.removeLeader(0);
         } catch (InvalidParameterException e) {
             assert true;
@@ -493,13 +576,13 @@ class PersonalBoardTest {
         assertEquals(3,leaderCards.size());
 
         try {
-            personalBoard.removeLeader(1);
-            personalBoard.removeLeader(1);
-            personalBoard.removeLeader(1);
+            personalBoard.removeLeader(2);
+            personalBoard.removeLeader(2);
         } catch (InvalidParameterException e) {
             assert false;
         }
-        assertEquals(0,leaderCards.size());
+        assertEquals(1,leaderCards.size());
+
     }
 
     @Test

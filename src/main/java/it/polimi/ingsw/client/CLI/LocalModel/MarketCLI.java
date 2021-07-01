@@ -57,6 +57,11 @@ public class MarketCLI {
         //System.out.print( CliColor.RESET + "\nMarble out: " + getColorString.getColorMarble(marbleOut) + "● \n" + CliColor.RESET);
     }
 
+    /**
+     * Getter for a row of the market
+     * @param row the index of the row
+     * @return the string of the row
+     */
     public String getByRow(int row){
         return marketStrings.get(row);
     }

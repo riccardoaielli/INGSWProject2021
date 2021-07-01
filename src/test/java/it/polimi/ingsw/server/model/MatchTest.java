@@ -4,6 +4,7 @@ import it.polimi.ingsw.server.model.enumerations.MatchPhase;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.InvalidNickName;
 import it.polimi.ingsw.server.model.exceptions.InvalidParameterException;
+import it.polimi.ingsw.server.model.exceptions.RequirementNotMetException;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -18,8 +19,8 @@ class MatchTest {
     public void matchPhasesTest(){
         Match match = null;
         try {
-            match = new Match(1,3,false);
-            match = new Match(1,5,false);
+            match = new Match(1,3,true);
+            match = new Match(1,5,true);
         } catch (InvalidParameterException exception) {
             assert true;
         }
@@ -52,10 +53,17 @@ class MatchTest {
         }
 
         try {
-            match.getPlayer("marco").getPersonalBoard().discardInitialLeader(1,2);
-            match.getPlayer("mario").getPersonalBoard().discardInitialLeader(1,2);
+            match.getPlayer("marco").getPersonalBoard().discardInitialLeader(1,10);
+        } catch (InvalidParameterException e) {
+            assert true;
+        } catch (InvalidNickName invalidNickName) {
+            assert false;
+        }
+        try {
+            match.getPlayer("marco").getPersonalBoard().discardInitialLeader(2,3);
+            match.getPlayer("mario").getPersonalBoard().discardInitialLeader(2,3);
             assertEquals(match.getMatchPhase(), MatchPhase.LEADERCHOICE);
-            match.getPlayer("massimo").getPersonalBoard().discardInitialLeader(1,2);
+            match.getPlayer("massimo").getPersonalBoard().discardInitialLeader(2,3);
         } catch (InvalidNickName | InvalidParameterException invalidNickName) {
             assert false;
         }
@@ -70,6 +78,11 @@ class MatchTest {
         match.moveFaithMarkerAll(-1);
 
         Player p1 = match.getCurrentPlayer();
+        try {
+            p1.getPersonalBoard().activateLeader(1);
+        } catch (RequirementNotMetException | InvalidParameterException e) {
+            assert false;
+        }
         match.nextPlayer();
         assertNotEquals(p1,match.getCurrentPlayer());
         match.getCurrentPlayer().getPersonalBoard().moveFaithMarker(30);
@@ -82,7 +95,7 @@ class MatchTest {
         match.nextPlayer();
         //check the change of match phase when the last player plays its last turn
         assertEquals(match.getMatchPhase(), MatchPhase.GAMEOVER);
-        assertEquals("mario",match.getFinalRank().get(1).getNickname());
+        assertEquals("marco",match.getFinalRank().get(1).getNickname());
         System.out.println(match.getFinalRank().get(1).toString());
     }
 
@@ -132,6 +145,15 @@ class MatchTest {
         }
 
         Map<Resource,Integer> resourceMap = new HashMap<>();
+
+        try {
+            resourceMap.put(Resource.SHIELD, 3);
+            match.getCurrentPlayer().getPersonalBoard().addInitialResources(resourceMap);
+        } catch (InvalidParameterException e) {
+            assert true;
+        }
+
+        resourceMap = new HashMap<>();
 
         try {
             resourceMap.put(Resource.SHIELD,1);

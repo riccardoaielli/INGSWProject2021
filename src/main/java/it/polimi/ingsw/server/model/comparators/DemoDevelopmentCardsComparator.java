@@ -12,13 +12,10 @@ public class DemoDevelopmentCardsComparator implements Comparator<DevelopmentCar
      * Override of compare to sort cards by ID
      * @param firstCard a development card
      * @param secondCard a development card
-     * @return 0 if the first card's ID is greater than the second's card ID
+     * @return a compare value between the id of the cards
      */
     @Override
     public int compare(DevelopmentCard firstCard, DevelopmentCard secondCard) {
-        if(firstCard.getId() >= secondCard.getId())
-            return 0;
-        else
-            return 1;
+        return Integer.compare(firstCard.getId(), secondCard.getId());
     }
 }

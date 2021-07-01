@@ -53,6 +53,11 @@ public class StrongboxCLI {
         strongboxStrings.add(resource);
     }
 
+    /**
+     * Getter for a row of the strongbox
+     * @param row the index of the row
+     * @return the string of the row
+     */
     public String getByRow(int row){
         return strongboxStrings.get(row);
     }

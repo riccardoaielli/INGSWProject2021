@@ -38,7 +38,7 @@ public class FaithTrackCLI {
     }
 
     /**
-     * Method used to print the faith track
+     * Method used to generate the faith track to print
      */
     public void printFaithTrack(){
         faithTrackStrings = new ArrayList<>();
@@ -83,6 +83,11 @@ public class FaithTrackCLI {
         faithTrackStrings.add(popeFavourTilesString);
     }
 
+    /**
+     * Getter for a row of the faithTrack
+     * @param row the index of the row
+     * @return the string of the row
+     */
     public String getFaithTrackByRow(int row){
         return faithTrackStrings.get(row);
     }

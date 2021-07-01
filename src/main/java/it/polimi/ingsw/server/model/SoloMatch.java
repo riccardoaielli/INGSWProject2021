@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.common.messages.messagesToClient.RankUpdate;
+import it.polimi.ingsw.server.model.comparators.CustomPlayerComparator;
 import it.polimi.ingsw.server.model.enumerations.MatchPhase;
 import it.polimi.ingsw.server.model.exceptions.InvalidParameterException;
 
@@ -10,8 +11,9 @@ import java.util.ArrayList;
  * The match to handle a game with only one player that plays against Lorenzo
  */
 public class SoloMatch extends Match{
-    Lorenzo lorenzo;
+    private Lorenzo lorenzo;
     private ArrayList<RankPosition> finalRank;
+    private boolean win;
 
     /**
      * This constructor creates a match deserializing all the leader cards and creating the market and the card grid
@@ -50,13 +52,27 @@ public class SoloMatch extends Match{
     @Override
     public void update(boolean message) {
         super.update(message);
-        if(message){
+        win = message;
+        if(win){
             finalRank = new ArrayList<>();
             finalRank.add(new RankPosition("Lorenzo",0));
             notifyObservers(new RankUpdate(finalRank));
         }
-        else
+        else {
             endGame();
+        }
+    }
+
+    @Override
+    public void endGame() {
+        if(win){
+            finalRank = new ArrayList<>();
+            finalRank.add(new RankPosition("Lorenzo",0));
+            notifyObservers(new RankUpdate(finalRank));
+        }
+        else {
+            super.endGame();
+        }
     }
 
     /**

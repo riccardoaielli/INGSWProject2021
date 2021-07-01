@@ -894,7 +894,7 @@ public class CLI implements ClientView {
     @Override
     public void showUpdateRank(String nickname, ArrayList<RankPosition> rank) {
         clearConsoleAndReprint();
-        localModel.printRank(nickname, rank);
+        localModel.printRank(rank);
 
     }
 

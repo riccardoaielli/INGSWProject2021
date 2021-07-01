@@ -646,7 +646,11 @@ public class LocalModel {
                 "                                                                                                   \n");
     }
 
-    public void printRank(String nickname, ArrayList<RankPosition> rank) {
+    /**
+     * Method to print the finl rank of the game
+     * @param rank the rank to print
+     */
+    public void printRank(ArrayList<RankPosition> rank) {
         if(players.size() == 1){
             if(rank.get(0).getNickname().equals("Lorenzo"))
                 System.out.println("Lorenzo ended the game, you lost.");
@@ -656,7 +660,7 @@ public class LocalModel {
         else {
             System.out.println("The game ended.\nFinal Rank:");
             for (int pos = 0; pos < rank.size(); pos++) {
-                if (rank.get(pos).getNickname().equals(nickname))
+                if (rank.get(pos).getNickname().equals(localPlayer.getNickname()))
                     System.out.println((pos + 1) + "° " + CliColor.COLOR_YELLOW + rank.get(pos).toString() + CliColor.RESET);
                 else
                     System.out.println((pos + 1) + "° " + rank.get(pos).toString());

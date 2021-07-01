@@ -113,7 +113,7 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
                     return;
                 case LEADERCHOICE:
                     numOfPlayersReady = 0;
-                    if(demo)
+                    if(!demo)
                         Collections.shuffle(players);
 
                     //Sending order of players
@@ -226,7 +226,10 @@ public class Match extends MessageObservable implements EndGameConditionsObserve
         players.forEach(x -> x.getPersonalBoard().sumVictoryPoints());
         rank = new ArrayList<>(players);
         rank.sort(new CustomPlayerComparator());
-
+        ArrayList<Player> tempRank = new ArrayList<>();
+        for (Player player: rank)
+            tempRank.add(rank.get(rank.size() - rank.indexOf(player) - 1));
+        rank = new ArrayList<>(tempRank);
         finalRank = new ArrayList<>();
         rank.forEach(x-> finalRank.add(new RankPosition(x.getNickname(),x.getPersonalBoard().getVictoryPoints())));
 

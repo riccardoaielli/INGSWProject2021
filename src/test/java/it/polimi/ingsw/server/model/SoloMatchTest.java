@@ -53,6 +53,11 @@ class SoloMatchTest {
         match.addPlayerReady();
         match.nextPlayer();
         blackCrossOne.soloAction();
+        try {
+            match.getPlayer("Pippo").getPersonalBoard().moveFaithMarker(30);
+        } catch (InvalidNickName invalidNickName) {
+            assert false;
+        }
     }
 
 }

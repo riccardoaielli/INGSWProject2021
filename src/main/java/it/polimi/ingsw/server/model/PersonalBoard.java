@@ -356,10 +356,6 @@ public class PersonalBoard extends MessageObservable {
             personalBoardPhase = PersonalBoardPhase.MAIN_TURN_ACTION_DONE;
             myPlayer.getView().update(new MainTurnActionDoneUpdate(myPlayer.getNickname()));
         }
-        //Ends turn in the setup round before playing
-        else if(personalBoardPhase == PersonalBoardPhase.ADD_INITIAL_RESOURCES){
-            match.nextPlayer();
-        }
     }
 
     /**

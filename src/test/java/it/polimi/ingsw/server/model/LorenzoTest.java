@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import it.polimi.ingsw.server.model.exceptions.InvalidNickName;
 import it.polimi.ingsw.server.model.exceptions.InvalidParameterException;
 import org.junit.jupiter.api.Test;
 
@@ -16,12 +17,14 @@ class LorenzoTest {
                 assert false;
             }
         }
-        Lorenzo lorenzo = new Lorenzo(match);
         try {
-            lorenzo.addObserver(new SoloMatch(1, false));
-        } catch (InvalidParameterException e) {
+            match.addPlayer("Pippo", new ViewStub());
+        } catch (InvalidNickName invalidNickName) {
             assert false;
         }
+        Lorenzo lorenzo = new Lorenzo(match);
+        lorenzo.addObserver(match);
+
         lorenzo.moveFaithMarker(1);
         assertEquals(1, lorenzo.getFaithTrackPositionBlack());
         //testing maximum value of faith marker
