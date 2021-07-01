@@ -185,6 +185,7 @@ class PersonalBoardTest {
         } catch (InvalidProductionException e) {
             assert true;
         }
+        personalBoard.endProduction();
 
         assertEquals(1,personalBoard.getFaithTrack().getFaithTrackPosition());
         assertEquals(11,personalBoard.getStrongbox().getResourceQuantity(Resource.COIN));
