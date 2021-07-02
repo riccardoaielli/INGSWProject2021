@@ -37,18 +37,21 @@ public class StrongboxCLI {
     public void printStrongbox(){
         strongboxStrings = new ArrayList<>();
         String resource;
-        resource = (color.getColorResource(Resource.COIN) + "●" + CliColor.RESET + ": " + strongbox.get(Resource.COIN) + " ");
-        if(strongbox.get(Resource.COIN) < 10)
+        resource = (color.getColorResource(Resource.COIN) + "●" + CliColor.RESET + ": " + strongbox.getOrDefault(Resource.COIN,0) + " ");
+        if(strongbox.getOrDefault(Resource.COIN,0) < 10)
             resource = resource.concat(" ");
-        resource = resource.concat(color.getColorResource(Resource.SERVANT) + "●" + CliColor.RESET + ": " + strongbox.get(Resource.SERVANT) + " ");
-        if(strongbox.get(Resource.SERVANT) < 10)
+
+        resource = resource.concat(color.getColorResource(Resource.SERVANT) + "●" + CliColor.RESET + ": " + strongbox.getOrDefault(Resource.SERVANT, 0) + " ");
+        if(strongbox.getOrDefault(Resource.SERVANT, 0) < 10)
             resource = resource.concat(" ");
         strongboxStrings.add(resource);
-        resource = (color.getColorResource(Resource.SHIELD) + "●" + CliColor.RESET + ": " + strongbox.get(Resource.SHIELD) + " ");
-        if(strongbox.get(Resource.SHIELD) < 10)
+
+        resource = (color.getColorResource(Resource.SHIELD) + "●" + CliColor.RESET + ": " + strongbox.getOrDefault(Resource.SHIELD,0) + " ");
+        if(strongbox.getOrDefault(Resource.SHIELD,0) < 10)
             resource = resource.concat(" ");
-        resource = resource.concat(color.getColorResource(Resource.STONE) + "●" + CliColor.RESET + ": " + strongbox.get(Resource.STONE) + " ");
-        if(strongbox.get(Resource.STONE) < 10)
+
+        resource = resource.concat(color.getColorResource(Resource.STONE) + "●" + CliColor.RESET + ": " + strongbox.getOrDefault(Resource.STONE,0) + " ");
+        if(strongbox.getOrDefault(Resource.STONE,0) < 10)
             resource = resource.concat(" ");
         strongboxStrings.add(resource);
     }
