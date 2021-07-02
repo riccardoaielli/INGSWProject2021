@@ -4,10 +4,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * This class is a thread that reads from the standard input stream
+ */
 public class StdInReader extends Thread{
     private boolean questionAsked;
     private String line = "";
 
+    /**
+     * Run method that reads from input stream
+     */
     @Override
     public void run() {
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
@@ -39,6 +45,9 @@ public class StdInReader extends Thread{
         }
     }
 
+    /**
+     * Run method that reads from input stream
+     */
     public synchronized String readUserInput(){
         questionAsked = true;
         //while in cui aspetta le l'input (con la notify)

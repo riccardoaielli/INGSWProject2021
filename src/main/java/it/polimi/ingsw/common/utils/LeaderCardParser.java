@@ -54,6 +54,7 @@ public class LeaderCardParser {
         return leaderCards;
     }
 
+
     public Stack<LeaderDepot> leaderCardDepotDeserializer(){
 
         Stack<LeaderDepot> leaderCardDepot;

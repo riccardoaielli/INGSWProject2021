@@ -483,6 +483,9 @@ public class LocalModel {
         cliCardString.put(EMPTY_LEADER, discardedLeaderArray);
     }
 
+    /**
+     * Method to create a string witch contains the information of card requirement
+     */
     private ArrayList <String> cardRequirementStringParser(LeaderCard leaderCard, ArrayList <String> stringArray){
         String string = "";
         int stringLength = 0;
@@ -515,6 +518,9 @@ public class LocalModel {
         return stringArray;
     }
 
+    /**
+     * Method to create a string witch contains the information of power of production
+     */
     private ArrayList <String> cardPowerOfProductionStringParser(PowerOfProduction powerOfProduction, ArrayList <String> stringArray){
         String string = "║";
         int stringLength = 1;

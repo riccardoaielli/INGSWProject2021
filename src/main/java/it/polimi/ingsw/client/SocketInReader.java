@@ -15,6 +15,11 @@ public class SocketInReader implements Runnable {
     BufferedReader in;
     ClientSocket clientSocket;
 
+    /**
+     * Constructor of this thread
+     * @param socket is the socket of the client
+     * @param clientSocket is the class of the client who manages messages
+     */
     public SocketInReader(Socket socket, ClientSocket clientSocket) {
         this.clientSocket = clientSocket;
         this.socket = socket;
