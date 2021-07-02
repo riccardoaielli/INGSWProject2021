@@ -248,7 +248,7 @@ public class PlayerCLI {
     public void printTermporaryResource() {
         if(!temporaryMapResource.isEmpty()) {
             System.out.print(nickname + "'s resources not yet stored:[ ");
-            temporaryMapResource.keySet().forEach(x -> System.out.print(color.getColorResource(x) + "●" + CliColor.RESET + ": " + temporaryMapResource.get(x) + " "));
+            temporaryMapResource.keySet().forEach(x -> System.out.print(color.getColorResource(x) + "●" + CliColor.RESET + ": " + temporaryMapResource.getOrDefault(x,0) + " "));
             System.out.println("]");
         }
     }

@@ -43,7 +43,11 @@ public class FaithTrackCLI {
     public void printFaithTrack(){
         faithTrackStrings = new ArrayList<>();
         String cell = "|";
-        String redCross = getColorString.getColorResource(Resource.FAITH)+"┼"+ CliColor.RESET;
+        String redCross;
+        if(redcrossPosition < 10)
+            redCross = getColorString.getColorResource(Resource.FAITH)+"┼"+ CliColor.RESET;
+        else
+            redCross = getColorString.getColorResource(Resource.FAITH)+"┼ "+ CliColor.RESET;
         String faithTrack = "";
         String popeFavourTilesString = "         └---x---┘       └-------y------┘     └--------z--------┘";
         for (int pos = 0; pos<=24; pos++){

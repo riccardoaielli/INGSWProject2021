@@ -200,6 +200,8 @@ public class LocalModel {
                 }
                 for(String finalRow:finalBoards)
                     System.out.println(finalRow);
+                //for (PlayerCLI player : players)
+                //    player.printTermporaryResource();
             }
         }
     }
