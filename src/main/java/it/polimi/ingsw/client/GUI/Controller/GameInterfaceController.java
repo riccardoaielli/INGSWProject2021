@@ -229,9 +229,9 @@ public class GameInterfaceController extends AbstractController {
                 string = "You won!\n" + rank.get(0).toString();
         }
         else {
-            string = "Final Rank:";
+            string = "Final Rank:   ";
             for(RankPosition rankPosition : rank){
-                string = string + rankPosition.toString() + "       ";
+                string = string + rankPosition.toString() + "   ";
             }
         }
 
