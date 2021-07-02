@@ -896,7 +896,7 @@ public class CLI implements ClientView {
     public void showUpdateRank(String nickname, ArrayList<RankPosition> rank) {
         clearConsoleAndReprint();
         localModel.printRank(rank);
-
+        closeGame("");
     }
 
     /**
