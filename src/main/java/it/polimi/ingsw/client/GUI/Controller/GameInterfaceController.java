@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client.GUI.Controller;
 
+import it.polimi.ingsw.client.CLI.LocalModel.CliColor;
 import it.polimi.ingsw.client.LocalPhase;
 import it.polimi.ingsw.client.GUI.SceneManager;
 import it.polimi.ingsw.common.messages.messagesToServer.EndTurnMessage;
@@ -218,10 +219,22 @@ public class GameInterfaceController extends AbstractController {
     }
 
     public void updateRank(ArrayList<RankPosition> rank){
+
         String string = "";
-        for(RankPosition rankPosition : rank){
-            string = string + rankPosition.toString() + "       ";
+
+        if(rank.size() == 1){
+            if(rank.get(0).getNickname().equals("Lorenzo"))
+                string = "Lorenzo ended the game, you lost.";
+            else
+                string = "You won!\n" + rank.get(0).toString();
         }
+        else {
+            string = "Final Rank:";
+            for(RankPosition rankPosition : rank){
+                string = string + rankPosition.toString() + "       ";
+            }
+        }
+
         SceneManager.getInstance().showClientDisconnectedInterface(string);
         rearrangeWHouseButton.setDisable(true);
         marketButton.setDisable(true);
