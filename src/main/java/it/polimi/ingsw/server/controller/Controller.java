@@ -13,20 +13,31 @@ import it.polimi.ingsw.server.model.enumerations.MatchPhase;
 import it.polimi.ingsw.server.model.enumerations.PersonalBoardPhase;
 import it.polimi.ingsw.server.model.enumerations.Resource;
 import it.polimi.ingsw.server.model.exceptions.*;
-
 import java.util.Map;
 
+/**
+ * Class that receives messages from the view and modifies the state of the state of the model
+ */
 public class Controller extends MessageObservable{
     private Match match;
     private Boolean firstConnected;
     private final Boolean demo;
     private Lobby lobby;
 
+    /**
+     * Constructor for the online game implementing multiple matches
+     * @param demo true to enable the demo mode
+     * @param lobby handles the players that connects and the creation of multiple matches
+     */
     public Controller(Boolean demo, Lobby lobby) {
         this(demo);
         this.lobby = lobby;
     }
 
+    /**
+     * Constructor for the solo game controller
+     * @param demo true to enable the demo mode
+     */
     public Controller(Boolean demo){
         this.demo = demo;
         firstConnected = false;
@@ -50,16 +61,21 @@ public class Controller extends MessageObservable{
         }
     }
 
-
-    //TODO is synchronized needed
-    public synchronized Boolean hasFirstConnected() {
+    /**
+     * Method to know if the first player of a match already connected
+     * @return true if the first player of a match already connected
+     */
+    public Boolean hasFirstConnected() {
         return firstConnected;
     }
 
+    /**
+     * Method to know if a match waiting for players already exist
+     * @return true if a match waiting for players already exist
+     */
     public Boolean isNumOfPlayerChosen(){
         return match != null;
     }
-
 
     /**
      * Handles a nicknameReplyMessage
