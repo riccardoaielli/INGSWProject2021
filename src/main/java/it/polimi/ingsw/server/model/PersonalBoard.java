@@ -312,10 +312,10 @@ public class PersonalBoard extends MessageObservable {
         Resource resource = singleResourceMap.keySet().iterator().next();
         //Checking if there are enough resources in temporary map
         if(temporaryMapResource.get(resource) == null){
-            throw new InvalidAdditionException("Not enough resources in temporary map");
+            throw new InvalidAdditionException("Not enough resources in temporary resources");
         }
         if (temporaryMapResource.get(resource) < singleResourceMap.get(resource)){
-            throw new InvalidAdditionException("Not enough resources in temporary map");
+            throw new InvalidAdditionException("Not enough resources in temporary resources");
         }
         warehouseDepots.add(depotLevel, singleResourceMap);
         //Removing or subtracting from temporaryResourceMap

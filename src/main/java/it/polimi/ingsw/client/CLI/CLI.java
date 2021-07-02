@@ -484,7 +484,7 @@ public class CLI implements ClientView {
     @Override
     public void askBuyDevCard() {
         System.out.println("Insert the coordinates of the development card you want to buy[type 0 to go back to menu]");
-        int row = readInt("Choose the row of the card (1,2 or 3):");
+        int row = readInt("Choose the row of the card (1,2 or 3 from top to bottom):");
 
         while(!(row>=0&&row <=3)){
             row = readInt("Please insert a number between 1 and 3)");
@@ -495,7 +495,7 @@ public class CLI implements ClientView {
             return;
         }
 
-        int column = readInt("Choose the column of the card (1,2,3 or 4):");
+        int column = readInt("Choose the column of the card (1,2,3 or 4 from left to right):");
 
         while(!(column>=0&&column <=4)){
             column = readInt("Please insert a number between 1 and 4");
@@ -662,7 +662,7 @@ public class CLI implements ClientView {
      */
     @Override
     public void askDiscardLeader(){
-        int numLeaderCard = readInt("Choose the number of the card to discard: ");
+        int numLeaderCard = readInt("Choose the number of the card to discard[Type 0 to go back to menu]: ");
         while (numLeaderCard < 0 || numLeaderCard > 2){
             numLeaderCard = readInt("-Type 0 to go back to menu.\nChoose the number of the card to discard: ");
         }
@@ -670,7 +670,8 @@ public class CLI implements ClientView {
             phase = LocalPhase.MENU;
             phase.handlePhase(this);
         }
-        messageSender.sendMessage(new DiscardLeaderMessage(localModel.getLocalPlayer().getNickname(),numLeaderCard));
+        else
+            messageSender.sendMessage(new DiscardLeaderMessage(localModel.getLocalPlayer().getNickname(),numLeaderCard));
     }
 
     /**

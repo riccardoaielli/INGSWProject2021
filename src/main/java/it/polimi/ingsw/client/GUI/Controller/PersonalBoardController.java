@@ -573,6 +573,17 @@ public class PersonalBoardController extends  AbstractController{
         if(numLeaderCard==1){
             //leaderCard1.setEffect(highlightEffectRed);
             leaderCard1.setImage(leaderCard2.getImage());
+            leaderCard1.setEffect(leaderCard2.getEffect());
+
+            leaderCard2Depot1.setLayoutX(leaderCard1Depot1.getLayoutX());
+            leaderCard2Depot1.setLayoutY(leaderCard1Depot1.getLayoutY());
+
+            leaderCard2Depot2.setLayoutX(leaderCard1Depot2.getLayoutX());
+            leaderCard2Depot2.setLayoutY(leaderCard1Depot2.getLayoutY());
+
+            leaderCard1Depot1.setImage(null);
+            leaderCard1Depot2.setImage(null);
+
             leaderCard2.setImage(null);
             leaderCard2.setVisible(false);
         }

@@ -17,16 +17,19 @@
     <items>
       <StackPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="398.0" prefWidth="294.0">
          <children>
-                <ImageView fx:id="leaderCard1" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="398.0" prefWidth="144.0" StackPane.alignment="CENTER">
+               <children>
+                      <ImageView fx:id="leaderCard1" fitHeight="150.0" fitWidth="100.0" layoutX="20.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
+                      <ImageView fx:id="leaderCard2" fitHeight="150.0" fitWidth="100.0" layoutX="20.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="leaderCard1Depot1" fitHeight="35.0" fitWidth="26.0" layoutX="39.5" layoutY="122.5" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="leaderCard2Depot2" fitHeight="35.0" fitWidth="26.0" layoutX="77.0" layoutY="312.5" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="leaderCard2Depot1" fitHeight="35.0" fitWidth="26.0" layoutX="39.5" layoutY="312.5" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="leaderCard1Depot2" fitHeight="35.0" fitWidth="26.0" layoutX="77.0" layoutY="122.5" pickOnBounds="true" preserveRatio="true" />
+               </children>
                <StackPane.margin>
-                  <Insets bottom="200.0" left="150.0" />
+                  <Insets left="150.0" />
                </StackPane.margin>
-            </ImageView>
-                <ImageView fx:id="leaderCard2" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-               <StackPane.margin>
-                  <Insets left="150.0" top="200.0" />
-               </StackPane.margin>
-            </ImageView>
+            </AnchorPane>
             <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="58.0" prefWidth="100.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -104,26 +107,6 @@
                   <Insets bottom="310.0" right="150.0" />
                </StackPane.margin>
             </Label>
-            <ImageView fx:id="leaderCard1Depot1" fitHeight="35.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-               <StackPane.margin>
-                  <Insets bottom="90.0" left="115.0" />
-               </StackPane.margin>
-            </ImageView>
-            <ImageView fx:id="leaderCard2Depot2" fitHeight="35.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-               <StackPane.margin>
-                  <Insets left="190.0" top="310.0" />
-               </StackPane.margin>
-            </ImageView>
-            <ImageView fx:id="leaderCard2Depot1" fitHeight="35.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-               <StackPane.margin>
-                  <Insets left="115.0" top="310.0" />
-               </StackPane.margin>
-            </ImageView>
-            <ImageView fx:id="leaderCard1Depot2" fitHeight="35.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-               <StackPane.margin>
-                  <Insets bottom="90.0" left="190.0" />
-               </StackPane.margin>
-            </ImageView>
          </children>
       </StackPane>
         <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="569.0" styleClass="transparentBackground" stylesheets="@../css/gameInterface.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
