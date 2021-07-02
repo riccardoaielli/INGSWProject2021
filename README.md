@@ -1,88 +1,88 @@
-# Prova Finale di Ingegneria del Software - AA 2020-2021
+# Software Engineering Final Exam - AA 2020-2021
 ![alt text](src/main/resources/Masters-of-Renaissance_box3D.png)
 
-Versione software del gioco da tavolo [Maestri del Rinascimento](http://www.craniocreations.it/prodotto/masters-of-renaissance/).
+Software version of the board game [Masters of the Renaissance](http://www.craniocreations.it/prodotto/masters-of-renaissance/).
 
-## Documentazione
+## Documentation [italian readme version](https://github.com/PaoloBisignano/ingswAM2021-Aielli-Bisignano-Cerasani/blob/master/README-ITA.md)
 
 ### UML
-I seguenti diagrammi delle classi rappresentano rispettivamente il modello iniziale sviluppato durante la fase di progettazione e i diagrammi del prodotto finale nelle parti critiche riscontrate.
-- [UML Iniziale](inserire link)
-- [UML Finali](inserire link)
+The following class diagrams respectively represent the initial model developed during the design phase and the diagrams of the final product in the critical parts found.
+- [Initial UML](insert link)
+- [Final UML](insert link)
 
 ### JavaDoc
-La seguente documentazione include una descrizione per la maggior parte delle classi e dei metodi utilizzati, segue le tecniche di documentazione di Java e può essere consultata al seguente indirizzo: [Javadoc](inserire link)
+The following documentation includes a description for most of the classes and methods used, follows Java documentation techniques, and can be found at the following address: [Javadoc](insert link).
 
 ### Coverage report
-Al seguente link è possibile consultare il report della coverage dei test effettuati con Junit: [Report](inserire link)
+At the following link you can see the coverage report of the tests done with Junit: [Report](insert link)
 
-### Protocollo di comunicazione
-Il seguente documento rappresenta il protocollo di comunicazione implementato tra client e server: [Protocollo_Comunicazione](inserire link)
+### Communication Protocol
+The following document represents the communication protocol implemented between client and server: [Communication Protocol](insert link)
 
-### Librerie aggiuntive utilizzate
-|Libreria|Descrizione|
+### Additional libraries used
+|Library|Description|
 |---------------|-----------|
-|__Maven__|Strumento di automazione della compilazione utilizzato principalmente per progetti Java.|
-|__JavaFx__|Libreria grafica per realizzare interfacce utente.|
-|__JUnit__|Framework di unit testing.|
-|__Gson__|Libreria che permette di serializzare e deserializzare oggetti tramite l'utilizzo di files json.|
+|__Maven__|Compilation automation tool used primarily for Java projects.|
+|__JavaFx__|Graphic library for building user interfaces.|
+|__JUnit__|Unit testing framework.|
+|__Gson__|Library that allows to serialize and deserialize objects through the use of json files.|
 
-## Funzionalità
-### Funzionalità Sviluppate
-- Regole Complete
+## Features
+### Developed Functionalities
+- Complete Rules
 - CLI
 - GUI
 - Socket
-- 2 FA (Funzionalità Avanzate)
-    - __Partita locale:__ Il client è realizzato in modo che possa gestire la partita in solitario senza effettuare
-      una connessione con il server.
+- 2 FA (Advanced Features)
+    - __Local Game:__ The client is designed so that it can run the game solo without making a
+      a connection with the server.
 
-    - __Partite multiple:__  Il server è realizzato in modo che possa gestire più partite contemporaneamente,
-      dopo la procedura di creazione della prima partita, i giocatori che accedono al server vengono gestiti
-      in una sala d’attesa per creare una seconda partita e così via.
+    - __Multiple Matches:__ The server is built so that it can handle multiple matches simultaneously,
+      after the creation procedure of the first game, the players who access the server are managed
+      in a waiting room to create a second game and so on.
 
-## Compilazione e packaging
-I jar sono stati realizzati con l'ausilio di Maven Shade Plugin.
-Di seguito sono forniti i jar precompilati.
-Per compilare i jar autonomamente, posizionarsi nella root del progetto e lanciare il comando:
+## Compilation and packaging
+The jar was built with the help of Maven Shade Plugin.
+Pre-compiled jar is provided below.
+To compile the jar yourself, go to the root of the project and run the command:
 ```
 mvn clean package
 ```
-Il jar compilato verrà posizionato all'interno della cartella ```target/``` con il nome
-```MoRAM37.jar```.
+The compiled jar will be placed inside the folder ``target/`` with the name
+``MoRAM37.jar``.
 
 ### Jars
-I Jar del progetto possono essere scaricati al seguente link: [Jars](//inserire link).
+The project`s jar can be downloaded at the following link: [Jar](//insert link).
 
 
-## Esecuzione
-Questo progetto richiede una versione di Java 8 o superiore per essere eseguito correttamente.
+## Execution
+This project requires a version of Java 8 or higher to run correctly.
 
 ### Masters of Renaissance Client
-Le seguenti istruzioni descrivono come eseguire il client con interfaccia CLI o GUI.
+The following instructions describe how to run the client with CLI or GUI interface.
 
 #### CLI
-Per lanciare il Client in modalità CLI digitare da terminale il comando:
+To launch the Client in CLI mode type from terminal the following command:
 ```
 java -jar MoRAM37.jar -morClient -cli
 ```
 #### GUI
-Per lanciare il Client in modalità GUI digitare da terminale il comando:
+To launch the Client in GUI mode type from terminal the following command:
 ```
 java -jar MoRAM37.jar -morClient
 ```
 
 ### Masters of Renaissance Server
-Per lanciare il Server digitare da terminale il comando:
+To launch the Server type from terminal the following command:
 ```
-java -jar MoRAM37.jar -morServer [-port <port_number> -demo -help]
+java -jar MoRAM37.jar -morServer [-port <port_number> -demo -help].
 ```
-#### Parametri
-- `-port`: permette di specificare la porta del server. Se non specificato il valore di default è __1334__;
-- `-demo`: permette di avviare il server in mmodalità demo. La modalità demo fornisce in partenza dieci risorse per ogni tipo ad ogni giocatore;
-- `-help`: fornisce informazioni riguardo l'esecuzione del server;
+#### Parameters
+- `-port`: allows you to specify the server port. If not specified the default value is __1334__;
+- `-demo`: allows you to start the server in demo mode. Demo mode provides ten resources of each type to each player;
+- `-help`: provides information about running the server;
 
-## Componenti del gruppo
+## Group members
 - [__Riccardo Aielli__](https://github.com/riccardoaielli)
 - [__Paolo Bisignano__](https://github.com/PaoloBisignano)
 - [__Andrea Cerasani__](https://github.com/andreacerasani)
