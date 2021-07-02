@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="250.0" prefWidth="500.0" styleClass="menuBackground" stylesheets="@../css/global.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.RearrangeWHouseInterfaceController">
+<AnchorPane prefHeight="250.0" prefWidth="500.0" styleClass="menuBackground" stylesheets="@../css/global.css" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.RearrangeWHouseInterfaceController">
    <children>
       <Label layoutX="85.0" layoutY="38.0" text="Choose the type of rearrange:" />
       <Button fx:id="moveButton" layoutX="85.0" layoutY="125.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Move" AnchorPane.leftAnchor="100.0" />

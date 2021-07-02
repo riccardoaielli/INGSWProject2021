@@ -6,7 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="130.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.ChoiceBoxDevCardSpaceController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="130.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.ChoiceBoxDevCardSpaceController">
         <ChoiceBox fx:id="choiceBox" layoutX="225.0" layoutY="142.0" maxHeight="25.0" prefHeight="0.0" prefWidth="150.0" styleClass="check-box" stylesheets="@../css/global.css" AnchorPane.leftAnchor="175.0" AnchorPane.topAnchor="60.0">
             <items>
                 <FXCollections fx:factory="observableArrayList">

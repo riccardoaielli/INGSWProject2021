@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<SplitPane dividerPositions="0.3843351548269581" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" styleClass="menuBackground" stylesheets="@../css/global.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.BuyCardInterfaceController">
+<SplitPane dividerPositions="0.3843351548269581" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" styleClass="menuBackground" stylesheets="@../css/global.css" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.BuyCardInterfaceController">
    <items>
       <!-- content from counter.fxml included here -->
       <fx:include fx:id="cardGrid" source="../fxmls/cardGrid.fxml" />

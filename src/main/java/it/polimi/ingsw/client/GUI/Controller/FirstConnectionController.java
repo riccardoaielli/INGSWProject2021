@@ -27,7 +27,6 @@ public class FirstConnectionController extends AbstractController {
     private void onJoinClick(Event event){
         String nickname = this.nickname.getText();
         int numOfPlayers = choiceBox.getValue();
-        System.out.println(nickname + numOfPlayers);
         this.getGui().setNickname(nickname);
         SceneManager.getInstance().setRootFXML("loadingScreen");
         this.getGui().getMessageSender().sendMessage(new CreateMatchReplyMessage(nickname, numOfPlayers));

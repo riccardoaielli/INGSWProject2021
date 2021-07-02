@@ -237,7 +237,6 @@ public class PersonalBoardController extends  AbstractController{
 
     private void onResourceImgClick(Event event){
         ImageView imageView = (ImageView) event.getTarget();
-        System.out.println(GridPane.getRowIndex(imageView) + "," +GridPane.getColumnIndex(imageView));
     }
 
     public void updateWarehouse(List<Map<Resource, Integer>> depots){

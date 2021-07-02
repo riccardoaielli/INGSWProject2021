@@ -4,7 +4,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="500.0" styleClass="menuBackground" stylesheets="@../css/global.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.DiscardLeaderInterfaceController">
+<AnchorPane prefHeight="400.0" prefWidth="500.0" styleClass="menuBackground" stylesheets="@../css/global.css" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.GUI.Controller.DiscardLeaderInterfaceController">
     <children>
         <ImageView id="1" fx:id="leaderOneImgView" fitHeight="250.0" fitWidth="150.0" layoutX="165.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="30.0" />
         <ImageView id="2" fx:id="leaderTwoImgView" fitHeight="250.0" fitWidth="150.0" layoutX="336.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="30.0" />

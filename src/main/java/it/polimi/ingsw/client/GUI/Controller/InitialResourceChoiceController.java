@@ -49,8 +49,6 @@ public class InitialResourceChoiceController extends PopupController {
         }
 
 
-        System.out.println(personalTabs.get(0).getText());
-
         for (Node node : initialResourceIconGridPane.getChildren()) {
             ImageView imgView = (ImageView) node;
             imgView.setImage(new Image("resourcesImage/" + imgView.getId() + ".png"));
