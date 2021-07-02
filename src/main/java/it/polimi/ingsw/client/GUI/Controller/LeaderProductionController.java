@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.GUI.Controller;
 
 import it.polimi.ingsw.client.GUI.PopupController;
 import it.polimi.ingsw.client.GUI.SceneManager;
+import it.polimi.ingsw.client.LocalPhase;
 import it.polimi.ingsw.common.messages.messagesToServer.ActivateBasicProductionMessage;
 import it.polimi.ingsw.common.messages.messagesToServer.ActivateLeaderProductionMessage;
 import it.polimi.ingsw.server.model.enumerations.Resource;
@@ -114,5 +115,14 @@ public class LeaderProductionController extends PopupController{
             selectedCardImageView.setEffect(highlightEffect);
         }
         numLeaderCard = Integer.parseInt(imageView.getId());
+    }
+
+    @Override
+    public void setOnClose(Stage popupStage) {
+        popupStage.setOnCloseRequest(event ->{
+            event.consume();
+            popupStage.close();
+            getGui().askProduction();
+        });
     }
 }

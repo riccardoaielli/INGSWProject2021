@@ -77,4 +77,13 @@ public class CardProductionController extends PopupController {
         }
         indexDevelopmentCardSpace = Integer.parseInt(imageView.getId());
     }
+
+    @Override
+    public void setOnClose(Stage popupStage) {
+        popupStage.setOnCloseRequest(event ->{
+            event.consume();
+            popupStage.close();
+            getGui().askProduction();
+        });
+    }
 }
