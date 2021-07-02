@@ -57,7 +57,8 @@ The project`s jar can be downloaded at the following link: [Jar](https://github.
 
 ## Execution
 This project requires a version of Java 8 or higher to run correctly.<br/> 
-CLI is displayed correctly on Linux terminal.
+CLI is displayed correctly on Linux terminal.<br/>
+GUI and server can be run on Linux, Windows and MacOS (MacOS not tested)<br/>
 
 ### Masters of Renaissance Client
 To launch the Client type from terminal the following command:
