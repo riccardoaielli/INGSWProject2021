@@ -75,4 +75,13 @@ public class BasicProductionController extends PopupController {
             stage.close();
         }
     }
+
+    @Override
+    public void setOnClose(Stage popupStage) {
+        popupStage.setOnCloseRequest(event ->{
+            event.consume();
+            popupStage.close();
+            getGui().askProduction();
+        });
+    }
 }

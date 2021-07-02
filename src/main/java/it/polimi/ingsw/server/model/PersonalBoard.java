@@ -109,7 +109,8 @@ public class PersonalBoard extends MessageObservable {
         //Adding production to strongbox and/or faithTrack
         dispatch(production);
         checkVaticanReport();
-        strongbox.add(production);
+        production.forEach((resource, quantity) -> temporaryMapResource.merge(resource, quantity, Integer::sum));
+        notifyObservers(new TemporaryResourceMapUpdate(getNickname(), new HashMap<>(temporaryMapResource)));
     }
 
     //Method that is used to remove faith from temporaryMapResource and to add it to faithTrack
