@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Main class contains the main method of the project, you can start the client by adding -morClient argument or you can start the server by adding -morServer
+ */
+
 public class Main {
     private static final String SERVER_ARGUMENT = "-morServer";
     private static final String CLIENT_ARGUMENT = "-morClient";
@@ -14,7 +18,6 @@ public class Main {
     private static final int DEFAULT_PORT = 1334;
     private static final int MIN_PORT = 1024;
     private static final int MAX_PORT = 65535;
-
 
 
     public static void main(String[] args) {

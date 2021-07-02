@@ -197,7 +197,7 @@ public class PersonalBoard extends MessageObservable {
      * Method used to activate the production using the power of production of a leader card with the proper power
      * @param costStrongbox The cost of power of production paid with the resources located in the strongbox
      * @param costWarehouseDepot The cost of power of production paid with the resources located in the warehouse
-     * @param numLeaderCard The number of the leader card to use, must be > 0 and < leader cards not discarded in PlayerBoard
+     * @param numLeaderCard The number of the leader card to use, must be strictly greater than 0 and strictly less than leader cards not discarded in PlayerBoard
      * @param resource The resource that is going to be produced (together with a faith point already provided by the leader card)
      * @throws InvalidProductionException If the specified leader card does not exist or if the same production has already been done in the same turn
      * @throws InvalidRemovalException If the payment can't be made
@@ -388,7 +388,7 @@ public class PersonalBoard extends MessageObservable {
      * @param column Column of the card grid of the chosen card, ranges from 1 to 4
      * @param costStrongbox The cost of power of production paid with the resources located in the strongbox
      * @param costWarehouseDepots The cost of power of production paid with the resources located in the warehouse
-     * @param numLeaderCard The number of the leader card to use to discount the price, if 0 then no leader card will be used, otherwise must be > 0 and < leader cards not discarded in PlayerBoard
+     * @param numLeaderCard The number of the leader card to use to discount the price, if 0 then no leader card will be used, otherwise must be greater than 0 and strictly less than leader cards not discarded in PlayerBoard
      * @param cardPosition The development card space slot in which the bought card will be placed
      * @throws NoCardException If there is no card in the specified coordinates of card grid
      * @throws InvalidCostException If the specified price does not match the one of the chosen card
@@ -425,7 +425,7 @@ public class PersonalBoard extends MessageObservable {
 
     /**
      * Method to activate a leader
-     * @param numLeaderCard The number of the leader card to activate, must be > 0 and < leader cards not discarded in PlayerBoard
+     * @param numLeaderCard The number of the leader card to activate, must be greater than 0 and strictly less than leader cards not discarded in PlayerBoard
      * @throws RequirementNotMetException if the requirements of the leader card are not met
      * @throws InvalidParameterException if the specified numLeaderCard is not correct, or if the leader card is already active
      */
@@ -460,7 +460,7 @@ public class PersonalBoard extends MessageObservable {
 
     /**
      * Method used to discard a leader card during the game and gain a faith point as a consequence
-     * @param numLeaderCard The number of the leader card to activate, must be > 0 and < leader cards not discarded in PlayerBoard
+     * @param numLeaderCard The number of the leader card to activate, must be greater than 0 and strictly less than leader cards not discarded in PlayerBoard
      * @throws InvalidParameterException if numLeaderCard is incorrect or the leader does not exist
      */
     public void removeLeader(int numLeaderCard) throws InvalidParameterException {

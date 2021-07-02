@@ -947,6 +947,9 @@ public class CLI implements ClientView {
         return localModel.getLocalPlayer().getNickname();
     }
 
+    /**
+     * Setter for the nickname associated with the view
+     */
     @Override
     public void setNickname(String nickname) {
         localModel.setLocalPlayer(nickname);

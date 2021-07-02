@@ -10,12 +10,18 @@ import java.util.Objects;
 import java.util.Stack;
 
 
-
+/**
+ * This class deserializes the developmentCards from json
+ */
 public class CardGridParser {
 
     private Stack<DevelopmentCard>[][] cardGridMatrix;
     Gson gson = new Gson();
 
+    /**
+     * This method creates a bidimensional matrix of stacks of development cards from json file
+     * @return cardGridMatrix bidimensional matrix of stacks
+     */
     public Stack<DevelopmentCard>[][] parse() {
 
     String path = "/server/developmentCards.json";
