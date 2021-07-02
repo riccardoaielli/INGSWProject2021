@@ -47,19 +47,26 @@ public class SoloMatch extends Match{
 
     /**
      * Method called when the conditions to end the match are verified
-     * @param message
+     * @param message true if lorenzo won the match, false otherwise
      */
     @Override
     public void update(boolean message) {
         super.update(message);
         win = message;
+    }
+
+    /**
+     * This method ends the game sending to client if the winner is lorenzo or the player
+     */
+    @Override
+    public void endGame() {
         if(win){
             finalRank = new ArrayList<>();
             finalRank.add(new RankPosition("Lorenzo",0));
             notifyObservers(new RankUpdate(finalRank));
         }
         else {
-            endGame();
+            super.endGame();
         }
     }
 
