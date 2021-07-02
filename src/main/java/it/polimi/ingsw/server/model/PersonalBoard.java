@@ -243,7 +243,7 @@ public class PersonalBoard extends MessageObservable {
     /**
      * Method used to acquire marbles form market
      * @param rowOrColumn 0 if row, 1 if column
-     * @param value from 0 to 2 if row, from 0 to 3 if column Todo ricontrollare
+     * @param value from 0 to 2 if row, from 0 to 3 if column
      */
     public void takeFromMarket(int rowOrColumn, int value) throws InvalidParameterException {
         if ((rowOrColumn == 0 && value >= 0 && value <= 2) || (rowOrColumn == 1 && value >= 0 && value <= 3)){
@@ -406,7 +406,6 @@ public class PersonalBoard extends MessageObservable {
                 throw new InvalidLeaderAction("Invalid card");
             //if not the correct leader throws InvalidLeaderAction()
             leaderCards.get(numLeaderCard-1).abilityDiscount(price);
-            //TODO make sure ability discount manages if resource to discount is not in price
         }
         //Verifying that the provided costs are correct
         mergeCostsAndVerify(costStrongbox, costWarehouseDepots, price);

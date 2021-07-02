@@ -7,17 +7,17 @@ Versione software del gioco da tavolo [Maestri del Rinascimento](http://www.cran
 
 ### UML
 I seguenti diagrammi delle classi rappresentano rispettivamente il modello iniziale sviluppato durante la fase di progettazione e i diagrammi del prodotto finale nelle parti critiche riscontrate.
-- [UML Iniziale](inserire link)
-- [UML Finali](inserire link)
+- [UML Iniziale](https://github.com/PaoloBisignano/ingswAM2021-Aielli-Bisignano-Cerasani/blob/master/deliveries/uml/initial_uml_model.png)
+- [UML Finali](https://github.com/PaoloBisignano/ingswAM2021-Aielli-Bisignano-Cerasani/tree/master/deliveries/uml)
 
 ### JavaDoc
-La seguente documentazione include una descrizione per la maggior parte delle classi e dei metodi utilizzati, segue le tecniche di documentazione di Java e può essere consultata al seguente indirizzo: [Javadoc](inserire link)
+La seguente documentazione include una descrizione per la maggior parte delle classi e dei metodi utilizzati, segue le tecniche di documentazione di Java e può essere consultata al seguente indirizzo: [Javadoc](https://github.com/PaoloBisignano/ingswAM2021-Aielli-Bisignano-Cerasani/tree/master/deliveries/javadoc/index.html)
 
 ### Coverage report
-Al seguente link è possibile consultare il report della coverage dei test effettuati con Junit: [Report](inserire link)
+Al seguente link è possibile consultare il report della coverage dei test effettuati con Junit: [Report](https://github.com/PaoloBisignano/ingswAM2021-Aielli-Bisignano-Cerasani/tree/master/deliveries/report/CoverageReport.JPG)
 
 ### Protocollo di comunicazione
-Il seguente documento rappresenta il protocollo di comunicazione implementato tra client e server: [Protocollo di Comunicazione](inserire link)
+Il seguente documento rappresenta il protocollo di comunicazione implementato tra client e server: [Protocollo di Comunicazione](https://github.com/PaoloBisignano/ingswAM2021-Aielli-Bisignano-Cerasani/tree/master/deliveries/communication/CommunicationProtocol.pdf)
 
 ### Librerie aggiuntive utilizzate
 |Libreria|Descrizione|
@@ -42,17 +42,17 @@ Il seguente documento rappresenta il protocollo di comunicazione implementato tr
       in una sala d’attesa per creare una seconda partita e così via.
 
 ## Compilazione e packaging
-I jar sono stati realizzati con l'ausilio di Maven Shade Plugin.
-Di seguito sono forniti i jar precompilati.
-Per compilare i jar autonomamente, posizionarsi nella root del progetto e lanciare il comando:
+Il jar è stati realizzato con l'ausilio di Maven Shade Plugin.
+Di seguito è fornito il jar precompilato.
+Per compilare il jar autonomamente, posizionarsi nella root del progetto e lanciare il comando:
 ```
 mvn clean package
 ```
 Il jar compilato verrà posizionato all'interno della cartella ```target/``` con il nome
-```MoRAM37.jar```.
+```MoR-AM37.jar```.
 
-### Jars
-I Jar del progetto possono essere scaricati al seguente link: [Jars](//inserire link).
+### Jar
+Il Jar del progetto può essere scaricato al seguente link: [Jars](https://github.com/PaoloBisignano/ingswAM2021-Aielli-Bisignano-Cerasani/tree/master/deliveries/jar/MoR-AM37.jar).
 
 
 ## Esecuzione
@@ -64,18 +64,18 @@ Le seguenti istruzioni descrivono come eseguire il client con interfaccia CLI o 
 #### CLI
 Per lanciare il Client in modalità CLI digitare da terminale il comando:
 ```
-java -jar MoRAM37.jar -morClient -cli
+java -jar MoR-AM37.jar -morClient -cli
 ```
 #### GUI
 Per lanciare il Client in modalità GUI digitare da terminale il comando:
 ```
-java -jar MoRAM37.jar -morClient
+java -jar MoR-AM37.jar -morClient
 ```
 
 ### Masters of Renaissance Server
 Per lanciare il Server digitare da terminale il comando:
 ```
-java -jar MoRAM37.jar -morServer [-port <port_number> -demo -help]
+java -jar MoR-AM37.jar -morServer [-port <port_number> -demo -help]
 ```
 #### Parametri
 - `-port`: permette di specificare la porta del server. Se non specificato il valore di default è __1334__;

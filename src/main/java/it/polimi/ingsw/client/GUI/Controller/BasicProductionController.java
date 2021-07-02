@@ -32,7 +32,6 @@ public class BasicProductionController extends PopupController {
 
     @FXML
     public void initialize(){
-        //TODO extract resource choice in a separate fxml
         highlightEffect.setSpread(1);
         //shieldImgV.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onResourceClick);
         shieldImgV.setOnMouseClicked(e ->{
