@@ -51,7 +51,7 @@ mvn clean package
 The compiled jar will be placed inside the folder ``target/`` with the name
 ``MoR-AM37.jar``.
 
-### Jars
+### Jar
 The project`s jar can be downloaded at the following link: [Jar](https://github.com/PaoloBisignano/ingswAM2021-Aielli-Bisignano-Cerasani/tree/master/deliveries/jar/MoR-AM37.jar).
 
 
@@ -59,18 +59,15 @@ The project`s jar can be downloaded at the following link: [Jar](https://github.
 This project requires a version of Java 8 or higher to run correctly.
 
 ### Masters of Renaissance Client
-The following instructions describe how to run the client with CLI or GUI interface.
-
-#### CLI
-To launch the Client in CLI mode type from terminal the following command:
+To launch the Client type from terminal the following command:
 ```
-java -jar MoR-AM37.jar -morClient -cli
+java -jar MoR-AM37.jar -morClient [-cli -port <port_number> -host <host_number> -help]
 ```
-#### GUI
-To launch the Client in GUI mode type from terminal the following command:
-```
-java -jar MoR-AM37.jar -morClient
-```
+#### Parameters
+- `-cli`: allows to start the CLI. If not specified runs the GUI by default;
+- `-port`: allows you to specify the server port to connect to. If not specified the default value is __1334__;
+- `-host`: allows you to specify the server ip address. If not specified the default value is 127.0.0.1;
+- `-help`: provides information about running the client;
 
 ### Masters of Renaissance Server
 To launch the Server type from terminal the following command:

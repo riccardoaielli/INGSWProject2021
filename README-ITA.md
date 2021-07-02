@@ -52,25 +52,22 @@ Il jar compilato verrà posizionato all'interno della cartella ```target/``` con
 ```MoR-AM37.jar```.
 
 ### Jar
-Il Jar del progetto può essere scaricato al seguente link: [Jars](https://github.com/PaoloBisignano/ingswAM2021-Aielli-Bisignano-Cerasani/tree/master/deliveries/jar/MoR-AM37.jar).
+Il Jar del progetto può essere scaricato al seguente link: [Jar](https://github.com/PaoloBisignano/ingswAM2021-Aielli-Bisignano-Cerasani/tree/master/deliveries/jar/MoR-AM37.jar).
 
 
 ## Esecuzione
 Questo progetto richiede una versione di Java 8 o superiore per essere eseguito correttamente.
 
 ### Masters of Renaissance Client
-Le seguenti istruzioni descrivono come eseguire il client con interfaccia CLI o GUI.
-
-#### CLI
-Per lanciare il Client in modalità CLI digitare da terminale il comando:
+Per lanciare il Client digitare da terminale il comando:
 ```
-java -jar MoR-AM37.jar -morClient -cli
+java -jar MoR-AM37.jar -morClient [-cli -port <port_number> -host <host_number> -help]
 ```
-#### GUI
-Per lanciare il Client in modalità GUI digitare da terminale il comando:
-```
-java -jar MoR-AM37.jar -morClient
-```
+#### Parametri
+- `-cli`: permette di avviare la CLI. Se non specificato viene avviata la GUI di default;
+- `-port`: permette di specificare la porta del server al quale connettersi. Se non specificato il valore di default è __1334__;
+- `-host`: permette di specificare l'ip del server al quale connettersi. Se non specificato il valore di default è 127.0.0.1;
+- `-help`: fornisce informazioni riguardo l'esecuzione del client;
 
 ### Masters of Renaissance Server
 Per lanciare il Server digitare da terminale il comando:
