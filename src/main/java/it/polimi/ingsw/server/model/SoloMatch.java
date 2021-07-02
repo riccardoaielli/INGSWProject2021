@@ -63,18 +63,6 @@ public class SoloMatch extends Match{
         }
     }
 
-    @Override
-    public void endGame() {
-        if(win){
-            finalRank = new ArrayList<>();
-            finalRank.add(new RankPosition("Lorenzo",0));
-            notifyObservers(new RankUpdate(finalRank));
-        }
-        else {
-            super.endGame();
-        }
-    }
-
     /**
      * Getter for testing purpose
      * @return lorenzo

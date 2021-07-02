@@ -131,13 +131,14 @@ class PersonalBoardTest {
 
     @Test
     void activateLeaderProduction() {
+        LeaderProduction card = new LeaderProduction(1,null,null);
         Map<Resource,Integer> costStrongbox = new HashMap<>();
         costStrongbox.put(Resource.STONE,1);
         Map<Resource,Integer> costWarehouseDepot = new HashMap<>();
         try {
             personalBoard.getDevelopmentCardSpace().addCard(match.getCardGrid().getCard(2,3),1);
             personalBoard.getDevelopmentCardSpace().addCard(match.getCardGrid().getCard(1,3),1);
-            personalBoard.discardInitialLeader(1,2);
+            personalBoard.discardInitialLeader(2,3);
         } catch ( InvalidParameterException | NoCardException | InvalidDevelopmentCardException e) {
             assert false;
         }
@@ -151,6 +152,7 @@ class PersonalBoardTest {
 
         try {
             personalBoard.activateLeader(2);
+            personalBoard.activateLeader(1);
         } catch (RequirementNotMetException | InvalidParameterException e) {
             assert false;
         }
@@ -169,6 +171,14 @@ class PersonalBoardTest {
         } catch (InvalidCostException | InvalidLeaderAction | InvalidRemovalException e) {
             assert false;
         } catch (InvalidProductionException e) {
+            assert true;
+        }
+
+        try {
+            personalBoard.activateLeaderProduction(costStrongbox,costWarehouseDepot,1,Resource.COIN);
+        } catch (InvalidCostException | InvalidRemovalException | InvalidProductionException e) {
+            assert false;
+        } catch (InvalidLeaderAction e) {
             assert true;
         }
 

@@ -37,7 +37,6 @@ public class CardRequirement{
      */
     @Override
     public boolean equals(Object obj){
-        CardRequirement cardRequirement = (CardRequirement) obj;
-        return (color == cardRequirement.color) && (level.equals(cardRequirement.level));
+        return (color == ((CardRequirement) obj).color) && (level.equals(((CardRequirement) obj).level));
     }
 }

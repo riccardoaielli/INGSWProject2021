@@ -21,10 +21,31 @@ class DevelopmentCardSpaceTest {
     @Test
     void addCardTest() throws InvalidParameterException {
         int cardPosition = 1;
-        int cardLevel = 1;
-        PowerOfProduction powerOfProduction = new PowerOfProduction(new HashMap<>(), new HashMap<>());
+        int cardLevel = 2;
+        PowerOfProduction powerOfProduction;
+        try {
+            powerOfProduction = new PowerOfProduction(null,null);
+        } catch (InvalidParameterException e) {
+            assert true;
+        }
+        powerOfProduction = new PowerOfProduction(new HashMap<>(), new HashMap<>());
         DevelopmentCard card = new DevelopmentCard(DevelopmentCardColor.GREEN,cardLevel, new HashMap<>(),5, powerOfProduction );
         DevelopmentCardSpace developmentCardSpace= new DevelopmentCardSpace();
+
+        try {
+            developmentCardSpace.addCard(card,10);
+        } catch (InvalidParameterException | InvalidDevelopmentCardException e) {
+            assert true;
+        }
+
+        try {
+            developmentCardSpace.addCard(card,1);
+        } catch (InvalidDevelopmentCardException e) {
+            assert true;
+        }
+
+        cardLevel = 1;
+        card = new DevelopmentCard(DevelopmentCardColor.GREEN,cardLevel, new HashMap<>(),5, powerOfProduction );
 
         try {
             developmentCardSpace.addCard(card, cardPosition);

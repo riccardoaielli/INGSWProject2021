@@ -82,9 +82,7 @@ public class CardGrid extends MessageObservable {
                         if ((!cardGridMatrix[row][this.column].empty()) && getCard(row, this.column).getColor().equals(color)) {
                             column = this.column;
                         }
-                    } catch (NoCardException e) {
-                        e.printStackTrace();
-                    }
+                    } catch (NoCardException ignored) { }
                 }
             for (row = maxRow - 1; row >= 0; row--) {
                 if (!cardGridMatrix[row][column].empty()) {//if the bottom stack is empty, don't do anything and go to the upper stack

@@ -41,5 +41,6 @@ class LeaderMarbleTest {
         assertEquals(marblesTest.get(Marble.WHITEMARBLE), 2);
         assertEquals(marblesTest.get(Marble.BLUEMARBLE), 5);
 
+        assertEquals(marbleTest,((LeaderMarble) leaderCardTest).getMarble());
     }
 }

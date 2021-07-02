@@ -54,7 +54,7 @@ public class DevelopmentCardSpace extends MessageObservable implements Observabl
      */
     public void addCard(DevelopmentCard card, int cardPosition) throws InvalidDevelopmentCardException, InvalidParameterException {
         cardPosition = cardPosition - 1;
-        if((card != null) || (cardPosition >= 0 && cardPosition < numOfStacks)) {
+        if((card != null && cardPosition >= 0 && cardPosition < numOfStacks)) {
             ArrayList<DevelopmentCard> stackList = cards.get(cardPosition);
 
             if (card.getLevel() != 1 && stackList.size() == 0) {

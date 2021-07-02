@@ -281,9 +281,7 @@ public class PersonalBoard extends MessageObservable {
             for(int value = 0; value < temporaryMarbles.get(marble); value++){
                 try {
                     marble.transform(temporaryMapResource, faithTrack);
-                } catch (InvalidParameterException e) {
-                    e.printStackTrace();
-                }
+                } catch (InvalidParameterException ignored) { }
             }
         }
         temporaryMarbles.clear();

@@ -38,5 +38,7 @@ class LeaderDiscountTest {
         }catch (InvalidLeaderAction exception){
             assert false;
         }
+
+        assertEquals(resourcediscount, ((LeaderDiscount) leaderCardTest).getResourceDiscounted());
     }
 }

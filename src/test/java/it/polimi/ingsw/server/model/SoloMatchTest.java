@@ -58,6 +58,7 @@ class SoloMatchTest {
         } catch (InvalidNickName invalidNickName) {
             assert false;
         }
+
     }
 
 }
