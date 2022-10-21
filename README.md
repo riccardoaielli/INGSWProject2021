@@ -1,7 +1,7 @@
 # Software Engineering Final Exam - AA 2020-2021
 ![alt text](src/main/resources/Masters-of-Renaissance_box3D.png)
 
-Software version of the board game [Masters of the Renaissance](http://www.craniocreations.it/prodotto/masters-of-renaissance/).
+Software version of the board game [Masters of the Renaissance](https://www.craniocreations.it/prodotto/maestri-del-rinascimento).
 
 ## Documentation 
 
