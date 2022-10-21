@@ -1,3 +1,8 @@
+# INGSWProject2021
+This is the project of *Software Engineering* course (Politecnico di Milano, A.Y. 2020/2021).
+<br>
+Evaluation: 30/30
+
 # Software Engineering Final Exam - AA 2020-2021
 ![alt text](src/main/resources/Masters-of-Renaissance_box3D.png)
 
