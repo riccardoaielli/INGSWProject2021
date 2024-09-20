@@ -12,17 +12,17 @@ Software version of the board game [Masters of the Renaissance](https://www.cran
 
 ### UML
 The following class diagrams respectively represent the initial model developed during the design phase and the diagrams of the final product in the critical parts found.
-- [Initial UML](https://github.com/PaoloBisignano/ingswAM2021-Aielli-Bisignano-Cerasani/blob/master/deliveries/uml/initial_uml_model.png)
-- [Final UMLs](https://github.com/PaoloBisignano/ingswAM2021-Aielli-Bisignano-Cerasani/tree/master/deliveries/uml)
+- [Initial UML](https://github.com/riccardoaielli/INGSWProject2021/blob/master/deliveries/uml/initial_uml_model.png)
+- [Final UMLs](https://github.com/riccardoaielli/INGSWProject2021/tree/master/deliveries/uml)
 
 ### JavaDoc
 The following documentation includes a description for most of the classes and methods used, follows Java documentation techniques, and can be found at the following address: [Javadoc](https://github.com/PaoloBisignano/ingswAM2021-Aielli-Bisignano-Cerasani/tree/master/deliveries/javadoc/index.html).
 
 ### Coverage report
-At the following link you can see the coverage report of the tests done with Junit: [Coverage Report](https://github.com/PaoloBisignano/ingswAM2021-Aielli-Bisignano-Cerasani/tree/master/deliveries/report/CoverageReport.JPG)
+At the following link you can see the coverage report of the tests done with Junit: [Coverage Report](https://github.com/riccardoaielli/INGSWProject2021/tree/master/deliveries/report/CoverageReport.JPG)
 
 ### Communication Protocol
-The following document represents the communication protocol implemented between client and server: [Communication Protocol](https://github.com/PaoloBisignano/ingswAM2021-Aielli-Bisignano-Cerasani/tree/master/deliveries/communication/CommunicationProtocol.pdf)
+The following document represents the communication protocol implemented between client and server: [Communication Protocol](https://github.com/riccardoaielli/INGSWProject2021/tree/master/deliveries/communication/CommunicationProtocol.pdf)
 
 ### Additional libraries used
 |Library|Description|
@@ -57,7 +57,7 @@ The compiled jar will be placed inside the folder ``target/`` with the name
 ``MoR-AM37.jar``.
 
 ### Jar
-The project`s jar can be downloaded at the following link: [Jar](https://github.com/PaoloBisignano/ingswAM2021-Aielli-Bisignano-Cerasani/tree/master/deliveries/jar/MoR-AM37.jar).
+The project`s jar can be downloaded at the following link: [Jar](https://github.com/riccardoaielli/INGSWProject2021/tree/master/deliveries/jar/MoR-AM37.jar).
 
 
 ## Execution
@@ -91,4 +91,4 @@ java -jar MoR-AM37.jar -morServer [-port <port_number> -demo -help].
 - [__Paolo Bisignano__](https://github.com/PaoloBisignano)
 - [__Andrea Cerasani__](https://github.com/andreacerasani)
 
-Italian README version [here](https://github.com/PaoloBisignano/ingswAM2021-Aielli-Bisignano-Cerasani/blob/master/README-ITA.md)
+Italian README version [here](https://github.com/riccardoaielli/INGSWProject2021/blob/master/README-ITA.md)
